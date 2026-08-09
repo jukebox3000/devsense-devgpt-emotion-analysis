@@ -137,7 +137,7 @@ function Dashboard() {
             </TabsContent>
             <TabsContent
               value="deep"
-              className="m-0 focus-visible:outline-none"
+              className="m-0 focus-visible:outline-none h-full"
             >
               <CaseInspectorTab
                 selectedId={selectedId}

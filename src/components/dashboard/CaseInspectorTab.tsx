@@ -7,7 +7,6 @@ import {
   type Emotion,
   type Conversation,
 } from "@/lib/emotions";
-import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { fmtPct } from "@/components/charts/chart-utils";
 import {
@@ -17,7 +16,6 @@ import {
   ArrowUpDown,
   ChevronUp,
   ChevronDown,
-  Search,
   MessageSquare,
 } from "lucide-react";
 
@@ -48,9 +46,6 @@ export function CaseInspectorTab({
     [kpiData.conversations],
   );
 
-  const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState<Emotion | "all">("all");
-
   const [localSelectedId, localSetSelectedId] = useState<string | null>(null);
   const selectedId =
     propSelectedId !== undefined ? propSelectedId : localSelectedId;
@@ -72,19 +67,20 @@ export function CaseInspectorTab({
 
   const hasAutoSelected = useRef(false);
 
-  // Auto-select the first conversation when they load
-  useEffect(() => {
-    if (!hasAutoSelected.current && conversations.length > 0) {
-      setSelectedId(conversations[0]?.id ?? null);
-      hasAutoSelected.current = true;
-    }
-  }, [conversations, setSelectedId]);
-
   // Floating window states
   const [panelWidth, setPanelWidth] = useState(480);
   const [panelHeight, setPanelHeight] = useState(0);
   const [isMinimized, setIsMinimized] = useState(true);
   const [highlightTurnId, setHighlightTurnId] = useState<number | null>(null);
+
+  // Automatically maximize chat window when a user selects a conversation
+  const prevSelectedIdRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (selectedId && prevSelectedIdRef.current !== null && selectedId !== prevSelectedIdRef.current) {
+      setIsMinimized(false);
+    }
+    prevSelectedIdRef.current = selectedId;
+  }, [selectedId]);
 
   useEffect(() => {
     setPanelHeight(
@@ -114,21 +110,17 @@ export function CaseInspectorTab({
     return sum / c.turns.length;
   }, []);
 
-  // Filter list by query, emotion, and maximum turn count
+  // Filter list by maximum turn count and exclude single-turn neutral ChatGPT records
   const list = useMemo(() => {
     return conversations.filter((c) => {
       const maxTurnCount = 90;
-      const matchesQuery =
-        !query ||
-        `${c.id} ${c.title} ${c.language} ${c.source}`
-          .toLowerCase()
-          .includes(query.toLowerCase());
-      const matchesFilter =
-        filter === "all" || c.turns.some((t) => t.promptEmotion === filter);
-      const matchesTurnLimit = c.turns.length <= maxTurnCount;
-      return matchesQuery && matchesFilter && matchesTurnLimit;
+      const isSingleTurnNeutralGpt =
+        c.turns.length === 1 &&
+        getDominantEmotion(c, "answerEmotion") === "neutral";
+
+      return c.turns.length <= maxTurnCount && !isSingleTurnNeutralGpt;
     });
-  }, [query, filter, conversations]);
+  }, [conversations, getDominantEmotion]);
 
   // Sort list
   const sortedList = useMemo(() => {
@@ -173,8 +165,16 @@ export function CaseInspectorTab({
   }, [list, sortKey, sortDirection, getDominantEmotion, getAvgConfidence]);
 
   const selectedConversation = useMemo(() => {
-    return conversations.find((c) => c.id === selectedId) || null;
-  }, [selectedId, conversations]);
+    return conversations.find((c) => c.id === selectedId) || sortedList[0] || null;
+  }, [selectedId, conversations, sortedList]);
+
+  // Auto-select the first record of the table in the page when loaded
+  useEffect(() => {
+    if (!hasAutoSelected.current && sortedList.length > 0) {
+      setSelectedId(sortedList[0]?.id ?? null);
+      hasAutoSelected.current = true;
+    }
+  }, [sortedList, setSelectedId]);
 
   const handleSort = (key: typeof sortKey) => {
     if (!key) return;
@@ -225,90 +225,53 @@ export function CaseInspectorTab({
   );
 
   return (
-    <div className="space-y-6 relative h-full">
-      {/* Top Filter and Search Controls */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-muted/20 p-4 rounded-xl border border-border/40">
-        <div className="flex flex-col gap-2 self-start md:self-auto">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-            <span className="hidden sm:inline">Developer emotion</span>
-            <span className="inline sm:hidden">DEV EMOTION</span>
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {(["all", ...EMOTIONS] as const).map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={cn(
-                  "rounded-full border px-3 py-1 text-xs cursor-pointer transition-all duration-200",
-                  filter === f
-                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-border text-muted-foreground hover:text-foreground hover:bg-muted/50",
-                )}
-              >
-                {f === "all" ? "All Moods" : EMOTION_LABEL[f]}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative w-full md:w-80">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search topic, lang, source..."
-            className="pl-9 h-9 text-xs rounded-full bg-background border-border/50"
+    <div className="flex flex-col h-full space-y-3.5 relative overflow-hidden">
+      {/* Top Heatmap Panel */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-muted/20 p-3.5 rounded-2xl border border-border/40 shrink-0">
+        <div className="flex-1 w-full overflow-hidden">
+          <SelectedConversationHeatmap
+            conversation={selectedConversation}
+            highlightTurnId={highlightTurnId}
+            onTurnClick={(turnIndex) => {
+              if (selectedConversation) {
+                setSelectedId(selectedConversation.id);
+                setHighlightTurnId(turnIndex);
+                setIsMinimized(false);
+              }
+            }}
           />
         </div>
       </div>
 
       {/* Conversation List Table */}
-      <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex flex-col">
-        <div className="max-h-[550px] overflow-y-auto custom-scrollbar">
+      <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex-1 flex flex-col min-h-0">
+        <div className="flex-1 overflow-y-auto custom-scrollbar">
           <table className="w-full border-collapse text-left text-xs">
             <thead className="sticky top-0 bg-muted/90 backdrop-blur-md z-10 border-b border-border select-none">
               <tr>
                 <th
                   onClick={() => handleSort("title")}
-                  className="p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors w-1/3"
+                  className="px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors w-1/2"
                 >
                   Conversation Title {renderSortIcon("title")}
                 </th>
                 <th
-                  onClick={() => handleSort("source")}
-                  className="p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
-                >
-                  Category {renderSortIcon("source")}
-                </th>
-                <th
-                  onClick={() => handleSort("language")}
-                  className="p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
-                >
-                  Language {renderSortIcon("language")}
-                </th>
-                <th
                   onClick={() => handleSort("turns")}
-                  className="p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors text-center"
+                  className="px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors text-center"
                 >
                   Turns {renderSortIcon("turns")}
                 </th>
                 <th
                   onClick={() => handleSort("devEmotion")}
-                  className="p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                  className="px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
                 >
                   Dev Emotion {renderSortIcon("devEmotion")}
                 </th>
                 <th
                   onClick={() => handleSort("gptEmotion")}
-                  className="p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                  className="px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
                 >
                   GPT Emotion {renderSortIcon("gptEmotion")}
-                </th>
-                <th
-                  onClick={() => handleSort("confidence")}
-                  className="p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors text-right"
-                >
-                  Avg Confidence {renderSortIcon("confidence")}
                 </th>
               </tr>
             </thead>
@@ -316,17 +279,16 @@ export function CaseInspectorTab({
               {sortedList.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={7}
+                    colSpan={4}
                     className="p-8 text-center text-muted-foreground"
                   >
-                    No conversations matches search parameters.
+                    No conversations available.
                   </td>
                 </tr>
               ) : (
                 sortedList.map((c) => {
                   const devEmo = getDominantEmotion(c, "promptEmotion");
                   const gptEmo = getDominantEmotion(c, "answerEmotion");
-                  const avgConf = getAvgConfidence(c);
                   const isSelected = c.id === selectedId;
 
                   return (
@@ -334,17 +296,18 @@ export function CaseInspectorTab({
                       key={c.id}
                       onClick={() => {
                         setSelectedId(c.id);
+                        setIsMinimized(false);
                       }}
                       className={cn(
-                        "cursor-pointer transition-colors border-l-2",
+                        "cursor-pointer transition-colors border-l-2 h-[46px]",
                         isSelected
                           ? "bg-accent/40 border-l-primary font-medium"
                           : "hover:bg-muted/30 border-l-transparent",
                       )}
                     >
-                      <td className="p-4">
-                        <div className="flex flex-col gap-1">
-                          <span className="font-medium text-foreground line-clamp-1">
+                      <td className="px-4 py-2">
+                        <div className="flex flex-col gap-0.5">
+                          <span className="font-medium text-foreground line-clamp-1 text-xs">
                             {c.title}
                           </span>
                           <span className="text-[10px] text-muted-foreground font-mono">
@@ -352,16 +315,10 @@ export function CaseInspectorTab({
                           </span>
                         </div>
                       </td>
-                      <td className="p-4 uppercase tracking-wider font-mono text-[10px]">
-                        {c.source.replace("_", " ")}
-                      </td>
-                      <td className="p-4 font-mono text-[10px] text-muted-foreground">
-                        {c.language}
-                      </td>
-                      <td className="p-4 text-center numeral font-bold">
+                      <td className="px-4 py-2 text-center numeral font-bold text-xs">
                         {c.turns.length}
                       </td>
-                      <td className="p-4">
+                      <td className="px-4 py-2">
                         <span
                           className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
                           style={{
@@ -372,7 +329,7 @@ export function CaseInspectorTab({
                           {devEmo}
                         </span>
                       </td>
-                      <td className="p-4">
+                      <td className="px-4 py-2">
                         <span
                           className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
                           style={{
@@ -383,9 +340,6 @@ export function CaseInspectorTab({
                           {gptEmo}
                         </span>
                       </td>
-                      <td className="p-4 text-right font-mono text-muted-foreground">
-                        {fmtPct(avgConf, 0)}
-                      </td>
                     </tr>
                   );
                 })
@@ -395,7 +349,7 @@ export function CaseInspectorTab({
         </div>
         <div className="bg-muted/10 border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center">
           <span>
-            Showing {sortedList.length} of {conversations.length} conversations
+            Displaying {sortedList.length} records
           </span>
           {selectedId && (
             <button
@@ -514,10 +468,7 @@ function ConversationViewer({
         className="h-[52px] bg-muted/60 border-b border-border px-4 py-3 flex items-center justify-between cursor-pointer select-none shrink-0"
         onClick={() => setIsMinimized(!isMinimized)}
       >
-        <div className="flex flex-col gap-0.5 max-w-[70%]">
-          <span className="text-[10px] tracking-wider text-muted-foreground uppercase font-mono truncate">
-            {conversation.id} · {conversation.language}
-          </span>
+        <div className="flex items-center gap-2 max-w-[75%]">
           <h4 className="text-sm font-extrabold text-foreground truncate">
             {conversation.title}
           </h4>
@@ -577,7 +528,7 @@ function ConversationViewer({
                   >
                     <div className="pb-1 mb-1.5 border-b border-border/30 flex items-center justify-between gap-4 text-[10px] font-semibold tracking-wider">
                       <span className="text-foreground/95 font-bold uppercase">
-                        DEVELOPER · TURN {t.index}
+                        DEVELOPER
                       </span>
                       <div className="flex items-center gap-1.5">
                         <span
@@ -631,7 +582,7 @@ function ConversationViewer({
                   >
                     <div className="pb-1 mb-1.5 border-b border-border/30 flex items-center justify-between gap-4 text-[10px] font-semibold tracking-wider">
                       <span className="text-foreground/95 font-bold uppercase">
-                        GPT · TURN {t.index}
+                        GPT
                       </span>
                       <div className="flex items-center gap-1.5">
                         <span
@@ -653,6 +604,269 @@ function ConversationViewer({
               </div>
             );
           })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Interactive Turn Emotion Heatmap Component for Selected Conversation
+interface SelectedConversationHeatmapProps {
+  conversation: Conversation | null;
+  highlightTurnId: number | null;
+  onTurnClick: (turnIndex: number) => void;
+}
+
+function SelectedConversationHeatmap({
+  conversation,
+  highlightTurnId,
+  onTurnClick,
+}: SelectedConversationHeatmapProps) {
+  const [tooltip, setTooltip] = useState<{
+    visible: boolean;
+    x: number;
+    y: number;
+    role: "Developer Prompt" | "ChatGPT Response" | "Turn";
+    emotion?: Emotion | undefined;
+    score?: number | undefined;
+    turnSeq: number;
+    avatar?: string | undefined;
+  }>({
+    visible: false,
+    x: 0,
+    y: 0,
+    role: "Developer Prompt",
+    turnSeq: 1,
+  });
+
+  if (!conversation || conversation.turns.length === 0) {
+    return (
+      <div className="flex flex-col justify-center text-xs text-muted-foreground py-1">
+        <span>Select a conversation from the table below to inspect its turn emotion sequence heatmap.</span>
+      </div>
+    );
+  }
+
+  const turns = conversation.turns;
+
+  const handleMouseEnter = (
+    e: React.MouseEvent,
+    role: "Developer Prompt" | "ChatGPT Response" | "Turn",
+    turnSeq: number,
+    emotion?: Emotion,
+    score?: number,
+    avatar?: string,
+  ) => {
+    setTooltip({
+      visible: true,
+      x: e.pageX,
+      y: e.pageY,
+      role,
+      turnSeq,
+      emotion,
+      score,
+      avatar,
+    });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setTooltip((prev) => ({
+      ...prev,
+      x: e.pageX,
+      y: e.pageY,
+    }));
+  };
+
+  const handleMouseLeave = () => {
+    setTooltip((prev) => ({ ...prev, visible: false }));
+  };
+
+  return (
+    <div className="flex flex-col gap-2 w-full overflow-hidden relative">
+      <div className="flex items-center justify-between gap-4">
+        <h3 className="text-base font-semibold tracking-tight text-foreground whitespace-nowrap">
+          Emotion Sequence Heatmap
+        </h3>
+
+        {/* Emotion Legend */}
+        <div className="hidden lg:flex items-center gap-3 text-[10px] font-medium text-muted-foreground shrink-0">
+          {EMOTIONS.map((e) => (
+            <span key={e} className="flex items-center gap-1">
+              <span
+                className="w-2.5 h-2.5 rounded-full shadow-xs"
+                style={{ backgroundColor: EMOTION_COLORS[e] }}
+              />
+              <span className="capitalize">{EMOTION_LABEL[e]}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Heatmap Grid */}
+      <div className="overflow-x-auto custom-scrollbar pb-1 pt-0.5" key={conversation.id}>
+        <div className="inline-flex flex-col min-w-max border border-border/60 rounded-md bg-card overflow-hidden shadow-xs">
+          {/* Row 1: Developer Prompts */}
+          <div className="flex items-stretch border-b border-border/40">
+            <div className="w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none">
+              DEV
+            </div>
+            <div className="flex items-stretch">
+              {turns.map((t, idx) => {
+                const color = EMOTION_COLORS[t.promptEmotion];
+                const isSelectedTurn = highlightTurnId === t.index;
+                const turnSeq = idx + 1;
+                return (
+                  <button
+                    key={`dev-${t.index}`}
+                    onClick={() => onTurnClick(t.index)}
+                    onMouseEnter={(e) =>
+                      handleMouseEnter(
+                        e,
+                        "Developer Prompt",
+                        turnSeq,
+                        t.promptEmotion,
+                        t.promptScore,
+                        devLogo,
+                      )
+                    }
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    className={cn(
+                      "w-6 h-6 border-r border-border/30 transition-all duration-150 cursor-pointer relative hover:brightness-110 animate-block-stagger",
+                      isSelectedTurn ? "ring-2 ring-primary ring-inset z-10" : "",
+                    )}
+                    style={{
+                      backgroundColor: color,
+                      animationDelay: `${idx * 35}ms`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Row 2: ChatGPT Responses */}
+          <div className="flex items-stretch border-b border-border/40">
+            <div className="w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none">
+              GPT
+            </div>
+            <div className="flex items-stretch">
+              {turns.map((t, idx) => {
+                const color = EMOTION_COLORS[t.answerEmotion];
+                const isSelectedTurn = highlightTurnId === t.index;
+                const turnSeq = idx + 1;
+                return (
+                  <button
+                    key={`gpt-${t.index}`}
+                    onClick={() => onTurnClick(t.index)}
+                    onMouseEnter={(e) =>
+                      handleMouseEnter(
+                        e,
+                        "ChatGPT Response",
+                        turnSeq,
+                        t.answerEmotion,
+                        t.answerScore,
+                        gptLogo,
+                      )
+                    }
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    className={cn(
+                      "w-6 h-6 border-r border-border/30 transition-all duration-150 cursor-pointer relative hover:brightness-110 animate-block-stagger",
+                      isSelectedTurn ? "ring-2 ring-primary ring-inset z-10" : "",
+                    )}
+                    style={{
+                      backgroundColor: color,
+                      animationDelay: `${idx * 35 + 20}ms`,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Row 3: X-Axis Sequential Turn Counter (1, 2, 3...) */}
+          <div className="flex items-stretch bg-muted/30">
+            <div className="w-10 px-2 py-1 bg-muted/60 text-[9px] font-mono text-muted-foreground/70 flex items-center justify-end border-r border-border/40 shrink-0 select-none">
+              #
+            </div>
+            <div className="flex items-stretch">
+              {turns.map((t, idx) => {
+                const turnSeq = idx + 1;
+                const isSelectedTurn = highlightTurnId === t.index;
+                return (
+                  <div
+                    key={`axis-${t.index}`}
+                    onClick={() => onTurnClick(t.index)}
+                    onMouseEnter={(e) =>
+                      handleMouseEnter(e, "Turn", turnSeq)
+                    }
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                    className={cn(
+                      "w-6 h-5 border-r border-border/30 flex items-center justify-center text-[9px] font-mono text-muted-foreground cursor-pointer hover:text-foreground hover:bg-muted/60 transition-colors select-none animate-block-stagger",
+                      isSelectedTurn ? "font-bold text-primary bg-primary/10" : "",
+                    )}
+                    style={{
+                      animationDelay: `${idx * 35 + 40}ms`,
+                    }}
+                  >
+                    {turnSeq}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Tooltip Component */}
+      {tooltip.visible && (
+        <div
+          className="fixed z-[99999] pointer-events-none transition-opacity duration-150"
+          style={{
+            top: tooltip.y - 70,
+            left: tooltip.x + 14,
+            background: "rgba(15, 23, 42, 0.95)",
+            backdropFilter: "blur(8px)",
+            border: "1px solid rgba(255, 255, 255, 0.15)",
+            padding: "8px 12px",
+            borderRadius: "8px",
+            color: "#fff",
+            fontSize: "11px",
+            fontWeight: 600,
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+          }}
+        >
+          <div className="flex items-center gap-1.5 mb-1">
+            {tooltip.avatar && (
+              <img
+                src={tooltip.avatar}
+                className="w-3.5 h-3.5 rounded-full object-cover shrink-0"
+                alt=""
+              />
+            )}
+            <span className="text-slate-400 font-medium text-[10px]">
+              Turn {tooltip.turnSeq} · {tooltip.role}
+            </span>
+          </div>
+          {tooltip.emotion ? (
+            <div className="flex items-center gap-2 mt-0.5">
+              <span
+                className="font-extrabold uppercase text-[12px] tracking-wider"
+                style={{ color: EMOTION_COLORS[tooltip.emotion] }}
+              >
+                {EMOTION_LABEL[tooltip.emotion]}
+              </span>
+              <span className="text-white text-[12px] font-bold">
+                {fmtPct(tooltip.score || 0, 0)}
+              </span>
+            </div>
+          ) : (
+            <span className="text-white text-xs font-bold">
+              Click to jump to Turn {tooltip.turnSeq}
+            </span>
+          )}
         </div>
       )}
     </div>

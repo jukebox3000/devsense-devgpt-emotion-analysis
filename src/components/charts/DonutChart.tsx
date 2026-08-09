@@ -66,7 +66,8 @@ export function DonutChart({
       .attr("dy", "0.35em")
       .style("font-size", "10px")
       .style("font-weight", "600")
-      .style("fill", "var(--background)")
+      .style("fill", "#000000")
+      .style("font-weight", "800")
       .text((d) => fmtPct(d.data.share, 0));
 
   }, [data, width, height]);

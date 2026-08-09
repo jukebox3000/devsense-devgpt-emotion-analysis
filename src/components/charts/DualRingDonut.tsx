@@ -4,6 +4,7 @@ import type { Emotion } from "@/lib/emotions";
 import { EMOTIONS, EMOTION_LABEL } from "@/lib/emotions";
 import gptLogo from "../../../assets/black-gpt-chat-logo-on-white-background-logo-illustration-free-vector.jpg";
 import devLogo from "../../../assets/user-profile-icon-free-vector-658200527.jpg";
+import devgptLogo from "../../../assets/DevGPT_Logo.png";
 
 const EMOTION_HEX: Record<Emotion, string> = {
   frustration: "#c0392b",
@@ -99,11 +100,12 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
       defs = svg.insert("defs", "g");
     }
 
-    // Clip paths sized for single (r=26) and both (r=18)
+    // Clip paths sized for single (r=26), both (r=18), and devgpt (r=28)
     if (defs.select("#clip-logo-dev").empty()) {
       defs.append("clipPath").attr("id", "clip-logo-dev").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 26);
       defs.append("clipPath").attr("id", "clip-logo-gpt").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 26);
-      // Small clip paths for both mode
+      defs.append("clipPath").attr("id", "clip-logo-devgpt").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 28);
+      // Small clip paths for single mode scaling
       defs.append("clipPath").attr("id", "clip-logo-dev-sm").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 18);
       defs.append("clipPath").attr("id", "clip-logo-gpt-sm").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 18);
     }
@@ -186,11 +188,34 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
         .attr("height", 56)
         .attr("x", -28)
         .attr("y", -28);
+
+      // DevGPT group (visible when both rings displayed)
+      const devgptG = logoGroup.append("g").attr("class", "logo-devgpt-group")
+        .style("cursor", "pointer")
+        .on("click", (e) => {
+          e.stopPropagation();
+          setFilter("both");
+        });
+
+      devgptG.append("circle").attr("class", "logo-devgpt-ring")
+        .attr("cx", 0).attr("cy", 0).attr("r", 28)
+        .attr("fill", "white")
+        .attr("stroke", "rgba(59,130,246,0.5)")
+        .attr("stroke-width", 2);
+      devgptG.append("image").attr("class", "logo-devgpt-img")
+        .attr("href", devgptLogo)
+        .attr("preserveAspectRatio", "xMidYMid slice")
+        .attr("clip-path", "url(#clip-logo-devgpt)")
+        .attr("width", 56)
+        .attr("height", 56)
+        .attr("x", -28)
+        .attr("y", -28);
     }
 
     // ── Dynamic D3 Transitions for Center Logos ─────────────────────────────
     const logoDevGroup = textGroup.select("g.logo-dev-group");
     const logoGptGroup = textGroup.select("g.logo-gpt-group");
+    const logoDevgptGroup = textGroup.select("g.logo-devgpt-group");
     const duration = 500;
     const ease = d3.easeCubicInOut;
 
@@ -207,15 +232,23 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
         .attr("width", 88).attr("height", 88).attr("x", -44).attr("y", -44)
         .attr("clip-path", "url(#clip-logo-dev)");
 
-      // GPT fade out
+      // GPT & DevGPT fade out
       logoGptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
         .style("opacity", 0)
         .attr("transform", "translate(15,0) scale(0.6)");
+
+      logoDevgptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
+        .style("opacity", 0)
+        .attr("transform", "translate(0,0) scale(0.6)");
     } else if (filter === "gpt") {
-      // Dev fade out
+      // Dev & DevGPT fade out
       logoDevGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
         .style("opacity", 0)
         .attr("transform", "translate(-15,0) scale(0.6)");
+
+      logoDevgptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
+        .style("opacity", 0)
+        .attr("transform", "translate(0,0) scale(0.6)");
 
       // GPT solo (centered & large)
       logoGptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease)
@@ -229,28 +262,25 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
         .attr("width", 88).attr("height", 88).attr("x", -44).attr("y", -44)
         .attr("clip-path", "url(#clip-logo-gpt)");
     } else {
-      // Both side-by-side
-      logoDevGroup.style("pointer-events", "all").transition().duration(duration).ease(ease)
+      // Both mode: DevGPT logo centered in the middle
+      logoDevgptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease)
         .style("opacity", 1)
-        .attr("transform", "translate(-22,0)");
+        .attr("transform", "translate(0,0)");
 
-      logoDevGroup.select("circle.logo-dev-ring").transition().duration(duration).ease(ease)
-        .attr("r", 18);
+      logoDevgptGroup.select("circle.logo-devgpt-ring").transition().duration(duration).ease(ease)
+        .attr("r", 28);
 
-      logoDevGroup.select("image.logo-dev-img").transition().duration(duration).ease(ease)
+      logoDevgptGroup.select("image.logo-devgpt-img").transition().duration(duration).ease(ease)
         .attr("width", 56).attr("height", 56).attr("x", -28).attr("y", -28)
-        .attr("clip-path", "url(#clip-logo-dev-sm)");
+        .attr("clip-path", "url(#clip-logo-devgpt)");
 
-      logoGptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease)
-        .style("opacity", 1)
-        .attr("transform", "translate(22,0)");
+      logoDevGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
+        .style("opacity", 0)
+        .attr("transform", "translate(-20,0) scale(0.6)");
 
-      logoGptGroup.select("circle.logo-gpt-ring").transition().duration(duration).ease(ease)
-        .attr("r", 18);
-
-      logoGptGroup.select("image.logo-gpt-img").transition().duration(duration).ease(ease)
-        .attr("width", 56).attr("height", 56).attr("x", -28).attr("y", -28)
-        .attr("clip-path", "url(#clip-logo-gpt-sm)");
+      logoGptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
+        .style("opacity", 0)
+        .attr("transform", "translate(20,0) scale(0.6)");
     }
 
     // ── Arc tween helper ───────────────────────────────────────────────────────
@@ -431,12 +461,11 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
     gptLabels.enter().append("text")
       .attr("text-anchor", "middle")
       .attr("dy", "0.35em")
-      .attr("fill", "white")
+      .attr("fill", "#000000")
       .attr("font-size", "14px")
       .attr("font-weight", "bold")
       .style("pointer-events", "none")
       .style("opacity", 0)
-      .style("filter", "drop-shadow(0px 1px 2px rgba(0,0,0,0.8))")
       .merge(gptLabels as any)
       .text(d => totalGpt > 0 ? `${Math.round((d.data.count / totalGpt) * 100)}%` : "")
       .transition().duration(750).ease(d3.easeCubicInOut)
@@ -506,9 +535,12 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
                 />
               </span>
               <span className="flex flex-col text-left">
-                <span className={`text-[11px] font-semibold leading-tight ${
-                  filter === "developer" ? "text-foreground" : "text-muted-foreground"
-                }`}>Developer</span>
+                <span
+                  className="text-[11px] font-bold leading-tight text-black dark:text-white"
+                  style={{ color: '#000000' }}
+                >
+                  Developer
+                </span>
                 <span className="text-[9px] font-mono text-muted-foreground/50 mt-0.5">inner ring</span>
               </span>
             </button>
@@ -542,14 +574,8 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
               </span>
               <span className="flex flex-col text-left">
                 <span
-                  className={`text-[11px] font-semibold leading-tight ${
-                    filter === "gpt" ? "text-foreground" : "text-muted-foreground"
-                  }`}
-                  style={{
-                    backgroundImage: 'repeating-linear-gradient(45deg, rgba(59,130,246,0.95) 0 4px, rgba(148,163,184,0.65) 0 8px)',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
-                  }}
+                  className="text-[11px] font-bold leading-tight text-black dark:text-white"
+                  style={{ color: '#000000' }}
                 >
                   ChatGPT
                 </span>

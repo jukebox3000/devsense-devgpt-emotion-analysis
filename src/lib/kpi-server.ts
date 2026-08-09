@@ -214,6 +214,9 @@ export const processKpis = createServerFn({ method: "GET" }).handler(
         answerScore,
         hasCodeContent,
       });
+      if (promptEmotion) {
+        counts[promptEmotion] = (counts[promptEmotion] || 0) + 1;
+      }
       if (answerEmotion) {
         gptCounts[answerEmotion] = (gptCounts[answerEmotion] || 0) + 1;
       }

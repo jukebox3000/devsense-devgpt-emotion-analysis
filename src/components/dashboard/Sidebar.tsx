@@ -83,17 +83,6 @@ export function Sidebar({
                 Reset
               </button>
             </div>
-
-            <div className="w-full text-left">
-              <h4 className="text-sm font-semibold text-foreground">
-                Dataset: DevGPT
-              </h4>
-              <hr className="my-3 border-border" />
-              <h4 className="text-sm font-semibold text-foreground">Summary</h4>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {kpiData.totalPairs.toLocaleString()} pairs · {kpiData.totalConversations.toLocaleString()} conversations
-              </p>
-            </div>
           </div>
         </div>
       </div>

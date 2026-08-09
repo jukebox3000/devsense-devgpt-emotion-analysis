@@ -87,12 +87,6 @@ export function EmojiMorph({
           >
             {EMOTION_EMOJI[current]}
           </span>
-          <button
-            onClick={() => setPlaying((p) => !p)}
-            className="absolute -bottom-2 -right-2 z-10 rounded-full border border-border/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:bg-accent bg-background shadow-sm"
-          >
-            {playing ? "pause" : "play"}
-          </button>
         </div>
 
         <div
