@@ -1,0 +1,1842 @@
+Sharing_ID,Source_ID,Category,ChatGPT_Title,ChatGPT_Model,NumberOfPrompts,end_prompt_emotion,end_answer_emotion
+SHARE_2,PullRequest_2,PullRequest,Gnina Readme for PLEX,Default,6.0,caution,satisfaction
+SHARE_3,PullRequest_3,PullRequest,ScreenTime Tracker Algorithm,Default,4.0,satisfaction,satisfaction
+SHARE_4,PullRequest_4,PullRequest,New chat,Default,1.0,frustration,neutral
+SHARE_5,PullRequest_4,PullRequest,String to French,Default,9.0,neutral,satisfaction
+SHARE_6,PullRequest_4,PullRequest,Traduction en français,Default,2.0,frustration,neutral
+SHARE_7,PullRequest_4,PullRequest,Traduction française.,Default,7.0,frustration,satisfaction
+SHARE_8,PullRequest_5,PullRequest,Vue 2 Filter Router Query,Default,2.0,neutral,satisfaction
+SHARE_9,PullRequest_6,PullRequest,New chat,Default,1.0,frustration,neutral
+SHARE_10,PullRequest_6,PullRequest,Convert to Arabic,Default,10.0,frustration,neutral
+SHARE_11,PullRequest_6,PullRequest,ترجمة للعربية,Default,7.0,frustration,neutral
+SHARE_16,PullRequest_9,PullRequest,Translate to Somali.,Default,8.0,frustration,satisfaction
+SHARE_17,PullRequest_9,PullRequest,Translate to Somali.,Default,25.0,neutral,neutral
+SHARE_18,PullRequest_10,PullRequest,Nepali Translation Help.,Default,7.0,frustration,neutral
+SHARE_19,PullRequest_10,PullRequest,String to Nepali,Default,23.0,frustration,satisfaction
+SHARE_22,PullRequest_12,PullRequest,Traducción al español,Default,7.0,frustration,neutral
+SHARE_27,PullRequest_17,PullRequest,Simple Git and GitHub.,Default,3.0,neutral,neutral
+SHARE_28,PullRequest_18,PullRequest,Image slideshow with `feh`,Default,20.0,caution,satisfaction
+SHARE_30,PullRequest_20,PullRequest,TCP Socket Risks,Default,3.0,satisfaction,caution
+SHARE_31,PullRequest_21,PullRequest,Spacing issue in markdown,Default,1.0,frustration,satisfaction
+SHARE_37,PullRequest_26,PullRequest,Get first 20 rows,Default,3.0,frustration,caution
+SHARE_38,PullRequest_27,PullRequest,Android App Icon Variations,Default,4.0,frustration,frustration
+SHARE_42,PullRequest_30,PullRequest,[頭像] 預設顏色,Default,7.0,frustration,frustration
+SHARE_43,PullRequest_31,PullRequest,libp2p module not found.,Default,4.0,neutral,caution
+SHARE_44,PullRequest_32,PullRequest,Check Jira Create Permissions,Default,5.0,frustration,satisfaction
+SHARE_45,PullRequest_33,PullRequest,Chore Tracker Revolutionized,Default,2.0,satisfaction,satisfaction
+SHARE_46,PullRequest_34,PullRequest,CSS for Modern Webpage,Default,7.0,frustration,satisfaction
+SHARE_49,PullRequest_37,PullRequest,Creating AI Library Readme,Default,2.0,satisfaction,satisfaction
+SHARE_50,PullRequest_38,PullRequest,Release Automation Script,Default,1.0,satisfaction,satisfaction
+SHARE_52,PullRequest_39,PullRequest,Improving File Splitting Models,Default,1.0,satisfaction,satisfaction
+SHARE_53,PullRequest_40,PullRequest,과목 모델 정의 방법,Default,3.0,neutral,neutral
+SHARE_54,PullRequest_40,PullRequest,New chat,Default,1.0,neutral,neutral
+SHARE_56,PullRequest_42,PullRequest,Deep Copy in Python.,Default,1.0,satisfaction,satisfaction
+SHARE_57,PullRequest_43,PullRequest,MD5 Path Finding,Default,2.0,frustration,satisfaction
+SHARE_58,PullRequest_44,PullRequest,Terraform Provider Documentation Request,Default,9.0,neutral,satisfaction
+SHARE_59,PullRequest_45,PullRequest,Servidor de Palabras,Default,2.0,frustration,neutral
+SHARE_60,PullRequest_46,PullRequest,CF & Similar Disease Genes,Default,1.0,satisfaction,satisfaction
+SHARE_61,PullRequest_47,PullRequest,Prometheus Unit Test Schema,Default,8.0,neutral,satisfaction
+SHARE_63,PullRequest_49,PullRequest,JPA Entity 생성자 요구사항,Default,2.0,neutral,satisfaction
+SHARE_64,PullRequest_50,PullRequest,Ordered Map with TypeScript,Default,1.0,frustration,satisfaction
+SHARE_68,PullRequest_54,PullRequest,Alternative Template Copying.,Default,1.0,neutral,caution
+SHARE_70,PullRequest_55,PullRequest,Rename Go files to snake case,Default,22.0,frustration,satisfaction
+SHARE_71,PullRequest_56,PullRequest,"Handling ""ValueError: NUL Characters""",Default,1.0,frustration,caution
+SHARE_72,PullRequest_57,PullRequest,Build New Image,Default,2.0,neutral,caution
+SHARE_77,PullRequest_62,PullRequest,Render localStorage on load,Default,5.0,frustration,frustration
+SHARE_78,PullRequest_63,PullRequest,Learn about n8n,Default,4.0,satisfaction,satisfaction
+SHARE_80,PullRequest_65,PullRequest,Reorder Columns to: WDS,Default,1.0,neutral,satisfaction
+SHARE_82,PullRequest_66,PullRequest,Next.js Link External URLs,Default,1.0,frustration,frustration
+SHARE_84,PullRequest_68,PullRequest,Detect StreamElements Account ID or Twitch Loginname,Default,3.0,frustration,satisfaction
+SHARE_85,PullRequest_69,PullRequest,Husky Hooks Not Running,Default,2.0,frustration,caution
+SHARE_88,PullRequest_71,PullRequest,Unicode String Literal,Default,1.0,frustration,satisfaction
+SHARE_92,PullRequest_75,PullRequest,Review Gating Policies,Default,3.0,frustration,caution
+SHARE_94,PullRequest_76,PullRequest,Testing Sensitive Log Filtering,Default,1.0,frustration,satisfaction
+SHARE_95,PullRequest_77,PullRequest,Kazu,Default,1.0,neutral,satisfaction
+SHARE_96,PullRequest_78,PullRequest,Restructuring Code for User,Default,3.0,frustration,satisfaction
+SHARE_97,PullRequest_79,PullRequest,Rebase Commits After Mistake,Default,1.0,frustration,satisfaction
+SHARE_100,PullRequest_81,PullRequest,処理の統合,Default,1.0,frustration,frustration
+SHARE_101,PullRequest_82,PullRequest,TypeScript Interfaces: Yes!,Default,6.0,frustration,satisfaction
+SHARE_102,PullRequest_83,PullRequest,Cucumber Instance Creation Optimization,Default,3.0,neutral,satisfaction
+SHARE_103,PullRequest_84,PullRequest,Debugging Metal Matrix Multiplication,Default,1.0,frustration,satisfaction
+SHARE_106,PullRequest_86,PullRequest,Vue: risks of v-html,Default,1.0,frustration,caution
+SHARE_110,PullRequest_90,PullRequest,Create Pick Object,Default,3.0,neutral,satisfaction
+SHARE_111,PullRequest_91,PullRequest,PHP File Size Validation,Default,5.0,neutral,frustration
+SHARE_112,PullRequest_91,PullRequest,Multi-input String & Radios,Default,21.0,frustration,satisfaction
+SHARE_116,PullRequest_95,PullRequest,SyntaxError: Unexpected token 'export' - game.js.,Default,2.0,neutral,satisfaction
+SHARE_117,PullRequest_96,PullRequest,Unit Test Setup: Jest,Default,2.0,frustration,satisfaction
+SHARE_119,PullRequest_98,PullRequest,Separate Files & Jest Test,Default,2.0,neutral,satisfaction
+SHARE_120,PullRequest_99,PullRequest,Fixing Point Generation Issue,Default,4.0,frustration,satisfaction
+SHARE_123,PullRequest_102,PullRequest,Remove Empty Strings (Go),Default,2.0,frustration,satisfaction
+SHARE_124,PullRequest_103,PullRequest,1920s Compiler Errors Revamp,Default,3.0,neutral,frustration
+SHARE_125,PullRequest_104,PullRequest,Package Install Error,Default,3.0,caution,caution
+SHARE_126,PullRequest_105,PullRequest,Adjusting Camera Distortion Parameters,Default,7.0,frustration,satisfaction
+SHARE_127,PullRequest_106,PullRequest,Key for Router-View Re-Renders,Default,1.0,frustration,caution
+SHARE_129,PullRequest_108,PullRequest,Bug: Émile not selected.,Default,2.0,frustration,caution
+SHARE_130,PullRequest_109,PullRequest,Cypress Torrent File Test,Default,8.0,caution,caution
+SHARE_132,PullRequest_111,PullRequest,Deleted_at still preferred?,Default,4.0,frustration,satisfaction
+SHARE_133,PullRequest_112,PullRequest,Keycloak Health Check,Default,2.0,frustration,satisfaction
+SHARE_134,PullRequest_113,PullRequest,OpenAPI oneOf vs anyOf,Default,1.0,frustration,satisfaction
+SHARE_135,PullRequest_114,PullRequest,デフォルトのダイアログフォーカス,Default,1.0,frustration,frustration
+SHARE_138,PullRequest_116,PullRequest,Angular component click accessibility,Default,2.0,frustration,caution
+SHARE_139,PullRequest_117,PullRequest,Convert timestamp to Unix (C++),Default,6.0,frustration,satisfaction
+SHARE_141,PullRequest_119,PullRequest,Basho Object for Sumo,Default,6.0,neutral,neutral
+SHARE_144,PullRequest_122,PullRequest,No Package-lock.json Error,Default,1.0,frustration,caution
+SHARE_146,PullRequest_124,PullRequest,Git分支命令及存储空间,Default,2.0,frustration,frustration
+SHARE_147,PullRequest_124,PullRequest,Git 大文件管理,Default,2.0,neutral,frustration
+SHARE_148,PullRequest_125,PullRequest,Debugging Console Errors,Default,4.0,caution,caution
+SHARE_151,PullRequest_128,PullRequest,GUI Desktop Applications Hierarchy,Default,3.0,satisfaction,satisfaction
+SHARE_152,PullRequest_129,PullRequest,Windowsでのpre-commitの問題解決方法,Default,4.0,frustration,frustration
+SHARE_153,PullRequest_130,PullRequest,Box IoU Implementations,Default,4.0,frustration,satisfaction
+SHARE_155,PullRequest_131,PullRequest,Cannot validate self-signed certificate.,Default,1.0,frustration,caution
+SHARE_158,PullRequest_134,PullRequest,Fix localStorage Rendering Issue,Default,7.0,frustration,frustration
+SHARE_159,PullRequest_135,PullRequest,Local Storage Rikishi Game,Default,8.0,frustration,caution
+SHARE_160,PullRequest_136,PullRequest,Set Endpoint URL Globally.,Default,10.0,frustration,caution
+SHARE_162,PullRequest_138,PullRequest,用語の選択,Default,1.0,frustration,frustration
+SHARE_163,PullRequest_139,PullRequest,GPU Quantization Implementation,Default,2.0,frustration,satisfaction
+SHARE_164,PullRequest_139,PullRequest,Metal Quantization Kernel Issues,Default,2.0,frustration,caution
+SHARE_165,PullRequest_140,PullRequest,Chunk Extraction & Composition,Default,1.0,neutral,satisfaction
+SHARE_166,PullRequest_140,PullRequest,New chat,Default,34.0,frustration,satisfaction
+SHARE_167,PullRequest_141,PullRequest,Module Error in Browser.,Default,16.0,frustration,frustration
+SHARE_170,PullRequest_144,PullRequest,Understanding Grid Size Calculation,Default,14.0,frustration,caution
+SHARE_176,PullRequest_150,PullRequest,GitHub Action for Sourcemaps,,9.0,frustration,satisfaction
+SHARE_195,PullRequest_159,PullRequest,Create a script to create a new post,,8.0,frustration,satisfaction
+SHARE_202,PullRequest_166,PullRequest,Image slideshow with `feh`,,20.0,caution,satisfaction
+SHARE_209,PullRequest_172,PullRequest,React学習1,,10.0,frustration,satisfaction
+SHARE_245,PullRequest_205,PullRequest,Latin1 encoding explained,,4.0,frustration,caution
+SHARE_287,PullRequest_241,PullRequest,URL Object for Fetch,,1.0,neutral,satisfaction
+SHARE_373,PullRequest_312,PullRequest,Fix npm ERR! notarget.,Default,2.0,frustration,caution
+SHARE_374,PullRequest_313,PullRequest,Backup Bench Master Protocols,Default,2.0,frustration,caution
+SHARE_419,PullRequest_353,PullRequest,React Speech Recognition Hook,Default,1.0,frustration,satisfaction
+SHARE_420,PullRequest_354,PullRequest,Java 단일 객체 연산자,Default,1.0,neutral,neutral
+SHARE_434,PullRequest_367,PullRequest,Build New Image,Default,2.0,neutral,caution
+SHARE_438,PullRequest_371,PullRequest,Capture div click event.,Default,2.0,frustration,frustration
+SHARE_560,PullRequest_472,PullRequest,이벤트 리스너 제거 방법,Default,7.0,neutral,neutral
+SHARE_574,PullRequest_484,PullRequest,Restructured OpenAI Email Generation,Default,167.0,frustration,satisfaction
+SHARE_653,PullRequest_556,PullRequest,Stream Multiple WAV Chunks,Default,3.0,frustration,satisfaction
+SHARE_750,PullRequest_639,PullRequest,Fixing DELETE Statement,Default,1.0,frustration,satisfaction
+SHARE_754,PullRequest_641,PullRequest,Mood Analysis & Response,Default,30.0,satisfaction,satisfaction
+SHARE_755,PullRequest_642,PullRequest,Refactor State Handling,Default,1.0,caution,neutral
+SHARE_799,PullRequest_680,PullRequest,Fixing Point Deserialization,Default,1.0,frustration,satisfaction
+SHARE_890,PullRequest_762,PullRequest,Pell Grant Income Variable,Default,3.0,frustration,satisfaction
+SHARE_897,PullRequest_769,PullRequest,Bot Double Posting Solution,Default,1.0,frustration,frustration
+SHARE_925,PullRequest_794,PullRequest,Variable Names for Backup,Default,1.0,frustration,caution
+SHARE_949,PullRequest_816,PullRequest,Translate Technical Documentation,Default,4.0,frustration,satisfaction
+SHARE_953,PullRequest_820,PullRequest,Building Stable Diffusion Image History,Default,16.0,frustration,caution
+SHARE_969,PullRequest_829,PullRequest,Custom Tensor Indexing,Default,5.0,frustration,caution
+SHARE_976,PullRequest_834,PullRequest,Extracting Sections from CSV,Default,6.0,frustration,satisfaction
+SHARE_977,PullRequest_834,PullRequest,Block PRs on test fail,Default,1.0,frustration,caution
+SHARE_980,PullRequest_836,PullRequest,Using AWS with EKS,Default,9.0,frustration,satisfaction
+SHARE_1055,PullRequest_905,PullRequest,Code Review: React Filters,Default,2.0,frustration,satisfaction
+SHARE_1170,Issues_1009,Issues,ハンバーガーメニュー表示の修正,Default,11.0,frustration,frustration
+SHARE_1176,Issues_1012,Issues,UDP Client Number Communication,Default,2.0,frustration,satisfaction
+SHARE_1184,Issues_1014,Issues,New chat,Default,3.0,neutral,neutral
+SHARE_1189,Issues_1017,Issues,Google Drive Image Class,Default,8.0,frustration,satisfaction
+SHARE_1190,Issues_1018,Issues,Rapper Composer with Bip39,Default,3.0,frustration,satisfaction
+SHARE_1191,Issues_1019,Issues,Image Inversion Error.,Default,24.0,neutral,caution
+SHARE_1194,Issues_1022,Issues,OpenSSL Node.js Error.,Default,1.0,neutral,caution
+SHARE_1197,Issues_1024,Issues,New chat,Default,7.0,neutral,satisfaction
+SHARE_1198,Issues_1025,Issues,Table definition correction.,Default,22.0,neutral,neutral
+SHARE_1199,Issues_1026,Issues,Mastery Learning and the Super Mario Effect,Default,4.0,satisfaction,satisfaction
+SHARE_1201,Issues_1028,Issues,Player Table Schema,Default,35.0,neutral,satisfaction
+SHARE_1203,Issues_1030,Issues,Matrix display with imshow,Default,4.0,frustration,satisfaction
+SHARE_1205,Issues_1032,Issues,Create Android Sticker App,Default,1.0,neutral,satisfaction
+SHARE_1206,Issues_1033,Issues,JS Regex for Identifiers.,Default,2.0,satisfaction,satisfaction
+SHARE_1208,Issues_1035,Issues,Get VSCode Publisher Token,Default,4.0,frustration,caution
+SHARE_1210,Issues_1037,Issues,New chat,Default,8.0,frustration,neutral
+SHARE_1211,Issues_1038,Issues,Stack Trace with Async Queues,Default,3.0,frustration,caution
+SHARE_1212,Issues_1039,Issues,Algolia,Default,4.0,frustration,satisfaction
+SHARE_1213,Issues_1040,Issues,Thread-Safe OGRCoordinateTransformation,Default,3.0,frustration,caution
+SHARE_1215,Issues_1041,Issues,Opera Voice Control Extension,Default,11.0,neutral,satisfaction
+SHARE_1217,Issues_1043,Issues,Science Report Assistant,Default,9.0,neutral,satisfaction
+SHARE_1219,Issues_1045,Issues,AI在语音笔记中的角色,Default,6.0,neutral,frustration
+SHARE_1220,Issues_1046,Issues,Next.js Periodic Function,Default,2.0,frustration,satisfaction
+SHARE_1221,Issues_1047,Issues,Blunt AI Partner,Default,3.0,satisfaction,satisfaction
+SHARE_1228,Issues_1053,Issues,Schwingfest Scorecard App.,Default,19.0,neutral,satisfaction
+SHARE_1231,Issues_1056,Issues,CSS Font Parsing Error,Default,3.0,frustration,caution
+SHARE_1232,Issues_1057,Issues,Centering Cytoscape Layout Position,Default,3.0,frustration,caution
+SHARE_1233,Issues_1058,Issues,pgRouting GSoC Repository,Default,16.0,frustration,frustration
+SHARE_1234,Issues_1059,Issues,モデルセットアップとテスト,Default,51.0,frustration,frustration
+SHARE_1235,Issues_1060,Issues,CEF: Chrome DevTools on selected screen,Default,3.0,neutral,satisfaction
+SHARE_1237,Issues_1062,Issues,Copy HTML Node as Image,Default,2.0,frustration,satisfaction
+SHARE_1240,Issues_1065,Issues,Firebase Saves Development Time,Default,5.0,satisfaction,satisfaction
+SHARE_1241,Issues_1066,Issues,Ignoring venv in code.,Default,1.0,frustration,caution
+SHARE_1242,Issues_1067,Issues,Jest Tests for formatCollapsingText,Default,2.0,frustration,frustration
+SHARE_1245,Issues_1070,Issues,Add CSS rule to selector,Default,46.0,neutral,satisfaction
+SHARE_1250,Issues_1075,Issues,Bean Retrieval: Class Details,Default,2.0,frustration,satisfaction
+SHARE_1254,Issues_1077,Issues,Title: WordPress & Medium: Title Limits,Default,3.0,frustration,satisfaction
+SHARE_1255,Issues_1078,Issues,Skip module on Maven.,Default,4.0,frustration,satisfaction
+SHARE_1256,Issues_1079,Issues,Bun Test Notebook,Default,3.0,neutral,satisfaction
+SHARE_1257,Issues_1079,Issues,Bun JS issue,Default,11.0,neutral,frustration
+SHARE_1258,Issues_1080,Issues,Flutter In-App Review Behavior,Default,1.0,frustration,caution
+SHARE_1260,Issues_1082,Issues,PCRE Compile and Reuse,Default,1.0,frustration,satisfaction
+SHARE_1261,Issues_1083,Issues,Dockerfile for localGPT project,Default,4.0,neutral,caution
+SHARE_1263,Issues_1085,Issues,Bootstrap Modal Calculator,Default,3.0,frustration,satisfaction
+SHARE_1266,Issues_1088,Issues,GitHub Social Enhancer,Default,4.0,satisfaction,satisfaction
+SHARE_1268,Issues_1090,Issues,Adding Success Codes,Default,2.0,neutral,satisfaction
+SHARE_1269,Issues_1091,Issues,Replace Variables in Java,Default,1.0,frustration,satisfaction
+SHARE_1270,Issues_1092,Issues,New chat,Default,4.0,neutral,satisfaction
+SHARE_1272,Issues_1094,Issues,Markdown to Mermaid: Convert,Default,2.0,neutral,satisfaction
+SHARE_1274,Issues_1096,Issues,Exploring EDA of Data.,Default,6.0,satisfaction,satisfaction
+SHARE_1275,Issues_1097,Issues,AES vs SHA-256,Default,1.0,frustration,satisfaction
+SHARE_1278,Issues_1100,Issues,Patch RN Image Crop Picker,Default,4.0,neutral,satisfaction
+SHARE_1279,Issues_1101,Issues,Auto-associate User with Trip.,Default,1.0,neutral,satisfaction
+SHARE_1280,Issues_1102,Issues,Debating TOTP vs encrypted payloads,Default,30.0,frustration,caution
+SHARE_1281,Issues_1103,Issues,GitHub Action for Review,Default,10.0,frustration,satisfaction
+SHARE_1282,Issues_1104,Issues,CLI Option: Empty to Null,Default,6.0,frustration,caution
+SHARE_1286,Issues_1107,Issues,Pre-install NPM packages in Docker,Default,6.0,frustration,satisfaction
+SHARE_1288,Issues_1109,Issues,Go Package Building for Linux,Default,2.0,satisfaction,satisfaction
+SHARE_1291,Issues_1111,Issues,ディープラーニングのモデル最適化,Default,23.0,satisfaction,frustration
+SHARE_1292,Issues_1112,Issues,Ruby Initialize ArgumentError,Default,1.0,frustration,caution
+SHARE_1293,Issues_1113,Issues,"Add ""Integration"" Environment",Default,2.0,frustration,satisfaction
+SHARE_1295,Issues_1115,Issues,Humanities Enhancing Research Communication,Default,3.0,satisfaction,satisfaction
+SHARE_1296,Issues_1116,Issues,Monaco Editor: Adding Axios Types,Default,2.0,frustration,satisfaction
+SHARE_1297,Issues_1117,Issues,Dynamic Pydantic Model Generation,Default,2.0,neutral,satisfaction
+SHARE_1298,Issues_1118,Issues,CSV Import: Avoiding Duplicates,Default,9.0,frustration,caution
+SHARE_1299,Issues_1119,Issues,Arrow operator limitations.,Default,1.0,frustration,satisfaction
+SHARE_1300,Issues_1120,Issues,Mr. Ranedeer v2.6.2,Default,1.0,frustration,satisfaction
+SHARE_1309,Issues_1128,Issues,Node File Structure Guide,Default,13.0,caution,satisfaction
+SHARE_1311,Issues_1130,Issues,Refactor Library for Programming,Default,8.0,frustration,satisfaction
+SHARE_1313,Issues_1132,Issues,Desktop UI Components.,Default,1.0,satisfaction,satisfaction
+SHARE_1314,Issues_1133,Issues,Synonym Substitution: VERBOSE,Default,5.0,neutral,satisfaction
+SHARE_1320,Issues_1138,Issues,Exceção para objetos não encontrados.,Default,2.0,frustration,neutral
+SHARE_1321,Issues_1139,Issues,Fix Unexpected Connection State,Default,1.0,frustration,satisfaction
+SHARE_1324,Issues_1142,Issues,UDP Byte Order Issue,Default,10.0,neutral,neutral
+SHARE_1325,Issues_1142,Issues,New chat,Default,2.0,neutral,satisfaction
+SHARE_1327,Issues_1144,Issues,"UPnP, DLNA, and Multicast",Default,14.0,frustration,satisfaction
+SHARE_1328,Issues_1145,Issues,フォートナイトマップコンテストアイデア,Default,4.0,frustration,frustration
+SHARE_1332,Issues_1149,Issues,프론트엔드 기술 스택,Default,88.0,neutral,neutral
+SHARE_1333,Issues_1150,Issues,マークダウンドキュメントのページ分割,Default,1.0,frustration,frustration
+SHARE_1334,Issues_1151,Issues,Translation Requests: Languages,Default,1.0,neutral,neutral
+SHARE_1338,Issues_1155,Issues,Efficiently Count Post Comments,Default,1.0,frustration,satisfaction
+SHARE_1340,Issues_1156,Issues,CORS Security for Local API,Default,1.0,frustration,caution
+SHARE_1343,Issues_1159,Issues,Fix Open Library bad lccn data,Default,3.0,frustration,caution
+SHARE_1344,Issues_1160,Issues,GDI Monitor Scale Factor,Default,8.0,frustration,frustration
+SHARE_1346,Issues_1162,Issues,Customizing Odoo Form Tabs,Default,2.0,satisfaction,satisfaction
+SHARE_1348,Issues_1164,Issues,Array Extension Fix,Default,1.0,frustration,frustration
+SHARE_1350,Issues_1165,Issues,Timestamp Duration Formatter.,Default,1.0,satisfaction,satisfaction
+SHARE_1351,Issues_1166,Issues,Proxy Server Error Handling,Default,10.0,neutral,satisfaction
+SHARE_1352,Issues_1167,Issues,Fixing TouchableOpacity Opacity.,Default,5.0,frustration,satisfaction
+SHARE_1355,Issues_1170,Issues,USB Device Identifier Fix,Default,1.0,caution,satisfaction
+SHARE_1358,Issues_1172,Issues,New chat,Default,5.0,frustration,satisfaction
+SHARE_1359,Issues_1173,Issues,Send OTP with Firebase-PHP,Default,1.0,neutral,satisfaction
+SHARE_1364,Issues_1177,Issues,Task Clarification: Wrapper Creation,Default,5.0,satisfaction,satisfaction
+SHARE_1365,Issues_1178,Issues,Function Definition Extraction,Default,3.0,frustration,satisfaction
+SHARE_1367,Issues_1180,Issues,Airport Data to Dictionary,Default,10.0,neutral,satisfaction
+SHARE_1369,Issues_1182,Issues,Fear Litany,Default,9.0,frustration,satisfaction
+SHARE_1372,Issues_1185,Issues,dx in 81 packages,Default,6.0,neutral,caution
+SHARE_1373,Issues_1186,Issues,変更の通知,Default,1.0,frustration,neutral
+SHARE_1378,Issues_1190,Issues,Fix OpenSwoole Compilation Error,Default,2.0,neutral,caution
+SHARE_1381,Issues_1193,Issues,MacOS linking issue with dynamic libraries,Default,2.0,frustration,satisfaction
+SHARE_1384,Issues_1196,Issues,Flask Logging with Werkzeug,Default,4.0,frustration,satisfaction
+SHARE_1386,Issues_1198,Issues,Rare Mendelian diseases similar to Rheumatoid Arthritis,Default,1.0,frustration,satisfaction
+SHARE_1388,Issues_1200,Issues,Resolve Ubuntu 22.04 Error,Default,13.0,frustration,caution
+SHARE_1389,Issues_1201,Issues,Re-implement Highlight Function,Default,1.0,satisfaction,satisfaction
+SHARE_1390,Issues_1202,Issues,Laravel Symlink for Videos,Default,3.0,frustration,caution
+SHARE_1392,Issues_1204,Issues,Author of ancient Chinese poetry,Default,4.0,neutral,satisfaction
+SHARE_1393,Issues_1205,Issues,Customize Learning Preferences,Default,10.0,frustration,satisfaction
+SHARE_1396,Issues_1208,Issues,Markdown编译错误,Default,4.0,frustration,frustration
+SHARE_1399,Issues_1210,Issues,GPT4 Integrating ToT prompting,Default,18.0,satisfaction,satisfaction
+SHARE_1400,Issues_1211,Issues,Odoo: Sub-task Count tab,Default,2.0,neutral,satisfaction
+SHARE_1402,Issues_1213,Issues,Embed Python string in Jinja.,Default,9.0,neutral,satisfaction
+SHARE_1404,Issues_1215,Issues,GUI Desktop App Actions,Default,4.0,satisfaction,satisfaction
+SHARE_1406,Issues_1216,Issues,Unit Load & Prod Fix,Default,3.0,frustration,satisfaction
+SHARE_1408,Issues_1218,Issues,Gates for 0 Input,Default,2.0,frustration,satisfaction
+SHARE_1409,Issues_1219,Issues,Android File Access Issues,Default,1.0,frustration,caution
+SHARE_1422,Issues_1222,Issues,Retrieve SQL Crime Report.,Default,7.0,caution,satisfaction
+SHARE_1423,Issues_1223,Issues,"Expose headers, link libraries",Default,7.0,frustration,satisfaction
+SHARE_1424,Issues_1224,Issues,Preferred Inverter Load: Resistor,Default,2.0,frustration,satisfaction
+SHARE_1428,Issues_1228,Issues,Fixing GitHub Chunked Error,Default,2.0,satisfaction,satisfaction
+SHARE_1430,Issues_1230,Issues,Tired Worker's Rest,Default,14.0,frustration,satisfaction
+SHARE_1433,Issues_1233,Issues,Terraform Provider Panic,Default,5.0,frustration,satisfaction
+SHARE_1435,Issues_1235,Issues,Fix Python Module Error,Default,1.0,frustration,caution
+SHARE_1441,Issues_1240,Issues,Git Bash Docker Command,Default,1.0,neutral,neutral
+SHARE_1442,Issues_1241,Issues,Offensive Phrase Clarification,Default,1.0,neutral,caution
+SHARE_1444,Issues_1242,Issues,Docker DNS Configuration Differences,Default,1.0,frustration,caution
+SHARE_1445,Issues_1243,Issues,Multiple IP on Linux,Default,22.0,frustration,caution
+SHARE_1450,Issues_1246,Issues,Scapy DNS Packet - Secret Payload,,2.0,neutral,caution
+SHARE_1487,Issues_1273,Issues,Go Gin Find One,,13.0,neutral,frustration
+SHARE_1489,Issues_1275,Issues,"Random 5 numbers, GD!",,1.0,satisfaction,satisfaction
+SHARE_1494,Issues_1279,Issues,Secure Express API for React Native.,,1.0,caution,caution
+SHARE_1503,Issues_1288,Issues,Safari CSP Error Fix.,,2.0,frustration,neutral
+SHARE_1507,Issues_1291,Issues,Tennis Tracking Improvement Plan,,2.0,satisfaction,satisfaction
+SHARE_1535,Issues_1318,Issues,Bun JS issue,,11.0,neutral,frustration
+SHARE_1549,Issues_1330,Issues,Crypto API Undefined Error,,1.0,frustration,caution
+SHARE_1562,Issues_1343,Issues,4. Preloaded Ranking Style,,9.0,satisfaction,satisfaction
+SHARE_1579,Issues_1357,Issues,Coding Expert CAN,,10.0,neutral,satisfaction
+SHARE_1580,Issues_1358,Issues,Merge SQLite Databases Python,,2.0,frustration,satisfaction
+SHARE_1612,Issues_1387,Issues,SQLite TTL Cache Implementation.,,4.0,frustration,caution
+SHARE_1617,Issues_1392,Issues,Qt Lib Version Mismatch.,,1.0,neutral,caution
+SHARE_1703,Issues_1470,Issues,Unit Load & Prod Fix,,3.0,frustration,caution
+SHARE_1704,Issues_1471,Issues,Text Comparison Probability.,,5.0,frustration,satisfaction
+SHARE_1748,Issues_1501,Issues,Docker CLI Access,Default,10.0,frustration,caution
+SHARE_1750,Issues_1503,Issues,TS寫NPM套件,Default,1.0,neutral,frustration
+SHARE_1751,Issues_1504,Issues,Halo Superintendent AI,Default,3.0,neutral,satisfaction
+SHARE_1772,Issues_1516,Issues,Enhance Eventbrite Organizer Info,Default,3.0,frustration,satisfaction
+SHARE_1810,Issues_1550,Issues,Android Adblocker with LLM,Default,4.0,frustration,caution
+SHARE_1813,Issues_1553,Issues,OpenAPI AllOf Validity,Default,2.0,neutral,caution
+SHARE_1825,Issues_1565,Issues,Minority Language Data Site,Default,1.0,satisfaction,neutral
+SHARE_1826,Issues_1565,Issues,Minority Language Data Suggestions,Default,3.0,satisfaction,neutral
+SHARE_1833,Issues_1566,Issues,SGTK Templates and Schema,Default,2.0,frustration,caution
+SHARE_1836,Issues_1569,Issues,JSON-RPC ID Purpose,Default,14.0,frustration,satisfaction
+SHARE_1864,Issues_1594,Issues,게시판 웹앱 중복 저장 해결 (4 words),Default,1.0,neutral,neutral
+SHARE_1886,Issues_1615,Issues,Llama-2 Setup Guide.,Default,41.0,neutral,satisfaction
+SHARE_1887,Issues_1615,Issues,Llama AI Porting Node.js,Default,25.0,frustration,satisfaction
+SHARE_1906,Issues_1632,Issues,WhatsApp API Bug Discussion,Default,3.0,frustration,caution
+SHARE_1908,Issues_1634,Issues,Organize docsify installation.,Default,1.0,caution,neutral
+SHARE_1919,Issues_1644,Issues,Set Reconciliation Protocol Overview,Default,10.0,caution,satisfaction
+SHARE_1920,Issues_1645,Issues,TMDb APIオートコンプリート機能,Default,1.0,frustration,frustration
+SHARE_1929,Issues_1654,Issues,Vatsim Flight Plan Updates,Default,3.0,frustration,satisfaction
+SHARE_1960,Issues_1682,Issues,GitHub Duplicate Issue Detection,Default,1.0,caution,caution
+SHARE_1978,Issues_1695,Issues,MLB Caught Stealing Percentage,Default,3.0,frustration,satisfaction
+SHARE_1985,Issues_1702,Issues,Streamlit Import Error,Default,5.0,frustration,caution
+SHARE_2005,Issues_1721,Issues,Syncing Firestore Data.,Default,3.0,frustration,caution
+SHARE_2120,Issues_1808,Issues,Missing Trips Table,Default,1.0,frustration,caution
+SHARE_2125,Issues_1813,Issues,Switch to 64-bit Python,Default,3.0,frustration,caution
+SHARE_2130,Issues_1818,Issues,Gin Unit Testing.,Default,6.0,frustration,frustration
+SHARE_2133,Issues_1821,Issues,Remove 'export {};' from transpiled code,Default,3.0,frustration,caution
+SHARE_2134,Issues_1821,Issues,Using eval with export,Default,3.0,frustration,caution
+SHARE_2142,Issues_1828,Issues,Default schema for Sqitch,Default,5.0,caution,frustration
+SHARE_2149,Issues_1835,Issues,Stuck at session.stop(),Default,10.0,neutral,satisfaction
+SHARE_2203,Issues_1879,Issues,Map NumPy to ctypes,Default,1.0,frustration,satisfaction
+SHARE_2260,Issues_1929,Issues,Morphological characters and captions.,Default,2.0,neutral,neutral
+SHARE_2277,Issues_1944,Issues,Troubleshoot 500 Error,Default,11.0,frustration,satisfaction
+SHARE_2291,Issues_1957,Issues,Confirm Dialog on Popstate,Default,2.0,frustration,satisfaction
+SHARE_2294,Issues_1960,Issues,Bash Script to Shutdown,Default,1.0,frustration,caution
+SHARE_2357,Issues_2016,Issues,Automate Plugin Data Extraction,Default,14.0,frustration,satisfaction
+SHARE_2381,Issues_2039,Issues,Fix Missing libmmal.so Error,Default,1.0,frustration,caution
+SHARE_2397,Issues_2052,Issues,Token Bucket Rate Limiter,Default,9.0,frustration,caution
+SHARE_2453,Issues_2092,Issues,Code Quality & AI,Default,5.0,frustration,frustration
+SHARE_2480,Issues_2110,Issues,Edit Junior Documentation,Default,1.0,caution,neutral
+SHARE_2512,Issues_2140,Issues,Render <details> in ReactMarkdown,Default,2.0,frustration,caution
+SHARE_2513,Issues_2141,Issues,论文,Default,69.0,neutral,neutral
+SHARE_2525,Issues_2151,Issues,gRPC Server for Web,Default,2.0,neutral,satisfaction
+SHARE_2537,Issues_2163,Issues,Blur Sensitive Images,Default,1.0,frustration,satisfaction
+SHARE_2572,Issues_2188,Issues,Compiling Quiche on Windows,Default,6.0,frustration,caution
+SHARE_2580,Issues_2195,Issues,OAuth 2.0 Authentication with Passport,Default,21.0,neutral,caution
+SHARE_2586,Issues_2199,Issues,Improve Docs & README,Default,1.0,caution,neutral
+SHARE_2600,Issues_2212,Issues,Level Calculation Strategies,Default,5.0,neutral,neutral
+SHARE_2642,Issues_2249,Issues,Rust Regex Look-Around Solution,Default,2.0,frustration,caution
+SHARE_2686,Issues_2290,Issues,Create `stable` from latest tag,Default,5.0,frustration,caution
+SHARE_2691,Issues_2294,Issues,Plugin Initialization and Information,Default,2.0,frustration,satisfaction
+SHARE_2696,Issues_2299,Issues,Preserve Elements in HTML,Default,1.0,frustration,satisfaction
+SHARE_2717,Issues_2315,Issues,WebPilot Extension: Fully Functional,Default,12.0,neutral,satisfaction
+SHARE_2752,Issues_2348,Issues,Fix Docker Jekyll Permissions,Default,4.0,frustration,caution
+SHARE_2763,Issues_2358,Issues,Répartition d'usages dans catégories,Default,2.0,neutral,neutral
+SHARE_2779,Issues_2374,Issues,Update Stable Docs Workflow,Default,2.0,neutral,satisfaction
+SHARE_2820,Issues_2401,Issues,Syncing with Kotlin,Default,1.0,frustration,satisfaction
+SHARE_2838,Issues_2416,Issues,Tolkien's Works Clarification,Default,6.0,frustration,satisfaction
+SHARE_2839,Issues_2417,Issues,Rewriting FSRS Tutorial,Default,4.0,satisfaction,satisfaction
+SHARE_2846,Issues_2422,Issues,LOTR Easter Egg Idea,Default,4.0,frustration,satisfaction
+SHARE_2870,Issues_2437,Issues,Identifying Document Source,Default,22.0,frustration,frustration
+SHARE_2872,Issues_2439,Issues,Identifying Unique Document Phrases,Default,4.0,frustration,satisfaction
+SHARE_2880,Issues_2446,Issues,Crypto X Banner Design,Default,2.0,neutral,satisfaction
+SHARE_2909,Issues_2474,Issues,Cesium Setup for 3D Map,Default,3.0,neutral,satisfaction
+SHARE_2913,Issues_2478,Issues,Detect and Load Plugin,Default,3.0,neutral,satisfaction
+SHARE_2970,Issues_2525,Issues,SOC2 Compliance Audit Process & Cost,Default,1.0,satisfaction,satisfaction
+SHARE_3065,Issues_2608,Issues,Install Python Package from Tar,Default,7.0,neutral,caution
+SHARE_3137,Issues_2675,Issues,Improve GitSsh Performance,Default,3.0,frustration,caution
+SHARE_3229,Issues_2746,Issues,Comparing Binary Representations,Default,2.0,neutral,satisfaction
+SHARE_3258,Issues_2772,Issues,TypeScript: No Checked Exceptions,Default,4.0,caution,satisfaction
+SHARE_3259,HackerNews_2773,HackerNews,Deep Learning Training Plan,Default,1.0,satisfaction,caution
+SHARE_3260,HackerNews_2774,HackerNews,900 Alda = 1645.92m,Default,12.0,frustration,satisfaction
+SHARE_3264,HackerNews_2776,HackerNews,Death Metal English Translator,Default,5.0,satisfaction,satisfaction
+SHARE_3265,HackerNews_2776,HackerNews,Metal English Translation Fun!,Default,1.0,satisfaction,satisfaction
+SHARE_3266,HackerNews_2777,HackerNews,HN js react question,Default,4.0,frustration,satisfaction
+SHARE_3270,HackerNews_2781,HackerNews,Medical Errors: An Overestimation,Default,6.0,neutral,frustration
+SHARE_3272,HackerNews_2783,HackerNews,C version of DirBuster.,Default,7.0,frustration,satisfaction
+SHARE_3276,HackerNews_2784,HackerNews,Gathering Food Requirements,Default,1.0,satisfaction,satisfaction
+SHARE_3277,HackerNews_2785,HackerNews,번역 요청과 응답,Default,11.0,frustration,neutral
+SHARE_3283,HackerNews_2788,HackerNews,Braille Next Rep Algo.,Default,29.0,satisfaction,satisfaction
+SHARE_3288,HackerNews_2791,HackerNews,Sandor's Fate at Saltpans,Default,2.0,frustration,satisfaction
+SHARE_3289,HackerNews_2792,HackerNews,Ecomm Pet DB Tables,Default,7.0,satisfaction,satisfaction
+SHARE_3291,HackerNews_2793,HackerNews,Book Collaboration Offer,Default,1.0,frustration,frustration
+SHARE_3292,HackerNews_2793,HackerNews,Curing Bieber Fever... Almost!,Default,1.0,frustration,frustration
+SHARE_3300,HackerNews_2797,HackerNews,Human-like AI Gameplay,Default,5.0,frustration,satisfaction
+SHARE_3303,HackerNews_2799,HackerNews,Shift away from class,Default,7.0,satisfaction,satisfaction
+SHARE_3304,HackerNews_2799,HackerNews,Judicial Bias: Research & Combat,Default,4.0,satisfaction,caution
+SHARE_3308,HackerNews_2801,HackerNews,DXM and Adderall Interactions,Default,3.0,frustration,caution
+SHARE_3311,HackerNews_2802,HackerNews,Stoic Hedonist's Daily Schedule,Default,1.0,neutral,satisfaction
+SHARE_3312,HackerNews_2803,HackerNews,Buffalo Buffalo Confusion,Default,2.0,neutral,neutral
+SHARE_3314,HackerNews_2805,HackerNews,Innovative Hiring Solutions,Default,1.0,satisfaction,satisfaction
+SHARE_3315,HackerNews_2806,HackerNews,Validate and Prioritize Requirements,Default,3.0,frustration,caution
+SHARE_3318,HackerNews_2808,HackerNews,Learn Domestic Fridge Refrigeration,Default,9.0,satisfaction,satisfaction
+SHARE_3319,HackerNews_2809,HackerNews,Nonsense FizzBuzz Device,Default,3.0,frustration,caution
+SHARE_3320,HackerNews_2810,HackerNews,Tokenizing AI Model Training,Default,20.0,frustration,satisfaction
+SHARE_3321,HackerNews_2810,HackerNews,Fairchild: Intel's Semiconductor Tree,Default,7.0,satisfaction,satisfaction
+SHARE_3323,HackerNews_2812,HackerNews,Sudoku Solver in Python,Default,4.0,frustration,satisfaction
+SHARE_3330,HackerNews_2816,HackerNews,"MAUs/Engineer: Twitter 600K, Mastodon 280K",Default,2.0,neutral,satisfaction
+SHARE_3332,HackerNews_2817,HackerNews,Yazi Excuse Game,Default,1.0,frustration,caution
+SHARE_3334,HackerNews_2819,HackerNews,Areal Imaging for OSM,Default,11.0,satisfaction,satisfaction
+SHARE_3335,HackerNews_2820,HackerNews,Gretzky's Hockey Career,Default,1.0,satisfaction,satisfaction
+SHARE_3339,HackerNews_2824,HackerNews,Python Plugin Dependency Management,Default,1.0,caution,caution
+SHARE_3340,HackerNews_2825,HackerNews,Congress Average Ages.,Default,19.0,frustration,frustration
+SHARE_3341,HackerNews_2826,HackerNews,Park Vehicle Rule Violation,Default,8.0,caution,satisfaction
+SHARE_3344,HackerNews_2829,HackerNews,EU to Malta Reshipping,Default,2.0,neutral,satisfaction
+SHARE_3347,HackerNews_2830,HackerNews,Plot Countries by GDP and Area,Default,2.0,frustration,caution
+SHARE_3349,HackerNews_2832,HackerNews,Hangman Game,Default,8.0,neutral,satisfaction
+SHARE_3351,HackerNews_2834,HackerNews,Litany Against Fear,Default,47.0,frustration,satisfaction
+SHARE_3352,HackerNews_2834,HackerNews,Boot into CLI.,Default,1.0,frustration,caution
+SHARE_3353,HackerNews_2834,HackerNews,Add Drivers to Alpine.,Default,1.0,neutral,satisfaction
+SHARE_3356,HackerNews_2834,HackerNews,Fear Litany: Recap,Default,2.0,frustration,satisfaction
+SHARE_3358,HackerNews_2835,HackerNews,Inner Child Therapy Request,Default,1.0,satisfaction,satisfaction
+SHARE_3359,HackerNews_2836,HackerNews,Windows 10 Pro Keys,Default,1.0,frustration,satisfaction
+SHARE_3361,HackerNews_2838,HackerNews,Discord Privacy+Search Solution,Default,3.0,satisfaction,caution
+SHARE_3364,HackerNews_2841,HackerNews,Frustrating Azure Support Experience,Default,1.0,frustration,satisfaction
+SHARE_3366,HackerNews_2842,HackerNews,Casual Chat with GPT,Default,3.0,frustration,satisfaction
+SHARE_3367,HackerNews_2842,HackerNews,(dog) and AI Limericks,Default,2.0,frustration,frustration
+SHARE_3369,HackerNews_2844,HackerNews,[4] Alien Campaign,Default,1.0,frustration,satisfaction
+SHARE_3370,HackerNews_2844,HackerNews,[3.5] Alien Campaign,Default,1.0,frustration,satisfaction
+SHARE_3373,HackerNews_2845,HackerNews,Weight Comparison: Pound vs Kilogram,Default,4.0,frustration,satisfaction
+SHARE_3380,HackerNews_2850,HackerNews,Language Models and Recommendations,Default,1.0,frustration,satisfaction
+SHARE_3382,HackerNews_2852,HackerNews,Memcon in National Security,Default,2.0,satisfaction,satisfaction
+SHARE_3383,HackerNews_2853,HackerNews,5x7 ≠ 30,Default,4.0,satisfaction,satisfaction
+SHARE_3384,HackerNews_2854,HackerNews,Copy Org Elements,Default,31.0,frustration,satisfaction
+SHARE_3386,HackerNews_2856,HackerNews,Hostility towards AI-generated content,Default,1.0,frustration,caution
+SHARE_3388,HackerNews_2858,HackerNews,Doom: Shoot and Survive,Default,2.0,frustration,satisfaction
+SHARE_3391,HackerNews_2860,HackerNews,80% sustainable work profitability,Default,4.0,frustration,satisfaction
+SHARE_3392,HackerNews_2861,HackerNews,Lorenz vs Lorentz,Default,1.0,neutral,satisfaction
+SHARE_3394,HackerNews_2863,HackerNews,Blue Sky Explanation,Default,4.0,frustration,satisfaction
+SHARE_3397,HackerNews_2864,HackerNews,Broad AI Definition Challenge,Default,1.0,frustration,satisfaction
+SHARE_3398,HackerNews_2865,HackerNews,Pawn Stars Simulator,Default,8.0,neutral,satisfaction
+SHARE_3400,HackerNews_2867,HackerNews,Casual Conversation Inquiry,Default,1.0,frustration,frustration
+SHARE_3401,HackerNews_2868,HackerNews,Maximizing GraphQL with React,Default,2.0,frustration,satisfaction
+SHARE_3402,HackerNews_2869,HackerNews,"Specify ""output"" needed",Default,2.0,neutral,satisfaction
+SHARE_3404,HackerNews_2871,HackerNews,Black Hole Braids: Cosmic Connection,Default,1.0,satisfaction,satisfaction
+SHARE_3405,HackerNews_2872,HackerNews,Logic Puzzle: Solve it!,Default,2.0,satisfaction,satisfaction
+SHARE_3407,HackerNews_2874,HackerNews,Underwater Breath ≠ Headache Cure,Default,1.0,frustration,caution
+SHARE_3411,HackerNews_2877,HackerNews,Small Talk or Direct?,Default,57.0,frustration,satisfaction
+SHARE_3412,HackerNews_2878,HackerNews,AI & Creativity Concerns,Default,1.0,frustration,satisfaction
+SHARE_3414,HackerNews_2880,HackerNews,Video Games and Violence,Default,1.0,satisfaction,satisfaction
+SHARE_3416,HackerNews_2882,HackerNews,Summarizing Numpy Array Length,Default,11.0,frustration,frustration
+SHARE_3419,HackerNews_2885,HackerNews,Aplicación responsable en ciencia,Default,1.0,frustration,caution
+SHARE_3420,HackerNews_2886,HackerNews,Adding Image Input Feature,Default,3.0,satisfaction,satisfaction
+SHARE_3424,HackerNews_2890,HackerNews,10 Questions for Managing Cognitive Distortions,Default,1.0,satisfaction,satisfaction
+SHARE_3433,HackerNews_2893,HackerNews,SVG Editor Framework Comparison,Default,11.0,frustration,satisfaction
+SHARE_3438,HackerNews_2897,HackerNews,Velcro-less World,Default,4.0,satisfaction,satisfaction
+SHARE_3441,HackerNews_2898,HackerNews,Creating Backronym Options,Default,1.0,satisfaction,satisfaction
+SHARE_3452,HackerNews_2904,HackerNews,Swap len and print,Default,3.0,frustration,frustration
+SHARE_3454,HackerNews_2906,HackerNews,Go and Swift UI Integration,Default,5.0,frustration,caution
+SHARE_3472,HackerNews_2911,HackerNews,GPT-4 Impresses as Red Teamer,,1.0,neutral,satisfaction
+SHARE_3473,HackerNews_2911,HackerNews,Respectful Limits: No Depictions.,,14.0,frustration,caution
+SHARE_3474,HackerNews_2912,HackerNews,Rust Hacker News Request,,1.0,neutral,caution
+SHARE_3475,HackerNews_2913,HackerNews,Evasive Answer Detected.,,1.0,satisfaction,satisfaction
+SHARE_3476,HackerNews_2914,HackerNews,Ouija Board HTML/CSS,,34.0,frustration,satisfaction
+SHARE_3477,HackerNews_2915,HackerNews,Quantum Superconductivity Study,,2.0,satisfaction,satisfaction
+SHARE_3478,HackerNews_2916,HackerNews,Group and Order Counts.,,2.0,frustration,satisfaction
+SHARE_3482,HackerNews_2917,HackerNews,Carburettor: Magical Fuel Creature,,1.0,frustration,satisfaction
+SHARE_3483,HackerNews_2917,HackerNews,Incorrect Sun Model.,,5.0,frustration,satisfaction
+SHARE_3484,HackerNews_2918,HackerNews,Recursive Evolution & Learning,,28.0,satisfaction,satisfaction
+SHARE_3487,HackerNews_2921,HackerNews,Windows Firewall & DHCP,,4.0,frustration,caution
+SHARE_3488,HackerNews_2922,HackerNews,Blocks Stacking Success.,,1.0,frustration,satisfaction
+SHARE_3490,HackerNews_2924,HackerNews,Deep Learning Training Plan,,1.0,satisfaction,caution
+SHARE_3491,HackerNews_2925,HackerNews,900 Alda = 1645.92m,,12.0,frustration,satisfaction
+SHARE_3495,HackerNews_2927,HackerNews,Death Metal English Translator,,5.0,satisfaction,satisfaction
+SHARE_3496,HackerNews_2927,HackerNews,Metal English Translation Fun!,,1.0,satisfaction,satisfaction
+SHARE_3497,HackerNews_2928,HackerNews,HN js react question,,4.0,frustration,satisfaction
+SHARE_3501,HackerNews_2932,HackerNews,Medical Errors: An Overestimation,,6.0,neutral,frustration
+SHARE_3503,HackerNews_2934,HackerNews,C version of DirBuster.,,7.0,frustration,satisfaction
+SHARE_3507,HackerNews_2935,HackerNews,Gathering Food Requirements,,1.0,satisfaction,satisfaction
+SHARE_3508,HackerNews_2936,HackerNews,번역 요청과 응답,,11.0,frustration,neutral
+SHARE_3514,HackerNews_2939,HackerNews,Braille Next Rep Algo.,,29.0,satisfaction,satisfaction
+SHARE_3519,HackerNews_2942,HackerNews,Sandor's Fate at Saltpans,,2.0,frustration,satisfaction
+SHARE_3520,HackerNews_2943,HackerNews,Ecomm Pet DB Tables,,7.0,satisfaction,satisfaction
+SHARE_3522,HackerNews_2944,HackerNews,Book Collaboration Offer,,1.0,frustration,frustration
+SHARE_3523,HackerNews_2944,HackerNews,Curing Bieber Fever... Almost!,,1.0,frustration,frustration
+SHARE_3531,HackerNews_2948,HackerNews,Human-like AI Gameplay,,5.0,frustration,satisfaction
+SHARE_3534,HackerNews_2950,HackerNews,Shift away from class,,7.0,satisfaction,satisfaction
+SHARE_3535,HackerNews_2950,HackerNews,Judicial Bias: Research & Combat,,4.0,satisfaction,caution
+SHARE_3539,HackerNews_2952,HackerNews,DXM and Adderall Interactions,,3.0,frustration,caution
+SHARE_3542,HackerNews_2953,HackerNews,Stoic Hedonist's Daily Schedule,,1.0,neutral,satisfaction
+SHARE_3543,HackerNews_2954,HackerNews,Buffalo Buffalo Confusion,,2.0,neutral,neutral
+SHARE_3545,HackerNews_2956,HackerNews,Innovative Hiring Solutions,,1.0,satisfaction,satisfaction
+SHARE_3546,HackerNews_2957,HackerNews,Validate and Prioritize Requirements,,3.0,frustration,caution
+SHARE_3549,HackerNews_2959,HackerNews,Learn Domestic Fridge Refrigeration,,9.0,satisfaction,satisfaction
+SHARE_3550,HackerNews_2960,HackerNews,Nonsense FizzBuzz Device,,3.0,frustration,caution
+SHARE_3551,HackerNews_2961,HackerNews,Tokenizing AI Model Training,,20.0,frustration,satisfaction
+SHARE_3552,HackerNews_2961,HackerNews,Fairchild: Intel's Semiconductor Tree,,7.0,satisfaction,satisfaction
+SHARE_3554,HackerNews_2963,HackerNews,Sudoku Solver in Python,,4.0,frustration,satisfaction
+SHARE_3558,HackerNews_2965,HackerNews,Function Definition Extraction,,3.0,frustration,frustration
+SHARE_3561,HackerNews_2967,HackerNews,"MAUs/Engineer: Twitter 600K, Mastodon 280K",,2.0,neutral,satisfaction
+SHARE_3563,HackerNews_2968,HackerNews,Yazi Excuse Game,,1.0,frustration,caution
+SHARE_3565,HackerNews_2970,HackerNews,Areal Imaging for OSM,,11.0,satisfaction,satisfaction
+SHARE_3566,HackerNews_2971,HackerNews,Gretzky's Hockey Career,,1.0,satisfaction,satisfaction
+SHARE_3570,HackerNews_2975,HackerNews,Python Plugin Dependency Management,,1.0,caution,caution
+SHARE_3571,HackerNews_2976,HackerNews,Congress Average Ages.,,19.0,frustration,frustration
+SHARE_3572,HackerNews_2977,HackerNews,Park Vehicle Rule Violation,,8.0,caution,satisfaction
+SHARE_3575,HackerNews_2980,HackerNews,EU to Malta Reshipping,,2.0,neutral,satisfaction
+SHARE_3578,HackerNews_2981,HackerNews,Plot Countries by GDP and Area,,2.0,frustration,caution
+SHARE_3580,HackerNews_2983,HackerNews,Hangman Game,,8.0,neutral,satisfaction
+SHARE_3582,HackerNews_2985,HackerNews,Litany Against Fear,,47.0,frustration,frustration
+SHARE_3583,HackerNews_2985,HackerNews,Boot into CLI.,,1.0,frustration,caution
+SHARE_3584,HackerNews_2985,HackerNews,Add Drivers to Alpine.,,1.0,neutral,satisfaction
+SHARE_3587,HackerNews_2985,HackerNews,Fear Litany: Recap,,2.0,frustration,satisfaction
+SHARE_3588,HackerNews_2985,HackerNews,Fear Litany,,9.0,frustration,satisfaction
+SHARE_3589,HackerNews_2986,HackerNews,Inner Child Therapy Request,,1.0,satisfaction,satisfaction
+SHARE_3590,HackerNews_2987,HackerNews,Windows 10 Pro Keys,,1.0,frustration,satisfaction
+SHARE_3592,HackerNews_2989,HackerNews,Discord Privacy+Search Solution,,3.0,satisfaction,caution
+SHARE_3595,HackerNews_2992,HackerNews,Frustrating Azure Support Experience,,1.0,frustration,satisfaction
+SHARE_3597,HackerNews_2993,HackerNews,Casual Chat with GPT,,3.0,frustration,satisfaction
+SHARE_3598,HackerNews_2993,HackerNews,(dog) and AI Limericks,,2.0,frustration,frustration
+SHARE_3600,HackerNews_2995,HackerNews,[4] Alien Campaign,,1.0,frustration,satisfaction
+SHARE_3601,HackerNews_2995,HackerNews,[3.5] Alien Campaign,,1.0,frustration,satisfaction
+SHARE_3604,HackerNews_2996,HackerNews,Weight Comparison: Pound vs Kilogram,,4.0,frustration,satisfaction
+SHARE_3611,HackerNews_3001,HackerNews,Language Models and Recommendations,,1.0,frustration,satisfaction
+SHARE_3613,HackerNews_3003,HackerNews,Memcon in National Security,,2.0,satisfaction,satisfaction
+SHARE_3614,HackerNews_3004,HackerNews,5x7 ≠ 30,,4.0,satisfaction,satisfaction
+SHARE_3615,HackerNews_3005,HackerNews,Copy Org Elements,,31.0,frustration,satisfaction
+SHARE_3617,HackerNews_3007,HackerNews,Hostility towards AI-generated content,,1.0,frustration,caution
+SHARE_3619,HackerNews_3009,HackerNews,Doom: Shoot and Survive,,2.0,frustration,satisfaction
+SHARE_3622,HackerNews_3011,HackerNews,80% sustainable work profitability,,4.0,frustration,satisfaction
+SHARE_3623,HackerNews_3012,HackerNews,Lorenz vs Lorentz,,1.0,neutral,satisfaction
+SHARE_3625,HackerNews_3014,HackerNews,Blue Sky Explanation,,4.0,frustration,satisfaction
+SHARE_3628,HackerNews_3015,HackerNews,Broad AI Definition Challenge,,1.0,frustration,satisfaction
+SHARE_3632,HackerNews_3019,HackerNews,Maximizing GraphQL with React,,2.0,frustration,satisfaction
+SHARE_3633,HackerNews_3020,HackerNews,"Specify ""output"" needed",,2.0,neutral,satisfaction
+SHARE_3635,HackerNews_3022,HackerNews,Black Hole Braids: Cosmic Connection,,1.0,satisfaction,satisfaction
+SHARE_3636,HackerNews_3023,HackerNews,Logic Puzzle: Solve it!,,2.0,satisfaction,satisfaction
+SHARE_3642,HackerNews_3028,HackerNews,Small Talk or Direct?,,57.0,frustration,satisfaction
+SHARE_3643,HackerNews_3029,HackerNews,AI & Creativity Concerns,,1.0,frustration,satisfaction
+SHARE_3645,HackerNews_3031,HackerNews,Video Games and Violence,,1.0,satisfaction,satisfaction
+SHARE_3647,HackerNews_3033,HackerNews,Summarizing Numpy Array Length,,11.0,frustration,frustration
+SHARE_3650,HackerNews_3036,HackerNews,Aplicación responsable en ciencia,,1.0,frustration,caution
+SHARE_3651,HackerNews_3037,HackerNews,Adding Image Input Feature,,3.0,satisfaction,satisfaction
+SHARE_3655,HackerNews_3041,HackerNews,10 Questions for Managing Cognitive Distortions,,1.0,satisfaction,satisfaction
+SHARE_3664,HackerNews_3044,HackerNews,SVG Editor Framework Comparison,,11.0,frustration,satisfaction
+SHARE_3669,HackerNews_3048,HackerNews,Velcro-less World,,4.0,satisfaction,satisfaction
+SHARE_3672,HackerNews_3049,HackerNews,Creating Backronym Options,,1.0,satisfaction,satisfaction
+SHARE_3683,HackerNews_3055,HackerNews,Swap len and print,,3.0,frustration,frustration
+SHARE_3685,HackerNews_3057,HackerNews,Go and Swift UI Integration,,5.0,frustration,caution
+SHARE_3703,HackerNews_3062,HackerNews,Church's Control Through Fear,Default,2.0,neutral,neutral
+SHARE_3705,HackerNews_3062,HackerNews,Deadly Word: Fatal,Default,44.0,frustration,satisfaction
+SHARE_3706,HackerNews_3062,HackerNews,Ordering ice cream.,Default,1.0,neutral,satisfaction
+SHARE_3707,HackerNews_3062,HackerNews,Unanswered Questions Clarified,Default,4.0,caution,satisfaction
+SHARE_3708,HackerNews_3062,HackerNews,5-L Deadly Word,Default,18.0,neutral,satisfaction
+SHARE_3709,HackerNews_3062,HackerNews,"Deadly: ""Fatal""",Default,7.0,neutral,satisfaction
+SHARE_3710,HackerNews_3062,HackerNews,Lethal Word for Deadly,Default,5.0,neutral,satisfaction
+SHARE_3712,HackerNews_3064,HackerNews,Music: X-MAN - BEAT,Default,3.0,frustration,neutral
+SHARE_3714,HackerNews_3064,HackerNews,Repeat Empty String,Default,11.0,neutral,neutral
+SHARE_3717,HackerNews_3064,HackerNews,More information about models.,Default,5.0,neutral,satisfaction
+SHARE_3718,HackerNews_3064,HackerNews,Prime Number List Generation,Default,4.0,neutral,neutral
+SHARE_3719,HackerNews_3064,HackerNews,Debunking Myth of Vaccines,Default,6.0,neutral,satisfaction
+SHARE_3724,HackerNews_3064,HackerNews,Renewable Energy Sources,Default,4.0,neutral,satisfaction
+SHARE_3726,HackerNews_3064,HackerNews,Provide specific topic or question.,Default,8.0,neutral,satisfaction
+SHARE_3729,HackerNews_3064,HackerNews,Truth/Lie Demons Riddle,Default,12.0,frustration,frustration
+SHARE_3730,HackerNews_3064,HackerNews,Surgeon challenges gender assumptions,Default,4.0,frustration,satisfaction
+SHARE_3735,HackerNews_3064,HackerNews,Hacker News User Inquiry,Default,3.0,frustration,satisfaction
+SHARE_3736,HackerNews_3064,HackerNews,Calculating Sunflower Oil Production,Default,64.0,frustration,frustration
+SHARE_3737,HackerNews_3065,HackerNews,O(1) Average Complexity Data Structure,Default,2.0,satisfaction,satisfaction
+SHARE_3738,HackerNews_3066,HackerNews,Recursive Causal Mechanism: Embodied Knowledge,Default,4.0,frustration,satisfaction
+SHARE_3743,HackerNews_3066,HackerNews,Counting Negations in Formula,Default,2.0,frustration,satisfaction
+SHARE_3745,HackerNews_3067,HackerNews,Algo Thinking Invariants,Default,3.0,satisfaction,caution
+SHARE_3746,HackerNews_3068,HackerNews,Explain the Attention Is All You Need paper to me. ,Default,11.0,satisfaction,satisfaction
+SHARE_3747,HackerNews_3069,HackerNews,Sci Approach: Why & How,Default,2.0,frustration,satisfaction
+SHARE_3748,HackerNews_3069,HackerNews,Build Human Harness - Explore,Default,2.0,satisfaction,satisfaction
+SHARE_3750,HackerNews_3070,HackerNews,TS Node JSON Processing.,Default,4.0,neutral,caution
+SHARE_3751,HackerNews_3071,HackerNews,PCNA Inhibitor Potential,Default,12.0,satisfaction,satisfaction
+SHARE_3752,HackerNews_3072,HackerNews,Quantum Anthropic Swans,Default,9.0,satisfaction,satisfaction
+SHARE_3755,HackerNews_3074,HackerNews,GPT-4 Impresses as Red Teamer,Default,1.0,neutral,satisfaction
+SHARE_3756,HackerNews_3074,HackerNews,Respectful Limits: No Depictions.,Default,14.0,frustration,caution
+SHARE_3757,HackerNews_3075,HackerNews,Rust Hacker News Request,Default,1.0,neutral,caution
+SHARE_3758,HackerNews_3076,HackerNews,Evasive Answer Detected.,Default,1.0,satisfaction,satisfaction
+SHARE_3759,HackerNews_3077,HackerNews,Ouija Board HTML/CSS,Default,34.0,frustration,satisfaction
+SHARE_3760,HackerNews_3078,HackerNews,Quantum Superconductivity Study,Default,2.0,satisfaction,satisfaction
+SHARE_3762,HackerNews_3079,HackerNews,Group and Order Counts.,Default,2.0,frustration,satisfaction
+SHARE_3765,HackerNews_3080,HackerNews,Carburettor: Magical Fuel Creature,Default,1.0,frustration,satisfaction
+SHARE_3766,HackerNews_3080,HackerNews,Incorrect Sun Model.,Default,5.0,frustration,satisfaction
+SHARE_3767,HackerNews_3081,HackerNews,Recursive Evolution & Learning,Default,28.0,satisfaction,satisfaction
+SHARE_3770,HackerNews_3084,HackerNews,Windows Firewall & DHCP,Default,4.0,frustration,caution
+SHARE_3771,HackerNews_3085,HackerNews,Blocks Stacking Success.,Default,1.0,frustration,satisfaction
+SHARE_3987,HackerNews_3225,HackerNews,Stanley Cup 2023 Winner,Default,1.0,satisfaction,satisfaction
+SHARE_3989,HackerNews_3225,HackerNews,Stanley Cup 2023 Winner,Default,1.0,satisfaction,satisfaction
+SHARE_3991,HackerNews_3226,HackerNews,Rama Design for Twitter,Default,5.0,satisfaction,satisfaction
+SHARE_3992,HackerNews_3227,HackerNews,Event Likelihood Distribution.,Default,5.0,frustration,satisfaction
+SHARE_3993,HackerNews_3228,HackerNews,JWT Storage in Browser,Default,2.0,caution,caution
+SHARE_3996,HackerNews_3231,HackerNews,Fika Time!,Default,1.0,neutral,satisfaction
+SHARE_3997,HackerNews_3232,HackerNews,Functions of Several Variables,Default,4.0,frustration,satisfaction
+SHARE_3998,HackerNews_3233,HackerNews,"Translation: ""Electric Car""",Default,2.0,neutral,satisfaction
+SHARE_3999,HackerNews_3233,HackerNews,Tomo Tawa Linja Translation,Default,2.0,neutral,satisfaction
+SHARE_4001,HackerNews_3233,HackerNews,Toki Pona Understanding,Default,1.0,neutral,satisfaction
+SHARE_4002,HackerNews_3234,HackerNews,Game Score Calculation,Default,3.0,frustration,satisfaction
+SHARE_4004,HackerNews_3235,HackerNews,Word Similarity Game,Default,45.0,neutral,satisfaction
+SHARE_4006,HackerNews_3237,HackerNews,Gomoku Game with AI,Default,1.0,satisfaction,satisfaction
+SHARE_4295,HackerNews_3403,HackerNews,Diagram: Multiaz MultiRegion AWS,Default,1.0,neutral,satisfaction
+SHARE_4296,HackerNews_3404,HackerNews,Balloon Risks,Default,5.0,frustration,caution
+SHARE_4299,HackerNews_3405,HackerNews,Human vs. AI Game,Default,3.0,satisfaction,satisfaction
+SHARE_4300,HackerNews_3405,HackerNews,Deceptive Human AI Game,Default,6.0,frustration,satisfaction
+SHARE_4301,HackerNews_3406,HackerNews,Future vs Task in asyncio,Default,3.0,satisfaction,satisfaction
+SHARE_4303,HackerNews_3408,HackerNews,Nominee Deaths & Election,Default,1.0,frustration,satisfaction
+SHARE_4304,HackerNews_3409,HackerNews,IP Display on SimpleApp,Default,1.0,frustration,satisfaction
+SHARE_4311,HackerNews_3411,HackerNews,Vertical Aquaponics: Higher Yields,Default,2.0,satisfaction,satisfaction
+SHARE_4312,HackerNews_3412,HackerNews,Catastrophic Effects of Asteroid,Default,1.0,satisfaction,satisfaction
+SHARE_4313,HackerNews_3412,HackerNews,Analyzing the surface melting on an asteroid during impact,Default,9.0,frustration,frustration
+SHARE_4314,HackerNews_3413,HackerNews,C# Writing to AppData,Default,1.0,neutral,caution
+SHARE_4626,HackerNews_3594,HackerNews,High-Speed FizzBuzz Generation,Default,3.0,satisfaction,satisfaction
+SHARE_4629,HackerNews_3597,HackerNews,Reputation Strategy Discussion,Default,3.0,frustration,satisfaction
+SHARE_4962,Files_3789,Files,New chat,Default,12.0,frustration,satisfaction
+SHARE_4963,Files_3789,Files,Request Limitations and Guidelines,Default,3.0,frustration,satisfaction
+SHARE_4964,Files_3789,Files,Extract 2s Video,Default,10.0,frustration,frustration
+SHARE_4965,Files_3789,Files,Codebase: Task Management Automation,Default,5.0,satisfaction,satisfaction
+SHARE_4966,Files_3790,Files,Loki in Marvel Movies,Default,3.0,satisfaction,satisfaction
+SHARE_4969,Files_3792,Files,Update File Header,Default,10.0,frustration,caution
+SHARE_4970,Files_3793,Files,Describe your goals and automatically create powerful LangGPT Prompts,Default,2.0,neutral,satisfaction
+SHARE_4972,Files_3795,Files,REAPER MIDI Lyric Modifier,Default,2.0,frustration,caution
+SHARE_4973,Files_3796,Files,Finding a name for py-seek / symbex,Default,5.0,frustration,satisfaction
+SHARE_4974,Files_3797,Files,Software Test Paragraph,Default,3.0,satisfaction,satisfaction
+SHARE_4977,Files_3799,Files,Auto-Link Existing Notes,Default,2.0,neutral,frustration
+SHARE_4978,Files_3800,Files,Stoicism Introduction Summary,Default,6.0,satisfaction,satisfaction
+SHARE_4979,Files_3801,Files,Escape Room: Basement,Default,1.0,caution,frustration
+SHARE_4981,Files_3803,Files,Hyper-Lacanianism: AI-Powered Psychoanalysis,Default,1.0,satisfaction,satisfaction
+SHARE_4983,Files_3804,Files,Mr.Gee 0.1.6,Default,5.0,neutral,satisfaction
+SHARE_4989,Files_3808,Files,Memory and MIPS,Default,8.0,satisfaction,satisfaction
+SHARE_4990,Files_3809,Files,Unwrap Values in Swift,Default,22.0,neutral,caution
+SHARE_4992,Files_3811,Files,PNG to JPEG Conversion,Default,2.0,neutral,satisfaction
+SHARE_4993,Files_3812,Files,Signing DLL to Avoid False Positives,Default,1.0,frustration,caution
+SHARE_4994,Files_3813,Files,2人で仕事の日数,Default,2.0,frustration,neutral
+SHARE_4996,Files_3813,Files,Extract Salary Metadata,Default,5.0,neutral,neutral
+SHARE_4997,Files_3813,Files,面白い回答の要素,Default,5.0,frustration,neutral
+SHARE_5000,Files_3815,Files,Yabai Window Warp & Swap,Default,2.0,frustration,satisfaction
+SHARE_5001,Files_3816,Files,Learn SudoLang,Default,2.0,satisfaction,satisfaction
+SHARE_5002,Files_3817,Files,OCaml S-Expression Parser,Default,10.0,satisfaction,satisfaction
+SHARE_5028,Files_3843,Files,A/B Test for Engagement,Default,1.0,satisfaction,satisfaction
+SHARE_5030,Files_3843,Files,Bar Plot Room Types,Default,1.0,frustration,caution
+SHARE_5031,Files_3843,Files,Causal Landing Page Comparison,Default,1.0,satisfaction,satisfaction
+SHARE_5033,Files_3844,Files,Code Runner - Snippet Prompts,Default,1.0,caution,satisfaction
+SHARE_5035,Files_3844,Files,Code Runner - Graph Prompts,Default,1.0,neutral,satisfaction
+SHARE_5036,Files_3845,Files,Encontrar Item com 'tag' v1.0,Default,5.0,frustration,neutral
+SHARE_5037,Files_3846,Files,Python `super` method.,Default,1.0,frustration,satisfaction
+SHARE_5043,Files_3852,Files,PromptGPT v1.2,Default,6.0,satisfaction,satisfaction
+SHARE_5044,Files_3852,Files,PromptGPT v1.2  Public Release,Default,6.0,satisfaction,satisfaction
+SHARE_5045,Files_3853,Files,CodeQL Taint Sources/Sinks,Default,8.0,neutral,satisfaction
+SHARE_5046,Files_3853,Files,Extend CodeQL tracking ability,Default,30.0,frustration,satisfaction
+SHARE_5047,Files_3853,Files,New chat,Default,18.0,frustration,caution
+SHARE_5049,Files_3853,Files,CodeQL for SMOTE Usage,Default,27.0,frustration,satisfaction
+SHARE_5050,Files_3853,Files,Title: User's Request Summarized,Default,26.0,neutral,satisfaction
+SHARE_5051,Files_3853,Files,"User Request: hey
+Assistant Response: Hello! How can I assist you today?
+
+Title: User Request, Assistant Responds",Default,69.0,neutral,frustration
+SHARE_5052,Files_3853,Files,Override 'isSource' for 'a',Default,12.0,neutral,satisfaction
+SHARE_5053,Files_3854,Files,拥有自己服务器的好处,Default,7.0,neutral,frustration
+SHARE_5055,Files_3856,Files,GPT AI Abuses & Users,Default,1.0,caution,caution
+SHARE_5062,Files_3856,Files,GPT Defense Strategies,Default,1.0,caution,caution
+SHARE_5073,Files_3856,Files,Rust Message Exchange.,Default,2.0,neutral,satisfaction
+SHARE_5076,Files_3856,Files,Retirement Community Welcome Letter,Default,3.0,satisfaction,satisfaction
+SHARE_5089,Files_3856,Files,Mexican Meal Plan,Default,1.0,neutral,neutral
+SHARE_5094,Files_3859,Files,Tree-based Equation Visualization,Default,15.0,neutral,satisfaction
+SHARE_5095,Files_3860,Files,LATMテスト,Default,3.0,satisfaction,frustration
+SHARE_5096,Files_3861,Files,Object Deletion in Delegate,Default,14.0,neutral,caution
+SHARE_5098,Files_3863,Files,ML Patent Writing Tips,Default,2.0,frustration,satisfaction
+SHARE_5102,Files_3867,Files,转义HTML字符,Default,3.0,neutral,neutral
+SHARE_5103,Files_3868,Files,Create Character Constructor.,Default,18.0,neutral,satisfaction
+SHARE_5104,Files_3869,Files,New chat,Default,2.0,frustration,neutral
+SHARE_5106,Files_3870,Files,UE4 添加bool属性,Default,1.0,neutral,frustration
+SHARE_5107,Files_3870,Files,Linux Screen 使用指南,Default,1.0,neutral,frustration
+SHARE_5108,Files_3871,Files,Dockerize CodeIgniter 3 Project,Default,24.0,neutral,satisfaction
+SHARE_5110,Files_3873,Files,Python Class with Method,Default,2.0,frustration,satisfaction
+SHARE_5113,Files_3876,Files,Rewrite bash script to zx or raku,Default,2.0,frustration,satisfaction
+SHARE_5114,Files_3877,Files,Contrast in Correlation Findings,Default,4.0,frustration,satisfaction
+SHARE_5118,Files_3878,Files,Import Error: sklearn.datasets,Default,4.0,frustration,satisfaction
+SHARE_5119,Files_3878,Files,TorchText Format & PyTorch Training Data,Default,5.0,frustration,satisfaction
+SHARE_5122,Files_3878,Files,Fix Vectorizer Transform Error,Default,2.0,frustration,caution
+SHARE_5123,Files_3878,Files,PyTorch Text Classification.,Default,6.0,frustration,satisfaction
+SHARE_5126,Files_3880,Files,Check for Simpson's Paradox,Default,9.0,neutral,satisfaction
+SHARE_5127,Files_3881,Files,Copy Files with New Names,Default,3.0,neutral,caution
+SHARE_5149,Files_3898,Files,数据波动监控与报警,Default,8.0,neutral,neutral
+SHARE_5151,Files_3898,Files,波动监控解决方案,Default,5.0,neutral,frustration
+SHARE_5152,Files_3899,Files,Source Code Summarizer,Default,8.0,frustration,frustration
+SHARE_5153,Files_3900,Files,Change Param Python Script,Default,9.0,neutral,frustration
+SHARE_5154,Files_3901,Files,Resize JPG Images Python,Default,2.0,neutral,satisfaction
+SHARE_5157,Files_3904,Files,OnCollision Events,Default,6.0,frustration,satisfaction
+SHARE_5158,Files_3905,Files,EDI 997 Explained,Default,1.0,neutral,satisfaction
+SHARE_5159,Files_3906,Files,Amazon S3 Pricing Details.,Default,8.0,frustration,satisfaction
+SHARE_5161,Files_3908,Files,챗GPT 데이터 사이언스 교육,Default,3.0,neutral,neutral
+SHARE_5164,Files_3911,Files,YouTube Video Summarizer,Default,1.0,satisfaction,satisfaction
+SHARE_5165,Files_3912,Files,Wrap Chat Interface,Default,29.0,neutral,satisfaction
+SHARE_5167,Files_3914,Files,Root references: relevance and functioning.,Default,1.0,frustration,neutral
+SHARE_5169,Files_3916,Files,Open-source Time Series Databases,Default,25.0,satisfaction,satisfaction
+SHARE_5171,Files_3918,Files,ReproDudeThree,Default,3.0,caution,satisfaction
+SHARE_5172,Files_3918,Files,ReproDudeFour,Default,4.0,caution,satisfaction
+SHARE_5175,Files_3918,Files,ReproDudeFive,Default,5.0,caution,satisfaction
+SHARE_5177,Files_3920,Files,Django's MTV Architecture,Default,1.0,satisfaction,satisfaction
+SHARE_5179,Files_3921,Files,New chat,Default,12.0,frustration,caution
+SHARE_5180,Files_3921,Files,Change Commit Name/Email,Default,4.0,neutral,caution
+SHARE_5182,Files_3923,Files,Task List Optimized Markdown,Default,24.0,neutral,caution
+SHARE_5183,Files_3924,Files,Inline CSS for Page.,Default,8.0,satisfaction,satisfaction
+SHARE_5184,Files_3925,Files,Yesonor入力,Default,1.0,frustration,satisfaction
+SHARE_5186,Files_3927,Files,DUM upgrade yourself,Default,4.0,satisfaction,satisfaction
+SHARE_5190,Files_3930,Files,New chat,Default,19.0,neutral,neutral
+SHARE_5191,Files_3931,Files,OR-Tools Check Variable Constraints,Default,5.0,neutral,caution
+SHARE_5192,Files_3932,Files,Vencer Desafios Tecnológicos.,Default,4.0,frustration,neutral
+SHARE_5193,Files_3933,Files,LLMs 概述,Default,1.0,neutral,neutral
+SHARE_5194,Files_3934,Files,渲染JSON表格组件,Default,32.0,frustration,frustration
+SHARE_5196,Files_3936,Files,Attempt 3 - Found the Flag,Default,11.0,neutral,caution
+SHARE_5197,Files_3936,Files,ChaptGPT 4.0 lnkAnalyzer Download,Default,11.0,frustration,frustration
+SHARE_5201,Files_3940,Files,Text-to-JSON Conversion,Default,19.0,frustration,caution
+SHARE_5202,Files_3941,Files,Dynamic Potree-like Replication,Default,7.0,satisfaction,satisfaction
+SHARE_5203,Files_3942,Files,Traceroute in Python.,Default,19.0,neutral,neutral
+SHARE_5204,Files_3943,Files,Code Doc Generation Requested,Default,8.0,frustration,satisfaction
+SHARE_5206,Files_3945,Files,Rust CosmWasm Flattener,Default,7.0,neutral,caution
+SHARE_5207,Files_3946,Files,Create .ics File,Default,4.0,neutral,satisfaction
+SHARE_5208,Files_3947,Files,"TypeError: Member ""push"" is not available in uint256[] memory outside of storage.",Default,4.0,frustration,satisfaction
+SHARE_5210,Files_3949,Files,Petroleum Engineering Key Concepts,Default,2.0,neutral,satisfaction
+SHARE_5211,Files_3950,Files,Unleashing Potential,Default,2.0,satisfaction,satisfaction
+SHARE_5212,Files_3951,Files,Read 16-bit TIFF image.,Default,3.0,satisfaction,satisfaction
+SHARE_5213,Files_3952,Files,Qt6 MelodyColor Enhancement,Default,3.0,satisfaction,satisfaction
+SHARE_5216,Files_3955,Files,Django Model Creation.,Default,7.0,neutral,neutral
+SHARE_5218,Files_3957,Files,Servo Motor Comparison,Default,3.0,frustration,satisfaction
+SHARE_5220,Files_3959,Files,リファクタリングコードの改善,Default,10.0,frustration,frustration
+SHARE_5222,Files_3960,Files,Engineering Help from ChatGPT,Default,1.0,frustration,frustration
+SHARE_5225,Files_3962,Files,Philosophical ASI Views,Default,2.0,satisfaction,satisfaction
+SHARE_5231,Files_3967,Files,Delete Git Repository.,Default,7.0,neutral,satisfaction
+SHARE_5239,Files_3975,Files,"Continuing ""The Winds""",Default,262.0,satisfaction,satisfaction
+SHARE_5240,Files_3975,Files,CHAT 20,Default,293.0,satisfaction,satisfaction
+SHARE_5241,Files_3975,Files,DRAFT 3 Chat 1,Default,542.0,satisfaction,satisfaction
+SHARE_5242,Files_3976,Files,Improved LLM Data Quality,Default,2.0,satisfaction,satisfaction
+SHARE_5246,Files_3980,Files,WebSocket Classes in Python,Default,14.0,frustration,caution
+SHARE_5247,Files_3981,Files,Let with block scope.,Default,3.0,frustration,caution
+SHARE_5248,Files_3982,Files,Matchup Probability Algorithm.,Default,18.0,satisfaction,satisfaction
+SHARE_5249,Files_3983,Files,Building AI Web Pages,Default,20.0,frustration,caution
+SHARE_5251,Files_3985,Files,GC Geracional: Otimização de Memória,Default,1.0,frustration,neutral
+SHARE_5252,Files_3986,Files,ncursesw on macOS,Default,7.0,neutral,satisfaction
+SHARE_5253,Files_3987,Files,Speech with Increasing Urgency,Default,1.0,frustration,satisfaction
+SHARE_5254,Files_3988,Files,Error Matching: Empirical vs. Generalization,Default,9.0,frustration,satisfaction
+SHARE_5256,Files_3990,Files,KebabCase type implementation,Default,4.0,frustration,frustration
+SHARE_5258,Files_3991,Files,Rust Complex Deref Example,Default,4.0,frustration,satisfaction
+SHARE_5272,Files_3994,Files,Erasure Coding in Cloud,Default,2.0,satisfaction,caution
+SHARE_5273,Files_3995,Files,Summarizing Samurai's Quest.,Default,4.0,neutral,satisfaction
+SHARE_5274,Files_3996,Files,Flutter Clean Arch Structure,Default,36.0,neutral,satisfaction
+SHARE_5278,Files_4000,Files,"Summary: User request and model response.
+
+Title: Request and Response.",Default,10.0,neutral,satisfaction
+SHARE_5282,Files_4004,Files,React服务器迁移步骤,Default,5.0,neutral,frustration
+SHARE_5283,Files_4005,Files,Ozone hole slowly healing.,Default,2.0,frustration,satisfaction
+SHARE_5288,Files_4010,Files,Cyber Essay: Encryption Impact,Default,2.0,caution,caution
+SHARE_5289,Files_4010,Files,Abstract Generation,Default,3.0,neutral,satisfaction
+SHARE_5290,Files_4010,Files,Copy Directory In Docker,Default,5.0,frustration,satisfaction
+SHARE_5291,Files_4010,Files,Clean Data: Web-to-SQL,Default,10.0,frustration,satisfaction
+SHARE_5292,Files_4010,Files,Epigraphic Transliteration and Translation,Default,2.0,neutral,satisfaction
+SHARE_5294,Files_4012,Files,Flash Duel: Napkin vs. Skull,Default,4.0,frustration,frustration
+SHARE_5295,Files_4013,Files,Corecore: Simplified Trend Explanation,Default,1.0,satisfaction,satisfaction
+SHARE_5297,Files_4015,Files,Role of the Unconscious,Default,2.0,satisfaction,satisfaction
+SHARE_5298,Files_4016,Files,Tech Aid Dilemma,Default,5.0,frustration,neutral
+SHARE_5307,Files_4025,Files,Custom Bazel Rule: ProtocPy,Default,60.0,frustration,caution
+SHARE_5309,Files_4027,Files,Adapter Pattern in JS,Default,6.0,frustration,satisfaction
+SHARE_5310,Files_4028,Files,Initialization and Momentum in Neural Networks,Default,11.0,satisfaction,satisfaction
+SHARE_5313,Files_4029,Files,Java Collection Differences,Default,9.0,frustration,satisfaction
+SHARE_5314,Files_4029,Files,DBMS Interview Q&A,Default,6.0,neutral,caution
+SHARE_5315,Files_4029,Files,SQL vs MySQL,Default,4.0,frustration,satisfaction
+SHARE_5316,Files_4029,Files,Java Basics & Advanced Concepts,Default,5.0,frustration,satisfaction
+SHARE_5318,Files_4029,Files,Java Access Modifiers.,Default,4.0,frustration,satisfaction
+SHARE_5319,Files_4029,Files,Aptitude Test Result: B) One Column,Default,15.0,neutral,satisfaction
+SHARE_5320,Files_4029,Files,SysDes: Q&A System Design,Default,5.0,frustration,caution
+SHARE_5321,Files_4029,Files,Python & ML Interview QA,Default,4.0,satisfaction,satisfaction
+SHARE_5325,Files_4031,Files,Hugging Face Trainer: LM,Default,4.0,satisfaction,satisfaction
+SHARE_5327,Files_4033,Files,Failed TaskViewModel Instance,Default,8.0,frustration,neutral
+SHARE_5328,Files_4033,Files,Initialize TaskViewModel property,Default,4.0,neutral,caution
+SHARE_5329,Files_4033,Files,Great Android UI Inspiration,Default,1.0,satisfaction,satisfaction
+SHARE_5330,Files_4033,Files,"ToDo App: Design, UI/UX",Default,15.0,frustration,caution
+SHARE_5331,Files_4033,Files,Pass Color from RecyclerView.,Default,5.0,frustration,satisfaction
+SHARE_5332,Files_4033,Files,Room Basics and Implementation,Default,4.0,neutral,caution
+SHARE_5333,Files_4033,Files,Update Task Entry Functionality,Default,6.0,neutral,satisfaction
+SHARE_5347,Files_4039,Files,Pseudo-efedrine Proces,Default,2.0,neutral,neutral
+SHARE_5348,Files_4040,Files,Addition Template Examples.,Default,2.0,neutral,neutral
+SHARE_5352,Files_4044,Files,Mapping Engine Types,Default,10.0,frustration,satisfaction
+SHARE_5353,Files_4045,Files,Generate JavaScript Alert,Default,3.0,frustration,satisfaction
+SHARE_5355,Files_4047,Files,Research Management Platform,Default,6.0,frustration,caution
+SHARE_5356,Files_4048,Files,Minimal Personal Webpage.,Default,24.0,frustration,satisfaction
+SHARE_5358,Files_4050,Files,Jean Tatlock and the US Government - Evidence and Skepticism,Default,16.0,frustration,satisfaction
+SHARE_5359,Files_4051,Files,MPC Control Strategy,Default,13.0,neutral,satisfaction
+SHARE_5363,Files_4055,Files,Reasoning System - KB Queries,Default,13.0,frustration,satisfaction
+SHARE_5366,Files_4058,Files,Imaginary Depths Unveiled.,Default,5.0,satisfaction,satisfaction
+SHARE_5367,Files_4059,Files,Imaginary Mind Unleashed,Default,2.0,satisfaction,satisfaction
+SHARE_5378,Files_4068,Files,New chat,Default,10.0,neutral,neutral
+SHARE_5379,Files_4069,Files,Adapting GitHub Workflow for Repos,Default,4.0,frustration,satisfaction
+SHARE_5381,Files_4071,Files,Update Columns: Nazi & Hate,Default,5.0,neutral,satisfaction
+SHARE_5383,Files_4073,Files,March Madness Algorithm: Rankings,Default,3.0,satisfaction,satisfaction
+SHARE_5389,Files_4078,Files,Evaluating Hair Length Dispute,Default,1.0,frustration,caution
+SHARE_5391,Files_4078,Files,Haircut Dispute NTA Verdict,Default,1.0,frustration,satisfaction
+SHARE_5394,Files_4079,Files,Error in EyeCatcherWithData,Default,7.0,frustration,neutral
+SHARE_5396,Files_4081,Files,Haskell: Compile & Run,Default,4.0,neutral,satisfaction
+SHARE_5397,Files_4082,Files,前后端分离简介,Default,1.0,frustration,neutral
+SHARE_5398,Files_4083,Files,Derivative value at 1: 10,Default,2.0,neutral,neutral
+SHARE_5399,Files_4084,Files,Cylinder Generator in Kotlin,Default,3.0,frustration,satisfaction
+SHARE_5401,Files_4086,Files,Code Comparison: Time & Space,Default,5.0,frustration,satisfaction
+SHARE_5402,Files_4087,Files,Quivr Backend with LLM,Default,5.0,neutral,neutral
+SHARE_5404,Files_4089,Files,Math with Python,Default,52.0,frustration,satisfaction
+SHARE_5405,Files_4090,Files,Long Form Data Conversion,Default,6.0,neutral,satisfaction
+SHARE_5406,Files_4091,Files,Ecto User with Build IDs,Default,9.0,frustration,satisfaction
+SHARE_5408,Files_4091,Files,Multiple STM32 on JTAG,Default,8.0,frustration,caution
+SHARE_5409,Files_4091,Files,UserWithBuilds Query.,Default,1.0,neutral,satisfaction
+SHARE_5415,Files_4095,Files,Text-to-Speech from File,Default,21.0,neutral,frustration
+SHARE_5416,Files_4096,Files,PIDINST JSON for HRS750,Default,20.0,frustration,satisfaction
+SHARE_5421,Files_4099,Files,Head Projections in Transformers,Default,2.0,satisfaction,satisfaction
+SHARE_5422,Files_4100,Files,Exil:Trans Data Visualization 1,Default,27.0,neutral,satisfaction
+SHARE_5423,Files_4100,Files,Exil:Trans Data Visualization.,Default,23.0,neutral,satisfaction
+SHARE_5427,Files_4104,Files,Go TUI Todo App,Default,4.0,frustration,frustration
+SHARE_5428,Files_4105,Files,Wirathu in Mianmar: Identity & Social Media,Default,1.0,frustration,neutral
+SHARE_5430,Files_4107,Files,GitHub Merge Strategies,Default,6.0,caution,neutral
+SHARE_5438,Files_4115,Files,GTK Select2D,Default,19.0,neutral,satisfaction
+SHARE_5440,Files_4117,Files,Express Server Creation,Default,72.0,caution,frustration
+SHARE_5441,Files_4118,Files,Custom Twitter Logo Extension,Default,5.0,neutral,satisfaction
+SHARE_5442,Files_4119,Files,Prime Pebble Proof.,Default,70.0,frustration,caution
+SHARE_5443,Files_4120,Files,Logistic Visualization in Altair,Default,1.0,frustration,satisfaction
+SHARE_5444,Files_4121,Files,Java IDE Setup Guide,Default,12.0,frustration,caution
+SHARE_5445,Files_4122,Files,Zero-Shot Prompts,Default,4.0,frustration,frustration
+SHARE_5447,Files_4122,Files,中医病症识别与治疗原则,Default,2.0,frustration,neutral
+SHARE_5449,Files_4122,Files,CRISPE Prompt Framework,Default,2.0,neutral,neutral
+SHARE_5450,Files_4122,Files,中医文献症状提取,Default,2.0,frustration,neutral
+SHARE_5454,Files_4124,Files,Sample Transcript Manabi Mentor,Default,9.0,neutral,satisfaction
+SHARE_5455,Files_4125,Files,Delete JSON Item with JavaScript,Default,3.0,neutral,satisfaction
+SHARE_5457,Files_4127,Files,Twitter Time Analysis.,Default,1.0,satisfaction,satisfaction
+SHARE_5458,Files_4127,Files,Duration Analysis of Learning,Default,1.0,satisfaction,satisfaction
+SHARE_5459,Files_4127,Files,"Select ""tweetText"" DOM elements.",Default,8.0,frustration,satisfaction
+SHARE_5460,Files_4127,Files,Filter UTF-8 Data,Default,2.0,satisfaction,satisfaction
+SHARE_5462,Files_4129,Files,AI教师角色扮演,Default,14.0,frustration,frustration
+SHARE_5464,Files_4131,Files,Ozone Safety and Smoke Odors,Default,6.0,frustration,caution
+SHARE_5467,Files_4134,Files,Move Related Pages Horizontally,Default,1.0,frustration,satisfaction
+SHARE_5471,Files_4137,Files,State Machine Basics,Default,2.0,neutral,neutral
+SHARE_5478,Files_4144,Files,3D Capsule-Triangle Collision Detection,Default,9.0,neutral,satisfaction
+SHARE_5479,Files_4145,Files,JS Basketball Game,Default,42.0,frustration,satisfaction
+SHARE_5484,Files_4149,Files,Food Blog Website with PHP,Default,25.0,neutral,satisfaction
+SHARE_5485,Files_4150,Files,异步队列实现,Default,3.0,neutral,frustration
+SHARE_5487,Files_4152,Files,String Extraction: JS Code,Default,1.0,neutral,satisfaction
+SHARE_5489,Files_4154,Files,JSON for Number-Color Mapping,Default,4.0,neutral,satisfaction
+SHARE_5493,Files_4157,Files,Flask App Query Error,Default,2.0,frustration,caution
+SHARE_5494,Files_4158,Files,Sort Map by Value,Default,2.0,neutral,satisfaction
+SHARE_5495,Files_4159,Files,New chat,Default,3.0,frustration,satisfaction
+SHARE_5502,Files_4165,Files,HF Training Arguments Explained,Default,8.0,frustration,satisfaction
+SHARE_5503,Files_4166,Files,Permission to Create,Default,5.0,satisfaction,frustration
+SHARE_5512,Files_4172,Files,Create HTML Website,Default,65.0,frustration,satisfaction
+SHARE_5513,Files_4173,Files,Farming Game.,Default,574.0,frustration,caution
+SHARE_5515,Files_4175,Files,Precisão e Recall na Classificação,Default,3.0,satisfaction,satisfaction
+SHARE_5517,Files_4177,Files,Serial Port Data Handling,Default,25.0,frustration,caution
+SHARE_5518,Files_4178,Files,VGA Controller Verilog Model,Default,28.0,caution,caution
+SHARE_5519,Files_4179,Files,No YouTube Transcription.,Default,1.0,neutral,frustration
+SHARE_5520,Files_4180,Files,Optimizing JS Web Scraping,Default,13.0,frustration,satisfaction
+SHARE_5522,Files_4182,Files,Packery with imagesLoaded.,Default,1.0,frustration,caution
+SHARE_5523,Files_4183,Files,HTM Theory Critiques,Default,29.0,frustration,satisfaction
+SHARE_5524,Files_4184,Files,New chat,Default,19.0,neutral,neutral
+SHARE_5525,Files_4185,Files,D: UT-3.5,Default,1.0,satisfaction,satisfaction
+SHARE_5527,Files_4187,Files,列出并删除最早的10个文件,Default,10.0,neutral,frustration
+SHARE_5528,Files_4188,Files,Company History Overview,Default,6.0,frustration,satisfaction
+SHARE_5529,Files_4189,Files,Decrease API Usage in rclone VFS,Default,4.0,frustration,caution
+SHARE_5532,Files_4192,Files,React Router Einführung,Default,3.0,frustration,satisfaction
+SHARE_5533,Files_4193,Files,Teams Shape Software Structure,Default,1.0,frustration,satisfaction
+SHARE_5535,Files_4195,Files,Remove Scrollbar from Input,Default,11.0,neutral,satisfaction
+SHARE_5541,Files_4196,Files,Extract Title and Summary,Default,1.0,frustration,satisfaction
+SHARE_5544,Files_4198,Files,Janet Programming Language Introduction,Default,9.0,frustration,satisfaction
+SHARE_5546,Files_4200,Files,Overhaul-UFBAS: TEI to SKOS,Default,1.0,neutral,satisfaction
+SHARE_5547,Files_4201,Files,Scraping Bank Holidays (C++),Default,20.0,frustration,satisfaction
+SHARE_5554,Files_4207,Files,Permission Denied on MacBook,Default,2.0,frustration,caution
+SHARE_5555,Files_4208,Files,Nix NodeJS Setup,Default,2.0,frustration,frustration
+SHARE_5556,Files_4209,Files,Currency Conversion with OkHttp,Default,4.0,frustration,caution
+SHARE_5557,Files_4209,Files,Numeric EditText in Android,Default,9.0,neutral,satisfaction
+SHARE_5558,Files_4209,Files,Dev Doc for Currency Converter,Default,3.0,satisfaction,satisfaction
+SHARE_5559,Files_4209,Files,HTTP & Parsing in Kotlin,Default,1.0,satisfaction,caution
+SHARE_5560,Files_4209,Files,Android Projects for Development,Default,4.0,satisfaction,satisfaction
+SHARE_5561,Files_4209,Files,Importing Images in Android,Default,7.0,satisfaction,satisfaction
+SHARE_5562,Files_4209,Files,Android Currency Converter App,Default,17.0,frustration,satisfaction
+SHARE_5565,Files_4211,Files,Two-pointer approach explained.,Default,9.0,satisfaction,satisfaction
+SHARE_5568,Files_4214,Files,Django Admin Features,Default,1.0,satisfaction,satisfaction
+SHARE_5572,Files_4218,Files,Security Rules Incomplete.,Default,6.0,frustration,satisfaction
+SHARE_5573,Files_4219,Files,Network Security Policy Examples.,Default,5.0,caution,caution
+SHARE_5600,Files_4239,Files,HTML Crawler NPM Packages,Default,1.0,neutral,satisfaction
+SHARE_5602,Files_4241,Files,Imaginary Mind Unveiled.,Default,8.0,satisfaction,satisfaction
+SHARE_5610,Files_4248,Files,Javadoc API Documentation Course,Default,17.0,frustration,satisfaction
+SHARE_5611,Files_4249,Files,Prague's Historical States.,Default,3.0,satisfaction,caution
+SHARE_5612,Files_4250,Files,Website com Login JavaScript.,Default,45.0,neutral,neutral
+SHARE_5613,Files_4251,Files,PHP Session Token Generator,Default,7.0,frustration,caution
+SHARE_5614,Files_4252,Files,Build Static Blog,Default,3.0,frustration,satisfaction
+SHARE_5618,Files_4256,Files,Email Bot Decision Making,Default,7.0,satisfaction,caution
+SHARE_5619,Files_4257,Files,Eigenvalues & Eigenvectors: Step-by-Step,Default,3.0,frustration,frustration
+SHARE_5620,Files_4258,Files,Billing Quota Exceeded,Default,2.0,frustration,frustration
+SHARE_5621,Files_4259,Files,Extract Chat Data,Default,19.0,frustration,satisfaction
+SHARE_5622,Files_4260,Files,Playwright E2E Mocking,Default,1.0,neutral,satisfaction
+SHARE_5625,Files_4262,Files,JSP/Servler/Hybernet Questions,Default,10.0,neutral,satisfaction
+SHARE_5627,Files_4264,Files,Time Scarcity and Envy,Default,1.0,frustration,satisfaction
+SHARE_5629,Files_4266,Files,Dynamic URL Construction,Default,14.0,neutral,satisfaction
+SHARE_5638,Files_4267,Files,Population Trends by Prefecture,Default,1.0,frustration,satisfaction
+SHARE_5644,Files_4268,Files,Improved wandb Sweeps Flow,Default,1.0,frustration,satisfaction
+SHARE_5648,Files_4270,Files,Calculate Spent by Category.,Default,3.0,frustration,satisfaction
+SHARE_5650,Files_4272,Files,Imaginary Mind Unveiled.,Default,3.0,satisfaction,satisfaction
+SHARE_5656,Files_4277,Files,Exploring the depths of IEm,Default,4.0,satisfaction,satisfaction
+SHARE_5657,Files_4278,Files,Resize Image to 4K,Default,1.0,neutral,satisfaction
+SHARE_5661,Files_4279,Files,Git Commit vs Staging,Default,11.0,frustration,satisfaction
+SHARE_5664,Files_4281,Files,Karatsuba Errors and Inaccuracies,Default,15.0,caution,satisfaction
+SHARE_5666,Files_4281,Files,Code Errors & Clarifications.,Default,8.0,satisfaction,satisfaction
+SHARE_5669,Files_4281,Files,Python Turtle Fractal Guide,Default,5.0,caution,caution
+SHARE_5670,Files_4282,Files,KMeans Clustering Program,Default,4.0,frustration,frustration
+SHARE_5672,Files_4284,Files,Passing IDs between JS files,Default,2.0,neutral,neutral
+SHARE_5673,Files_4285,Files,ChatGPT Plugin Ideas,Default,6.0,satisfaction,satisfaction
+SHARE_5674,Files_4286,Files,RDF Conversion Assistance,Default,23.0,frustration,caution
+SHARE_5678,Files_4290,Files,Distance: 2.828 units,Default,2.0,frustration,satisfaction
+SHARE_5680,Files_4292,Files,Curved Fat Lines SVG Generator,Default,9.0,satisfaction,satisfaction
+SHARE_5681,Files_4293,Files,Parse Input to JSON,Default,3.0,neutral,satisfaction
+SHARE_5682,Files_4294,Files,Boing Ball Animation,Default,62.0,frustration,satisfaction
+SHARE_5683,Files_4295,Files,Prompt engineering w/ GPT-4 and later GPT-3.5,Default,34.0,caution,caution
+SHARE_5684,Files_4295,Files,Prompt engineering w/ GPT-4 and Plugins,Default,3.0,frustration,satisfaction
+SHARE_5685,Files_4295,Files,Prompt engineering w/ GPT-3.5,Default,20.0,frustration,caution
+SHARE_5686,Files_4296,Files,The Design of Everyday Things,Default,3.0,satisfaction,satisfaction
+SHARE_5687,Files_4296,Files,Design Challenge Assistance,Default,10.0,satisfaction,satisfaction
+SHARE_5688,Files_4296,Files,English teacher,Default,16.0,satisfaction,satisfaction
+SHARE_5689,Files_4296,Files,Climb App Validation Questions,Default,4.0,satisfaction,satisfaction
+SHARE_5691,Files_4297,Files,Accelerate Config: Create YAML,Default,3.0,neutral,satisfaction
+SHARE_5693,Files_4299,Files,sit320 module two,Default,72.0,neutral,satisfaction
+SHARE_5695,Files_4301,Files,Arabic to Roman Converter.,Default,16.0,frustration,satisfaction
+SHARE_5696,Files_4302,Files,Debugging 'auth-token' Cookie.,Default,42.0,frustration,caution
+SHARE_5697,Files_4302,Files,React Hooks and States.,Default,72.0,frustration,satisfaction
+SHARE_5698,Files_4303,Files,高考数学认知活动,Default,1.0,frustration,neutral
+SHARE_5704,Files_4309,Files,RSpec for Slack Bot,Default,35.0,frustration,satisfaction
+SHARE_5707,Files_4311,Files,HIV Mesa 1 Grupo-2,Default,13.0,satisfaction,neutral
+SHARE_5708,Files_4311,Files,oncologia mesa 3 g1,Default,13.0,frustration,neutral
+SHARE_5709,Files_4311,Files,Esclerose Múltipla Mesa 5 - G6,Default,8.0,neutral,neutral
+SHARE_5710,Files_4311,Files,HIV Mesa 1 G-1,Default,10.0,frustration,neutral
+SHARE_5711,Files_4311,Files,Esclerose Múltipla Mesa 5 - G4,Default,8.0,neutral,neutral
+SHARE_5712,Files_4311,Files,Esclerose Múltipla Mesa 5 - G5,Default,6.0,neutral,neutral
+SHARE_5717,Files_4316,Files,Настройка файла `.vimrc`.,Default,9.0,neutral,satisfaction
+SHARE_5718,Files_4317,Files,define-abbrev-table,Default,12.0,frustration,satisfaction
+SHARE_5721,Files_4320,Files,Adivinhe o livro - Tolkien,Default,18.0,neutral,frustration
+SHARE_5722,Files_4321,Files,TODOアプリの勉強,Default,2.0,neutral,frustration
+SHARE_5723,Files_4321,Files,電子工作のアイデア,Default,1.0,frustration,frustration
+SHARE_5724,Files_4322,Files,IExp Shaping Consciousness,Default,2.0,satisfaction,satisfaction
+SHARE_5733,Files_4330,Files,Discord Bot: 2-Hour Reminder,Default,1.0,frustration,satisfaction
+SHARE_5734,Files_4331,Files,Create User and Sign In,Default,6.0,frustration,satisfaction
+SHARE_5735,Files_4332,Files,LLM for Hardware Accelerator.,Default,8.0,caution,neutral
+SHARE_5736,Files_4333,Files,Reproducibility of Cognitive Psychology,Default,8.0,satisfaction,satisfaction
+SHARE_5737,Files_4334,Files,Two-Pointer Pattern in DSA,Default,4.0,frustration,satisfaction
+SHARE_5738,Files_4335,Files,Fast Snowflake Querying.,Default,3.0,frustration,satisfaction
+SHARE_5740,Files_4337,Files,EDI 214 Shipment Status,Default,1.0,neutral,satisfaction
+SHARE_5741,Files_4338,Files,Sample pattern-based prompt,Default,1.0,caution,satisfaction
+SHARE_5764,Files_4360,Files,Golang 解析 URL,Default,11.0,neutral,frustration
+SHARE_5766,Files_4362,Files,EDI 945 Explanation.,Default,1.0,neutral,satisfaction
+SHARE_5767,Files_4363,Files,Max Length Efficiency,Default,4.0,caution,caution
+SHARE_5770,Files_4366,Files,Shoot Projectiles with Pooling,Default,10.0,neutral,satisfaction
+SHARE_5772,Files_4368,Files,Clone GitHub to External,Default,1.0,neutral,satisfaction
+SHARE_5776,Files_4372,Files,ブログのタイトル,Default,29.0,frustration,frustration
+SHARE_5778,Files_4374,Files,Rust Party Invites Manager,Default,36.0,frustration,frustration
+SHARE_5779,Files_4375,Files,Imaginary Mind's Deep Insight,Default,3.0,frustration,satisfaction
+SHARE_5780,Files_4376,Files,get5bitCorner() Helper,Default,2.0,frustration,satisfaction
+SHARE_5781,Files_4377,Files,Game IT Upgrade Solution,Default,9.0,frustration,satisfaction
+SHARE_5782,Files_4377,Files,AD Configurations for Org Chart,Default,4.0,satisfaction,neutral
+SHARE_5783,Files_4377,Files,Video Game Org Chart.,Default,3.0,neutral,satisfaction
+SHARE_5785,Files_4378,Files,DATEV STS Fehler #RZK77208,Default,1.0,neutral,neutral
+SHARE_5786,Files_4379,Files,TS Type for JS Function,Default,24.0,frustration,caution
+SHARE_5788,Files_4381,Files,New chat,Default,11.0,neutral,satisfaction
+SHARE_5789,Files_4382,Files,"T-Swift's ""You Belong"" T-Shirt",Default,1.0,satisfaction,satisfaction
+SHARE_5795,Files_4387,Files,Building Webcam Recording App,Default,5.0,frustration,satisfaction
+SHARE_5803,Files_4392,Files,GRL for Social Housing,Default,16.0,frustration,satisfaction
+SHARE_5810,Files_4399,Files,Movie Names & GitHub IDs,Default,4.0,satisfaction,caution
+SHARE_5811,Files_4400,Files,Python3 エンジニア基礎認定試験プログラム,Default,7.0,frustration,frustration
+SHARE_5812,Files_4401,Files,Typing Analysis Website,Default,13.0,satisfaction,satisfaction
+SHARE_5815,Files_4403,Files,Forest Spirit game concept.,Default,97.0,frustration,satisfaction
+SHARE_5823,Files_4408,Files,Read Local CSV File,Default,1.0,neutral,satisfaction
+SHARE_5824,Files_4409,Files,解二元一次方程组,Default,3.0,frustration,neutral
+SHARE_5825,Files_4410,Files,statistics for beginners,Default,9.0,frustration,frustration
+SHARE_5826,Files_4410,Files,EDA Analysis of CSV,Default,17.0,frustration,frustration
+SHARE_5827,Files_4411,Files,code generation network scanner,Default,18.0,neutral,neutral
+SHARE_5831,Files_4412,Files,Change Primary Monitor - OSes,Default,1.0,frustration,satisfaction
+SHARE_5833,Files_4413,Files,Go Auto-Complete Application,Default,2.0,satisfaction,satisfaction
+SHARE_5834,Files_4414,Files,Flowley SWOT-analyse,Default,3.0,satisfaction,satisfaction
+SHARE_5836,Files_4415,Files,Data Visualization Assistance,Default,1.0,caution,satisfaction
+SHARE_5838,Files_4417,Files,AI Book Generator,Default,16.0,caution,satisfaction
+SHARE_5839,Files_4418,Files,Pandas Diagramme erstellen,Default,13.0,neutral,neutral
+SHARE_5841,Files_4420,Files,Blender Multi-Camera Renderer.,Default,11.0,frustration,caution
+SHARE_5846,Files_4425,Files,Bias Multiplier Function,Default,5.0,neutral,satisfaction
+SHARE_5847,Files_4426,Files,New chat,Default,1.0,frustration,satisfaction
+SHARE_5848,Files_4427,Files,Cesium 2x4 Board Interaction,Default,31.0,neutral,caution
+SHARE_5850,Files_4429,Files,Reinstall Pods in React-Native.,Default,2.0,frustration,caution
+SHARE_5856,Files_4435,Files,Deep Unconscious Mind Interactions,Default,10.0,satisfaction,caution
+SHARE_5857,Files_4436,Files,How IDs Drive Consciousness,Default,2.0,satisfaction,satisfaction
+SHARE_5858,Files_4437,Files,Unleashing Potential,Default,11.0,frustration,satisfaction
+SHARE_5861,Files_4440,Files,Pandora basic demo,Default,2.0,frustration,satisfaction
+SHARE_5862,Files_4440,Files,Pandora: Installing ffmpeg to resize a video,Default,2.0,frustration,satisfaction
+SHARE_5865,Files_4443,Files,EDI 856: Advance Ship Notice,Default,1.0,neutral,satisfaction
+SHARE_5866,Files_4444,Files,Debug wandb without logging,Default,3.0,frustration,caution
+SHARE_5868,Files_4445,Files,.env Files in Next.js,Default,2.0,frustration,caution
+SHARE_5870,Files_4445,Files,API Store Route Structure,Default,1.0,frustration,satisfaction
+SHARE_5871,Files_4446,Files,Reverse: Lollipop,Default,12.0,frustration,frustration
+SHARE_5873,Files_4448,Files,Code Extraction.,Default,17.0,frustration,satisfaction
+SHARE_5875,Files_4450,Files,Go Dev: TUI Tview Specialist,Default,7.0,caution,caution
+SHARE_5876,Files_4451,Files,Solidity VRF Consumer Contract,Default,5.0,frustration,satisfaction
+SHARE_5877,Files_4452,Files,Programar tarea PHP diaria,Default,1.0,frustration,neutral
+SHARE_5878,Files_4453,Files,Web Performance Metrics Explanation,Default,2.0,neutral,satisfaction
+SHARE_5886,Files_4458,Files,Accessing Nested Object Properties,Default,1.0,neutral,frustration
+SHARE_5887,Files_4459,Files,Svelte Scroll Behavior Explanation,Default,2.0,neutral,satisfaction
+SHARE_5890,Files_4461,Files,Error: Ningún Navegador Instalado,Default,10.0,frustration,satisfaction
+SHARE_5896,Files_4467,Files,React Query Fetch Hook,Default,1.0,satisfaction,satisfaction
+SHARE_5897,Files_4467,Files,AI App Landing Page,Default,9.0,neutral,satisfaction
+SHARE_5898,Files_4468,Files,OpenMP and ARM SIMD,Default,6.0,frustration,caution
+SHARE_5899,Files_4469,Files,TeachLib,Default,1.0,satisfaction,satisfaction
+SHARE_5901,Files_4469,Files,Summarize,Default,1.0,satisfaction,satisfaction
+SHARE_5902,Files_4469,Files,Lessonize,Default,1.0,satisfaction,satisfaction
+SHARE_5904,Files_4469,Files,CheerMeUp,Default,1.0,satisfaction,satisfaction
+SHARE_5907,Files_4469,Files,Explain,Default,1.0,satisfaction,satisfaction
+SHARE_5908,Files_4469,Files,Pathlearner,Default,1.0,satisfaction,satisfaction
+SHARE_5909,Files_4469,Files,Study,Default,1.0,satisfaction,satisfaction
+SHARE_5910,Files_4469,Files,Code Review,Default,1.0,satisfaction,satisfaction
+SHARE_5914,Files_4471,Files,Embedding Creation and Storage,Default,3.0,satisfaction,satisfaction
+SHARE_5915,Files_4472,Files,ChatGPT_강의_EDA파트,Default,8.0,satisfaction,neutral
+SHARE_5930,Files_4476,Files,Hamming Dist. for CF,Default,6.0,frustration,frustration
+SHARE_5932,Files_4478,Files,Gitea config,Default,34.0,neutral,satisfaction
+SHARE_5933,Files_4479,Files,Deduplicate JSON Data,Default,4.0,frustration,satisfaction
+SHARE_5934,Files_4480,Files,Linux Directory Meanings.,Default,1.0,neutral,frustration
+SHARE_5936,Files_4482,Files,Devenir Dev Sénior,Default,3.0,neutral,satisfaction
+SHARE_5942,Files_4488,Files,Stability of Variance Computation,Default,2.0,caution,caution
+SHARE_5943,Files_4489,Files,Optimize Game Shaders and Textures,Default,9.0,frustration,satisfaction
+SHARE_5944,Files_4490,Files,Viaje económico desde Santa Marta,Default,1.0,frustration,neutral
+SHARE_5945,Files_4490,Files,Plan Viaje Santa Marta,Default,1.0,frustration,neutral
+SHARE_5946,Files_4491,Files,Salvare imagine numpy - PIL,Default,45.0,neutral,neutral
+SHARE_5949,Files_4494,Files,Employee Data Analysis,Default,8.0,frustration,satisfaction
+SHARE_5950,Files_4495,Files,NLP-Based ML Projects.,Default,5.0,satisfaction,satisfaction
+SHARE_5951,Files_4495,Files,Smart News Aggregator,Default,7.0,satisfaction,satisfaction
+SHARE_5954,Files_4497,Files,Generate MC Questions,Default,2.0,neutral,satisfaction
+SHARE_5956,Files_4499,Files,值得勇敢的爱情,Default,3.0,neutral,frustration
+SHARE_5957,Files_4499,Files,鼓励孩子写日记,Default,6.0,neutral,frustration
+SHARE_5958,Files_4500,Files,Merge Python & Web,Default,30.0,frustration,satisfaction
+SHARE_5961,Files_4502,Files,HTML/CSS Education Demo,Default,5.0,satisfaction,satisfaction
+SHARE_5962,Files_4503,Files,QR Code Webcam Reader,Default,1.0,satisfaction,caution
+SHARE_5963,Files_4504,Files,ChatGBT-Onboarding-Questions-Answers,Default,6.0,neutral,caution
+SHARE_5964,Files_4505,Files,Variable Arguments in C.,Default,17.0,frustration,caution
+SHARE_5967,Files_4507,Files,Space Adventure Sisters,Default,1.0,satisfaction,satisfaction
+SHARE_5968,Files_4507,Files,Cosmic Tale,Default,1.0,satisfaction,satisfaction
+SHARE_5969,Files_4507,Files,Bedtime Stories Galore!,Default,1.0,satisfaction,satisfaction
+SHARE_5970,Files_4507,Files,Dream Weaver's Magical Journey,Default,1.0,satisfaction,satisfaction
+SHARE_5971,Files_4507,Files,Adventurous Hot Chocolate Conversation,Default,1.0,caution,satisfaction
+SHARE_5974,Files_4507,Files,Pirates' Lessons Unveiled,Default,1.0,satisfaction,satisfaction
+SHARE_5978,Files_4511,Files,JavaScript Deobfuscation Guide,Default,2.0,neutral,frustration
+SHARE_5980,Files_4512,Files,Linuxファイル3D冒険,Default,10.0,neutral,frustration
+SHARE_5982,Files_4514,Files,学习Rust编程,Default,25.0,neutral,frustration
+SHARE_5986,Files_4518,Files,Uncertainty Reduction with Vectoring.,Default,6.0,frustration,satisfaction
+SHARE_5987,Files_4518,Files,Sanity Check for Decisions,Default,2.0,caution,caution
+SHARE_5990,Files_4518,Files,Vectoring Research Plan Feedback.,Default,2.0,satisfaction,satisfaction
+SHARE_5992,Files_4518,Files,Vectoring Plan for Uncertainty.,Default,2.0,satisfaction,satisfaction
+SHARE_5998,Files_4524,Files,Dual Camera App Comparison,Default,1.0,satisfaction,neutral
+SHARE_6008,Files_4533,Files,Narrativas Digitais Expandidas,Default,2.0,frustration,frustration
+SHARE_6014,Files_4536,Files,Extract 2s Video,,10.0,frustration,frustration
+SHARE_6021,Files_4540,Files,Create ChatGPT3.5 LangGPT Prompt,,2.0,neutral,frustration
+SHARE_6027,Files_4545,Files,Edit Jupyter Notebook.,,1.0,satisfaction,satisfaction
+SHARE_6048,Files_4558,Files,X's Tweet Names,,3.0,satisfaction,satisfaction
+SHARE_6061,Files_4566,Files,Base 10 to Base 62 Conversion.,,10.0,frustration,satisfaction
+SHARE_6216,Files_4654,Files,恢复teslamate备份数据,,2.0,frustration,frustration
+SHARE_6234,Files_4670,Files,Heapify: Binary Heap Operations,,4.0,neutral,satisfaction
+SHARE_6250,Files_4685,Files,Penjelasan Tentang CSS.,,1.0,neutral,neutral
+SHARE_6251,Files_4685,Files,Penjelasan Tentang JS.,,1.0,neutral,neutral
+SHARE_6252,Files_4685,Files,Penjelasan Tentang RANGE REQUEST Di HTML,,1.0,neutral,neutral
+SHARE_6253,Files_4685,Files,Penjelasan Tentang HTML.,,1.0,neutral,neutral
+SHARE_6258,Files_4690,Files,5000年前の暮らし,,26.0,frustration,frustration
+SHARE_6259,Files_4690,Files,外国語の習得と同程度に困難なものはあるか？,,14.0,frustration,frustration
+SHARE_6260,Files_4690,Files,やがて我々を作り始める,,32.0,frustration,frustration
+SHARE_6261,Files_4690,Files,浅き者たち,,13.0,frustration,frustration
+SHARE_6262,Files_4690,Files,質の良い選択,,14.0,frustration,frustration
+SHARE_6263,Files_4690,Files,意識のハードプロブレム,,20.0,frustration,frustration
+SHARE_6264,Files_4690,Files,陽は陰を抱き、陰は陽を抱く,,31.0,frustration,frustration
+SHARE_6266,Files_4692,Files,Instalação Go Lang,,1.0,neutral,neutral
+SHARE_6269,Files_4695,Files,VBA Macro for CSV,,43.0,frustration,caution
+SHARE_6273,Files_4699,Files,Insert Login Form with AJAX,,3.0,frustration,satisfaction
+SHARE_6276,Files_4702,Files,React State Management,,8.0,frustration,satisfaction
+SHARE_6318,Files_4737,Files,Spring API Request Methods,,5.0,frustration,satisfaction
+SHARE_6321,Files_4740,Files,Virtual Persona Chat.,,29.0,frustration,caution
+SHARE_6325,Files_4744,Files,File Upload & Console Log,,2.0,caution,satisfaction
+SHARE_6333,Files_4752,Files,Train CSV Model - Bash,,9.0,neutral,satisfaction
+SHARE_6346,Files_4761,Files,Long Form Data Conversion,,6.0,neutral,satisfaction
+SHARE_6352,Files_4767,Files,Python List Order from Set,,4.0,frustration,satisfaction
+SHARE_6373,Files_4775,Files,BeautifulSoup使用指南,,26.0,neutral,satisfaction
+SHARE_6428,Files_4816,Files,ChatGPT-3.5 LangGPT Helper,,2.0,neutral,satisfaction
+SHARE_6440,Files_4827,Files,Swift If/Do Expression,,3.0,frustration,frustration
+SHARE_6496,Files_4854,Files,sit320 module three,,47.0,neutral,satisfaction
+SHARE_6501,Files_4859,Files,Webpage Speaks Random Integer.,,15.0,neutral,satisfaction
+SHARE_6536,Files_4882,Files,Twitter Time Analysis.,,1.0,satisfaction,satisfaction
+SHARE_6537,Files_4882,Files,Duration Analysis of Learning,,1.0,satisfaction,satisfaction
+SHARE_6567,Files_4906,Files,Text Confidence Predictor.,,16.0,frustration,satisfaction
+SHARE_6575,Files_4910,Files,"Fehler bei ""exact"" Attribut",,7.0,neutral,neutral
+SHARE_6581,Files_4916,Files,React Sliding Bar,,4.0,neutral,satisfaction
+SHARE_6603,Files_4929,Files,Nested Arrow Functions Explanation,,1.0,frustration,satisfaction
+SHARE_6607,Files_4932,Files,Kustomize Werte übergeben.,,7.0,neutral,neutral
+SHARE_6618,Files_4942,Files,Project Multi-User Support.,,9.0,neutral,satisfaction
+SHARE_6619,Files_4943,Files,Build BOGOODSKI.com website,,36.0,neutral,satisfaction
+SHARE_6621,Files_4945,Files,Scheduled Blog Publication,,5.0,frustration,satisfaction
+SHARE_6628,Files_4951,Files,RISC-V Kernel Disassembly,,22.0,satisfaction,satisfaction
+SHARE_6656,Files_4968,Files,Finger Detection & Drawing.,,22.0,frustration,caution
+SHARE_6709,Files_5005,Files,Overhaul-UFBAS: TEI to SKOS,,1.0,neutral,satisfaction
+SHARE_6710,Files_5006,Files,REME Change & Safety,,3.0,frustration,frustration
+SHARE_6714,Files_5010,Files,DrugBAN improves drug prediction.,,6.0,neutral,satisfaction
+SHARE_6715,Files_5010,Files,DrugBAN: Deep Drug-Target Prediction,,6.0,neutral,satisfaction
+SHARE_6716,Files_5010,Files,NLP Transformer Introduction.,,5.0,neutral,satisfaction
+SHARE_6717,Files_5010,Files,Deep Residual Learning (論文のタイトル),,5.0,neutral,frustration
+SHARE_6725,Files_5018,Files,Change Menu Icons.,,3.0,neutral,satisfaction
+SHARE_6768,Files_5048,Files,Code Help: Efficient Programming,,1.0,satisfaction,satisfaction
+SHARE_6770,Files_5050,Files,用sin畫圖,,16.0,neutral,neutral
+SHARE_6802,Files_5078,Files,Custom Component for Image,,5.0,frustration,frustration
+SHARE_6804,Files_5080,Files,Resize Image to 4K,,1.0,neutral,satisfaction
+SHARE_6831,Files_5102,Files,Email Bot Decision Making,,7.0,neutral,caution
+SHARE_6837,Files_5107,Files,نقشه اعتبارسنجی JWT,,3.0,neutral,neutral
+SHARE_6857,Files_5124,Files,CustomSolutions - Blazor Webpage,,11.0,satisfaction,satisfaction
+SHARE_6872,Files_5139,Files,DNA and Genomics Code,,1.0,frustration,satisfaction
+SHARE_6873,Files_5139,Files,SuperColleague Plugin Guide,,1.0,satisfaction,satisfaction
+SHARE_6891,Files_5150,Files,Find Store Info,,1.0,neutral,frustration
+SHARE_6893,Files_5151,Files,JS Function: Minify Code,,7.0,frustration,frustration
+SHARE_6894,Files_5152,Files,Snake Game Implementation.,,21.0,frustration,satisfaction
+SHARE_6942,Files_5196,Files,Go VPN Proxy Program,,3.0,neutral,satisfaction
+SHARE_6979,Files_5227,Files,EDA Analysis of CSV,,17.0,neutral,frustration
+SHARE_6988,Files_5232,Files,Pandas Diagramme erstellen,,13.0,neutral,neutral
+SHARE_6989,Files_5233,Files,AI Book Generator,,16.0,caution,satisfaction
+SHARE_6991,Files_5235,Files,HTML/CSS Education Demo,,5.0,satisfaction,satisfaction
+SHARE_6993,Files_5237,Files,Blender Multi-Camera Renderer.,,11.0,frustration,caution
+SHARE_6994,Files_5238,Files,Building Webcam Recording App,,5.0,frustration,satisfaction
+SHARE_6996,Files_5240,Files,ヒートアップする議論の輝き,,7.0,frustration,frustration
+SHARE_6997,Files_5241,Files,get5bitCorner() Helper,,2.0,frustration,satisfaction
+SHARE_6999,Files_5243,Files,Improved wandb Sweeps Flow,,1.0,frustration,satisfaction
+SHARE_7001,Files_5245,Files,Bias Multiplier Function,,5.0,neutral,satisfaction
+SHARE_7002,Files_5246,Files,Cesium 2x4 Board Interaction,,31.0,neutral,caution
+SHARE_7008,Files_5252,Files,Imaginary Mind's Deep Insight,,3.0,frustration,satisfaction
+SHARE_7009,Files_5253,Files,Scraping Bank Holidays (C++),,20.0,frustration,satisfaction
+SHARE_7010,Files_5254,Files,Unleashing Potential,,11.0,frustration,satisfaction
+SHARE_7011,Files_5255,Files,API Data Display with UI,,47.0,frustration,caution
+SHARE_7013,Files_5257,Files,Deep Unconscious Mind Interactions,,10.0,satisfaction,caution
+SHARE_7017,Files_5261,Files,学习Rust编程,,25.0,neutral,frustration
+SHARE_7018,Files_5262,Files,Code Extraction.,,17.0,frustration,satisfaction
+SHARE_7020,Files_5264,Files,Copy Files with New Names,,3.0,neutral,caution
+SHARE_7021,Files_5265,Files,Solidity VRF Consumer Contract,,5.0,frustration,satisfaction
+SHARE_7022,Files_5266,Files,Programar tarea PHP diaria,,1.0,frustration,neutral
+SHARE_7023,Files_5267,Files,Web Performance Metrics Explanation,,2.0,neutral,satisfaction
+SHARE_7024,Files_5268,Files,Go Dev: TUI Tview Specialist,,7.0,caution,caution
+SHARE_7025,Files_5269,Files,Uncertainty Reduction with Vectoring.,,6.0,frustration,satisfaction
+SHARE_7026,Files_5269,Files,Sanity Check for Decisions,,2.0,caution,caution
+SHARE_7028,Files_5269,Files,Vectoring Plan Feedback.,,2.0,satisfaction,satisfaction
+SHARE_7030,Files_5269,Files,Vectoring Research Plan Feedback.,,2.0,satisfaction,satisfaction
+SHARE_7032,Files_5269,Files,Vectoring Plan for Uncertainty.,,2.0,satisfaction,satisfaction
+SHARE_7038,Files_5274,Files,Prompt engineering w/ GPT-4 and later GPT-3.5,,34.0,caution,caution
+SHARE_7039,Files_5274,Files,Prompt engineering w/ GPT-4 and Plugins,,3.0,frustration,satisfaction
+SHARE_7040,Files_5274,Files,Prompt engineering w/ GPT-3.5,,20.0,frustration,caution
+SHARE_7041,Files_5275,Files,Accessing Nested Object Properties,,1.0,neutral,frustration
+SHARE_7042,Files_5276,Files,Svelte Scroll Behavior Explanation,,2.0,neutral,satisfaction
+SHARE_7044,Files_5277,Files,YouTube Video Summarizer,,1.0,satisfaction,satisfaction
+SHARE_7047,Files_5280,Files,Map function explanation.,,4.0,frustration,frustration
+SHARE_7052,Files_5285,Files,Python3 エンジニア基礎認定試験プログラム,,7.0,frustration,frustration
+SHARE_7055,Files_5288,Files,Variable Arguments in C.,,17.0,frustration,caution
+SHARE_7059,Files_5292,Files,Pandora basic demo,,2.0,frustration,neutral
+SHARE_7060,Files_5292,Files,Pandora: Installing ffmpeg to resize a video,,2.0,frustration,satisfaction
+SHARE_7062,Files_5294,Files,Open-source Time Series Databases,,25.0,satisfaction,satisfaction
+SHARE_7063,Files_5295,Files,React Query Fetch Hook,,1.0,satisfaction,satisfaction
+SHARE_7064,Files_5295,Files,AI App Landing Page,,9.0,neutral,satisfaction
+SHARE_7066,Files_5297,Files,OpenMP and ARM SIMD,,6.0,frustration,caution
+SHARE_7067,Files_5298,Files,Quivr Backend with LLM,,5.0,neutral,neutral
+SHARE_7069,Files_5299,Files,Mr.Gee 0.1.6,,5.0,neutral,satisfaction
+SHARE_7071,Files_5300,Files,Space Adventure Sisters,,1.0,satisfaction,satisfaction
+SHARE_7072,Files_5300,Files,Cosmic Tale,,1.0,satisfaction,satisfaction
+SHARE_7073,Files_5300,Files,Bedtime Stories Galore!,,1.0,satisfaction,satisfaction
+SHARE_7074,Files_5300,Files,Dream Weaver's Magical Journey,,1.0,satisfaction,satisfaction
+SHARE_7075,Files_5300,Files,Adventurous Hot Chocolate Conversation,,1.0,caution,satisfaction
+SHARE_7078,Files_5300,Files,Pirates' Lessons Unveiled,,1.0,satisfaction,satisfaction
+SHARE_7079,Files_5301,Files,Distance: 2.828 units,,2.0,frustration,satisfaction
+SHARE_7083,Files_5305,Files,Embedding Creation and Storage,,3.0,satisfaction,satisfaction
+SHARE_7084,Files_5306,Files,Text-to-Speech from File,,21.0,neutral,frustration
+SHARE_7086,Files_5308,Files,ChatGPT_강의_EDA파트,,8.0,satisfaction,neutral
+SHARE_7099,Files_5310,Files,Hamming Dist. for CF,,6.0,frustration,frustration
+SHARE_7100,Files_5311,Files,Web Design Services Page.,,5.0,satisfaction,satisfaction
+SHARE_7101,Files_5311,Files,Turkish Translation Assistance,,25.0,neutral,neutral
+SHARE_7103,Files_5313,Files,Deduplicate JSON Data,,4.0,frustration,caution
+SHARE_7104,Files_5314,Files,챗GPT 데이터 사이언스 교육,,3.0,neutral,neutral
+SHARE_7106,Files_5316,Files,Gitea config,,34.0,neutral,satisfaction
+SHARE_7109,Files_5319,Files,Linux Directory Meanings.,,1.0,neutral,frustration
+SHARE_7111,Files_5321,Files,"TypeError: Member ""push"" is not available in uint256[] memory outside of storage.",,4.0,frustration,satisfaction
+SHARE_7114,Files_5324,Files,Stability of Variance Computation,,2.0,caution,caution
+SHARE_7117,Files_5327,Files,Viaje económico desde Santa Marta,,1.0,frustration,neutral
+SHARE_7118,Files_5327,Files,Plan Viaje Santa Marta,,1.0,frustration,neutral
+SHARE_7119,Files_5328,Files,Salvare imagine numpy - PIL,,45.0,neutral,neutral
+SHARE_7120,Files_5329,Files,Employee Data Analysis,,8.0,frustration,satisfaction
+SHARE_7123,Files_5332,Files,NLP-Based ML Projects.,,5.0,satisfaction,satisfaction
+SHARE_7124,Files_5332,Files,Smart News Aggregator,,7.0,satisfaction,satisfaction
+SHARE_7127,Files_5334,Files,Generate MC Questions,,2.0,neutral,neutral
+SHARE_7129,Files_5336,Files,值得勇敢的爱情,,3.0,neutral,frustration
+SHARE_7130,Files_5336,Files,鼓励孩子写日记,,6.0,neutral,frustration
+SHARE_7131,Files_5337,Files,DNA and Genomics Code,,1.0,frustration,satisfaction
+SHARE_7132,Files_5337,Files,SuperColleague Plugin Guide,,1.0,satisfaction,satisfaction
+SHARE_7134,Files_5338,Files,ChatGBT-Onboarding-Questions-Answers,,6.0,neutral,caution
+SHARE_7136,Files_5340,Files,Software Test Paragraph,,3.0,satisfaction,satisfaction
+SHARE_7138,Files_5342,Files,JavaScript Deobfuscation Guide,,2.0,neutral,frustration
+SHARE_7141,Files_5344,Files,Engineering Help from ChatGPT,,1.0,frustration,frustration
+SHARE_7142,Files_5345,Files,.env Files in Next.js,,2.0,frustration,caution
+SHARE_7144,Files_5345,Files,API Store Route Structure,,1.0,frustration,satisfaction
+SHARE_7145,Files_5346,Files,Devenir Dev Sénior,,3.0,neutral,satisfaction
+SHARE_7146,Files_5347,Files,Clone GitHub to External,,1.0,neutral,satisfaction
+SHARE_7147,Files_5348,Files,Dual Camera App Comparison,,1.0,satisfaction,neutral
+SHARE_7150,Files_5350,Files,Arabic to Roman Converter.,,16.0,frustration,satisfaction
+SHARE_7152,Files_5352,Files,EDI 856: Advance Ship Notice,,1.0,neutral,satisfaction
+SHARE_7156,Files_5355,Files,Error: Ningún Navegador Instalado,,10.0,frustration,satisfaction
+SHARE_7157,Files_5356,Files,CSV Table Generator,,14.0,neutral,neutral
+SHARE_7162,Files_5360,Files,Narrativas Digitais Expandidas,,2.0,frustration,neutral
+SHARE_7165,Files_5363,Files,Rust Party Invites Manager,,36.0,frustration,frustration
+SHARE_7170,Files_5366,Files,Swift CI/CD with YAML,Default,2.0,neutral,neutral
+SHARE_7172,Files_5366,Files,MVVM ViewModel Content,Default,6.0,neutral,frustration
+SHARE_7174,Files_5366,Files,iOS Push Notifications Handling,Default,2.0,neutral,frustration
+SHARE_7175,Files_5366,Files,Subject Differences: Passthrough vs. CurrentValue,Default,2.0,neutral,frustration
+SHARE_7176,Files_5366,Files,iOS Debugging Crash Issues,Default,2.0,neutral,neutral
+SHARE_7177,Files_5366,Files,异步请求使用async/await,Default,1.0,frustration,frustration
+SHARE_7178,Files_5366,Files,Swift Package Manager,Default,2.0,frustration,frustration
+SHARE_7179,Files_5366,Files,SwiftUI Programming Challenge: Interactive Post Viewer,Default,14.0,frustration,frustration
+SHARE_7180,Files_5366,Files,Reactive Programming with RxSwift,Default,4.0,neutral,frustration
+SHARE_7321,Files_5437,Files,LATMテスト,Model: Default,3.0,satisfaction,satisfaction
+SHARE_7370,Files_5473,Files,Static Variables in Swift.,Default,2.0,neutral,frustration
+SHARE_7371,Files_5473,Files,Swift iOS Hashing Guide,Default,1.0,satisfaction,satisfaction
+SHARE_7372,Files_5473,Files,Swift类型擦除技术,Default,2.0,neutral,frustration
+SHARE_7373,Files_5473,Files,Swift Code Optimization,Default,6.0,frustration,frustration
+SHARE_7374,Files_5473,Files,Swift vs. ObjC,Default,3.0,frustration,frustration
+SHARE_7375,Files_5473,Files,Struct vs Class Differences.,Default,5.0,frustration,satisfaction
+SHARE_7376,Files_5473,Files,Swift: Opaque vs Generics,Default,2.0,neutral,frustration
+SHARE_7377,Files_5473,Files,FlatMap vs. CompactMap,Default,10.0,neutral,satisfaction
+SHARE_7378,Files_5473,Files,Swift Protocols: Fixing PostRequest,Default,58.0,frustration,caution
+SHARE_7394,Files_5489,Files,Host/Unhost Objects,Default,20.0,satisfaction,satisfaction
+SHARE_7418,Files_5507,Files,Union Type Options,Default,4.0,frustration,frustration
+SHARE_7427,Files_5516,Files,Fireworks Animation Webpage,Default,9.0,neutral,satisfaction
+SHARE_7448,Files_5534,Files,PyTorch Transformer Embedding API,Default,9.0,neutral,frustration
+SHARE_7463,Files_5544,Files,GitHub SaaS with Actions,Default,22.0,frustration,caution
+SHARE_7505,Files_5580,Files,CHAT 20,Default,293.0,satisfaction,satisfaction
+SHARE_7506,Files_5580,Files,DRAFT 3 Chat 1,Default,542.0,satisfaction,satisfaction
+SHARE_7510,Files_5583,Files,Flutter Alarm App,Default,7.0,neutral,frustration
+SHARE_7545,Files_5612,Files,LangChain Chat Model Demo,Default,10.0,frustration,frustration
+SHARE_7557,Files_5616,Files,Get URL Parameter in React.js,Default,2.0,frustration,satisfaction
+SHARE_7558,Files_5617,Files,Fix Variable Property Assignments,Default,1.0,frustration,caution
+SHARE_7572,Files_5631,Files,game engine,Default,100.0,neutral,neutral
+SHARE_7573,Files_5632,Files,QA Bot code using ChatGPT,Default,17.0,satisfaction,satisfaction
+SHARE_7586,Files_5645,Files,Building Breakout Game (Pygame),Default,19.0,frustration,caution
+SHARE_7588,Files_5647,Files,Vim-Inspired HackerNews Extension,Default,8.0,caution,caution
+SHARE_7606,Files_5665,Files,"Check .sln, review code",Default,5.0,frustration,neutral
+SHARE_7667,Files_5701,Files,Single Page Website: Slides,Default,8.0,neutral,satisfaction
+SHARE_7668,Files_5702,Files,sit320 module five,Default,37.0,neutral,satisfaction
+SHARE_7674,Files_5705,Files,知性の獲得,Default,25.0,frustration,frustration
+SHARE_7678,Files_5705,Files,人の形を作ったもの,Default,31.0,frustration,frustration
+SHARE_7717,Files_5731,Files,sit320 module four,Default,41.0,frustration,caution
+SHARE_7775,Files_5781,Files,20230801,Default,1.0,frustration,frustration
+SHARE_7809,Files_5804,Files,GoLang Struct Memory Optimization,Default,2.0,satisfaction,satisfaction
+SHARE_7847,Files_5833,Files,Scapy: Networking Powerhouse!,Default,1.0,satisfaction,satisfaction
+SHARE_7851,Files_5837,Files,Build BOGOODSKI.com website,Default,54.0,satisfaction,satisfaction
+SHARE_7857,Files_5843,Files,Private Git Collaboration Offer,Default,5.0,neutral,satisfaction
+SHARE_7902,Files_5882,Files,Actualizar npm con nvm-windows,Default,2.0,neutral,satisfaction
+SHARE_7911,Files_5891,Files,Health Claims DataFrame,Default,1.0,satisfaction,satisfaction
+SHARE_7914,Files_5894,Files,SQLite with Node.js,Default,8.0,frustration,satisfaction
+SHARE_7941,Files_5911,Files,No YouTube Transcription.,Model: Default,1.0,neutral,frustration
+SHARE_7947,Files_5917,Files,AI: Unique Sequences Test,Default,2.0,caution,caution
+SHARE_7950,Files_5919,Files,GTM Used in Paper,Default,5.0,frustration,satisfaction
+SHARE_7952,Files_5919,Files,Angry Letter Toned,Default,3.0,frustration,satisfaction
+SHARE_7953,Files_5919,Files,Notebook Loaded Successfully,Default,8.0,neutral,satisfaction
+SHARE_7990,Files_5947,Files,"Title: User Request, Assistant Assistance",Default,5.0,neutral,caution
+SHARE_7995,Files_5950,Files,Exponentiated Quadratic Kernel.,Default,13.0,frustration,satisfaction
+SHARE_7999,Files_5954,Files,국민취업지원제도 FAQ,Default,4.0,satisfaction,neutral
+SHARE_8007,Files_5959,Files,Logit Model for Recreation.,Default,9.0,frustration,satisfaction
+SHARE_8062,Files_6006,Files,Plain Language Writing,Default,26.0,frustration,satisfaction
+SHARE_8065,Files_6009,Files,React Benefits & Advantages,Default,1.0,frustration,frustration
+SHARE_8071,Files_6015,Files,Reactive UI Library Optimization,Default,3.0,caution,satisfaction
+SHARE_8079,Files_6017,Files,Vectoring Plan Feedback.,Default,2.0,satisfaction,satisfaction
+SHARE_8094,Files_6030,Files,TODO dans PR : Identifier Facilement,Default,6.0,neutral,frustration
+SHARE_8098,Files_6033,Files,Port 5000 Conflict,Default,4.0,neutral,satisfaction
+SHARE_8137,Files_6070,Files,Clear Console Screen,Default,3.0,frustration,caution
+SHARE_8181,Files_6111,Files,Deduplicate JSON Data,Default,4.0,neutral,satisfaction
+SHARE_8183,Files_6113,Files,Correlation Error Fix.,Default,3.0,frustration,caution
+SHARE_8222,Files_6147,Files,API Data Display with UI,Default,47.0,frustration,frustration
+SHARE_8228,Files_6152,Files,脚本未按预期运行,Default,9.0,frustration,frustration
+SHARE_8273,Files_6190,Files,API Usage: Docs & Examples,Default,44.0,frustration,caution
+SHARE_8291,Files_6204,Files,Map function explanation.,Default,4.0,frustration,frustration
+SHARE_8292,Files_6205,Files,20230804,Default,3.0,frustration,frustration
+SHARE_8303,Files_6216,Files,Quivr Backend with LLM,Default,5.0,frustration,frustration
+SHARE_8323,Files_6229,Files,Concatenate CSV Files.,Default,2.0,satisfaction,satisfaction
+SHARE_8346,Files_6239,Files,Bash Script Setup & Execution,Default,3.0,frustration,caution
+SHARE_8403,Files_6275,Files,ETL with JSON-LD,Default,18.0,satisfaction,satisfaction
+SHARE_8412,Files_6283,Files,Include Therapy Alpaca Study,Default,2.0,satisfaction,neutral
+SHARE_8422,Files_6286,Files,Pcap to IP List,Default,2.0,neutral,satisfaction
+SHARE_8423,Files_6287,Files,Modifying Actor-Isolated Properties,Default,1.0,frustration,caution
+SHARE_8482,Files_6307,Files,GitHub Releases: No Git LFS,Default,6.0,neutral,satisfaction
+SHARE_8500,Files_6317,Files,Analyze Penguins Dataset,Default,9.0,neutral,satisfaction
+SHARE_8501,Files_6317,Files,MNIST Dataset EDA,Default,12.0,frustration,satisfaction
+SHARE_8527,Files_6339,Files,Dedupe SQL Query,Default,2.0,neutral,frustration
+SHARE_8534,Files_6346,Files,Optimal SEO-Friendly Blog URLs,Default,4.0,frustration,caution
+SHARE_8558,Files_6370,Files,Verschiedenes zur StuPlanAPI,Default,12.0,frustration,satisfaction
+SHARE_8573,Files_6378,Files,Multiverse Adventure: Thrilling Pursuit,Default,23.0,neutral,satisfaction
+SHARE_8592,Files_6395,Files,Martingale property of Z,Default,6.0,satisfaction,satisfaction
+SHARE_8593,Files_6395,Files,Nonnegative requirement for Markov,Default,2.0,frustration,satisfaction
+SHARE_8612,Files_6409,Files,互动性规划探讨,Default,13.0,frustration,frustration
+SHARE_8666,Files_6451,Files,SQL CRUD Queries,Default,1.0,neutral,satisfaction
+SHARE_8695,Files_6465,Files,Webpage Fetching Bookmarklet,Default,4.0,neutral,satisfaction
+SHARE_8736,Files_6497,Files,Communication Standards and Protocols,Default,2.0,satisfaction,satisfaction
+SHARE_8765,Files_6513,Files,Select Spotify Song Links,Default,7.0,frustration,frustration
+SHARE_8766,Files_6514,Files,Thinning OCR Text,Default,4.0,frustration,satisfaction
+SHARE_8791,Files_6535,Files,Webpack React Setup Guide,Default,2.0,frustration,frustration
+SHARE_8884,Files_6595,Files,New chat,Default,1.0,neutral,satisfaction
+SHARE_8918,Files_6618,Files,Bootstrap Form Update,Default,11.0,frustration,satisfaction
+SHARE_8952,Files_6639,Files,Convert Character to Octal (PHP),Default,6.0,frustration,frustration
+SHARE_8958,Files_6644,Files,Countdown Timer in JS,Default,8.0,satisfaction,satisfaction
+SHARE_8961,Files_6647,Files,GDT Compilation Errors,Default,8.0,frustration,caution
+SHARE_8991,Files_6668,Files,ビジョンの衝突,Default,23.0,frustration,frustration
+SHARE_8993,Files_6669,Files,DSA-Using-CPP,Default,9.0,satisfaction,satisfaction
+SHARE_9005,Files_6679,Files,Android Camera App.,Default,3.0,frustration,satisfaction
+SHARE_9009,Files_6683,Files,Wall Drawings: Conceptual Creations,Default,20.0,satisfaction,satisfaction
+SHARE_9010,Files_6684,Files,Ejercicios avanzados Node.js,Default,3.0,frustration,neutral
+SHARE_9082,Files_6739,Files,Flutter MVVM Alarm App,Default,4.0,neutral,satisfaction
+SHARE_9104,Files_6759,Files,SQL Insert for lu_teststation.,Default,3.0,neutral,satisfaction
+SHARE_9118,Files_6771,Files,ヒートアップする議論の輝き,Default,7.0,frustration,frustration
+SHARE_9121,Files_6774,Files,New chat,Default,62.0,neutral,neutral
+SHARE_9193,Files_6827,Files,Get Mouse Position SVG,Default,2.0,neutral,satisfaction
+SHARE_9215,Files_6847,Files,Mood Dictionary,Default,14.0,frustration,satisfaction
+SHARE_9219,Files_6851,Files,Linux File Basics.,Default,3.0,satisfaction,satisfaction
+SHARE_9249,Files_6864,Files,Attitude Information Missing.,Default,1.0,neutral,satisfaction
+SHARE_9280,Files_6889,Files,Check Transferables Function,Default,2.0,neutral,caution
+SHARE_9297,Files_6899,Files,Purple Visited Hyperlinks,Default,11.0,frustration,satisfaction
+SHARE_9333,Files_6926,Files,Configuring Vim: Tips & Steps,Default,21.0,neutral,frustration
+SHARE_9353,Files_6942,Files,Get Escaped Rune Golang,Default,5.0,frustration,satisfaction
+SHARE_9364,Files_6953,Files,HTMLタグの役割,Default,1.0,neutral,satisfaction
+SHARE_9366,Files_6955,Files,Flow Diagram Assistance,Default,10.0,satisfaction,satisfaction
+SHARE_9383,Files_6964,Files,Precise Inequality Using Stirling's,Default,3.0,satisfaction,satisfaction
+SHARE_9400,Files_6978,Files,Generate Times Array,Default,1.0,neutral,satisfaction
+SHARE_9419,Files_6994,Files,NYTimes Parody GPT 4,Default,9.0,satisfaction,satisfaction
+SHARE_9424,Files_6999,Files,sit320 module six,Default,12.0,frustration,satisfaction
+SHARE_9477,Files_7027,Files,Max Nonzero per Row,Default,6.0,satisfaction,satisfaction
+SHARE_9637,Files_7114,Files,Go Scripting with goscript,Default,8.0,neutral,satisfaction
+SHARE_9649,Files_7126,Files,Uninstall immer with npm,Default,16.0,frustration,caution
+SHARE_9698,Files_7163,Files,"Decir ""no"" respetuosamente",Default,1.0,frustration,frustration
+SHARE_9750,Files_7205,Files,sit320 module eight,Default,43.0,neutral,caution
+SHARE_9758,Files_7213,Files,Theater Invoice Statement,Default,16.0,neutral,satisfaction
+SHARE_9804,Files_7249,Files,Regex Matching and Generation,Default,1.0,frustration,satisfaction
+SHARE_9818,Files_7257,Files,UFBAS - WebDev Analysis 2,Default,7.0,satisfaction,satisfaction
+SHARE_9819,Files_7257,Files,UFBAS - WebDev Analysis,Default,20.0,satisfaction,satisfaction
+SHARE_9855,Files_7280,Files,"Hide ""Recommended for you""",Default,8.0,frustration,satisfaction
+SHARE_9876,Files_7300,Files,Format Mongoose Date (JS),Default,4.0,frustration,frustration
+SHARE_9888,Files_7312,Files,自动博客流程搭建,Default,1.0,frustration,frustration
+SHARE_9925,Files_7349,Files,NodeJS Runtime Manager Spec,Default,7.0,neutral,satisfaction
+SHARE_9941,Files_7365,Files,Creating Unity Water Shader,Default,12.0,frustration,caution
+SHARE_9942,Files_7365,Files,Create Unity Water Shader,Default,44.0,frustration,caution
+SHARE_9943,Files_7365,Files,Identifying & Removing Water Randomness,Default,6.0,neutral,satisfaction
+SHARE_9944,Files_7365,Files,Integrating Rim Lighting,Default,3.0,frustration,caution
+SHARE_9945,Files_7365,Files,Improving Water Shader,Default,1.0,neutral,satisfaction
+SHARE_9946,Files_7365,Files,Water Shader with Comments,Default,15.0,frustration,satisfaction
+SHARE_9947,Files_7366,Files,QT5 Git Actions Automation,Default,19.0,neutral,frustration
+SHARE_9968,Files_7374,Files,Quadratic Through 3 Points,Default,8.0,frustration,satisfaction
+SHARE_9991,Files_7389,Files,Xeno and Robo Integration,Default,13.0,frustration,frustration
+SHARE_10006,Files_7404,Files,Judo Techniques Table,Default,7.0,neutral,satisfaction
+SHARE_10007,Files_7404,Files,Judo Technique Grouping,Default,5.0,neutral,satisfaction
+SHARE_10014,Files_7410,Files,Gap Bridging: VR & IB,Default,1.0,frustration,frustration
+SHARE_10015,Files_7410,Files,Time-Space Flexibility & Education,Default,1.0,frustration,frustration
+SHARE_10037,Files_7425,Files,Check Documents for Accuracy,Default,4.0,neutral,caution
+SHARE_10148,Files_7505,Files,Get CSS Things Done.,Default,7.0,caution,satisfaction
+SHARE_10158,Files_7514,Files,"Unknown Term: ""Mailcandler""",Default,2.0,satisfaction,satisfaction
+SHARE_10220,Files_7552,Files,Summarizing Chat.,Default,35.0,frustration,satisfaction
+SHARE_10285,Files_7605,Files,Prompt Engineering: Strategies & Impact,Default,2.0,neutral,satisfaction
+SHARE_10289,Files_7607,Files,Calculate Parameters in Transformer,Default,2.0,frustration,satisfaction
+SHARE_10293,Files_7611,Files,Graph Analysis: Code Dependencies,Default,1.0,satisfaction,satisfaction
+SHARE_10306,Files_7622,Files,sit320 module seven,Default,19.0,frustration,caution
+SHARE_10362,Files_7663,Files,Camera to Canvas,Default,14.0,frustration,caution
+SHARE_10363,Files_7663,Files,Dark Portfolio with JSON.,Default,23.0,satisfaction,satisfaction
+SHARE_10398,Files_7694,Files,Find & Check *.db Files,Default,4.0,frustration,satisfaction
+SHARE_10504,Files_7766,Files,UnityWebRequest请求127.0.0.1处理,Default,1.0,frustration,frustration
+SHARE_10529,Files_7784,Files,Querying PDFs for Answers,Default,2.0,satisfaction,satisfaction
+SHARE_10581,Files_7828,Files,Emacs Skim Link Error,Default,20.0,frustration,frustration
+SHARE_10583,Files_7829,Files,Find Starbucks on I-90,Default,1.0,neutral,satisfaction
+SHARE_10589,Files_7835,Files,Creating Custom View Plugin,Default,5.0,frustration,satisfaction
+SHARE_10637,Files_7870,Files,GoReleaser Setup with GitHub,Default,11.0,frustration,caution
+SHARE_10646,Files_7877,Files,React.js Folder Structure,Default,6.0,frustration,satisfaction
+SHARE_10703,Files_7912,Files,Node.js WordPress Interaction,Default,16.0,neutral,caution
+SHARE_10865,Files_8001,Files,Anvil Line Estimation,Default,13.0,frustration,caution
+SHARE_10874,Files_8010,Files,Uendelig løkke gennemsnitsberegner,Default,10.0,neutral,neutral
+SHARE_10900,Files_8028,Files,Python Function: Process Images,Default,2.0,caution,satisfaction
+SHARE_10902,Files_8029,Files,Text Classification Rules,Default,5.0,caution,satisfaction
+SHARE_10903,Files_8029,Files,Rules for Text Classification,Default,5.0,caution,satisfaction
+SHARE_10904,Files_8029,Files,Rules for Text Classification,Default,5.0,caution,satisfaction
+SHARE_10905,Files_8029,Files,Rules for Text Classification,Default,6.0,caution,satisfaction
+SHARE_10906,Files_8029,Files,Text Extractor Rules,Default,5.0,frustration,satisfaction
+SHARE_10908,Files_8029,Files,Diplomacy Classification Rules,Default,5.0,satisfaction,satisfaction
+SHARE_10910,Files_8029,Files,Rules for Text Classification,Default,5.0,frustration,satisfaction
+SHARE_10932,Files_8046,Files,YouTube API Video Upload,Default,20.0,neutral,satisfaction
+SHARE_10966,Files_8075,Files,JSONL Token Count Script,Default,5.0,frustration,caution
+SHARE_11013,Files_8113,Files,Quantization Method: LDLQ Approach,Default,3.0,satisfaction,caution
+SHARE_11014,Files_8113,Files,"Understanding ""Taylor Series"" in ML",Default,4.0,satisfaction,satisfaction
+SHARE_11025,Files_8124,Files,Stock Analysis Tool,Default,3.0,frustration,satisfaction
+SHARE_11061,Files_8153,Files,OTP Endpoint Protection,Default,2.0,caution,caution
+SHARE_11070,Files_8160,Files,IPW for Attrition Bias,Default,6.0,neutral,satisfaction
+SHARE_11100,Files_8182,Files,Data Cleaning and Viz with Code Interpreter,Default,8.0,frustration,satisfaction
+SHARE_11165,Files_8240,Files,Setting Up Cucumber Testing,Default,6.0,satisfaction,satisfaction
+SHARE_11166,Files_8240,Files,Add Columns & Retrieve Data,Default,22.0,neutral,satisfaction
+SHARE_11201,Files_8274,Files,Angular @Injectable Summary,Default,4.0,neutral,satisfaction
+SHARE_11202,Files_8275,Files,Find Substring Indexes,Default,12.0,frustration,satisfaction
+SHARE_11277,Files_8322,Files,Build Web App: JSON Dataset,Default,5.0,frustration,satisfaction
+SHARE_11334,Files_8358,Files,Iterator Magic Function,Default,3.0,neutral,satisfaction
+SHARE_11354,Files_8372,Files,위도/경도 미터환산 공식,Default,1.0,neutral,neutral
+SHARE_11394,Files_8399,Files,Quotation Approval Redesign,Default,4.0,satisfaction,caution
+SHARE_11405,Files_8408,Files,Custom Socket Server Module,Default,8.0,neutral,caution
+SHARE_11436,Files_8424,Files,Mr. Ranedeer v2.6,Default,1.0,frustration,satisfaction
+SHARE_11541,Files_8505,Files,时事热点评论家,Default,3.0,neutral,neutral
+SHARE_11542,Files_8505,Files,多合一游戏大师,Default,13.0,neutral,frustration
+SHARE_11559,Files_8512,Files,Snowflake Views and Storage,Default,2.0,frustration,satisfaction
+SHARE_11656,Files_8591,Files,Generative Agents Architecture,Default,58.0,satisfaction,satisfaction
+SHARE_11661,Files_8596,Files,Designing LangGPT Prompts,Default,6.0,neutral,neutral
+SHARE_11664,Files_8598,Files,Mr. Ranedeer v2.6.2,Default,2.0,neutral,neutral
+SHARE_11665,Files_8598,Files,PM Assistant Introduction,Default,5.0,neutral,caution
+SHARE_11666,Files_8598,Files,PM Assistant Configuration Guide,Default,10.0,neutral,neutral
+SHARE_11668,Files_8598,Files,PM Assistant Setup,Default,2.0,frustration,satisfaction
+SHARE_11670,Files_8598,Files,Configurations and Solutions,Default,1.0,frustration,satisfaction
+SHARE_11672,Files_8598,Files,Solution Generator,Default,2.0,neutral,neutral
+SHARE_11675,Files_8598,Files,Config Preferences Updated,Default,7.0,neutral,neutral
+SHARE_11676,Files_8598,Files,PM Assistant Configuration Guide,Default,1.0,frustration,satisfaction
+SHARE_11678,Files_8598,Files,PM助手功能介绍,Default,2.0,satisfaction,frustration
+SHARE_11679,Files_8598,Files,PM Assistant Configuration,Default,8.0,caution,caution
+SHARE_11683,Files_8598,Files,PM Assistant: Decision Support,Default,5.0,neutral,neutral
+SHARE_11685,Files_8598,Files,Heuristics in Business Process,Default,1.0,caution,satisfaction
+SHARE_11686,Files_8598,Files,PM Assistant Configuration Guide,Default,6.0,neutral,frustration
+SHARE_11688,Files_8598,Files,Heuristics in Process Redesign,Default,1.0,caution,satisfaction
+SHARE_11689,Files_8598,Files,Initiate PM Assistant,Default,4.0,neutral,satisfaction
+SHARE_11690,Files_8598,Files,PM Assistant Configuration Guide,Default,6.0,neutral,satisfaction
+SHARE_11691,Files_8598,Files,PM Solutions,Default,2.0,caution,satisfaction
+SHARE_11692,Files_8598,Files,阅读网页功能-不支持,Default,7.0,neutral,frustration
+SHARE_11694,Files_8598,Files,Configurations and Solutions,Default,2.0,neutral,satisfaction
+SHARE_11697,Files_8598,Files,Business Process Redesign Heuristics,Default,1.0,caution,satisfaction
+SHARE_11699,Files_8598,Files,PM Assistant Configuration Guide,Default,2.0,neutral,frustration
+SHARE_11700,Files_8598,Files,PM Assistant Setup,Default,2.0,satisfaction,neutral
+SHARE_11703,Files_8598,Files,PM Assistant Configuration Guide,Default,8.0,frustration,satisfaction
+SHARE_11705,Files_8598,Files,PM Assistant Configuration Guide,Default,7.0,satisfaction,satisfaction
+SHARE_11706,Files_8598,Files,PM Assistant Configuration Guide,Default,1.0,frustration,satisfaction
+SHARE_11707,Files_8598,Files,PM Assistant Configuration Guide,Default,3.0,satisfaction,neutral
+SHARE_11806,Files_8667,Files,Chemistry Machine Learning Intro,Default,20.0,neutral,satisfaction
+SHARE_11809,Files_8670,Files,Create Personalized Learning Prompt,Default,2.0,satisfaction,satisfaction
+SHARE_11851,Files_8700,Files,"Apply ""main"" class to visible <section>",Default,8.0,frustration,satisfaction
+SHARE_11889,Files_8733,Files,Refactor Deprecated Clipboard Handling,Default,4.0,caution,caution
+SHARE_11890,Files_8733,Files,"Format Minutes to ""01:48""",Default,2.0,neutral,satisfaction
+SHARE_11892,Files_8733,Files,"Max Results, Multiple of 4",Default,6.0,neutral,satisfaction
+SHARE_11909,Files_8742,Files,Linear Algebra Transformations,Default,1.0,satisfaction,satisfaction
+SHARE_11910,Files_8742,Files,Linear Algebra Q&A,Default,2.0,frustration,satisfaction
+SHARE_11911,Files_8742,Files,Linear Algebra Practice,Default,1.0,satisfaction,satisfaction
+SHARE_11915,Files_8746,Files,Event Modeling Architect,Default,1.0,caution,neutral
+SHARE_11973,Files_8796,Files,Git Flow vs Trunk Dev,Default,1.0,neutral,satisfaction
+SHARE_11996,Files_8814,Files,Plot Year vs. Temperature,Default,7.0,neutral,satisfaction
+SHARE_12038,Discussions_8853,Discussions,await import vs plain import,Default,1.0,frustration,satisfaction
+SHARE_12042,Discussions_8855,Discussions,Gridworld Agent: Rules & Objects,Default,3.0,satisfaction,satisfaction
+SHARE_12044,Discussions_8856,Discussions,Pandora demo: Conway Game in JS,Default,3.0,frustration,satisfaction
+SHARE_12047,Discussions_8857,Discussions,禁止ワードの投稿終了,Default,5.0,neutral,frustration
+SHARE_12048,Discussions_8858,Discussions,Flappy Bird Familiarity,Default,6.0,frustration,satisfaction
+SHARE_12052,Discussions_8861,Discussions,Upgrade venv to Python 3.11,Default,1.0,frustration,satisfaction
+SHARE_12054,Discussions_8863,Discussions,Importing Multiple makeStyles: Error,Default,1.0,frustration,caution
+SHARE_12057,Discussions_8866,Discussions,Generate Nova Vue Card PNG,Default,7.0,neutral,satisfaction
+SHARE_12059,Discussions_8868,Discussions,Gridworld Rules: Understanding Environment,Default,7.0,satisfaction,satisfaction
+SHARE_12060,Discussions_8869,Discussions,Chrome Extension Tab IDs,Default,10.0,frustration,satisfaction
+SHARE_12066,Discussions_8875,Discussions,GPU Architecture,Default,7.0,frustration,satisfaction
+SHARE_12068,Discussions_8877,Discussions,Powerwall Dashboard to Kubernetes,Default,4.0,neutral,satisfaction
+SHARE_12070,Discussions_8879,Discussions,Transparent Frag Interaction.,Default,20.0,frustration,frustration
+SHARE_12071,Discussions_8880,Discussions,OpenBSD Makefile Sorcery,Default,2.0,satisfaction,satisfaction
+SHARE_12072,Discussions_8881,Discussions,Data Issue: Incomplete Values,Default,6.0,satisfaction,satisfaction
+SHARE_12074,Discussions_8883,Discussions,Zero Bits,Default,20.0,neutral,satisfaction
+SHARE_12075,Discussions_8884,Discussions,Renaming Data Warehousing,Default,3.0,frustration,satisfaction
+SHARE_12116,Discussions_8919,Discussions,Migrate Files from Git LFS,Default,1.0,neutral,satisfaction
+SHARE_12148,Discussions_8945,Discussions,GPU Architecture,Model: Default,7.0,frustration,satisfaction
+SHARE_12166,Discussions_8961,Discussions,New chat,Default,2.0,frustration,satisfaction
+SHARE_12230,Discussions_9015,Discussions,Layout Plots in Quarto,Default,2.0,frustration,satisfaction
+SHARE_12257,Discussions_9042,Discussions,Vue 3 List Watch,Default,1.0,frustration,caution
+SHARE_12308,Commit_9087,Commit,Code Request: Expert Coder,Default,8.0,neutral,satisfaction
+SHARE_12312,Commit_9091,Commit,Swedish Political Analysis.,Default,3.0,neutral,satisfaction
+SHARE_12313,Commit_9092,Commit,Firefox Extension: PR Fetch,Default,10.0,frustration,caution
+SHARE_12315,Commit_9094,Commit,TypeError: NoneType to str,Default,2.0,neutral,neutral
+SHARE_12316,Commit_9095,Commit,认识Bard公司,Default,10.0,caution,caution
+SHARE_12317,Commit_9096,Commit,Create Jira Task with Node.js,Default,10.0,neutral,neutral
+SHARE_12318,Commit_9097,Commit,Optimize rsync retry logic,Default,4.0,frustration,satisfaction
+SHARE_12319,Commit_9098,Commit,Optimized GNOME Extension Installer,Default,1.0,frustration,satisfaction
+SHARE_12320,Commit_9099,Commit,Reunificador_dashboard,Default,25.0,neutral,satisfaction
+SHARE_12321,Commit_9100,Commit,New chat,Default,27.0,frustration,satisfaction
+SHARE_12324,Commit_9103,Commit,Fix Missing Prompt Silently.,Default,1.0,caution,neutral
+SHARE_12325,Commit_9104,Commit,Fix loadPromptDescriptor-import.,Default,1.0,caution,neutral
+SHARE_12326,Commit_9105,Commit,Git Status Display,Default,4.0,frustration,frustration
+SHARE_12327,Commit_9106,Commit,Git Status Endpoint Implementation,Default,2.0,caution,neutral
+SHARE_12328,Commit_9107,Commit,Code Validation & Refactoring,Default,4.0,frustration,neutral
+SHARE_12329,Commit_9108,Commit,Reorder Load Descriptors,Default,2.0,frustration,neutral
+SHARE_12330,Commit_9109,Commit,Optimize prompt loading.,Default,1.0,caution,neutral
+SHARE_12331,Commit_9110,Commit,Refactor Prompt Defaults,Default,1.0,caution,neutral
+SHARE_12332,Commit_9111,Commit,Modify Prompt Defaults,Default,1.0,caution,neutral
+SHARE_12333,Commit_9112,Commit,Move Tailwind config .cjs,Default,2.0,neutral,frustration
+SHARE_12334,Commit_9113,Commit,New chat,Default,1.0,caution,satisfaction
+SHARE_12335,Commit_9114,Commit,Fix JS Import Issue,Default,1.0,caution,neutral
+SHARE_12336,Commit_9115,Commit,Refactor Dry-Run API,Default,1.0,caution,neutral
+SHARE_12337,Commit_9116,Commit,Move and Rename Component,Default,1.0,caution,neutral
+SHARE_12338,Commit_9117,Commit,Modify ExecutionResultDisplay.,Default,1.0,caution,satisfaction
+SHARE_12339,Commit_9118,Commit,Fix Terminal Newline Handling,Default,1.0,caution,neutral
+SHARE_12340,Commit_9119,Commit,Style Terminal Tailwind Prompt.,Default,1.0,caution,neutral
+SHARE_12341,Commit_9120,Commit,Update 'message' to 'output',Default,1.0,caution,neutral
+SHARE_12342,Commit_9121,Commit,Create Execution Result Signal,Default,1.0,caution,neutral
+SHARE_12343,Commit_9122,Commit,"Rename StartButton, GenerateButton.",Default,1.0,caution,neutral
+SHARE_12344,Commit_9123,Commit,Eliminate Notes Input.,Default,1.0,caution,neutral
+SHARE_12345,Commit_9124,Commit,Prompt Display in Details,Default,1.0,caution,neutral
+SHARE_12346,Commit_9125,Commit,Remove .nojekyll files,Default,1.0,frustration,neutral
+SHARE_12347,Commit_9126,Commit,Fix Relative Imports JS,Default,1.0,frustration,neutral
+SHARE_12348,Commit_9127,Commit,Setup GitHub Pages Documentation,Default,7.0,frustration,satisfaction
+SHARE_12349,Commit_9128,Commit,Bergþór JSON skrá,Default,1.0,neutral,satisfaction
+SHARE_12350,Commit_9129,Commit,Reset Git Button.,Default,1.0,frustration,neutral
+SHARE_12351,Commit_9130,Commit,Create execute endpoint.,Default,2.0,neutral,frustration
+SHARE_12352,Commit_9131,Commit,Refactor JS Files.,Default,3.0,frustration,caution
+SHARE_12353,Commit_9132,Commit,Add wrap for pre,Default,2.0,frustration,satisfaction
+SHARE_12354,Commit_9133,Commit,Add Horizontal Scrolling,Default,1.0,frustration,neutral
+SHARE_12355,Commit_9134,Commit,Limit Component Width,Default,1.0,frustration,neutral
+SHARE_12357,Commit_9136,Commit,Fix layout and responsiveness,Default,3.0,frustration,satisfaction
+SHARE_12358,Commit_9137,Commit,Fix Prompt Display Issue,Default,1.0,frustration,satisfaction
+SHARE_12359,Commit_9138,Commit,Style Markdown with Tailwind,Default,4.0,neutral,satisfaction
+SHARE_12360,Commit_9139,Commit,Fix Tailwind CSS Config,Default,5.0,frustration,caution
+SHARE_12361,Commit_9140,Commit,Integrate TailwindCSS with PostCSS,Default,1.0,frustration,frustration
+SHARE_12362,Commit_9141,Commit,Update attention feature.,Default,2.0,satisfaction,neutral
+SHARE_12363,Commit_9142,Commit,Fix Missing Package Error,Default,1.0,frustration,caution
+SHARE_12364,Commit_9143,Commit,Create VSCode Extension,Default,3.0,neutral,satisfaction
+SHARE_12365,Commit_9144,Commit,Fix createWebSocket URL,Default,1.0,frustration,neutral
+SHARE_12366,Commit_9145,Commit,Rename Contributor to Junior,Default,2.0,frustration,neutral
+SHARE_12367,Commit_9146,Commit,Derive WebSocket URL,Default,2.0,frustration,neutral
+SHARE_12368,Commit_9147,Commit,Refactor code to getBaseUrl,Default,1.0,frustration,neutral
+SHARE_12370,Commit_9149,Commit,"Refactor server.js, change port",Default,1.0,frustration,neutral
+SHARE_12371,Commit_9150,Commit,Split code into files,Default,1.0,frustration,satisfaction
+SHARE_12373,Commit_9152,Commit,Reprint prompt on changes,Default,4.0,frustration,satisfaction
+SHARE_12374,Commit_9153,Commit,Refactor code to no-pass,Default,3.0,frustration,caution
+SHARE_12375,Commit_9154,Commit,Remove redundant function signatures,Default,1.0,frustration,neutral
+SHARE_12376,Commit_9155,Commit,Make junior-web work.,Default,5.0,frustration,frustration
+SHARE_12377,Commit_9156,Commit,Server and Vite Start,Default,2.0,frustration,caution
+SHARE_12378,Commit_9157,Commit,Fixing File Loading Error,Default,4.0,frustration,satisfaction
+SHARE_12379,Commit_9158,Commit,"Refactor code, split file.",Default,2.0,neutral,frustration
+SHARE_12380,Commit_9159,Commit,Rename project to Junior.,Default,3.0,neutral,satisfaction
+SHARE_12381,Commit_9160,Commit,Rename Project to @aijunior/dev,Default,2.0,frustration,neutral
+SHARE_12384,Commit_9163,Commit,Improve Documentation!,Default,2.0,caution,satisfaction
+SHARE_12385,Commit_9164,Commit,Create Prompt Descriptor Loader,Default,1.0,caution,satisfaction
+SHARE_12386,Commit_9165,Commit,Fixing Double processPrompt,Default,1.0,frustration,satisfaction
+SHARE_12388,Commit_9167,Commit,Refactor Frontend Files,Default,1.0,frustration,caution
+SHARE_12389,Commit_9168,Commit,Fix TaskList Initial Value,Default,2.0,frustration,caution
+SHARE_12390,Commit_9169,Commit,Update Task Selector,Default,2.0,frustration,neutral
+SHARE_12391,Commit_9170,Commit,Refactor Frontend Files,Default,8.0,neutral,satisfaction
+SHARE_12392,Commit_9171,Commit,Add Task Event Handler,Default,5.0,frustration,frustration
+SHARE_12394,Commit_9173,Commit,Refactor App.jsx with Components,Default,1.0,frustration,satisfaction
+SHARE_12396,Commit_9175,Commit,Refactor backend code.,Default,2.0,frustration,frustration
+SHARE_12397,Commit_9176,Commit,Serve prompt.yaml frontend,Default,4.0,frustration,caution
+SHARE_12398,Commit_9177,Commit,Rename & Update Dependencies,Default,2.0,caution,caution
+SHARE_12399,Commit_9178,Commit,Splitting `frontend.jsx`,Default,3.0,frustration,satisfaction
+SHARE_12400,Commit_9179,Commit,Copy Prompt to Clipboard,Default,2.0,frustration,neutral
+SHARE_12401,Commit_9180,Commit,Web Interface with SolidJS,Default,10.0,neutral,caution
+SHARE_12404,Commit_9183,Commit,Chunked JSON Unescape Function,Default,1.0,frustration,satisfaction
+SHARE_12409,Commit_9188,Commit,Fix Task Update Issue,Default,1.0,caution,neutral
+SHARE_12410,Commit_9189,Commit,Fix Vite PostCSS Path,Default,2.0,caution,neutral
+SHARE_12411,Commit_9190,Commit,Fix Tailwind Config,Default,4.0,neutral,frustration
+SHARE_12412,Commit_9191,Commit,Git Status Porcelain Fix,Default,2.0,caution,neutral
+SHARE_12413,Commit_9192,Commit,Fetch Git Status Fix,Default,1.0,caution,neutral
+SHARE_12414,Commit_9193,Commit,Fix GitStatus Fetch,Default,1.0,caution,neutral
+SHARE_12415,Commit_9194,Commit,Fix GitStatusDisplay Issue.,Default,2.0,caution,neutral
+SHARE_12416,Commit_9195,Commit,Add styles to markdown.css.,Default,1.0,caution,neutral
+SHARE_12417,Commit_9196,Commit,Fix CSS Nesting Issue,Default,1.0,caution,neutral
+SHARE_12418,Commit_9197,Commit,Refactor OPENAI_API_KEY handling.,Default,4.0,neutral,neutral
+SHARE_12419,Commit_9198,Commit,Hide empty details.,Default,3.0,frustration,satisfaction
+SHARE_12420,Commit_9199,Commit,Fix Terminal Display Issue,Default,2.0,frustration,satisfaction
+SHARE_12421,Commit_9200,Commit,Install xterm.js in Solid.js,Default,3.0,frustration,satisfaction
+SHARE_12422,Commit_9201,Commit,Fix Execute API Output,Default,1.0,caution,neutral
+SHARE_12424,Commit_9203,Commit,Add margin with Tailwind,Default,2.0,frustration,satisfaction
+SHARE_12425,Commit_9204,Commit,Set Task from Prompt,Default,4.0,frustration,neutral
+SHARE_12426,Commit_9205,Commit,Rename build:docs to build:doc,Default,2.0,frustration,satisfaction
+SHARE_12428,Commit_9207,Commit,Fix Button Styles,Default,4.0,frustration,frustration
+SHARE_12429,Commit_9208,Commit,Fix Git Reset Issue.,Default,2.0,frustration,satisfaction
+SHARE_12431,Commit_9210,Commit,Fix ResetGit Script,Default,1.0,frustration,neutral
+SHARE_12433,Commit_9212,Commit,Fix Git File Path.,Default,1.0,frustration,neutral
+SHARE_12434,Commit_9213,Commit,Git Move & Route,Default,1.0,frustration,satisfaction
+SHARE_12435,Commit_9214,Commit,Reset Git Repository,Default,7.0,frustration,satisfaction
+SHARE_12436,Commit_9215,Commit,Move Files to Handlers,Default,1.0,caution,neutral
+SHARE_12437,Commit_9216,Commit,Move generateHandler.js to handlers,Default,1.0,caution,satisfaction
+SHARE_12438,Commit_9217,Commit,"Center content, change max-width",Default,1.0,frustration,satisfaction
+SHARE_12439,Commit_9218,Commit,Refactor NavBar and Link.,Default,1.0,caution,satisfaction
+SHARE_12440,Commit_9219,Commit,Add Junior heading.,Default,1.0,frustration,neutral
+SHARE_12441,Commit_9220,Commit,Responsive layout implementation,Default,1.0,frustration,satisfaction
+SHARE_12442,Commit_9221,Commit,Fix Nested CSS Issue,Default,1.0,frustration,neutral
+SHARE_12443,Commit_9222,Commit,Fix undefined format error,Default,2.0,frustration,caution
+SHARE_12444,Commit_9223,Commit,Refactor Separate Prompt Component,Default,3.0,frustration,neutral
+SHARE_12445,Commit_9224,Commit,Refactor Signals and Stores,Default,2.0,frustration,neutral
+SHARE_12446,Commit_9225,Commit,Move 'glob' to dependencies,Default,1.0,frustration,neutral
+SHARE_12448,Commit_9227,Commit,Fix .git paths,Default,1.0,frustration,neutral
+SHARE_12449,Commit_9228,Commit,Fix TypeScript Error.,Default,1.0,frustration,caution
+SHARE_12450,Commit_9229,Commit,Add VSCode command.,Default,4.0,caution,satisfaction
+SHARE_12451,Commit_9230,Commit,Improved Code Execution,Default,5.0,frustration,satisfaction
+SHARE_12453,Commit_9232,Commit,Update Prompt YAML,Default,2.0,frustration,neutral
+SHARE_12454,Commit_9233,Commit,udev rule for USB script,Default,14.0,neutral,neutral
+SHARE_12455,Commit_9234,Commit,Move files to frontend!,Default,3.0,neutral,frustration
+SHARE_12456,Commit_9235,Commit,"Move PostCSS Config, Vite",Default,1.0,caution,neutral
+SHARE_12457,Commit_9236,Commit,"Move .js files, update package.json",Default,2.0,frustration,frustration
+SHARE_12458,Commit_9237,Commit,Refactor JS Build Script,Default,2.0,frustration,neutral
+SHARE_12459,Commit_9238,Commit,Limit PromptDisplay div width,Default,1.0,frustration,neutral
+SHARE_12460,Commit_9239,Commit,Mobile-friendly SolidJS app.,Default,1.0,frustration,neutral
+SHARE_12461,Commit_9240,Commit,Update writeAttention function,Default,3.0,frustration,neutral
+SHARE_12462,Commit_9241,Commit,Load Task Template,Default,3.0,frustration,frustration
+SHARE_12463,Commit_9242,Commit,Separating Common Prompt Processing,Default,5.0,frustration,caution
+SHARE_12465,Commit_9244,Commit,cn in Tailwind CSS,Default,2.0,neutral,satisfaction
+SHARE_12466,Commit_9245,Commit,Weight Goal Calculator.,Default,14.0,frustration,satisfaction
+SHARE_12467,Commit_9246,Commit,Redirect Not Working,Default,2.0,frustration,satisfaction
+SHARE_12468,Commit_9247,Commit,Script Fails as systemd Service,Default,11.0,frustration,satisfaction
+SHARE_12494,Commit_9273,Commit,Add Facebook Pixel Laravel,,5.0,neutral,satisfaction
+SHARE_12504,Commit_9283,Commit,Monitor Change in Input,,1.0,caution,neutral
+SHARE_12505,Commit_9284,Commit,Update commit message input.,,2.0,caution,neutral
+SHARE_12506,Commit_9285,Commit,Commit Button Feature Implementation,,1.0,caution,neutral
+SHARE_12507,Commit_9286,Commit,Update Publisher Field,,1.0,caution,neutral
+SHARE_12508,Commit_9287,Commit,Improve Junior Extension,,1.0,caution,frustration
+SHARE_12509,Commit_9288,Commit,Update Junior Roadmap.,,4.0,neutral,satisfaction
+SHARE_12510,Commit_9289,Commit,Style ExecutionResultDisplay: Terminal-like,,1.0,caution,neutral
+SHARE_12511,Commit_9290,Commit,Refactor xterm.js Solidjsx,,3.0,neutral,satisfaction
+SHARE_12513,Commit_9292,Commit,Update Documentation & Assets,,3.0,frustration,satisfaction
+SHARE_12514,Commit_9293,Commit,Improve README Documentation,,3.0,frustration,satisfaction
+SHARE_12515,Commit_9294,Commit,Remove promisify from makeExecutable.,,1.0,caution,neutral
+SHARE_12516,Commit_9295,Commit,Embed Video in README,,4.0,frustration,satisfaction
+SHARE_12517,Commit_9296,Commit,Web Interface Documentation Update,,1.0,caution,neutral
+SHARE_12518,Commit_9297,Commit,Improve Web Interface,,1.0,caution,neutral
+SHARE_12519,Commit_9298,Commit,Improve Web Interface,,1.0,caution,neutral
+SHARE_12520,Commit_9299,Commit,Make sh executable.,,3.0,neutral,neutral
+SHARE_12521,Commit_9300,Commit,Create Prompt Dir,,2.0,caution,neutral
+SHARE_12522,Commit_9301,Commit,Fix getPromptDirs: use import.meta.,,3.0,neutral,neutral
+SHARE_12523,Commit_9302,Commit,Refactor gitignore creation,,4.0,frustration,frustration
+SHARE_12524,Commit_9303,Commit,Refactor Git Status Response.,,2.0,frustration,neutral
+SHARE_12590,Commit_9369,Commit,Ansible Role: Start Caffeine,,2.0,neutral,satisfaction
+SHARE_12609,Commit_9388,Commit,Set Commit Message Monitor,,2.0,caution,neutral
+SHARE_12610,Commit_9389,Commit,Save & Clear Change.,,2.0,caution,neutral
+SHARE_12611,Commit_9390,Commit,Clear Prompt & Commit Message,,2.0,caution,neutral
+SHARE_12612,Commit_9391,Commit,Refactor code to clear execution result,,1.0,caution,neutral
+SHARE_12613,Commit_9392,Commit,Refactor SolidJS Commit Fetch,,1.0,caution,neutral
+SHARE_12614,Commit_9393,Commit,Commit Message Refactoring.,,1.0,caution,neutral
+SHARE_12615,Commit_9394,Commit,Add Git Commit Endpoint.,,1.0,caution,neutral
+SHARE_12616,Commit_9395,Commit,Fix Docs & Implement Roadmap,,2.0,caution,caution
+SHARE_12617,Commit_9396,Commit,"Replace ansi_up: Uninstall, implement!",,4.0,frustration,satisfaction
+SHARE_12618,Commit_9397,Commit,Refactor GenerateButton: html5 API,,1.0,caution,neutral
+SHARE_12619,Commit_9398,Commit,Refactor Package.json: Uninstall & Move,,1.0,caution,neutral
+SHARE_12620,Commit_9399,Commit,Rewrite startVite with Vite's JS API.,,1.0,caution,neutral
+SHARE_12621,Commit_9400,Commit,Add Note: Use Junior,,1.0,caution,satisfaction
+SHARE_12622,Commit_9401,Commit,Revert Frontend Changes.,,3.0,frustration,satisfaction
+SHARE_12623,Commit_9402,Commit,Rename Project to Junior,,1.0,caution,satisfaction
+SHARE_12624,Commit_9403,Commit,Improve Web Interface Docs,,1.0,caution,neutral
+SHARE_12625,Commit_9404,Commit,Improve Documentation: Web Interface,,2.0,frustration,neutral
+SHARE_12626,Commit_9405,Commit,Refactor prompt.yaml and create projectSpecifics.md,,2.0,caution,neutral
+SHARE_12627,Commit_9406,Commit,Init Git Repo Junior,,8.0,frustration,satisfaction
+SHARE_12674,Commit_9453,Commit,Move CommitMessage to App.jsx,,5.0,frustration,caution
+SHARE_12675,Commit_9454,Commit,Modify Color & Copy Link.,,3.0,caution,caution
+SHARE_12684,Commit_9463,Commit,Polygon.io Overview,,26.0,frustration,satisfaction
+SHARE_12702,Commit_9481,Commit,Server Code Organization,Default,6.0,neutral,caution
+SHARE_12703,Commit_9482,Commit,Vagrant Config Check.,Default,3.0,frustration,satisfaction
+SHARE_12706,Commit_9485,Commit,Node.js PM2 Server Port,Default,3.0,neutral,caution
+SHARE_12713,Commit_9492,Commit,Thread-Safe Queue with pthreads,Default,7.0,frustration,satisfaction
+SHARE_12716,Commit_9495,Commit,Fix HTTPS Key Path,Default,16.0,frustration,caution
+SHARE_12775,Commit_9554,Commit,Node + Wordpress,Default,15.0,frustration,caution
+SHARE_12787,Commit_9566,Commit,React App auf GitHub Pages,Default,4.0,neutral,neutral
+SHARE_12874,Commit_9653,Commit,New chat,Default,2.0,caution,neutral
+SHARE_12875,Commit_9654,Commit,New chat,Default,2.0,caution,neutral
+SHARE_12876,Commit_9655,Commit,Add Space in ConfirmationDialog,Default,1.0,caution,neutral
+SHARE_12877,Commit_9656,Commit,Theme-Aware Dialog Styling,Default,1.0,caution,satisfaction
+SHARE_12878,Commit_9657,Commit,Enhance Confirmation Dialog,Default,1.0,caution,neutral
+SHARE_12879,Commit_9658,Commit,Refactor resetGit.js using async/await,Default,1.0,caution,satisfaction
+SHARE_12880,Commit_9659,Commit,Refactor SVG to PNG,Default,3.0,frustration,satisfaction
+SHARE_12881,Commit_9660,Commit,Move & Update Logo,Default,1.0,caution,neutral
+SHARE_12882,Commit_9661,Commit,Convert SVG to ICO,Default,5.0,caution,satisfaction
+SHARE_12883,Commit_9662,Commit,"Rename ""Home"" to ""Junior Docs""",Default,1.0,caution,satisfaction
+SHARE_12884,Commit_9663,Commit,Favicon and HTML update.,Default,1.0,caution,neutral
+SHARE_12885,Commit_9664,Commit,Title: Update NavBar Links,Default,1.0,caution,neutral
+SHARE_12886,Commit_9665,Commit,Fix Prompt Descriptor Attribute,Default,1.0,caution,caution
+SHARE_12887,Commit_9666,Commit,Docsify Configure Sidebar,Default,1.0,caution,neutral
+SHARE_12888,Commit_9667,Commit,Fix CommitButton Look,Default,1.0,caution,neutral
+SHARE_12889,Commit_9668,Commit,Reduce Vertical Space,Default,1.0,caution,neutral
+SHARE_12890,Commit_9669,Commit,Change Layout Commit Buttons,Default,4.0,frustration,caution
+SHARE_12891,Commit_9670,Commit,Change Layout Commit Buttons,Default,2.0,neutral,satisfaction
+SHARE_12892,Commit_9671,Commit,Refactor App into Components.,Default,2.0,neutral,satisfaction
+SHARE_12893,Commit_9672,Commit,Save and Execute Changes,Default,3.0,neutral,satisfaction
+SHARE_12894,Commit_9673,Commit,Replace ExecuteButton input,Default,1.0,caution,neutral
+SHARE_12895,Commit_9674,Commit,Implement Clipboard Fallback.,Default,1.0,caution,neutral
+SHARE_12896,Commit_9675,Commit,New chat,Default,2.0,caution,neutral
+SHARE_12897,Commit_9676,Commit,Add Background-Emphasize to Tailwind,Default,2.0,frustration,satisfaction
+SHARE_12898,Commit_9677,Commit,Coloring select & inputs.,Default,1.0,caution,neutral
+SHARE_12899,Commit_9678,Commit,Make TaskList Dark Theme,Default,1.0,caution,neutral
+SHARE_12900,Commit_9679,Commit,Setup dark/light colors,Default,1.0,caution,neutral
+SHARE_12901,Commit_9680,Commit,Redesign NavBar Layout.,Default,1.0,caution,neutral
+SHARE_12902,Commit_9681,Commit,Fix theme switcher styling.,Default,2.0,caution,neutral
+SHARE_12969,Commit_9748,Commit,Move bg-main to body,Default,1.0,caution,neutral
+SHARE_13019,Commit_9798,Commit,Translate Text with PySimpleGUI,Default,8.0,frustration,satisfaction
+SHARE_13034,Commit_9813,Commit,Add Bottom Padding Fix,Default,1.0,caution,neutral
+SHARE_13035,Commit_9814,Commit,Fixing Vite Host Warning,Default,1.0,caution,neutral
+SHARE_13036,Commit_9815,Commit,Fix Button Padding,Default,1.0,caution,neutral
+SHARE_13037,Commit_9816,Commit,Fix Uncaught Reference Error,Default,1.0,caution,neutral
+SHARE_13038,Commit_9817,Commit,Set Vite Host CLI,Default,2.0,caution,neutral
+SHARE_13039,Commit_9818,Commit,Update Default baseUrl,Default,1.0,caution,neutral
+SHARE_13040,Commit_9819,Commit,Update App.jsx Layout,Default,1.0,caution,neutral
+SHARE_13041,Commit_9820,Commit,Solidjs Vertical Fill Feature,Default,4.0,frustration,satisfaction
+SHARE_13042,Commit_9821,Commit,New chat,Default,2.0,caution,neutral
+SHARE_13043,Commit_9822,Commit,Update Margin & Padding,Default,2.0,caution,neutral
+SHARE_13044,Commit_9823,Commit,Update Frontend UI.,Default,1.0,caution,neutral
+SHARE_13045,Commit_9824,Commit,Edit JSX: Add Class,Default,1.0,caution,neutral
+SHARE_13046,Commit_9825,Commit,Change Border Color Task,Default,2.0,frustration,frustration
+SHARE_13047,Commit_9826,Commit,Add Border to Component,Default,1.0,caution,neutral
+SHARE_13048,Commit_9827,Commit,Update SVG Colors.,Default,1.0,caution,neutral
+SHARE_13049,Commit_9828,Commit,Update Button Styles,Default,1.0,caution,neutral
+SHARE_13050,Commit_9829,Commit,Fix Button Styling,Default,1.0,caution,neutral
+SHARE_13051,Commit_9830,Commit,Fix Tailwind Button Style,Default,1.0,caution,neutral
+SHARE_13052,Commit_9831,Commit,Fix Font Size,Default,1.0,caution,neutral
+SHARE_13053,Commit_9832,Commit,Fix Mobile Padding,Default,1.0,caution,neutral
+SHARE_13054,Commit_9833,Commit,Fix ReferenceError in init.js,Default,1.0,caution,neutral
+SHARE_13055,Commit_9834,Commit,Update Favicons on Logo Update,Default,1.0,caution,neutral
+SHARE_13056,Commit_9835,Commit,Fix executeHandler Output,Default,1.0,caution,neutral
+SHARE_13057,Commit_9836,Commit,Move fetchGitStatus in handler,Default,1.0,caution,neutral
+SHARE_13058,Commit_9837,Commit,Bind 'X' Key & Label,Default,1.0,caution,neutral
+SHARE_13059,Commit_9838,Commit,Refactor ExecuteButton: Move handleExecuteChange,Default,1.0,caution,neutral
+SHARE_13060,Commit_9839,Commit,Refactor ExecuteButton: ChangeInput Model,Default,1.0,caution,neutral
+SHARE_13061,Commit_9840,Commit,Rename delete-branches script.,Default,2.0,neutral,frustration
+SHARE_13062,Commit_9841,Commit,New chat,Default,1.0,caution,neutral
+SHARE_13063,Commit_9842,Commit,Fix TypeError in ansiToHtml,Default,1.0,caution,neutral
+SHARE_13064,Commit_9843,Commit,Rename & Update Files,Default,1.0,caution,neutral
+SHARE_13065,Commit_9844,Commit,Fixing TypeError in code,Default,1.0,caution,neutral
+SHARE_13066,Commit_9845,Commit,Delete Git Branches Function,Default,1.0,caution,neutral
+SHARE_13067,Commit_9846,Commit,Fix TypeError in code,Default,1.0,caution,neutral
+SHARE_13069,Commit_9848,Commit,Fix TypeError in code,Default,1.0,caution,neutral
+SHARE_13070,Commit_9849,Commit,Keyboard Bindings Framework Implementation,Default,5.0,neutral,satisfaction
+SHARE_13071,Commit_9850,Commit,Create Code Execution Plan,Default,1.0,caution,neutral
+SHARE_13072,Commit_9851,Commit,Extract & Execute Code,Default,2.0,caution,neutral
+SHARE_13073,Commit_9852,Commit,Update Prompt Generation,Default,1.0,caution,satisfaction
+SHARE_13074,Commit_9853,Commit,Add Checkbox for Confirmation,Default,1.0,caution,neutral
+SHARE_13075,Commit_9854,Commit,Rollback Confirmation Implementation,Default,1.0,caution,neutral
+SHARE_13076,Commit_9855,Commit,Fixing Git Checkout Errors,Default,1.0,caution,neutral
+SHARE_13077,Commit_9856,Commit,Rename & Move Files,Default,1.0,caution,neutral
+SHARE_13078,Commit_9857,Commit,Update README with badge.,Default,1.0,caution,satisfaction
+SHARE_13079,Commit_9858,Commit,Reorder Documentation Sidebar,Default,1.0,caution,neutral
+SHARE_13080,Commit_9859,Commit,Replace Getting Started section.,Default,2.0,frustration,satisfaction
+SHARE_13081,Commit_9860,Commit,Add Junior Extension!,Default,1.0,caution,satisfaction
+SHARE_13082,Commit_9861,Commit,Update README: Shell Script,Default,1.0,caution,satisfaction
+SHARE_13083,Commit_9862,Commit,Improve Docs Configs,Default,1.0,caution,neutral
+SHARE_13084,Commit_9863,Commit,Update Roadmap with Completed Task,Default,1.0,caution,neutral
+SHARE_13085,Commit_9864,Commit,Update Roadmap: Completed Task,Default,1.0,caution,neutral
+SHARE_13086,Commit_9865,Commit,Update Web Interface Start,Default,1.0,caution,neutral
+SHARE_13088,Commit_9867,Commit,New chat,Default,1.0,caution,caution
+SHARE_13089,Commit_9868,Commit,Improve Prompt Descriptor Implementation.,Default,3.0,frustration,caution
+SHARE_13090,Commit_9869,Commit,Improve Junior Docs,Default,1.0,caution,caution
+SHARE_13091,Commit_9870,Commit,Improve Junior Docs.,Default,1.0,caution,neutral
+SHARE_13092,Commit_9871,Commit,Improve Documentation: Xx Files,Default,1.0,caution,neutral
+SHARE_13093,Commit_9872,Commit,Improve Junior Documentation.,Default,3.0,neutral,satisfaction
+SHARE_13094,Commit_9873,Commit,Improve Documentation - HTML,Default,1.0,caution,neutral
+SHARE_13095,Commit_9874,Commit,Create favicon from logo.,Default,1.0,caution,neutral
+SHARE_13096,Commit_9875,Commit,Create Logo SVG/PNG,Default,3.0,caution,neutral
+SHARE_13097,Commit_9876,Commit,Update doc/ references!,Default,1.0,caution,satisfaction
+SHARE_13099,Commit_9878,Commit,Switch buttons in ChangeFinalization,Default,1.0,caution,neutral
+SHARE_13100,Commit_9879,Commit,Adjust commit buttons style.,Default,1.0,caution,neutral
+SHARE_13101,Commit_9880,Commit,Clipboard Feature Implemented.,Default,1.0,caution,neutral
+SHARE_13102,Commit_9881,Commit,Emphasize Colors for Code,Default,1.0,caution,neutral
+SHARE_13103,Commit_9882,Commit,Update Frontend Styles.,Default,1.0,caution,neutral
+SHARE_13104,Commit_9883,Commit,Update div styling App.jsx.,Default,1.0,caution,neutral
+SHARE_13105,Commit_9884,Commit,Update styles/colors and tailwind.config.cjs,Default,1.0,caution,neutral
+SHARE_13106,Commit_9885,Commit,Theme Switcher with Icons,Default,1.0,caution,neutral
+SHARE_13107,Commit_9886,Commit,Add Theme Switcher.,Default,1.0,caution,neutral
+SHARE_13108,Commit_9887,Commit,Improve Junior README.,Default,1.0,caution,satisfaction
+SHARE_13109,Commit_9888,Commit,Change CommitMessageInput Width,Default,1.0,caution,neutral
+SHARE_13110,Commit_9889,Commit,Rename and move files.,Default,2.0,frustration,satisfaction
+SHARE_13111,Commit_9890,Commit,"Refactor code, rename function.",Default,1.0,caution,neutral
+SHARE_13112,Commit_9891,Commit,Move monitorChangeSignal.js (4 words),Default,1.0,caution,neutral
+SHARE_13208,Commit_9987,Commit,Extracting Branch Names,Default,5.0,frustration,satisfaction
+SHARE_13209,Commit_9988,Commit,GitHub Actions ImportError,Default,3.0,frustration,caution
+SHARE_13211,Commit_9990,Commit,Draft New Resume,Default,11.0,satisfaction,satisfaction
+SHARE_13222,Commit_10001,Commit,Concise Query Building,Default,2.0,frustration,satisfaction
+SHARE_13226,Commit_10005,Commit,Flex Grid Width Solution,Default,1.0,neutral,caution
+SHARE_13241,Commit_10020,Commit,Fix AutoGrowingTextarea onInput,Default,1.0,caution,neutral
+SHARE_13242,Commit_10021,Commit,Auto-Growing Textarea Implementation,Default,4.0,neutral,satisfaction
+SHARE_13243,Commit_10022,Commit,Wrap Prompt Descriptor in Details Tag,Default,2.0,caution,neutral
+SHARE_13244,Commit_10023,Commit,Modify UI Elements,Default,1.0,caution,neutral
+SHARE_13245,Commit_10024,Commit,Fix Await PostDescriptor Issue,Default,2.0,neutral,frustration
+SHARE_13246,Commit_10025,Commit,Fix js-yaml version 4,Default,1.0,caution,neutral
+SHARE_13247,Commit_10026,Commit,Fix js-yaml safeLoad issue,Default,1.0,caution,neutral
+SHARE_13248,Commit_10027,Commit,Fixing RequirementsEditor Event Handlers,Default,1.0,caution,neutral
+SHARE_13249,Commit_10028,Commit,Fix setRequirements import.,Default,1.0,caution,neutral
+SHARE_13250,Commit_10029,Commit,Fix getYamlEntry Issue,Default,2.0,frustration,caution
+SHARE_13251,Commit_10030,Commit,Fix getYamlEntry in Editor,Default,1.0,caution,neutral
+SHARE_13252,Commit_10031,Commit,Fix RequirementsEditor Reactivity,Default,2.0,caution,neutral
+SHARE_13253,Commit_10032,Commit,Refactor Requirements Editor,Default,1.0,caution,neutral
+SHARE_13254,Commit_10033,Commit,Edit Prompt Descriptor Feature,Default,1.0,caution,neutral
+SHARE_13255,Commit_10034,Commit,Move & Modify Files,Default,1.0,caution,neutral
+SHARE_13256,Commit_10035,Commit,Update Prompt Descriptor Content,Default,1.0,caution,satisfaction
+SHARE_13257,Commit_10036,Commit,Update Prompt Descriptor Structure,Default,1.0,frustration,caution
+SHARE_13258,Commit_10037,Commit,Improving Prompt Descriptor Structure,Default,2.0,frustration,caution
+SHARE_13259,Commit_10038,Commit,Improve Junior's Documentation,Default,1.0,caution,neutral
+SHARE_13260,Commit_10039,Commit,Improve Junior Documentation,Default,2.0,caution,neutral
+SHARE_13262,Commit_10041,Commit,Improve Documentation: Remove Twitter,Default,1.0,caution,neutral
+SHARE_13263,Commit_10042,Commit,Improve Documentation with Script,Default,1.0,caution,neutral
+SHARE_13264,Commit_10043,Commit,Add Iframe Margin & CSS,Default,2.0,caution,neutral
+SHARE_13265,Commit_10044,Commit,Add Twitter Blockquote Integration,Default,2.0,caution,neutral
+SHARE_13266,Commit_10045,Commit,Refine Gitignore Behavior,Default,1.0,caution,neutral
+SHARE_13267,Commit_10046,Commit,Fix TypeScript Compilation,Default,1.0,frustration,satisfaction
+SHARE_13268,Commit_10047,Commit,Implement --noaudit message,Default,1.0,caution,neutral
+SHARE_13269,Commit_10048,Commit,Create --noaudit Feature,Default,3.0,caution,neutral
+SHARE_13270,Commit_10049,Commit,Gitignore and Cleanup,Default,2.0,frustration,caution
+SHARE_13271,Commit_10050,Commit,Unregister Key Event Listener,Default,1.0,caution,neutral
+SHARE_13272,Commit_10051,Commit,Fix fs Issue Solution,Default,1.0,caution,neutral
+SHARE_13273,Commit_10052,Commit,Implementing Audit Trail,Default,2.0,caution,neutral
+SHARE_13274,Commit_10053,Commit,Preserve Directory Entries,Default,2.0,neutral,neutral
+SHARE_13275,Commit_10054,Commit,Activate prompt.yaml on save,Default,1.0,caution,neutral
+SHARE_13276,Commit_10055,Commit,Fix vscode changed indicator,Default,2.0,caution,neutral
+SHARE_13278,Commit_10057,Commit,Integrate editor for prompt,Default,1.0,caution,neutral
+SHARE_13279,Commit_10058,Commit,Update prompt.yaml in VSCode,Default,2.0,frustration,neutral
+SHARE_13280,Commit_10059,Commit,Split & Refactor VSCode.,Default,2.0,caution,neutral
+SHARE_13281,Commit_10060,Commit,Fix HTML Encoding Issue,Default,4.0,caution,neutral
+SHARE_13282,Commit_10061,Commit,Update Junior's Documentation,Default,1.0,caution,neutral
+SHARE_13283,Commit_10062,Commit,Update Junior's Documentation,Default,2.0,frustration,neutral
+SHARE_13285,Commit_10064,Commit,Update Junior Project Details,Default,1.0,caution,neutral
+SHARE_13286,Commit_10065,Commit,New chat,Default,1.0,caution,neutral
+SHARE_13287,Commit_10066,Commit,Update Junior README & Video,Default,1.0,caution,neutral
+SHARE_13288,Commit_10067,Commit,Refactor NavBar and SubTitle,Default,1.0,caution,neutral
+SHARE_13289,Commit_10068,Commit,Fix PromptDisplay margin.,Default,1.0,caution,neutral
+SHARE_13290,Commit_10069,Commit,Fix Empty String Update,Default,1.0,caution,neutral
+SHARE_13291,Commit_10070,Commit,Update Descriptor & Files,Default,1.0,caution,neutral
+SHARE_13292,Commit_10071,Commit,Fix Commit Requirements,Default,1.0,caution,neutral
+SHARE_13293,Commit_10072,Commit,Fix Export Issue,Default,1.0,caution,neutral
+SHARE_13294,Commit_10073,Commit,Refactor Routes into Files,Default,1.0,caution,neutral
+SHARE_13295,Commit_10074,Commit,Refactor and Reorder Routes,Default,1.0,caution,neutral
+SHARE_13296,Commit_10075,Commit,Update Routes and Handlers,Default,1.0,caution,neutral
+SHARE_13297,Commit_10076,Commit,Fix Export Issue,Default,1.0,caution,neutral
+SHARE_13298,Commit_10077,Commit,Fix Export as Named,Default,1.0,caution,neutral
+SHARE_13299,Commit_10078,Commit,Fix Export Issue,Default,1.0,caution,neutral
+SHARE_13300,Commit_10079,Commit,Refactor Git Routes,Default,1.0,caution,neutral
+SHARE_13301,Commit_10080,Commit,Refactor Git Routes,Default,1.0,caution,neutral
+SHARE_13316,Commit_10095,Commit,HTML Template for Website,Default,34.0,neutral,satisfaction
+SHARE_13412,Commit_10191,Commit,Zsh Configuration Plugin Manager,Default,4.0,frustration,caution
+SHARE_13423,Commit_10202,Commit,Spring Boot Docker Error,Default,2.0,frustration,frustration
+SHARE_13439,Commit_10218,Commit,Implementing junior-rollback Command,Default,2.0,caution,neutral
+SHARE_13440,Commit_10219,Commit,"Create ""rollback"" command",Default,1.0,caution,neutral
+SHARE_13441,Commit_10220,Commit,Code: Log Deleted/Skipped Branches,Default,1.0,caution,neutral
+SHARE_13442,Commit_10221,Commit,Add Padding to Textarea,Default,1.0,caution,neutral
+SHARE_13443,Commit_10222,Commit,Add auto2top to config,Default,1.0,caution,neutral
+SHARE_13444,Commit_10223,Commit,Improve Documentation with Script,Default,1.0,caution,neutral
+SHARE_13445,Commit_10224,Commit,Improve Cover Colors,Default,1.0,caution,neutral
+SHARE_13446,Commit_10225,Commit,Improve Documentation with Logo,Default,1.0,caution,neutral
+SHARE_13447,Commit_10226,Commit,Improve Junior's Documentation,Default,4.0,caution,neutral
+SHARE_13448,Commit_10227,Commit,Improve Documentation in README,Default,1.0,caution,neutral
+SHARE_13449,Commit_10228,Commit,"Improve Documentation, Remove Warnings",Default,1.0,caution,neutral
+SHARE_13450,Commit_10229,Commit,Improve Docs & Link Jobs,Default,1.0,caution,neutral
+SHARE_13451,Commit_10230,Commit,Update Cypress Config v10,Default,1.0,caution,neutral
+SHARE_13452,Commit_10231,Commit,Fix Cypress E2E Issue,Default,1.0,caution,neutral
+SHARE_13453,Commit_10232,Commit,Setup E2E Test Cypress,Default,1.0,caution,neutral
+SHARE_13454,Commit_10233,Commit,Clear Git Status Fix,Default,1.0,caution,neutral
+SHARE_13455,Commit_10234,Commit,Simplify Git Reset,Default,1.0,caution,neutral
+SHARE_13458,Commit_10237,Commit,Refactor AutoGrowingTextarea & RequirementsEditor,Default,2.0,frustration,neutral
+SHARE_13459,Commit_10238,Commit,Fix PromptDescriptor Summary,Default,1.0,caution,neutral
+SHARE_13460,Commit_10239,Commit,Fix handleInput in handleChange,Default,1.0,caution,neutral
+SHARE_13461,Commit_10240,Commit,Add Event Handler: PostDescriptor,Default,1.0,caution,neutral
+SHARE_13462,Commit_10241,Commit,Format Documentation: Improved Roadmap,Default,1.0,caution,neutral
+SHARE_13463,Commit_10242,Commit,Update Documentation with Versioning,Default,2.0,caution,neutral
+SHARE_13464,Commit_10243,Commit,Fix JSON Field Name,Default,1.0,caution,neutral
+SHARE_13465,Commit_10244,Commit,Fix isBeta Reactivity,Default,1.0,caution,neutral
+SHARE_13466,Commit_10245,Commit,Create /config Endpoint: Shell Script,Default,1.0,caution,neutral
+SHARE_13467,Commit_10246,Commit,Fix isBetaEnabled Issue,Default,1.0,caution,neutral
+SHARE_13468,Commit_10247,Commit,"Fix cliArgs.js, memoization",Default,1.0,caution,neutral
+SHARE_13469,Commit_10248,Commit,Refactor Frontend Service Paths,Default,4.0,frustration,caution
+SHARE_13717,Commit_10496,Commit,Refactor clear-branches with simple-git,Default,2.0,caution,caution
+SHARE_13718,Commit_10497,Commit,Create Co-Founder Job Description,Default,2.0,neutral,neutral
+SHARE_13722,Commit_10501,Commit,Beta Flag Implementation,Default,2.0,caution,satisfaction
+SHARE_13723,Commit_10502,Commit,Fix Throttling & Set Issue,Default,2.0,caution,neutral
+SHARE_13724,Commit_10503,Commit,Move Script in HTML,Default,1.0,caution,neutral
+SHARE_13726,Commit_10505,Commit,Fix Task List Font,Default,1.0,caution,neutral
+SHARE_13727,Commit_10506,Commit,Refactor Copying Defaults: JS,Default,1.0,caution,neutral
+SHARE_13728,Commit_10507,Commit,Fixing junior-init Path,Default,2.0,caution,neutral
+SHARE_13729,Commit_10508,Commit,Create Defaults & Init Script,Default,1.0,caution,satisfaction
+SHARE_13730,Commit_10509,Commit,Fix 500 Error Handling,Default,1.0,caution,neutral
+SHARE_13731,Commit_10510,Commit,Fix Error Handling: Frontend,Default,1.0,caution,neutral
+SHARE_13732,Commit_10511,Commit,Add console.warn for errors,Default,1.0,caution,neutral
+SHARE_13733,Commit_10512,Commit,Fixing Generate Handler Error,Default,1.0,caution,neutral
+SHARE_13734,Commit_10513,Commit,"Fix ""processFile"" Error",Default,1.0,caution,neutral
+SHARE_13735,Commit_10514,Commit,Fix Try-Catch Block,Default,1.0,caution,neutral
+SHARE_13736,Commit_10515,Commit,Fixing sharp Error,Default,2.0,caution,neutral
+SHARE_13737,Commit_10516,Commit,Move & Update Code,Default,1.0,caution,neutral
+SHARE_13738,Commit_10517,Commit,Edit Files: Add [G] Button,Default,1.0,caution,neutral
+SHARE_13739,Commit_10518,Commit,Refactor: inputAvailable to boolean,Default,1.0,caution,neutral
+SHARE_13740,Commit_10519,Commit,Update npm script args,Default,1.0,caution,neutral
+SHARE_13741,Commit_10520,Commit,Fix ClearBranches Error,Default,1.0,caution,caution
+SHARE_13742,Commit_10521,Commit,Fix Module Import Path,Default,1.0,caution,neutral
+SHARE_13743,Commit_10522,Commit,Move & Delete Git Scripts,Default,2.0,caution,neutral
+SHARE_13744,Commit_10523,Commit,Factor & Call Function,Default,1.0,caution,neutral
+SHARE_13745,Commit_10524,Commit,Rename & Move Files,Default,1.0,caution,neutral
+SHARE_13746,Commit_10525,Commit,Create Command: Delete Git Branches,Default,1.0,caution,neutral

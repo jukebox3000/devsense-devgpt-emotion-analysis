@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Anton", "Inter Tight", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-grid: var(--grid);
+  --color-frustration: var(--emotion-frustration);
+  --color-caution: var(--emotion-caution);
+  --color-neutral: var(--emotion-neutral);
+  --color-satisfaction: var(--emotion-satisfaction);
+  --color-series-dev: var(--series-dev);
+  --color-series-gpt: var(--series-gpt);
+  --color-chart-1: var(--emotion-frustration);
+  --color-chart-2: var(--emotion-caution);
+  --color-chart-3: var(--emotion-neutral);
+  --color-chart-4: var(--emotion-satisfaction);
+  --color-chart-5: var(--series-gpt);
+  --color-sidebar: var(--card);
+  --color-sidebar-foreground: var(--foreground);
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-primary-foreground: var(--primary-foreground);
+  --color-sidebar-accent: var(--accent);
+  --color-sidebar-accent-foreground: var(--accent-foreground);
+  --color-sidebar-border: var(--border);
+  --color-sidebar-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --background: oklch(0.985 0.003 250);
+  --foreground: oklch(0.22 0.02 258);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.02 258);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.02 258);
+  --primary: oklch(0.28 0.03 265);
+  --primary-foreground: oklch(0.99 0.002 250);
+  --secondary: oklch(0.955 0.005 250);
+  --secondary-foreground: oklch(0.28 0.02 258);
+  --muted: oklch(0.955 0.005 250);
+  --muted-foreground: oklch(0.48 0.015 255);
+  --accent: oklch(0.94 0.008 255);
+  --accent-foreground: oklch(0.24 0.02 258);
+  --destructive: oklch(0.55 0.21 27);
+  --destructive-foreground: oklch(0.99 0.002 250);
+  --border: oklch(0.9 0.008 255);
+  --input: oklch(0.9 0.008 255);
+  --ring: oklch(0.55 0.13 245);
+  --grid: oklch(0.91 0.006 255);
+
+  --emotion-frustration: oklch(0.55 0.21 27);
+  --emotion-caution: oklch(0.72 0.15 72);
+  --emotion-neutral: oklch(0.55 0.13 248);
+  --emotion-satisfaction: oklch(0.56 0.14 155);
+
+  /* non-emotion series colours */
+  --series-dev: oklch(0.32 0.03 265);
+  --series-gpt: oklch(0.58 0.2 305);
+}
+
+.dark {
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.015em;
+  }
+}
+
+@utility panel {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px oklch(0.22 0.02 258 / 0.04);
+}
+
+@utility numeral {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility rise-in {
+  animation: rise-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility emoji {
+  font-family:
+    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+    "Twemoji Mozilla", sans-serif;
+}
