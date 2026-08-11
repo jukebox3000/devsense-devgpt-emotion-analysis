@@ -715,9 +715,6 @@ function ConversationViewer({
                         >
                           {t.promptEmotion.toUpperCase()}
                         </span>
-                        <span className="text-foreground/95 font-bold">
-                          {fmtPct(t.promptScore, 0)}
-                        </span>
                       </div>
                     </div>
                     <p className="whitespace-pre-wrap break-words leading-relaxed text-xs text-foreground select-text font-medium">
@@ -768,9 +765,6 @@ function ConversationViewer({
                           className="font-black text-[10.5px] tracking-wide"
                         >
                           {t.answerEmotion.toUpperCase()}
-                        </span>
-                        <span className="text-foreground/95 font-bold">
-                          {fmtPct(t.answerScore, 0)}
                         </span>
                       </div>
                     </div>
