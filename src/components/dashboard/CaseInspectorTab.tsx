@@ -93,7 +93,7 @@ export function CaseInspectorTab({
       return EMOTIONS.reduce(
         (best, e) =>
           c.turns.filter((t) => t[key] === e).length >
-          c.turns.filter((t) => t[key] === best).length
+            c.turns.filter((t) => t[key] === best).length
             ? e
             : best,
         "neutral" as Emotion,
@@ -113,7 +113,7 @@ export function CaseInspectorTab({
   // Filter list by maximum turn count and exclude single-turn neutral ChatGPT records
   const list = useMemo(() => {
     return conversations.filter((c) => {
-      const maxTurnCount = 90;
+      const maxTurnCount = 40;
       const isSingleTurnNeutralGpt =
         c.turns.length === 1 &&
         getDominantEmotion(c, "answerEmotion") === "neutral";
