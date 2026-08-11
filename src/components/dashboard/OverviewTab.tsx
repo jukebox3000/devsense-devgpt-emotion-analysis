@@ -448,6 +448,7 @@ export function OverviewTab({
             gptCounts={filteredGptCounts as Record<string, number>}
             width={320}
             height={320}
+            isFiltered={activeFilters.length > 0}
           />
         </div>
       </Panel>

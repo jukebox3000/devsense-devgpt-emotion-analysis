@@ -1,6 +1,6 @@
 import { EmojiMorph } from "./EmojiMorph";
 import { useLoaderData } from "@tanstack/react-router";
-import { type Emotion, EMOTIONS, EMOTION_EMOJI, EMOTION_LABEL } from "@/lib/emotions";
+import { type Emotion, EMOTIONS, EMOTION_EMOJI, EMOTION_LABEL, emotionVar } from "@/lib/emotions";
 import { cn } from "@/lib/utils";
 
 export function Sidebar({
@@ -52,29 +52,49 @@ export function Sidebar({
                 Filter by developer mood
               </p>
               <div className="flex w-full items-center justify-between gap-1.5">
-                {EMOTIONS.map((e) => (
-                  <button
-                    key={e}
-                    onClick={() => {
-                      if (activeFilters.includes(e)) {
-                        setActiveFilters(activeFilters.filter((f) => f !== e));
-                      } else {
-                        setActiveFilters([...activeFilters, e]);
+                {EMOTIONS.map((e) => {
+                  const color = emotionVar(e);
+                  const isExplicitlyActive = activeFilters.includes(e);
+                  const isAnyActive = activeFilters.length === 0;
+                  const showGradient = isExplicitlyActive || isAnyActive;
+
+                  return (
+                    <button
+                      key={e}
+                      onClick={() => {
+                        if (activeFilters.includes(e)) {
+                          setActiveFilters(activeFilters.filter((f) => f !== e));
+                        } else {
+                          setActiveFilters([...activeFilters, e]);
+                        }
+                      }}
+                      aria-label={`Filter by ${EMOTION_LABEL[e]}`}
+                      className={cn(
+                        "flex-1 flex items-center justify-center rounded-md border py-2 transition-all cursor-pointer",
+                        isExplicitlyActive
+                          ? "scale-[1.05] shadow-md border-foreground/30 font-bold"
+                          : isAnyActive
+                          ? "scale-[1.02] shadow-xs border-border/80 hover:scale-[1.04]"
+                          : "border-border bg-background text-muted-foreground hover:bg-accent opacity-40 hover:opacity-90"
+                      )}
+                      style={
+                        showGradient
+                          ? {
+                              backgroundImage: `radial-gradient(110% 115% at 50% 0%, color-mix(in oklab, ${color} 26%, transparent), transparent 90%)`,
+                              backgroundColor: `color-mix(in oklab, ${color} 10%, transparent)`,
+                              borderColor: isExplicitlyActive 
+                                ? `color-mix(in oklab, ${color} 45%, transparent)` 
+                                : `color-mix(in oklab, ${color} 25%, transparent)`,
+                            }
+                          : {}
                       }
-                    }}
-                    aria-label={`Filter by ${EMOTION_LABEL[e]}`}
-                    className={cn(
-                      "flex-1 flex items-center justify-center rounded-md border py-2 transition-all",
-                      activeFilters.includes(e) || activeFilters.length === 0
-                        ? "border-foreground/25 bg-accent scale-[1.02] shadow-sm"
-                        : "border-border bg-background text-muted-foreground hover:bg-accent opacity-50 hover:opacity-100"
-                    )}
-                  >
-                    <span className="emoji text-lg leading-none">
-                      {EMOTION_EMOJI[e]}
-                    </span>
-                  </button>
-                ))}
+                    >
+                      <span className="emoji text-lg leading-none">
+                        {EMOTION_EMOJI[e]}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
               <button
                 onClick={() => setActiveFilters([])}

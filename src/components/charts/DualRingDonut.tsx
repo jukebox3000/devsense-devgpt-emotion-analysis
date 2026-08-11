@@ -29,9 +29,10 @@ interface DualRingDonutProps {
   gptCounts: Record<string, number>;
   width?: number;
   height?: number;
+  isFiltered?: boolean;
 }
 
-export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }: DualRingDonutProps) {
+export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFiltered = false }: DualRingDonutProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [filter, setFilter] = useState<Filter>("both");
 
@@ -374,7 +375,12 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
       .style("pointer-events", "none")
       .style("opacity", 0)
       .merge(devLabels as any)
-      .text(d => totalDev > 0 ? `${Math.round((d.data.count / totalDev) * 100)}%` : "")
+      .text(d => {
+        if (isFiltered) {
+          return d.data.count > 0 ? `${d.data.count}` : "";
+        }
+        return totalDev > 0 ? `${Math.round((d.data.count / totalDev) * 100)}%` : "";
+      })
       .transition().duration(750).ease(d3.easeCubicInOut)
       .style("opacity", filter === "developer" ? 1 : 0)
       .attrTween("transform", function(this: SVGTextElement, d) {
@@ -467,7 +473,12 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
       .style("pointer-events", "none")
       .style("opacity", 0)
       .merge(gptLabels as any)
-      .text(d => totalGpt > 0 ? `${Math.round((d.data.count / totalGpt) * 100)}%` : "")
+      .text(d => {
+        if (isFiltered) {
+          return d.data.count > 0 ? `${d.data.count}` : "";
+        }
+        return totalGpt > 0 ? `${Math.round((d.data.count / totalGpt) * 100)}%` : "";
+      })
       .transition().duration(750).ease(d3.easeCubicInOut)
       .style("opacity", filter === "gpt" ? 1 : 0)
       .attrTween("transform", function(this: SVGTextElement, d) {
@@ -490,7 +501,7 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [filter, width, height, totalDev, totalGpt, devData, gptData]);
+  }, [filter, width, height, totalDev, totalGpt, devData, gptData, isFiltered]);
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-around gap-6 w-full h-full py-2 px-4">
