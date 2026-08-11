@@ -27,6 +27,8 @@ export const EMOTION_HEX: Record<Emotion, string> = {
   satisfaction: "#10b981",
 };
 
+export const EMOTION_COLORS = EMOTION_HEX;
+
 export const EMOTION_EMOJI: Record<Emotion, string> = {
   frustration: "😡",
   caution: "🧐",

@@ -99,14 +99,40 @@ export function emotionByTurnDepth(conversations: Conversation[]) {
 }
 
 export function scatterPoints(conversations: Conversation[]) {
-  const turns = getAllTurns(conversations);
-  return turns.map((t) => ({
-    x: t.promptScore,
-    y: t.answerScore,
-    promptEmotion: t.promptEmotion,
-    answerEmotion: t.answerEmotion,
-    id: `${t.conv.id}-${t.index}`,
-  }));
+  const filtered = conversations.filter(
+    (c) => c.turns.length >= 2 && c.turns.length <= 35,
+  );
+  return filtered.map((conv, idx) => {
+    const counts: Record<Emotion, number> = {
+      frustration: 0,
+      caution: 0,
+      neutral: 0,
+      satisfaction: 0,
+    };
+    conv.turns.forEach((t) => {
+      if (t.promptEmotion) {
+        counts[t.promptEmotion] = (counts[t.promptEmotion] || 0) + 1;
+      }
+    });
+
+    let dominantEmotion: Emotion = "neutral";
+    let maxEmotionCount = 0;
+    EMOTIONS.forEach((e) => {
+      if (counts[e] > maxEmotionCount) {
+        maxEmotionCount = counts[e];
+        dominantEmotion = e;
+      }
+    });
+
+    return {
+      id: conv.id,
+      x: idx + 1,
+      y: conv.turns.length,
+      dominantEmotion,
+      maxEmotionCount: Math.max(1, maxEmotionCount),
+      counts,
+    };
+  });
 }
 
 export function pearson(pairs: { x: number; y: number }[]) {
@@ -126,25 +152,54 @@ export function pearson(pairs: { x: number; y: number }[]) {
   return { r, slope, intercept: my - slope * mx, mx, my, n };
 }
 
+const EXCLUDED_LANGUAGES = new Set([
+  "unknown",
+  "plpgsql",
+  "shaderlab",
+  "asymptote",
+  "jinja",
+  "dockerfile",
+  "batchfile",
+  "shell",
+  "astro",
+  "codeql",
+  "jupyter notebook",
+  "javascript",
+  "c",
+  "kotlin",
+  "css",
+]);
+
 /** Language x developer-emotion share matrix for the heatmap. */
-export function languageMatrix(conversations: Conversation[]) {
+export function languageMatrix(conversations: Conversation[], minCount = 10) {
   const turns = getAllTurns(conversations);
   const langs = [...new Set(turns.map((t) => t.conv.language))].sort();
-  return langs.map((lang) => {
-    const rows = turns.filter((t) => t.conv.language === lang);
-    return {
-      row: lang,
-      total: rows.length,
-      cells: EMOTIONS.map((e) => ({
-        col: e,
-        share: share(
-          rows.filter((r) => r.promptEmotion === e).length,
-          rows.length,
-        ),
-        count: rows.filter((r) => r.promptEmotion === e).length,
-      })),
-    };
-  });
+  return langs
+    .map((lang) => {
+      const rows = turns.filter((t) => t.conv.language === lang);
+      return {
+        row: lang,
+        total: rows.length,
+        cells: EMOTIONS.map((e) => ({
+          col: e,
+          share: share(
+            rows.filter((r) => r.promptEmotion === e).length,
+            rows.length,
+          ),
+          count: rows.filter((r) => r.promptEmotion === e).length,
+        })),
+      };
+    })
+    .filter(
+      (r) =>
+        !EXCLUDED_LANGUAGES.has(r.row.trim().toLowerCase()) &&
+        r.cells.some((c) => c.count > minCount),
+    )
+    .sort((a, b) => {
+      const aFrust = a.cells.find((c) => c.col === "frustration")?.share ?? 0;
+      const bFrust = b.cells.find((c) => c.col === "frustration")?.share ?? 0;
+      return aFrust - bFrust;
+    });
 }
 
 export function sourceMatrix(conversations: Conversation[]) {

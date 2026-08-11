@@ -7,38 +7,35 @@ export type Point = {
   id: string;
   x: number;
   y: number;
-  promptEmotion: Emotion;
-  answerEmotion: Emotion;
+  dominantEmotion: Emotion;
+  maxEmotionCount: number;
+  counts?: Record<Emotion, number>;
 };
 
 const EMOTION_COLORS: Record<Emotion, string> = {
-  frustration: "#c0392b",
-  caution: "#c48f0a",
-  neutral: "#3b6fa5",
-  satisfaction: "#27ae60",
+  frustration: "#ef4444",
+  caution: "#f59e0b",
+  neutral: "#6b7280",
+  satisfaction: "#10b981",
 };
 
 export function ScatterPlot({
   points,
-  fit,
-  colorBy = "promptEmotion",
-  height = 320,
-  xLabel,
-  yLabel,
+  height = 360,
+  xLabel = "Conversation Index (Count)",
+  yLabel = "Conversation Length (Turns per Sharing ID)",
 }: {
   points: Point[];
-  fit?: { slope: number; intercept: number };
-  colorBy?: "promptEmotion" | "answerEmotion";
   height?: number;
-  xLabel: string;
-  yLabel: string;
+  xLabel?: string;
+  yLabel?: string;
 }) {
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
-    const margin = { top: 14, right: 16, bottom: 44, left: 52 };
+    const margin = { top: 18, right: 20, bottom: 44, left: 56 };
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
@@ -71,17 +68,22 @@ export function ScatterPlot({
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const x = d3.scaleLinear([0.3, 1], [0, w]);
-    const y = d3.scaleLinear([0.3, 1], [h, 0]);
+    const maxX = d3.max(points, (d) => d.x) || 100;
+    const maxY = d3.max(points, (d) => d.y) || 10;
+    const maxBubble = d3.max(points, (d) => d.maxEmotionCount) || 1;
+
+    const x = d3.scaleLinear([1, maxX], [0, w]);
+    const y = d3.scaleLinear([0, maxY + 2], [h, 0]);
+    const rScale = d3.scaleSqrt([1, maxBubble], [3.5, 18]);
 
     g.append("g")
-      .call(d3.axisLeft(y).ticks(5).tickSize(-w))
+      .call(d3.axisLeft(y).ticks(6).tickSize(-w))
       .call((s) => s.select(".domain").remove())
       .call((s) =>
         s
           .selectAll(".tick line")
           .style("stroke", "var(--grid)")
-          .style("opacity", 0.5),
+          .style("opacity", 0.4),
       )
       .selectAll("text")
       .style("fill", "var(--muted-foreground)")
@@ -89,13 +91,13 @@ export function ScatterPlot({
 
     g.append("g")
       .attr("transform", `translate(0,${h})`)
-      .call(d3.axisBottom(x).ticks(6).tickSize(-h))
+      .call(d3.axisBottom(x).ticks(8).tickSize(-h))
       .call((s) => s.select(".domain").style("stroke", "var(--border)"))
       .call((s) =>
         s
           .selectAll(".tick line")
           .style("stroke", "var(--grid)")
-          .style("opacity", 0.4),
+          .style("opacity", 0.3),
       )
       .selectAll("text")
       .style("fill", "var(--muted-foreground)")
@@ -112,7 +114,7 @@ export function ScatterPlot({
     g.append("text")
       .attr("transform", `rotate(-90)`)
       .attr("x", -h / 2)
-      .attr("y", -38)
+      .attr("y", -42)
       .attr("text-anchor", "middle")
       .style("font-size", "10px")
       .style("fill", "var(--muted-foreground)")
@@ -123,63 +125,53 @@ export function ScatterPlot({
       .join("circle")
       .attr("cx", (d) => x(d.x))
       .attr("cy", (d) => y(d.y))
-      .attr("r", 3.2)
-      .style("fill", (d) => emotionVar(d[colorBy]))
+      .attr("r", (d) => rScale(d.maxEmotionCount))
+      .style("fill", (d) => emotionVar(d.dominantEmotion))
       .style("opacity", 0.55)
+      .style("stroke", "var(--background)")
+      .style("stroke-width", "0.75px")
       .style("cursor", "pointer")
       .on("mouseover", function (event, d) {
-        const pColor = EMOTION_COLORS[d.promptEmotion];
-        const aColor = EMOTION_COLORS[d.answerEmotion];
-        const pLabel = EMOTION_LABEL[d.promptEmotion];
-        const aLabel = EMOTION_LABEL[d.answerEmotion];
+        const domColor = EMOTION_COLORS[d.dominantEmotion] || "var(--foreground)";
+        const domLabel = EMOTION_LABEL[d.dominantEmotion] || d.dominantEmotion;
 
         tooltipDiv
           .style("visibility", "visible")
           .html(
-            `<span style="color: #94a3b8; font-weight: 500;">Conversation ${d.id}</span><br/>` +
-              `<span style="color: ${pColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">DEV: ${pLabel} (${d.x.toFixed(2)})</span>` +
-              `<br/><span style="color: #94a3b8; font-weight: 400; margin-right: 4px;">→</span>` +
-              `<span style="color: ${aColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">GPT: ${aLabel} (${d.y.toFixed(2)})</span>`,
+            `<div style="font-weight: 800; font-size: 11px; color: #fff; margin-bottom: 2px;">Sharing ID: ${d.id}</div>` +
+              `<div style="color: #94a3b8; font-size: 10px; margin-bottom: 3px;">Conversation Length: <strong style="color: #fff;">${d.y} turns</strong></div>` +
+              `<div style="font-size: 10px; margin-bottom: 2px;">Dominant Emotion: <span style="color: ${domColor}; font-weight: 800; text-transform: uppercase;">${domLabel}</span></div>` +
+              `<div style="font-size: 10px; color: #cbd5e1;">Max Prompt Emotion Count: <strong>${d.maxEmotionCount}</strong></div>`,
           );
 
         d3.select(this)
           .transition()
           .duration(100)
-          .attr("r", 5.5)
-          .style("opacity", 0.95);
+          .attr("r", rScale(d.maxEmotionCount) + 3)
+          .style("opacity", 0.95)
+          .style("stroke", "var(--foreground)")
+          .style("stroke-width", "1.5px");
       })
       .on("mousemove", function (event) {
         tooltipDiv
-          .style("top", event.pageY - 60 + "px")
+          .style("top", event.pageY - 70 + "px")
           .style("left", event.pageX + 15 + "px");
       })
-      .on("mouseout", function () {
+      .on("mouseout", function (event, d) {
         tooltipDiv.style("visibility", "hidden");
         d3.select(this)
           .transition()
           .duration(100)
-          .attr("r", 3.2)
-          .style("opacity", 0.55);
+          .attr("r", rScale(d.maxEmotionCount))
+          .style("opacity", 0.55)
+          .style("stroke", "var(--background)")
+          .style("stroke-width", "0.75px");
       });
-
-    if (fit) {
-      const x0 = 0.3;
-      const x1 = 1;
-      g.append("line")
-        .attr("x1", x(x0))
-        .attr("x2", x(x1))
-        .attr("y1", y(fit.intercept + fit.slope * x0))
-        .attr("y2", y(fit.intercept + fit.slope * x1))
-        .style("stroke", "var(--foreground)")
-        .style("stroke-width", 1.5)
-        .style("stroke-dasharray", "5 4")
-        .style("opacity", 0.8);
-    }
 
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [points, width, height, fit, colorBy, xLabel, yLabel]);
+  }, [points, width, height, xLabel, yLabel]);
 
   return (
     <div ref={ref} className="w-full">
@@ -198,16 +190,18 @@ export function Heatmap({
   rows,
   colorFor,
   height,
-  rowLabelWidth = 96,
+  rowLabelWidth = 110,
+  valueFormat = "both",
 }: {
   rows: HeatRow[];
   colorFor: (col: string) => string;
   height?: number;
   rowLabelWidth?: number;
+  valueFormat?: "percentage" | "count" | "both";
 }) {
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const chartHeight = height ?? rows.length * 42 + 46;
+  const chartHeight = height ?? Math.max(220, rows.length * 38 + 46);
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
@@ -263,7 +257,8 @@ export function Heatmap({
       .style("fill", "var(--muted-foreground)")
       .text((d) => EMOTION_LABEL[d as Emotion] ?? d);
 
-    rows.forEach((r) => {
+    rows.forEach((r, rIdx) => {
+      const rowKey = `row-${rIdx}`;
       g.append("text")
         .attr("x", -10)
         .attr("y", y(r.row)! + y.bandwidth() / 2)
@@ -278,10 +273,10 @@ export function Heatmap({
         )
         .text(EMOTION_LABEL[r.row as Emotion] ?? r.row);
 
-      g.selectAll(`rect.c-${r.row.replace(/\W/g, "")}`)
+      g.selectAll(`rect.${rowKey}`)
         .data(r.cells)
         .join("rect")
-        .attr("class", `c-${r.row.replace(/\W/g, "")}`)
+        .attr("class", rowKey)
         .attr("x", (d) => x(d.col)!)
         .attr("y", y(r.row)!)
         .attr("width", x.bandwidth())
@@ -291,12 +286,12 @@ export function Heatmap({
         .style("opacity", (d) => 0.12 + Math.min(1, d.share / 0.6) * 0.82)
         .style("cursor", "pointer")
         .on("mouseover", function (event, d) {
-          const promptEmotion = r.row as Emotion;
-          const answerEmotion = d.col as Emotion;
-          const devColor = EMOTION_COLORS[promptEmotion] || "var(--foreground)";
-          const gptColor = EMOTION_COLORS[answerEmotion] || "var(--foreground)";
-          const devLabel = EMOTION_LABEL[promptEmotion] || r.row;
-          const gptLabel = EMOTION_LABEL[answerEmotion] || d.col;
+          const rowEmotion = r.row as Emotion;
+          const colEmotion = d.col as Emotion;
+          const devColor = EMOTION_COLORS[rowEmotion] || "#38bdf8";
+          const gptColor = EMOTION_COLORS[colEmotion] || "var(--foreground)";
+          const devLabel = EMOTION_LABEL[rowEmotion] || r.row;
+          const gptLabel = EMOTION_LABEL[colEmotion] || d.col;
 
           tooltipDiv
             .style("visibility", "visible")
@@ -305,7 +300,7 @@ export function Heatmap({
                 `<span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span>` +
                 `<span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span>` +
                 `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
-                `${(d.share * 100).toFixed(1)}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} turns)</span>` +
+                `${(d.share * 100).toFixed(1)}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} count)</span>` +
                 `</div>`,
             );
 
@@ -325,10 +320,10 @@ export function Heatmap({
           d3.select(this).transition().duration(100).attr("stroke", "none");
         });
 
-      g.selectAll(`text.v-${r.row.replace(/\W/g, "")}`)
+      g.selectAll(`text.v-${rowKey}`)
         .data(r.cells)
         .join("text")
-        .attr("class", `v-${r.row.replace(/\W/g, "")}`)
+        .attr("class", `v-${rowKey}`)
         .attr("x", (d) => x(d.col)! + x.bandwidth() / 2)
         .attr("y", y(r.row)! + y.bandwidth() / 2)
         .attr("dy", "0.35em")
@@ -338,17 +333,31 @@ export function Heatmap({
         .style("fill", (d) =>
           d.share > 0.32 ? "var(--background)" : "var(--foreground)",
         )
-        .text((d) => `${(d.share * 100).toFixed(0)}%`)
+        .text((d) => {
+          if (valueFormat === "count") return `${d.count}`;
+          if (valueFormat === "both")
+            return d.count > 0
+              ? `${(d.share * 100).toFixed(0)}% (${d.count})`
+              : "0";
+          return `${(d.share * 100).toFixed(0)}%`;
+        })
         .style("pointer-events", "none");
     });
 
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [rows, width, chartHeight, colorFor, rowLabelWidth]);
+  }, [rows, width, chartHeight, colorFor, rowLabelWidth, valueFormat]);
 
   return (
-    <div ref={ref} className="w-full">
+    <div
+      ref={ref}
+      className={
+        rows.length > 10
+          ? "w-full max-h-[440px] overflow-y-auto pr-1"
+          : "w-full"
+      }
+    >
       <svg ref={svgRef} width={width} height={chartHeight} />
     </div>
   );

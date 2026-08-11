@@ -7,6 +7,7 @@ import {
   answerValenceByPromptEmotion,
   emotionByTurnDepth,
   transitionMatrix,
+  languageMatrix,
 } from "@/lib/analysis";
 import {
   EMOTIONS,
@@ -19,9 +20,8 @@ import {
 import { ScatterPlot, Heatmap } from "@/components/charts/ScatterHeatmap";
 import { StackedBarChart } from "@/components/charts/BarCharts";
 import { TrendLineChart } from "@/components/charts/LineCharts";
-import { Panel, KpiCard } from "./Primitives";
+import { Panel } from "./Primitives";
 import { cn } from "@/lib/utils";
-import { fmtPct } from "@/components/charts/chart-utils";
 
 export function ImpactTab({
   activeFilters = [],
@@ -44,9 +44,10 @@ export function ImpactTab({
       .filter((conv) => conv.turns.length > 0);
   }, [activeFilters, kpiData.conversations]);
 
-  const [colorBy, setColorBy] = useState<"promptEmotion" | "answerEmotion">(
-    "promptEmotion",
-  );
+  const [valueFormat, setValueFormat] = useState<
+    "percentage" | "count" | "both"
+  >("both");
+
   const allTurns = useMemo(
     () => getAllTurns(filteredConversations),
     [filteredConversations],
@@ -54,10 +55,6 @@ export function ImpactTab({
   const points = useMemo(
     () => scatterPoints(filteredConversations),
     [filteredConversations],
-  );
-  const fit = useMemo(
-    () => pearson(points.map((p) => ({ x: p.x, y: p.y }))),
-    [points],
   );
   const valence = useMemo(
     () => answerValenceByPromptEmotion(filteredConversations),
@@ -69,6 +66,10 @@ export function ImpactTab({
   );
   const matrix = useMemo(
     () => transitionMatrix(filteredConversations),
+    [filteredConversations],
+  );
+  const langMatrix = useMemo(
+    () => languageMatrix(filteredConversations),
     [filteredConversations],
   );
 
@@ -85,22 +86,6 @@ export function ImpactTab({
 
   const frustrationRise =
     depth[depth.length - 1]!.frustration - depth[0]!.frustration;
-
-  // effect size: satisfaction lift of neutral/satisfied prompts over frustrated ones
-  const satAfter = (e: Emotion) => {
-    const rows = allTurns.filter((t) => t.promptEmotion === e);
-    return (
-      rows.filter((t) => t.answerEmotion === "satisfaction").length /
-      (rows.length || 1)
-    );
-  };
-  const riskRatio = satAfter("satisfaction") / (satAfter("frustration") || 1);
-
-  const baseline =
-    allTurns.reduce((s, t) => s + EMOTION_VALENCE[t.answerEmotion], 0) /
-    allTurns.length;
-  const frustrationGap =
-    valence.find((v) => v.emotion === "frustration")!.mean - baseline;
 
   return (
     <div className="space-y-6">
@@ -159,69 +144,65 @@ export function ImpactTab({
 
         <Panel
           className="lg:col-span-2"
-          title="Prompt score vs answer score"
-          subtitle="One point per prompt–answer pair; dashed line is the OLS fit"
+          title="Conversation Length vs Emotion Concentration"
+          subtitle="Each bubble represents a conversation (Sharing ID, length 2 to 35 turns): Y-axis is turn length, X-axis is conversation count index, bubble size is max occurring prompt emotion count, colored by dominant emotion"
           insight={
             <>
-              The near-flat fit (r = {fit.r.toFixed(3)}) shows that classifier{" "}
-              <em>confidence</em> does not transfer between the two sides — the
-              carryover effect lives in the discrete <em>labels</em>, not the
-              scores. Colour the points by answer emotion and the vertical
-              banding by emotion class becomes the visible structure instead.
+              This bubble scatterplot maps conversation length against developer affect concentration:
+              longer conversations (higher turn counts) feature larger bubbles indicating repeated emotion occurrences.
+              Frustration and caution dominate extended multi-turn conversations.
             </>
           }
         >
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex gap-1.5">
-              {(["promptEmotion", "answerEmotion"] as const).map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setColorBy(c)}
-                  className={cn(
-                    "rounded border px-2 py-0.5 text-[10px] transition-colors",
-                    colorBy === c
-                      ? "border-ring bg-accent text-foreground"
-                      : "border-border text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  colour by {c === "promptEmotion" ? "developer" : "assistant"}
-                </button>
-              ))}
-            </div>
-          </div>
           <ScatterPlot
             points={points}
-            fit={fit}
-            colorBy={colorBy}
             height={360}
-            xLabel="developer prompt emotion score"
-            yLabel="assistant answer emotion score"
+            xLabel="Conversation Count Index"
+            yLabel="Conversation Length (Number of Turns per Sharing ID)"
           />
         </Panel>
 
         <Panel
           className="lg:col-span-2"
-          title="Prompt emotion → answer emotion"
-          subtitle="Row-normalised share of answer labels for each prompt label"
+          title="Prompt Emotion by Programming Language"
+          subtitle="Heatmap showing count and distribution of developer prompt emotions for languages with at least one emotion count greater than 10"
           insight={
             <>
-              This heatmap shows how the assistant responds across developer
-              moods: each row is a prompt emotion, and the columns show the
-              answer emotion distribution that follows.
+              This heatmap displays developer prompt emotions broken down by
+              the programming language used in the conversation (showing only
+              languages where at least one individual prompt emotion count is
+              greater than 10). Each cell shows the count and percentage of
+              prompt emotions for that language.
             </>
           }
         >
+          <div className="mb-4 flex flex-wrap items-center justify-end gap-3 border-b border-border/50 pb-3">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px] font-medium text-muted-foreground mr-1">
+                Values:
+              </span>
+              {(["both", "count", "percentage"] as const).map((fmt) => (
+                <button
+                  key={fmt}
+                  onClick={() => setValueFormat(fmt)}
+                  className={cn(
+                    "rounded border px-2 py-0.5 text-[10px] capitalize transition-colors",
+                    valueFormat === fmt
+                      ? "border-ring bg-accent text-foreground font-semibold"
+                      : "border-border text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {fmt === "both" ? "% & count" : fmt}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <Heatmap
-            rows={matrix.map((r) => ({
-              row: r.prompt,
-              total: r.total,
-              cells: r.cells.map((c) => ({
-                col: c.answer,
-                share: c.share,
-                count: c.count,
-              })),
-            }))}
+            rows={langMatrix}
             colorFor={(col) => emotionVar(col as Emotion)}
+            rowLabelWidth={130}
+            valueFormat={valueFormat}
           />
         </Panel>
       </div>
