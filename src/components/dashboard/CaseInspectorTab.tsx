@@ -17,6 +17,8 @@ import {
   ChevronUp,
   ChevronDown,
   MessageSquare,
+  Filter,
+  Check,
 } from "lucide-react";
 
 // Import image assets for avatars
@@ -64,6 +66,11 @@ export function CaseInspectorTab({
     | null
   >("turns");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+
+  const [selectedDevEmotion, setSelectedDevEmotion] = useState<Emotion | "all">("all");
+  const [selectedGptEmotion, setSelectedGptEmotion] = useState<Emotion | "all">("all");
+  const [isDevDropdownOpen, setIsDevDropdownOpen] = useState(false);
+  const [isGptDropdownOpen, setIsGptDropdownOpen] = useState(false);
 
   const hasAutoSelected = useRef(false);
 
@@ -118,9 +125,21 @@ export function CaseInspectorTab({
         c.turns.length === 1 &&
         getDominantEmotion(c, "answerEmotion") === "neutral";
 
-      return c.turns.length <= maxTurnCount && !isSingleTurnNeutralGpt;
+      if (c.turns.length > maxTurnCount || isSingleTurnNeutralGpt) {
+        return false;
+      }
+
+      if (selectedDevEmotion !== "all" && getDominantEmotion(c, "promptEmotion") !== selectedDevEmotion) {
+        return false;
+      }
+
+      if (selectedGptEmotion !== "all" && getDominantEmotion(c, "answerEmotion") !== selectedGptEmotion) {
+        return false;
+      }
+
+      return true;
     });
-  }, [conversations, getDominantEmotion]);
+  }, [conversations, getDominantEmotion, selectedDevEmotion, selectedGptEmotion]);
 
   // Sort list
   const sortedList = useMemo(() => {
@@ -261,17 +280,176 @@ export function CaseInspectorTab({
                 >
                   Turns {renderSortIcon("turns")}
                 </th>
-                <th
-                  onClick={() => handleSort("devEmotion")}
-                  className="px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
-                >
-                  Dev Emotion {renderSortIcon("devEmotion")}
+                {/* Dev Emotion Header with Filter Dropdown */}
+                <th className="px-4 py-2.5 font-semibold text-muted-foreground relative select-none">
+                  <div 
+                    className="flex items-center gap-1.5 cursor-pointer hover:text-foreground transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsDevDropdownOpen(!isDevDropdownOpen);
+                      setIsGptDropdownOpen(false);
+                    }}
+                  >
+                    <span>Dev Emotion</span>
+                    {selectedDevEmotion !== "all" ? (
+                      <span 
+                        className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
+                        style={{
+                          backgroundColor: `${EMOTION_COLORS[selectedDevEmotion]}15`,
+                          color: EMOTION_COLORS[selectedDevEmotion],
+                        }}
+                      >
+                        {selectedDevEmotion}
+                      </span>
+                    ) : (
+                      <Filter className="size-3 opacity-60" />
+                    )}
+                    <ChevronDown className="size-3 opacity-60" />
+                  </div>
+
+                  {isDevDropdownOpen && (
+                    <>
+                      {/* Backdrop to close when clicking outside */}
+                      <div 
+                        className="fixed inset-0 z-30 cursor-default" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsDevDropdownOpen(false);
+                        }} 
+                      />
+                      <div className="absolute left-4 top-full mt-1 w-44 bg-popover border border-border rounded-lg shadow-lg z-40 p-1 text-foreground font-normal">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedDevEmotion("all");
+                            setIsDevDropdownOpen(false);
+                          }}
+                          className={cn(
+                            "w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer",
+                            selectedDevEmotion === "all" && "bg-muted font-medium"
+                          )}
+                        >
+                          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold bg-muted/50 text-muted-foreground border-border">
+                            <span>all</span>
+                          </div>
+                          {selectedDevEmotion === "all" && <Check className="size-3 text-primary" />}
+                        </button>
+                        <div className="h-px bg-border my-1" />
+                        {EMOTIONS.map((emo) => (
+                          <button
+                            key={emo}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedDevEmotion(emo);
+                              setIsDevDropdownOpen(false);
+                            }}
+                            className={cn(
+                              "w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer",
+                              selectedDevEmotion === emo && "bg-muted font-medium"
+                            )}
+                          >
+                            <div 
+                              className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold"
+                              style={{
+                                backgroundColor: `${EMOTION_COLORS[emo]}15`,
+                                color: EMOTION_COLORS[emo],
+                                borderColor: `${EMOTION_COLORS[emo]}30`,
+                              }}
+                            >
+                              <span>{emo}</span>
+                            </div>
+                            {selectedDevEmotion === emo && <Check className="size-3 text-primary" />}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </th>
-                <th
-                  onClick={() => handleSort("gptEmotion")}
-                  className="px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
-                >
-                  GPT Emotion {renderSortIcon("gptEmotion")}
+
+                {/* GPT Emotion Header with Filter Dropdown */}
+                <th className="px-4 py-2.5 font-semibold text-muted-foreground relative select-none">
+                  <div 
+                    className="flex items-center gap-1.5 cursor-pointer hover:text-foreground transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsGptDropdownOpen(!isGptDropdownOpen);
+                      setIsDevDropdownOpen(false);
+                    }}
+                  >
+                    <span>GPT Emotion</span>
+                    {selectedGptEmotion !== "all" ? (
+                      <span 
+                        className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
+                        style={{
+                          backgroundColor: `${EMOTION_COLORS[selectedGptEmotion]}15`,
+                          color: EMOTION_COLORS[selectedGptEmotion],
+                        }}
+                      >
+                        {selectedGptEmotion}
+                      </span>
+                    ) : (
+                      <Filter className="size-3 opacity-60" />
+                    )}
+                    <ChevronDown className="size-3 opacity-60" />
+                  </div>
+
+                  {isGptDropdownOpen && (
+                    <>
+                      {/* Backdrop to close when clicking outside */}
+                      <div 
+                        className="fixed inset-0 z-30 cursor-default" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsGptDropdownOpen(false);
+                        }} 
+                      />
+                      <div className="absolute left-4 top-full mt-1 w-44 bg-popover border border-border rounded-lg shadow-lg z-40 p-1 text-foreground font-normal">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedGptEmotion("all");
+                            setIsGptDropdownOpen(false);
+                          }}
+                          className={cn(
+                            "w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer",
+                            selectedGptEmotion === "all" && "bg-muted font-medium"
+                          )}
+                        >
+                          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold bg-muted/50 text-muted-foreground border-border">
+                            <span>all</span>
+                          </div>
+                          {selectedGptEmotion === "all" && <Check className="size-3 text-primary" />}
+                        </button>
+                        <div className="h-px bg-border my-1" />
+                        {EMOTIONS.map((emo) => (
+                          <button
+                            key={emo}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedGptEmotion(emo);
+                              setIsGptDropdownOpen(false);
+                            }}
+                            className={cn(
+                              "w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer",
+                              selectedGptEmotion === emo && "bg-muted font-medium"
+                            )}
+                          >
+                            <div 
+                              className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold"
+                              style={{
+                                backgroundColor: `${EMOTION_COLORS[emo]}15`,
+                                color: EMOTION_COLORS[emo],
+                                borderColor: `${EMOTION_COLORS[emo]}30`,
+                              }}
+                            >
+                              <span>{emo}</span>
+                            </div>
+                            {selectedGptEmotion === emo && <Check className="size-3 text-primary" />}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </th>
               </tr>
             </thead>
