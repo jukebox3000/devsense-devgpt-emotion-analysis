@@ -522,8 +522,8 @@ export function OverviewTab({
 
 
       <Panel
-        title="Emotion distribution - Developer vs ChatGPT"
-        subtitle="Inner ring: developer prompts (solid) · Outer ring: GPT responses (stripe)"
+        title="Overall emotion distribution: Developer vs ChatGPT"
+        subtitle="Inner ring: Developer prompts (solid) · Outer ring: GPT responses (striped)"
       >
         <div className="py-2">
           <DualRingDonut
@@ -542,7 +542,7 @@ export function OverviewTab({
       <div className="grid gap-6 lg:grid-cols-2">
         <Panel
           className="lg:col-span-2"
-          title="GPT reply style per developer mood"
+          title="GPT response style per developer mood"
           subtitle="Proportion of GPT answers that were helpful vs limited for each developer prompt mood"
           insight={
             <>
@@ -591,8 +591,8 @@ export function OverviewTab({
           title={
             <>
               Chance of a{" "}
-              <span className="text-satisfaction font-bold">satisfied</span>{" "}
-              answer
+              <span className="text-satisfaction font-bold">satisfactory</span>{" "}
+              response
             </>
           }
           subtitle="Bars use the developer's emotion colour"

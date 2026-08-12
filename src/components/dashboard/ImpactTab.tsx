@@ -16,7 +16,7 @@ import {
   type Emotion,
   type Conversation,
 } from "@/lib/emotions";
-import { Heatmap } from "@/components/charts/Heatmap";
+import { Heatmap } from "../charts/Heatmap";
 import { StackedBarChart } from "@/components/charts/BarCharts";
 import { TrendLineChart } from "@/components/charts/LineCharts";
 import { Panel } from "./Primitives";
@@ -98,7 +98,7 @@ export function ImpactTab({
                   WebkitTextFillColor: "transparent",
                 }}
               >
-                Longer the chat, worse the mood
+                Longer the chat, worse the mood?
               </span>
             </>
           }
