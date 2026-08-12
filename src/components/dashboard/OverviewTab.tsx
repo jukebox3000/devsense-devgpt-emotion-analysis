@@ -12,6 +12,7 @@ import {
   emotionVar,
   type Emotion,
   type Conversation,
+  type Turn,
 } from "@/lib/emotions";
 import { DonutChart } from "@/components/charts/DonutChart";
 import { StackedBarChart, MeanBarChart } from "@/components/charts/BarCharts";
@@ -242,6 +243,86 @@ export function OverviewTab({
     realPAnswer("satisfaction", "satisfaction") /
     (realPAnswer("frustration", "satisfaction") || 1);
 
+  const { devExamples, gptExamples } = useMemo(() => {
+    const devExamples: Record<Emotion, string> = {
+      frustration: "",
+      caution: "",
+      neutral: "",
+      satisfaction: "",
+    };
+    const gptExamples: Record<Emotion, string> = {
+      frustration: "",
+      caution: "",
+      neutral: "",
+      satisfaction: "",
+    };
+
+    const EMOTIONS_LIST: Emotion[] = ["frustration", "caution", "neutral", "satisfaction"];
+
+    const allTurns: Turn[] = [];
+    for (const conv of conversations) {
+      if (conv.turns) {
+        allTurns.push(...conv.turns);
+      }
+    }
+
+    const cleanText = (text: string) => {
+      if (!text) return "";
+      return text
+        .replace(/[\r\n]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    };
+
+    const truncateText = (text: string, maxLen = 100) => {
+      const cleaned = cleanText(text);
+      if (cleaned.length <= maxLen) return cleaned;
+      return cleaned.slice(0, maxLen - 3) + "...";
+    };
+
+    for (const emotion of EMOTIONS_LIST) {
+      const devCandidates = allTurns.filter((t) => t.promptEmotion === emotion && t.prompt);
+      const devSorted = [...devCandidates].sort((a, b) => {
+        const aLen = a.prompt.length;
+        const bLen = b.prompt.length;
+        const aPreferred = aLen >= 25 && aLen <= 120;
+        const bPreferred = bLen >= 25 && bLen <= 120;
+
+        if (aPreferred && !bPreferred) return -1;
+        if (!aPreferred && bPreferred) return 1;
+
+        return (b.promptScore || 0) - (a.promptScore || 0);
+      });
+
+      if (devSorted.length > 0) {
+        devExamples[emotion] = truncateText(devSorted[0].prompt);
+      } else {
+        devExamples[emotion] = "No representative prompt found.";
+      }
+
+      const gptCandidates = allTurns.filter((t) => t.answerEmotion === emotion && t.answer);
+      const gptSorted = [...gptCandidates].sort((a, b) => {
+        const aLen = a.answer.length;
+        const bLen = b.answer.length;
+        const aPreferred = aLen >= 25 && aLen <= 120;
+        const bPreferred = bLen >= 25 && bLen <= 120;
+
+        if (aPreferred && !bPreferred) return -1;
+        if (!aPreferred && bPreferred) return 1;
+
+        return (b.answerScore || 0) - (a.answerScore || 0);
+      });
+
+      if (gptSorted.length > 0) {
+        gptExamples[emotion] = truncateText(gptSorted[0].answer);
+      } else {
+        gptExamples[emotion] = "No representative response found.";
+      }
+    }
+
+    return { devExamples, gptExamples };
+  }, [conversations]);
+
   const sideBySide = visibleEmotions.map((e) => ({
     label: EMOTION_LABEL[e],
     values: { dev: shareOf(promptDist, e), gpt: shareOf(answerDist, e) },
@@ -449,6 +530,8 @@ export function OverviewTab({
             width={320}
             height={320}
             isFiltered={activeFilters.length > 0}
+            devExamples={devExamples}
+            gptExamples={gptExamples}
           />
         </div>
       </Panel>

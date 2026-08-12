@@ -1,14 +1,15 @@
 import { r as __toESM } from "../_runtime.mjs";
 import { a as require_jsx_runtime, o as require_react } from "../_libs/@radix-ui/react-collection+[...].mjs";
 import { _ as Link, f as createRouter, g as createRootRouteWithContext, h as createFileRoute, l as Scripts, m as lazyRouteComponent, p as Outlet, u as HeadContent, y as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
-import { i as getServerFnById, n as __exportAll, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BwZzRHIJ.mjs";
+import { i as getServerFnById, n as __exportAll, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BRAljjW5.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-Cmo7LCNO.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-drLD2uJb.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-Bx9z2SjK.css";
+var styles_default = "/assets/styles-CqZvmpXZ.css";
 var DevGPT_Logo_default = "/assets/DevGPT_Logo-D0xFZSbc.png";
+var animationloader_default = "/assets/animationloader-CooiT8Jq.mp4";
 function reportLovableError(error, context = {}) {
 	if (typeof window === "undefined") return;
 	window.__lovableEvents?.captureException?.(error, {
@@ -26,6 +27,60 @@ function reportLovableError(error, context = {}) {
 		message,
 		...stack !== void 0 && { stack },
 		filename: window.location.pathname
+	});
+}
+function LoadingScreen({ isFading }) {
+	const videoRef = (0, import_react.useRef)(null);
+	const [mounted, setMounted] = (0, import_react.useState)(false);
+	(0, import_react.useEffect)(() => {
+		setMounted(true);
+	}, []);
+	(0, import_react.useEffect)(() => {
+		if (mounted && videoRef.current) {
+			const video = videoRef.current;
+			video.setAttribute("muted", "");
+			video.setAttribute("playsinline", "");
+			video.setAttribute("webkit-playsinline", "");
+			video.muted = true;
+			video.playsInline = true;
+			const playPromise = video.play();
+			if (playPromise !== void 0) playPromise.catch((err) => {
+				console.warn("Safari/Chrome initial autoplay blocked. Retrying on metadata load...", err);
+				const handleLoadedMetadata = () => {
+					video.muted = true;
+					video.play().catch((retryErr) => {
+						console.error("Autoplay retry failed:", retryErr);
+					});
+				};
+				video.addEventListener("loadedmetadata", handleLoadedMetadata, { once: true });
+			});
+		}
+	}, [mounted]);
+	if (!mounted) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "fixed inset-0 bg-background z-[9999]" });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: `fixed inset-0 flex flex-col items-center justify-center bg-background z-[9999] transition-opacity duration-300 ${isFading ? "opacity-0 pointer-events-none" : "opacity-100"}`,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex flex-col items-center gap-4",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("video", {
+				ref: videoRef,
+				src: animationloader_default,
+				autoPlay: true,
+				loop: true,
+				muted: true,
+				playsInline: true,
+				controls: false,
+				preload: "auto",
+				className: "w-20 h-20 object-contain mix-blend-multiply",
+				style: {
+					mixBlendMode: "multiply",
+					transform: "translate3d(0, 0, 0)",
+					willChange: "transform"
+				}
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+				className: "numeral text-[10px] tracking-[0.2em] text-muted-foreground uppercase animate-pulse",
+				children: "Loading Analytics..."
+			})]
+		})
 	});
 }
 function NotFoundComponent() {
@@ -172,9 +227,23 @@ function RootShell({ children }) {
 }
 function RootComponent() {
 	const { queryClient } = Route$1.useRouteContext();
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(QueryClientProvider, {
+	const [isLoading, setIsLoading] = (0, import_react.useState)(true);
+	const [isFading, setIsFading] = (0, import_react.useState)(false);
+	(0, import_react.useEffect)(() => {
+		const fadeTimer = setTimeout(() => {
+			setIsFading(true);
+		}, 2700);
+		const removeTimer = setTimeout(() => {
+			setIsLoading(false);
+		}, 3e3);
+		return () => {
+			clearTimeout(fadeTimer);
+			clearTimeout(removeTimer);
+		};
+	}, []);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(QueryClientProvider, {
 		client: queryClient,
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})
+		children: [isLoading && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LoadingScreen, { isFading }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})]
 	});
 }
 var createSsrRpc = (functionId) => {
@@ -190,7 +259,7 @@ var createSsrRpc = (functionId) => {
 	});
 };
 var processKpis = createServerFn({ method: "GET" }).handler(createSsrRpc("a15dbfb3c2bd69dfb87d0fc3b9afc9f03987c63ee02bfbf7eddbe186c17ea438"));
-var $$splitComponentImporter = () => import("./routes-elq-hn49.mjs");
+var $$splitComponentImporter = () => import("./routes-C6ea-PKA.mjs");
 var title = "DevGPT Emotion Analytics — Developer–LLM Affect Dashboard";
 var description = "Thesis dashboard analysing emotion in developer–ChatGPT conversations: distribution, carryover effects, escalation trends and impact of developer affect on assistant responses.";
 var rootRouteChildren = { IndexRoute: createFileRoute("/")({

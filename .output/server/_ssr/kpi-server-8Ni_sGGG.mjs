@@ -1,6 +1,6 @@
-import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BwZzRHIJ.mjs";
+import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BRAljjW5.mjs";
 import processModule from "node:process";
-//#region node_modules/.nitro/vite/services/ssr/assets/kpi-server-DAl2ZNVY.js
+//#region node_modules/.nitro/vite/services/ssr/assets/kpi-server-8Ni_sGGG.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {
@@ -176,6 +176,7 @@ var processKpis = createServerFn({ method: "GET" }).handler(processKpis_createSe
 			answerScore,
 			hasCodeContent
 		});
+		if (promptEmotion) counts[promptEmotion] = (counts[promptEmotion] || 0) + 1;
 		if (answerEmotion) gptCounts[answerEmotion] = (gptCounts[answerEmotion] || 0) + 1;
 		if (promptEmotion === "frustration" && answerEmotion) frustrationAnswerCounts[answerEmotion] = (frustrationAnswerCounts[answerEmotion] || 0) + 1;
 		if (promptEmotion && answerEmotion && promptToAnswerCounts[promptEmotion] && promptToAnswerCounts[promptEmotion][answerEmotion] !== void 0) promptToAnswerCounts[promptEmotion][answerEmotion]++;

@@ -139,6 +139,16 @@ var ArrowUpDown = createLucideIcon("arrow-up-down", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var Check = createLucideIcon("check", [["path", {
+	d: "M20 6 9 17l-5-5",
+	key: "1gmf2c"
+}]]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var ChevronDown = createLucideIcon("chevron-down", [["path", {
 	d: "m6 9 6 6 6-6",
 	key: "qrunsl"
@@ -152,6 +162,16 @@ var ChevronDown = createLucideIcon("chevron-down", [["path", {
 var ChevronUp = createLucideIcon("chevron-up", [["path", {
 	d: "m18 15-6-6-6 6",
 	key: "153udz"
+}]]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
+var Funnel = createLucideIcon("funnel", [["path", {
+	d: "M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z",
+	key: "sc7q7i"
 }]]);
 /**
 * @license lucide-react v0.575.0 - ISC
@@ -203,21 +223,6 @@ var Minus = createLucideIcon("minus", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var Search = createLucideIcon("search", [["path", {
-	d: "m21 21-4.34-4.34",
-	key: "14j7rj"
-}], ["circle", {
-	cx: "11",
-	cy: "11",
-	r: "8",
-	key: "4ej97u"
-}]]);
-/**
-* @license lucide-react v0.575.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
 var X = createLucideIcon("x", [["path", {
 	d: "M18 6 6 18",
 	key: "1bl5f8"
@@ -226,4 +231,4 @@ var X = createLucideIcon("x", [["path", {
 	key: "d8bk6v"
 }]]);
 //#endregion
-export { Maximize2 as a, ArrowUpDown as c, MessageSquare as i, Search as n, ChevronUp as o, Minus as r, ChevronDown as s, X as t };
+export { Funnel as a, Check as c, Maximize2 as i, ArrowUpDown as l, Minus as n, ChevronUp as o, MessageSquare as r, ChevronDown as s, X as t };

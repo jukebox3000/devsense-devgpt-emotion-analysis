@@ -7,11 +7,92 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import devgptLogo from "../../assets/DevGPT_Logo.png";
+import loaderVideo from "../../assets/animationloader.mp4";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+
+function LoadingScreen({ isFading }: { isFading: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && videoRef.current) {
+      const video = videoRef.current;
+
+      // Force native properties directly on the DOM node for iOS/Safari compliance
+      video.defaultMuted = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "");
+
+      const playVideo = () => {
+        video.play().catch((err) => {
+          console.warn("Autoplay block caught:", err);
+        });
+      };
+
+      // If video metadata/frame is already loaded (from cache), play immediately
+      if (video.readyState >= 2) {
+        playVideo();
+      } else {
+        // Fallbacks for loading stages to trigger autoplay
+        video.addEventListener("loadedmetadata", playVideo, { once: true });
+        video.addEventListener("canplay", playVideo, { once: true });
+        video.addEventListener("canplaythrough", playVideo, { once: true });
+      }
+
+      // Cleanup
+      return () => {
+        video.removeEventListener("loadedmetadata", playVideo);
+        video.removeEventListener("canplay", playVideo);
+        video.removeEventListener("canplaythrough", playVideo);
+      };
+    }
+  }, [mounted]);
+
+  if (!mounted) {
+    return <div className="fixed inset-0 bg-background z-[9999]" />;
+  }
+
+  return (
+    <div
+      className={`fixed inset-0 flex flex-col items-center justify-center bg-background z-[9999] transition-opacity duration-300 ${
+        isFading ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    >
+      <div className="flex flex-col items-center gap-6">
+        <video
+          ref={videoRef}
+          src={loaderVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          controls={false}
+          preload="auto"
+          className="w-48 h-48 object-contain mix-blend-multiply"
+          style={{
+            mixBlendMode: "multiply",
+            transform: "translate3d(0, 0, 0)", // Force Safari GPU rendering context to respect blend mode
+            willChange: "transform",
+          }}
+        />
+        <p className="numeral text-[11px] tracking-[0.2em] text-muted-foreground uppercase animate-pulse">
+          Loading Analytics...
+        </p>
+      </div>
+    </div>
+  );
+}
 
 function NotFoundComponent() {
   return (
@@ -123,9 +204,27 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => {
+      setIsFading(true);
+    }, 4700);
+
+    const removeTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(removeTimer);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
+      {isLoading && <LoadingScreen isFading={isFading} />}
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>

@@ -63,7 +63,7 @@ function Dashboard() {
           </div>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
-              Analyzing emotional dynamics between Developers and ChatGPT;
+              Analyzing dynamics of Developers-ChatGPT conversations;
               <br />
               labelled with an SE-specific four-class scheme:
               <span style={{ color: "var(--emotion-frustration)" }}>

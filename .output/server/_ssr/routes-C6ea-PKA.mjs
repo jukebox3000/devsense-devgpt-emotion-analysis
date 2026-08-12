@@ -2,18 +2,18 @@ import { r as __toESM } from "../_runtime.mjs";
 import { n as cubicOut, t as cubicInOut } from "../_libs/d3+[...].mjs";
 import { a as require_jsx_runtime, o as require_react } from "../_libs/@radix-ui/react-collection+[...].mjs";
 import { v as useLoaderData } from "../_libs/@tanstack/react-router+[...].mjs";
-import { n as DevGPT_Logo_default } from "./router-Cmo7LCNO.mjs";
+import { n as DevGPT_Logo_default } from "./router-drLD2uJb.mjs";
 import { i as Trigger, n as List, r as Root2, t as Content } from "../_libs/radix-ui__react-tabs.mjs";
 import { t as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { n as max } from "../_libs/d3-array.mjs";
-import { n as band, r as point, t as linear } from "../_libs/d3-scale+internmap.mjs";
+import { i as point, n as linear, r as band, t as sqrt } from "../_libs/d3-scale+internmap.mjs";
 import { n as axisLeft, t as axisBottom } from "../_libs/d3-axis.mjs";
 import { t as select_default } from "../_libs/d3-selection.mjs";
 import { n as value_default } from "../_libs/d3-interpolate.mjs";
 import { i as arc_default, n as pie_default, r as line_default, t as monotoneX } from "../_libs/d3-shape.mjs";
-import { a as Maximize2, c as ArrowUpDown, i as MessageSquare, n as Search, o as ChevronUp, r as Minus, s as ChevronDown, t as X } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-elq-hn49.js
+import { a as Funnel, c as Check, i as Maximize2, l as ArrowUpDown, n as Minus, o as ChevronUp, r as MessageSquare, s as ChevronDown, t as X } from "../_libs/lucide-react.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-C6ea-PKA.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function cn(...inputs) {
@@ -134,36 +134,68 @@ function emotionByTurnDepth(conversations) {
 	}).filter((p) => p.n >= 25);
 }
 function scatterPoints(conversations) {
-	return getAllTurns(conversations).map((t) => ({
-		x: t.promptScore,
-		y: t.answerScore,
-		promptEmotion: t.promptEmotion,
-		answerEmotion: t.answerEmotion,
-		id: `${t.conv.id}-${t.index}`
-	}));
+	return conversations.filter((c) => c.turns.length >= 2 && c.turns.length <= 35).map((conv, idx) => {
+		const counts = {
+			frustration: 0,
+			caution: 0,
+			neutral: 0,
+			satisfaction: 0
+		};
+		conv.turns.forEach((t) => {
+			if (t.promptEmotion) counts[t.promptEmotion] = (counts[t.promptEmotion] || 0) + 1;
+		});
+		let dominantEmotion = "neutral";
+		let maxEmotionCount = 0;
+		EMOTIONS.forEach((e) => {
+			if (counts[e] > maxEmotionCount) {
+				maxEmotionCount = counts[e];
+				dominantEmotion = e;
+			}
+		});
+		return {
+			id: conv.id,
+			x: idx + 1,
+			y: conv.turns.length,
+			dominantEmotion,
+			maxEmotionCount: Math.max(1, maxEmotionCount),
+			counts
+		};
+	});
 }
-function pearson(pairs) {
-	const n = pairs.length || 1;
-	const mx = pairs.reduce((s, p) => s + p.x, 0) / n;
-	const my = pairs.reduce((s, p) => s + p.y, 0) / n;
-	let num = 0;
-	let dx = 0;
-	let dy = 0;
-	for (const p of pairs) {
-		num += (p.x - mx) * (p.y - my);
-		dx += (p.x - mx) ** 2;
-		dy += (p.y - my) ** 2;
-	}
-	const r = num / (Math.sqrt(dx * dy) || 1);
-	const slope = num / (dx || 1);
-	return {
-		r,
-		slope,
-		intercept: my - slope * mx,
-		mx,
-		my,
-		n
-	};
+var EXCLUDED_LANGUAGES = /* @__PURE__ */ new Set([
+	"unknown",
+	"plpgsql",
+	"shaderlab",
+	"asymptote",
+	"jinja",
+	"dockerfile",
+	"batchfile",
+	"shell",
+	"astro",
+	"codeql",
+	"jupyter notebook",
+	"javascript",
+	"c",
+	"kotlin",
+	"css"
+]);
+/** Language x developer-emotion share matrix for the heatmap. */
+function languageMatrix(conversations, minCount = 10) {
+	const turns = getAllTurns(conversations);
+	return [...new Set(turns.map((t) => t.conv.language))].sort().map((lang) => {
+		const rows = turns.filter((t) => t.conv.language === lang);
+		return {
+			row: lang,
+			total: rows.length,
+			cells: EMOTIONS.map((e) => ({
+				col: e,
+				share: share(rows.filter((r) => r.promptEmotion === e).length, rows.length),
+				count: rows.filter((r) => r.promptEmotion === e).length
+			}))
+		};
+	}).filter((r) => !EXCLUDED_LANGUAGES.has(r.row.trim().toLowerCase()) && r.cells.some((c) => c.count > minCount)).sort((a, b) => {
+		return (a.cells.find((c) => c.col === "frustration")?.share ?? 0) - (b.cells.find((c) => c.col === "frustration")?.share ?? 0);
+	});
 }
 /** Observes a container and returns its pixel width (for responsive D3 SVGs). */
 function useChartWidth() {
@@ -403,7 +435,7 @@ function emotionGlow(emotion) {
 	const c = EMOTION_HEX[emotion];
 	return `rgba(${parseInt(c.slice(1, 3), 16)},${parseInt(c.slice(3, 5), 16)},${parseInt(c.slice(5, 7), 16)},0.45)`;
 }
-function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
+function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFiltered = false }) {
 	const svgRef = (0, import_react.useRef)(null);
 	const [filter, setFilter] = (0, import_react.useState)("both");
 	const devData = EMOTIONS.map((e) => ({
@@ -463,6 +495,9 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 		if (defs.select("#clip-logo-dev").empty()) {
 			defs.append("clipPath").attr("id", "clip-logo-dev").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 26);
 			defs.append("clipPath").attr("id", "clip-logo-gpt").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 26);
+			defs.append("clipPath").attr("id", "clip-logo-devgpt").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 28);
+			defs.append("clipPath").attr("id", "clip-logo-dev-sm").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 18);
+			defs.append("clipPath").attr("id", "clip-logo-gpt-sm").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 18);
 		}
 		EMOTIONS.forEach((emo) => {
 			const color = EMOTION_HEX[emo];
@@ -501,9 +536,16 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 			});
 			gptG.append("circle").attr("class", "logo-gpt-ring").attr("cx", 0).attr("cy", 0).attr("r", 28).attr("fill", "white").attr("stroke", "rgba(59,130,246,0.5)").attr("stroke-width", 2);
 			gptG.append("image").attr("class", "logo-gpt-img").attr("href", black_gpt_chat_logo_on_white_background_logo_illustration_free_vector_default).attr("preserveAspectRatio", "xMidYMid slice").attr("clip-path", "url(#clip-logo-gpt)").attr("width", 56).attr("height", 56).attr("x", -28).attr("y", -28);
+			const devgptG = logoGroup.append("g").attr("class", "logo-devgpt-group").style("cursor", "pointer").on("click", (e) => {
+				e.stopPropagation();
+				setFilter("both");
+			});
+			devgptG.append("circle").attr("class", "logo-devgpt-ring").attr("cx", 0).attr("cy", 0).attr("r", 28).attr("fill", "white").attr("stroke", "rgba(59,130,246,0.5)").attr("stroke-width", 2);
+			devgptG.append("image").attr("class", "logo-devgpt-img").attr("href", DevGPT_Logo_default).attr("preserveAspectRatio", "xMidYMid slice").attr("clip-path", "url(#clip-logo-devgpt)").attr("width", 56).attr("height", 56).attr("x", -28).attr("y", -28);
 		}
 		const logoDevGroup = textGroup.select("g.logo-dev-group");
 		const logoGptGroup = textGroup.select("g.logo-gpt-group");
+		const logoDevgptGroup = textGroup.select("g.logo-devgpt-group");
 		const duration = 500;
 		const ease = cubicInOut;
 		if (filter === "developer") {
@@ -511,18 +553,19 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 			logoDevGroup.select("circle.logo-dev-ring").transition().duration(duration).ease(ease).attr("r", 28);
 			logoDevGroup.select("image.logo-dev-img").transition().duration(duration).ease(ease).attr("width", 88).attr("height", 88).attr("x", -44).attr("y", -44).attr("clip-path", "url(#clip-logo-dev)");
 			logoGptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease).style("opacity", 0).attr("transform", "translate(15,0) scale(0.6)");
+			logoDevgptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease).style("opacity", 0).attr("transform", "translate(0,0) scale(0.6)");
 		} else if (filter === "gpt") {
 			logoDevGroup.style("pointer-events", "none").transition().duration(duration).ease(ease).style("opacity", 0).attr("transform", "translate(-15,0) scale(0.6)");
+			logoDevgptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease).style("opacity", 0).attr("transform", "translate(0,0) scale(0.6)");
 			logoGptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease).style("opacity", 1).attr("transform", "translate(0,0)");
 			logoGptGroup.select("circle.logo-gpt-ring").transition().duration(duration).ease(ease).attr("r", 28);
 			logoGptGroup.select("image.logo-gpt-img").transition().duration(duration).ease(ease).attr("width", 88).attr("height", 88).attr("x", -44).attr("y", -44).attr("clip-path", "url(#clip-logo-gpt)");
 		} else {
-			logoDevGroup.style("pointer-events", "all").transition().duration(duration).ease(ease).style("opacity", 1).attr("transform", "translate(-22,0)");
-			logoDevGroup.select("circle.logo-dev-ring").transition().duration(duration).ease(ease).attr("r", 18);
-			logoDevGroup.select("image.logo-dev-img").transition().duration(duration).ease(ease).attr("width", 56).attr("height", 56).attr("x", -28).attr("y", -28).attr("clip-path", "url(#clip-logo-dev-sm)");
-			logoGptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease).style("opacity", 1).attr("transform", "translate(22,0)");
-			logoGptGroup.select("circle.logo-gpt-ring").transition().duration(duration).ease(ease).attr("r", 18);
-			logoGptGroup.select("image.logo-gpt-img").transition().duration(duration).ease(ease).attr("width", 56).attr("height", 56).attr("x", -28).attr("y", -28).attr("clip-path", "url(#clip-logo-gpt-sm)");
+			logoDevgptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease).style("opacity", 1).attr("transform", "translate(0,0)");
+			logoDevgptGroup.select("circle.logo-devgpt-ring").transition().duration(duration).ease(ease).attr("r", 28);
+			logoDevgptGroup.select("image.logo-devgpt-img").transition().duration(duration).ease(ease).attr("width", 56).attr("height", 56).attr("x", -28).attr("y", -28).attr("clip-path", "url(#clip-logo-devgpt)");
+			logoDevGroup.style("pointer-events", "none").transition().duration(duration).ease(ease).style("opacity", 0).attr("transform", "translate(-20,0) scale(0.6)");
+			logoGptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease).style("opacity", 0).attr("transform", "translate(20,0) scale(0.6)");
 		}
 		function makeArcTween(tInner, tOuter, dInner, dOuter) {
 			return function(d) {
@@ -560,7 +603,10 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 		});
 		if (g.select("g.dev-labels").empty()) g.append("g").attr("class", "dev-labels");
 		const devLabels = g.select("g.dev-labels").selectAll("text").data(devArcs, (d) => d.data.label);
-		devLabels.enter().append("text").attr("text-anchor", "middle").attr("dy", "0.35em").attr("fill", "white").attr("font-size", "14px").attr("font-weight", "bold").style("pointer-events", "none").style("opacity", 0).merge(devLabels).text((d) => totalDev > 0 ? `${Math.round(d.data.count / totalDev * 100)}%` : "").transition().duration(750).ease(cubicInOut).style("opacity", filter === "developer" ? 1 : 0).attrTween("transform", function(d) {
+		devLabels.enter().append("text").attr("text-anchor", "middle").attr("dy", "0.35em").attr("fill", "white").attr("font-size", "14px").attr("font-weight", "bold").style("pointer-events", "none").style("opacity", 0).merge(devLabels).text((d) => {
+			if (isFiltered) return d.data.count > 0 ? `${d.data.count}` : "";
+			return totalDev > 0 ? `${Math.round(d.data.count / totalDev * 100)}%` : "";
+		}).transition().duration(750).ease(cubicInOut).style("opacity", filter === "developer" ? 1 : 0).attrTween("transform", function(d) {
 			const el = this;
 			const ci = el._currentInner ?? targetDevInner;
 			const co = el._currentOuter ?? targetDevOuter;
@@ -596,7 +642,10 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 		});
 		if (g.select("g.gpt-labels").empty()) g.append("g").attr("class", "gpt-labels");
 		const gptLabels = g.select("g.gpt-labels").selectAll("text").data(gptArcs, (d) => d.data.label);
-		gptLabels.enter().append("text").attr("text-anchor", "middle").attr("dy", "0.35em").attr("fill", "white").attr("font-size", "14px").attr("font-weight", "bold").style("pointer-events", "none").style("opacity", 0).style("filter", "drop-shadow(0px 1px 2px rgba(0,0,0,0.8))").merge(gptLabels).text((d) => totalGpt > 0 ? `${Math.round(d.data.count / totalGpt * 100)}%` : "").transition().duration(750).ease(cubicInOut).style("opacity", filter === "gpt" ? 1 : 0).attrTween("transform", function(d) {
+		gptLabels.enter().append("text").attr("text-anchor", "middle").attr("dy", "0.35em").attr("fill", "#000000").attr("font-size", "14px").attr("font-weight", "bold").style("pointer-events", "none").style("opacity", 0).merge(gptLabels).text((d) => {
+			if (isFiltered) return d.data.count > 0 ? `${d.data.count}` : "";
+			return totalGpt > 0 ? `${Math.round(d.data.count / totalGpt * 100)}%` : "";
+		}).transition().duration(750).ease(cubicInOut).style("opacity", filter === "gpt" ? 1 : 0).attrTween("transform", function(d) {
 			const el = this;
 			const ci = el._currentInner ?? targetGptInner;
 			const co = el._currentOuter ?? targetGptOuter;
@@ -619,7 +668,8 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 		totalDev,
 		totalGpt,
 		devData,
-		gptData
+		gptData,
+		isFiltered
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "flex flex-col md:flex-row items-center justify-around gap-6 w-full h-full py-2 px-4",
@@ -670,7 +720,8 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 							className: "flex flex-col text-left",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: `text-[11px] font-semibold leading-tight ${filter === "developer" ? "text-foreground" : "text-muted-foreground"}`,
+								className: "text-[11px] font-bold leading-tight text-black dark:text-white",
+								style: { color: "#000000" },
 								children: "Developer"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								className: "text-[9px] font-mono text-muted-foreground/50 mt-0.5",
@@ -702,12 +753,8 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340 }) {
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 							className: "flex flex-col text-left",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: `text-[11px] font-semibold leading-tight ${filter === "gpt" ? "text-foreground" : "text-muted-foreground"}`,
-								style: {
-									backgroundImage: "repeating-linear-gradient(45deg, rgba(59,130,246,0.95) 0 4px, rgba(148,163,184,0.65) 0 8px)",
-									WebkitBackgroundClip: "text",
-									color: "transparent"
-								},
+								className: "text-[11px] font-bold leading-tight text-black dark:text-white",
+								style: { color: "#000000" },
 								children: "ChatGPT"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								className: "text-[9px] font-mono text-muted-foreground/50 mt-0.5",
@@ -1092,7 +1139,8 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 						devCounts: filteredDevCounts,
 						gptCounts: filteredGptCounts,
 						width: 320,
-						height: 320
+						height: 320,
+						isFiltered: activeFilters.length > 0
 					})
 				})
 			}),
@@ -1164,15 +1212,6 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 		]
 	});
 }
-var Input = import_react.forwardRef(({ className, type, ...props }, ref) => {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-		type,
-		className: cn("flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", className),
-		ref,
-		...props
-	});
-});
-Input.displayName = "Input";
 var EMOTION_COLORS$2 = {
 	frustration: "#c0392b",
 	caution: "#c48f0a",
@@ -1182,24 +1221,25 @@ var EMOTION_COLORS$2 = {
 function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSelectedId }) {
 	const kpiData = useLoaderData({ from: "/" });
 	const conversations = (0, import_react.useMemo)(() => kpiData.conversations || [], [kpiData.conversations]);
-	const [query, setQuery] = (0, import_react.useState)("");
-	const [filter, setFilter] = (0, import_react.useState)("all");
 	const [localSelectedId, localSetSelectedId] = (0, import_react.useState)(null);
 	const selectedId = propSelectedId !== void 0 ? propSelectedId : localSelectedId;
 	const setSelectedId = propSetSelectedId !== void 0 ? propSetSelectedId : localSetSelectedId;
 	const [sortKey, setSortKey] = (0, import_react.useState)("turns");
 	const [sortDirection, setSortDirection] = (0, import_react.useState)("desc");
+	const [selectedDevEmotion, setSelectedDevEmotion] = (0, import_react.useState)("all");
+	const [selectedGptEmotion, setSelectedGptEmotion] = (0, import_react.useState)("all");
+	const [isDevDropdownOpen, setIsDevDropdownOpen] = (0, import_react.useState)(false);
+	const [isGptDropdownOpen, setIsGptDropdownOpen] = (0, import_react.useState)(false);
 	const hasAutoSelected = (0, import_react.useRef)(false);
-	(0, import_react.useEffect)(() => {
-		if (!hasAutoSelected.current && conversations.length > 0) {
-			setSelectedId(conversations[0]?.id ?? null);
-			hasAutoSelected.current = true;
-		}
-	}, [conversations, setSelectedId]);
 	const [panelWidth, setPanelWidth] = (0, import_react.useState)(480);
 	const [panelHeight, setPanelHeight] = (0, import_react.useState)(0);
 	const [isMinimized, setIsMinimized] = (0, import_react.useState)(true);
 	const [highlightTurnId, setHighlightTurnId] = (0, import_react.useState)(null);
+	const prevSelectedIdRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (selectedId && prevSelectedIdRef.current !== null && selectedId !== prevSelectedIdRef.current) setIsMinimized(false);
+		prevSelectedIdRef.current = selectedId;
+	}, [selectedId]);
 	(0, import_react.useEffect)(() => {
 		setPanelHeight(Math.round(Math.max(320, Math.min(700, window.innerHeight * .5))));
 	}, []);
@@ -1211,16 +1251,18 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 	}, []);
 	const list = (0, import_react.useMemo)(() => {
 		return conversations.filter((c) => {
-			const maxTurnCount = 90;
-			const matchesQuery = !query || `${c.id} ${c.title} ${c.language} ${c.source}`.toLowerCase().includes(query.toLowerCase());
-			const matchesFilter = filter === "all" || c.turns.some((t) => t.promptEmotion === filter);
-			const matchesTurnLimit = c.turns.length <= maxTurnCount;
-			return matchesQuery && matchesFilter && matchesTurnLimit;
+			const maxTurnCount = 40;
+			const isSingleTurnNeutralGpt = c.turns.length === 1 && getDominantEmotion(c, "answerEmotion") === "neutral";
+			if (c.turns.length > maxTurnCount || isSingleTurnNeutralGpt) return false;
+			if (selectedDevEmotion !== "all" && getDominantEmotion(c, "promptEmotion") !== selectedDevEmotion) return false;
+			if (selectedGptEmotion !== "all" && getDominantEmotion(c, "answerEmotion") !== selectedGptEmotion) return false;
+			return true;
 		});
 	}, [
-		query,
-		filter,
-		conversations
+		conversations,
+		getDominantEmotion,
+		selectedDevEmotion,
+		selectedGptEmotion
 	]);
 	const sortedList = (0, import_react.useMemo)(() => {
 		const result = [...list];
@@ -1265,8 +1307,18 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 		getAvgConfidence
 	]);
 	const selectedConversation = (0, import_react.useMemo)(() => {
-		return conversations.find((c) => c.id === selectedId) || null;
-	}, [selectedId, conversations]);
+		return conversations.find((c) => c.id === selectedId) || sortedList[0] || null;
+	}, [
+		selectedId,
+		conversations,
+		sortedList
+	]);
+	(0, import_react.useEffect)(() => {
+		if (!hasAutoSelected.current && sortedList.length > 0) {
+			setSelectedId(sortedList[0]?.id ?? null);
+			hasAutoSelected.current = true;
+		}
+	}, [sortedList, setSelectedId]);
 	const handleSort = (key) => {
 		if (!key) return;
 		if (sortKey === key) setSortDirection((prev) => prev === "asc" ? "desc" : "asc");
@@ -1298,43 +1350,29 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 		window.addEventListener("mouseup", up);
 	}, []);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: "space-y-6 relative h-full",
+		className: "flex flex-col h-full space-y-3.5 relative overflow-hidden",
 		children: [
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "flex flex-col md:flex-row justify-between items-center gap-4 bg-muted/20 p-4 rounded-xl border border-border/40",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex flex-col gap-2 self-start md:self-auto",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-						className: "text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "hidden sm:inline",
-							children: "Developer emotion"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "inline sm:hidden",
-							children: "DEV EMOTION"
-						})]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "flex flex-wrap gap-1.5",
-						children: ["all", ...EMOTIONS].map((f) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							onClick: () => setFilter(f),
-							className: cn("rounded-full border px-3 py-1 text-xs cursor-pointer transition-all duration-200", filter === f ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border text-muted-foreground hover:text-foreground hover:bg-muted/50"),
-							children: f === "all" ? "All Moods" : EMOTION_LABEL[f]
-						}, f))
-					})]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "relative w-full md:w-80",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Search, { className: "absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-						value: query,
-						onChange: (e) => setQuery(e.target.value),
-						placeholder: "Search topic, lang, source...",
-						className: "pl-9 h-9 text-xs rounded-full bg-background border-border/50"
-					})]
-				})]
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "flex flex-col md:flex-row justify-between items-center gap-6 bg-muted/20 p-3.5 rounded-2xl border border-border/40 shrink-0",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "flex-1 w-full overflow-hidden",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectedConversationHeatmap, {
+						conversation: selectedConversation,
+						highlightTurnId,
+						onTurnClick: (turnIndex) => {
+							if (selectedConversation) {
+								setSelectedId(selectedConversation.id);
+								setHighlightTurnId(turnIndex);
+								setIsMinimized(false);
+							}
+						}
+					})
+				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex flex-col",
+				className: "rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex-1 flex flex-col min-h-0",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "max-h-[550px] overflow-y-auto custom-scrollbar",
+					className: "flex-1 overflow-y-auto custom-scrollbar",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", {
 						className: "w-full border-collapse text-left text-xs",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", {
@@ -1342,63 +1380,164 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
 									onClick: () => handleSort("title"),
-									className: "p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors w-1/3",
+									className: "px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors w-1/2",
 									children: ["Conversation Title ", renderSortIcon("title")]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
-									onClick: () => handleSort("source"),
-									className: "p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors",
-									children: ["Category ", renderSortIcon("source")]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
-									onClick: () => handleSort("language"),
-									className: "p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors",
-									children: ["Language ", renderSortIcon("language")]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
 									onClick: () => handleSort("turns"),
-									className: "p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors text-center",
+									className: "px-4 py-2.5 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors text-center",
 									children: ["Turns ", renderSortIcon("turns")]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
-									onClick: () => handleSort("devEmotion"),
-									className: "p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors",
-									children: ["Dev Emotion ", renderSortIcon("devEmotion")]
+									className: "px-4 py-2.5 font-semibold text-muted-foreground relative select-none",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-1.5 cursor-pointer hover:text-foreground transition-colors",
+										onClick: (e) => {
+											e.stopPropagation();
+											setIsDevDropdownOpen(!isDevDropdownOpen);
+											setIsGptDropdownOpen(false);
+										},
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Dev Emotion" }),
+											selectedDevEmotion !== "all" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												className: "text-[11px] font-semibold px-2 py-0.5 rounded-md",
+												style: {
+													backgroundColor: `${EMOTION_COLORS$2[selectedDevEmotion]}15`,
+													color: EMOTION_COLORS$2[selectedDevEmotion]
+												},
+												children: selectedDevEmotion
+											}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Funnel, { className: "size-3 opacity-60" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "size-3 opacity-60" })
+										]
+									}), isDevDropdownOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "fixed inset-0 z-30 cursor-default",
+										onClick: (e) => {
+											e.stopPropagation();
+											setIsDevDropdownOpen(false);
+										}
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "absolute left-4 top-full mt-1 w-44 bg-popover border border-border rounded-lg shadow-lg z-40 p-1 text-foreground font-normal",
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+												onClick: (e) => {
+													e.stopPropagation();
+													setSelectedDevEmotion("all");
+													setIsDevDropdownOpen(false);
+												},
+												className: cn("w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer", selectedDevEmotion === "all" && "bg-muted font-medium"),
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+													className: "flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold bg-muted/50 text-muted-foreground border-border",
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "all" })
+												}), selectedDevEmotion === "all" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "size-3 text-primary" })]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "h-px bg-border my-1" }),
+											EMOTIONS.map((emo) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+												onClick: (e) => {
+													e.stopPropagation();
+													setSelectedDevEmotion(emo);
+													setIsDevDropdownOpen(false);
+												},
+												className: cn("w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer", selectedDevEmotion === emo && "bg-muted font-medium"),
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+													className: "flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold",
+													style: {
+														backgroundColor: `${EMOTION_COLORS$2[emo]}15`,
+														color: EMOTION_COLORS$2[emo],
+														borderColor: `${EMOTION_COLORS$2[emo]}30`
+													},
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: emo })
+												}), selectedDevEmotion === emo && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "size-3 text-primary" })]
+											}, emo))
+										]
+									})] })]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
-									onClick: () => handleSort("gptEmotion"),
-									className: "p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors",
-									children: ["GPT Emotion ", renderSortIcon("gptEmotion")]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
-									onClick: () => handleSort("confidence"),
-									className: "p-4 font-semibold text-muted-foreground cursor-pointer hover:text-foreground transition-colors text-right",
-									children: ["Avg Confidence ", renderSortIcon("confidence")]
+									className: "px-4 py-2.5 font-semibold text-muted-foreground relative select-none",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-1.5 cursor-pointer hover:text-foreground transition-colors",
+										onClick: (e) => {
+											e.stopPropagation();
+											setIsGptDropdownOpen(!isGptDropdownOpen);
+											setIsDevDropdownOpen(false);
+										},
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "GPT Emotion" }),
+											selectedGptEmotion !== "all" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												className: "text-[11px] font-semibold px-2 py-0.5 rounded-md",
+												style: {
+													backgroundColor: `${EMOTION_COLORS$2[selectedGptEmotion]}15`,
+													color: EMOTION_COLORS$2[selectedGptEmotion]
+												},
+												children: selectedGptEmotion
+											}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Funnel, { className: "size-3 opacity-60" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "size-3 opacity-60" })
+										]
+									}), isGptDropdownOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "fixed inset-0 z-30 cursor-default",
+										onClick: (e) => {
+											e.stopPropagation();
+											setIsGptDropdownOpen(false);
+										}
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "absolute left-4 top-full mt-1 w-44 bg-popover border border-border rounded-lg shadow-lg z-40 p-1 text-foreground font-normal",
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+												onClick: (e) => {
+													e.stopPropagation();
+													setSelectedGptEmotion("all");
+													setIsGptDropdownOpen(false);
+												},
+												className: cn("w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer", selectedGptEmotion === "all" && "bg-muted font-medium"),
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+													className: "flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold bg-muted/50 text-muted-foreground border-border",
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "all" })
+												}), selectedGptEmotion === "all" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "size-3 text-primary" })]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "h-px bg-border my-1" }),
+											EMOTIONS.map((emo) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+												onClick: (e) => {
+													e.stopPropagation();
+													setSelectedGptEmotion(emo);
+													setIsGptDropdownOpen(false);
+												},
+												className: cn("w-full flex items-center justify-between px-2.5 py-1.5 text-xs rounded-md hover:bg-muted text-left transition-colors cursor-pointer", selectedGptEmotion === emo && "bg-muted font-medium"),
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+													className: "flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[11px] font-semibold",
+													style: {
+														backgroundColor: `${EMOTION_COLORS$2[emo]}15`,
+														color: EMOTION_COLORS$2[emo],
+														borderColor: `${EMOTION_COLORS$2[emo]}30`
+													},
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: emo })
+												}), selectedGptEmotion === emo && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "size-3 text-primary" })]
+											}, emo))
+										]
+									})] })]
 								})
 							] })
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", {
 							className: "divide-y divide-border/60",
 							children: sortedList.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-								colSpan: 7,
+								colSpan: 4,
 								className: "p-8 text-center text-muted-foreground",
-								children: "No conversations matches search parameters."
+								children: "No conversations available."
 							}) }) : sortedList.map((c) => {
 								const devEmo = getDominantEmotion(c, "promptEmotion");
 								const gptEmo = getDominantEmotion(c, "answerEmotion");
-								const avgConf = getAvgConfidence(c);
 								const isSelected = c.id === selectedId;
 								return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
 									onClick: () => {
 										setSelectedId(c.id);
+										setIsMinimized(false);
 									},
-									className: cn("cursor-pointer transition-colors border-l-2", isSelected ? "bg-accent/40 border-l-primary font-medium" : "hover:bg-muted/30 border-l-transparent"),
+									className: cn("cursor-pointer transition-colors border-l-2 h-[46px]", isSelected ? "bg-accent/40 border-l-primary font-medium" : "hover:bg-muted/30 border-l-transparent"),
 									children: [
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-											className: "p-4",
+											className: "px-4 py-2",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-												className: "flex flex-col gap-1",
+												className: "flex flex-col gap-0.5",
 												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-													className: "font-medium text-foreground line-clamp-1",
+													className: "font-medium text-foreground line-clamp-1 text-xs",
 													children: c.title
 												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 													className: "text-[10px] text-muted-foreground font-mono",
@@ -1407,19 +1546,11 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 											})
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-											className: "p-4 uppercase tracking-wider font-mono text-[10px]",
-											children: c.source.replace("_", " ")
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-											className: "p-4 font-mono text-[10px] text-muted-foreground",
-											children: c.language
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-											className: "p-4 text-center numeral font-bold",
+											className: "px-4 py-2 text-center numeral font-bold text-xs",
 											children: c.turns.length
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-											className: "p-4",
+											className: "px-4 py-2",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 												className: "text-[11px] font-semibold px-2 py-0.5 rounded-md",
 												style: {
@@ -1430,7 +1561,7 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 											})
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-											className: "p-4",
+											className: "px-4 py-2",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 												className: "text-[11px] font-semibold px-2 py-0.5 rounded-md",
 												style: {
@@ -1439,10 +1570,6 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 												},
 												children: gptEmo
 											})
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-											className: "p-4 text-right font-mono text-muted-foreground",
-											children: fmtPct(avgConf, 0)
 										})
 									]
 								}, c.id);
@@ -1452,11 +1579,9 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "bg-muted/10 border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
-						"Showing ",
+						"Displaying ",
 						sortedList.length,
-						" of ",
-						conversations.length,
-						" conversations"
+						" records"
 					] }), selectedId && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 						onClick: () => setIsMinimized(false),
 						className: "text-primary hover:underline flex items-center gap-1",
@@ -1533,19 +1658,12 @@ function ConversationViewer({ conversation, panelWidth, panelHeight, setPanelWid
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
 				className: "h-[52px] bg-muted/60 border-b border-border px-4 py-3 flex items-center justify-between cursor-pointer select-none shrink-0",
 				onClick: () => setIsMinimized(!isMinimized),
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "flex flex-col gap-0.5 max-w-[70%]",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-						className: "text-[10px] tracking-wider text-muted-foreground uppercase font-mono truncate",
-						children: [
-							conversation.id,
-							" · ",
-							conversation.language
-						]
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "flex items-center gap-2 max-w-[75%]",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
 						className: "text-sm font-extrabold text-foreground truncate",
 						children: conversation.title
-					})]
+					})
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "flex items-center gap-1.5",
 					onClick: (e) => e.stopPropagation(),
@@ -1582,19 +1700,16 @@ function ConversationViewer({ conversation, panelWidth, panelHeight, setPanelWid
 								},
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "pb-1 mb-1.5 border-b border-border/30 flex items-center justify-between gap-4 text-[10px] font-semibold tracking-wider",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										className: "text-foreground/95 font-bold uppercase",
-										children: ["DEVELOPER · TURN ", t.index]
-									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										children: "DEVELOPER"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 										className: "flex items-center gap-1.5",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 											style: { color: devColor },
 											className: "font-black text-[10.5px] tracking-wide",
 											children: t.promptEmotion.toUpperCase()
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "text-foreground/95 font-bold",
-											children: fmtPct(t.promptScore, 0)
-										})]
+										})
 									})]
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 									className: "whitespace-pre-wrap break-words leading-relaxed text-xs text-foreground select-text font-medium",
@@ -1626,19 +1741,16 @@ function ConversationViewer({ conversation, panelWidth, panelHeight, setPanelWid
 								},
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									className: "pb-1 mb-1.5 border-b border-border/30 flex items-center justify-between gap-4 text-[10px] font-semibold tracking-wider",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										className: "text-foreground/95 font-bold uppercase",
-										children: ["GPT · TURN ", t.index]
-									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										children: "GPT"
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 										className: "flex items-center gap-1.5",
-										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 											style: { color: gptColor },
 											className: "font-black text-[10.5px] tracking-wide",
 											children: t.answerEmotion.toUpperCase()
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											className: "text-foreground/95 font-bold",
-											children: fmtPct(t.answerScore, 0)
-										})]
+										})
 									})]
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 									className: "whitespace-pre-wrap break-words leading-relaxed text-xs text-muted-foreground select-text",
@@ -1652,22 +1764,210 @@ function ConversationViewer({ conversation, panelWidth, panelHeight, setPanelWid
 		]
 	});
 }
+function SelectedConversationHeatmap({ conversation, highlightTurnId, onTurnClick }) {
+	const [tooltip, setTooltip] = (0, import_react.useState)({
+		visible: false,
+		x: 0,
+		y: 0,
+		role: "Developer Prompt",
+		turnSeq: 1
+	});
+	if (!conversation || conversation.turns.length === 0) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: "flex flex-col justify-center text-xs text-muted-foreground py-1",
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Select a conversation from the table below to inspect its turn emotion sequence heatmap." })
+	});
+	const turns = conversation.turns;
+	const handleMouseEnter = (e, role, turnSeq, emotion, score, avatar) => {
+		setTooltip({
+			visible: true,
+			x: e.pageX,
+			y: e.pageY,
+			role,
+			turnSeq,
+			emotion,
+			score,
+			avatar
+		});
+	};
+	const handleMouseMove = (e) => {
+		setTooltip((prev) => ({
+			...prev,
+			x: e.pageX,
+			y: e.pageY
+		}));
+	};
+	const handleMouseLeave = () => {
+		setTooltip((prev) => ({
+			...prev,
+			visible: false
+		}));
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "flex flex-col gap-2 w-full overflow-hidden relative",
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "flex items-center justify-between gap-4",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+					className: "text-base font-semibold tracking-tight text-foreground whitespace-nowrap",
+					children: "Emotion Sequence Heatmap"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "hidden lg:flex items-center gap-3 text-[10px] font-medium text-muted-foreground shrink-0",
+					children: EMOTIONS.map((e) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						className: "flex items-center gap-1",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "w-2.5 h-2.5 rounded-full shadow-xs",
+							style: { backgroundColor: EMOTION_COLORS$2[e] }
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							className: "capitalize",
+							children: EMOTION_LABEL[e]
+						})]
+					}, e))
+				})]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "overflow-x-auto custom-scrollbar pb-1 pt-0.5",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "inline-flex flex-col min-w-max border border-border/60 rounded-md bg-card overflow-hidden shadow-xs",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-stretch border-b border-border/40",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none",
+								children: "DEV"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "flex items-stretch",
+								children: turns.map((t, idx) => {
+									const color = EMOTION_COLORS$2[t.promptEmotion];
+									const isSelectedTurn = highlightTurnId === t.index;
+									const turnSeq = idx + 1;
+									return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										onClick: () => onTurnClick(t.index),
+										onMouseEnter: (e) => handleMouseEnter(e, "Developer Prompt", turnSeq, t.promptEmotion, t.promptScore, user_profile_icon_free_vector_658200527_default),
+										onMouseMove: handleMouseMove,
+										onMouseLeave: handleMouseLeave,
+										className: cn("w-6 h-6 border-r border-border/30 transition-all duration-150 cursor-pointer relative hover:brightness-110 animate-block-stagger", isSelectedTurn ? "ring-2 ring-primary ring-inset z-10" : ""),
+										style: {
+											backgroundColor: color,
+											animationDelay: `${idx * 35}ms`
+										}
+									}, `dev-${t.index}`);
+								})
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-stretch border-b border-border/40",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none",
+								children: "GPT"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "flex items-stretch",
+								children: turns.map((t, idx) => {
+									const color = EMOTION_COLORS$2[t.answerEmotion];
+									const isSelectedTurn = highlightTurnId === t.index;
+									const turnSeq = idx + 1;
+									return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										onClick: () => onTurnClick(t.index),
+										onMouseEnter: (e) => handleMouseEnter(e, "ChatGPT Response", turnSeq, t.answerEmotion, t.answerScore, black_gpt_chat_logo_on_white_background_logo_illustration_free_vector_default),
+										onMouseMove: handleMouseMove,
+										onMouseLeave: handleMouseLeave,
+										className: cn("w-6 h-6 border-r border-border/30 transition-all duration-150 cursor-pointer relative hover:brightness-110 animate-block-stagger", isSelectedTurn ? "ring-2 ring-primary ring-inset z-10" : ""),
+										style: {
+											backgroundColor: color,
+											animationDelay: `${idx * 35 + 20}ms`
+										}
+									}, `gpt-${t.index}`);
+								})
+							})]
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-stretch bg-muted/30",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "w-10 px-2 py-1 bg-muted/60 text-[9px] font-mono text-muted-foreground/70 flex items-center justify-end border-r border-border/40 shrink-0 select-none",
+								children: "#"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "flex items-stretch",
+								children: turns.map((t, idx) => {
+									const turnSeq = idx + 1;
+									const isSelectedTurn = highlightTurnId === t.index;
+									return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										onClick: () => onTurnClick(t.index),
+										onMouseEnter: (e) => handleMouseEnter(e, "Turn", turnSeq),
+										onMouseMove: handleMouseMove,
+										onMouseLeave: handleMouseLeave,
+										className: cn("w-6 h-5 border-r border-border/30 flex items-center justify-center text-[9px] font-mono text-muted-foreground cursor-pointer hover:text-foreground hover:bg-muted/60 transition-colors select-none animate-block-stagger", isSelectedTurn ? "font-bold text-primary bg-primary/10" : ""),
+										style: { animationDelay: `${idx * 35 + 40}ms` },
+										children: turnSeq
+									}, `axis-${t.index}`);
+								})
+							})]
+						})
+					]
+				})
+			}, conversation.id),
+			tooltip.visible && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "fixed z-[99999] pointer-events-none transition-opacity duration-150",
+				style: {
+					top: tooltip.y - 70,
+					left: tooltip.x + 14,
+					background: "rgba(15, 23, 42, 0.95)",
+					backdropFilter: "blur(8px)",
+					border: "1px solid rgba(255, 255, 255, 0.15)",
+					padding: "8px 12px",
+					borderRadius: "8px",
+					color: "#fff",
+					fontSize: "11px",
+					fontWeight: 600,
+					boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)"
+				},
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex items-center gap-1.5 mb-1",
+					children: [tooltip.avatar && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+						src: tooltip.avatar,
+						className: "w-3.5 h-3.5 rounded-full object-cover shrink-0",
+						alt: ""
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						className: "text-slate-400 font-medium text-[10px]",
+						children: [
+							"Turn ",
+							tooltip.turnSeq,
+							" · ",
+							tooltip.role
+						]
+					})]
+				}), tooltip.emotion ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "flex items-center gap-2 mt-0.5",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "font-extrabold uppercase text-[12px] tracking-wider",
+						style: { color: EMOTION_COLORS$2[tooltip.emotion] },
+						children: EMOTION_LABEL[tooltip.emotion]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "text-white text-[12px] font-bold",
+						children: fmtPct(tooltip.score || 0, 0)
+					})]
+				}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+					className: "text-white text-xs font-bold",
+					children: ["Click to jump to Turn ", tooltip.turnSeq]
+				})]
+			})
+		]
+	});
+}
 var EMOTION_COLORS$1 = {
-	frustration: "#c0392b",
-	caution: "#c48f0a",
-	neutral: "#3b6fa5",
-	satisfaction: "#27ae60"
+	frustration: "#ef4444",
+	caution: "#f59e0b",
+	neutral: "#6b7280",
+	satisfaction: "#10b981"
 };
-function ScatterPlot({ points, fit, colorBy = "promptEmotion", height = 320, xLabel, yLabel }) {
+function ScatterPlot({ points, height = 360, xLabel = "Conversation Index (Count)", yLabel = "Conversation Length (Turns per Sharing ID)" }) {
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
 	(0, import_react.useEffect)(() => {
 		if (!width || !svgRef.current) return;
 		const margin = {
-			top: 14,
-			right: 16,
+			top: 18,
+			right: 20,
 			bottom: 44,
-			left: 52
+			left: 56
 		};
 		const w = width - margin.left - margin.right;
 		const h = height - margin.top - margin.bottom;
@@ -1676,30 +1976,27 @@ function ScatterPlot({ points, fit, colorBy = "promptEmotion", height = 320, xLa
 		const svg = select_default(svgRef.current);
 		svg.selectAll("*").remove();
 		const g = svg.attr("viewBox", `0 0 ${width} ${height}`).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-		const x = linear([.3, 1], [0, w]);
-		const y = linear([.3, 1], [h, 0]);
-		g.append("g").call(axisLeft(y).ticks(5).tickSize(-w)).call((s) => s.select(".domain").remove()).call((s) => s.selectAll(".tick line").style("stroke", "var(--grid)").style("opacity", .5)).selectAll("text").style("fill", "var(--muted-foreground)").style("font-size", "10px");
-		g.append("g").attr("transform", `translate(0,${h})`).call(axisBottom(x).ticks(6).tickSize(-h)).call((s) => s.select(".domain").style("stroke", "var(--border)")).call((s) => s.selectAll(".tick line").style("stroke", "var(--grid)").style("opacity", .4)).selectAll("text").style("fill", "var(--muted-foreground)").style("font-size", "10px");
+		const maxX = max(points, (d) => d.x) || 100;
+		const maxY = max(points, (d) => d.y) || 10;
+		const maxBubble = max(points, (d) => d.maxEmotionCount) || 1;
+		const x = linear([1, maxX], [0, w]);
+		const y = linear([0, maxY + 2], [h, 0]);
+		const rScale = sqrt([1, maxBubble], [3.5, 18]);
+		g.append("g").call(axisLeft(y).ticks(6).tickSize(-w)).call((s) => s.select(".domain").remove()).call((s) => s.selectAll(".tick line").style("stroke", "var(--grid)").style("opacity", .4)).selectAll("text").style("fill", "var(--muted-foreground)").style("font-size", "10px");
+		g.append("g").attr("transform", `translate(0,${h})`).call(axisBottom(x).ticks(8).tickSize(-h)).call((s) => s.select(".domain").style("stroke", "var(--border)")).call((s) => s.selectAll(".tick line").style("stroke", "var(--grid)").style("opacity", .3)).selectAll("text").style("fill", "var(--muted-foreground)").style("font-size", "10px");
 		g.append("text").attr("x", w / 2).attr("y", h + 36).attr("text-anchor", "middle").style("font-size", "10px").style("fill", "var(--muted-foreground)").text(xLabel);
-		g.append("text").attr("transform", `rotate(-90)`).attr("x", -h / 2).attr("y", -38).attr("text-anchor", "middle").style("font-size", "10px").style("fill", "var(--muted-foreground)").text(yLabel);
-		g.selectAll("circle").data(points).join("circle").attr("cx", (d) => x(d.x)).attr("cy", (d) => y(d.y)).attr("r", 3.2).style("fill", (d) => emotionVar(d[colorBy])).style("opacity", .55).style("cursor", "pointer").on("mouseover", function(event, d) {
-			const pColor = EMOTION_COLORS$1[d.promptEmotion];
-			const aColor = EMOTION_COLORS$1[d.answerEmotion];
-			const pLabel = EMOTION_LABEL[d.promptEmotion];
-			const aLabel = EMOTION_LABEL[d.answerEmotion];
-			tooltipDiv.style("visibility", "visible").html(`<span style="color: #94a3b8; font-weight: 500;">Conversation ${d.id}</span><br/><span style="color: ${pColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">DEV: ${pLabel} (${d.x.toFixed(2)})</span><br/><span style="color: #94a3b8; font-weight: 400; margin-right: 4px;">→</span><span style="color: ${aColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">GPT: ${aLabel} (${d.y.toFixed(2)})</span>`);
-			select_default(this).transition().duration(100).attr("r", 5.5).style("opacity", .95);
+		g.append("text").attr("transform", `rotate(-90)`).attr("x", -h / 2).attr("y", -42).attr("text-anchor", "middle").style("font-size", "10px").style("fill", "var(--muted-foreground)").text(yLabel);
+		g.selectAll("circle").data(points).join("circle").attr("cx", (d) => x(d.x)).attr("cy", (d) => y(d.y)).attr("r", (d) => rScale(d.maxEmotionCount)).style("fill", (d) => emotionVar(d.dominantEmotion)).style("opacity", .55).style("stroke", "var(--background)").style("stroke-width", "0.75px").style("cursor", "pointer").on("mouseover", function(event, d) {
+			const domColor = EMOTION_COLORS$1[d.dominantEmotion] || "var(--foreground)";
+			const domLabel = EMOTION_LABEL[d.dominantEmotion] || d.dominantEmotion;
+			tooltipDiv.style("visibility", "visible").html(`<div style="font-weight: 800; font-size: 11px; color: #fff; margin-bottom: 2px;">Sharing ID: ${d.id}</div><div style="color: #94a3b8; font-size: 10px; margin-bottom: 3px;">Conversation Length: <strong style="color: #fff;">${d.y} turns</strong></div><div style="font-size: 10px; margin-bottom: 2px;">Dominant Emotion: <span style="color: ${domColor}; font-weight: 800; text-transform: uppercase;">${domLabel}</span></div><div style="font-size: 10px; color: #cbd5e1;">Max Prompt Emotion Count: <strong>${d.maxEmotionCount}</strong></div>`);
+			select_default(this).transition().duration(100).attr("r", rScale(d.maxEmotionCount) + 3).style("opacity", .95).style("stroke", "var(--foreground)").style("stroke-width", "1.5px");
 		}).on("mousemove", function(event) {
-			tooltipDiv.style("top", event.pageY - 60 + "px").style("left", event.pageX + 15 + "px");
-		}).on("mouseout", function() {
+			tooltipDiv.style("top", event.pageY - 70 + "px").style("left", event.pageX + 15 + "px");
+		}).on("mouseout", function(event, d) {
 			tooltipDiv.style("visibility", "hidden");
-			select_default(this).transition().duration(100).attr("r", 3.2).style("opacity", .55);
+			select_default(this).transition().duration(100).attr("r", rScale(d.maxEmotionCount)).style("opacity", .55).style("stroke", "var(--background)").style("stroke-width", "0.75px");
 		});
-		if (fit) {
-			const x0 = .3;
-			const x1 = 1;
-			g.append("line").attr("x1", x(x0)).attr("x2", x(x1)).attr("y1", y(fit.intercept + fit.slope * x0)).attr("y2", y(fit.intercept + fit.slope * x1)).style("stroke", "var(--foreground)").style("stroke-width", 1.5).style("stroke-dasharray", "5 4").style("opacity", .8);
-		}
 		return () => {
 			select_default("#chart-tooltip").remove();
 		};
@@ -1707,8 +2004,6 @@ function ScatterPlot({ points, fit, colorBy = "promptEmotion", height = 320, xLa
 		points,
 		width,
 		height,
-		fit,
-		colorBy,
 		xLabel,
 		yLabel
 	]);
@@ -1722,10 +2017,10 @@ function ScatterPlot({ points, fit, colorBy = "promptEmotion", height = 320, xLa
 		})
 	});
 }
-function Heatmap({ rows, colorFor, height, rowLabelWidth = 96 }) {
+function Heatmap({ rows, colorFor, height, rowLabelWidth = 110, valueFormat = "both" }) {
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
-	const chartHeight = height ?? rows.length * 42 + 46;
+	const chartHeight = height ?? Math.max(220, rows.length * 38 + 46);
 	(0, import_react.useEffect)(() => {
 		if (!width || !svgRef.current) return;
 		const margin = {
@@ -1745,16 +2040,17 @@ function Heatmap({ rows, colorFor, height, rowLabelWidth = 96 }) {
 		const x = band().domain(cols).range([0, w]).padding(.06);
 		const y = band().domain(rows.map((r) => r.row)).range([0, h]).padding(.08);
 		g.selectAll("text.col").data(cols).join("text").attr("class", "col").attr("x", (d) => x(d) + x.bandwidth() / 2).attr("y", -10).attr("text-anchor", "middle").style("font-size", "10px").style("fill", "var(--muted-foreground)").text((d) => EMOTION_LABEL[d] ?? d);
-		rows.forEach((r) => {
+		rows.forEach((r, rIdx) => {
+			const rowKey = `row-${rIdx}`;
 			g.append("text").attr("x", -10).attr("y", y(r.row) + y.bandwidth() / 2).attr("dy", "0.35em").attr("text-anchor", "end").style("font-size", "11px").style("fill", EMOTION_COLORS$1[r.row] ? emotionVar(r.row) : "var(--foreground)").text(EMOTION_LABEL[r.row] ?? r.row);
-			g.selectAll(`rect.c-${r.row.replace(/\W/g, "")}`).data(r.cells).join("rect").attr("class", `c-${r.row.replace(/\W/g, "")}`).attr("x", (d) => x(d.col)).attr("y", y(r.row)).attr("width", x.bandwidth()).attr("height", y.bandwidth()).attr("rx", 3).style("fill", (d) => colorFor(d.col)).style("opacity", (d) => .12 + Math.min(1, d.share / .6) * .82).style("cursor", "pointer").on("mouseover", function(event, d) {
-				const promptEmotion = r.row;
-				const answerEmotion = d.col;
-				const devColor = EMOTION_COLORS$1[promptEmotion] || "var(--foreground)";
-				const gptColor = EMOTION_COLORS$1[answerEmotion] || "var(--foreground)";
-				const devLabel = EMOTION_LABEL[promptEmotion] || r.row;
-				const gptLabel = EMOTION_LABEL[answerEmotion] || d.col;
-				tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${(d.share * 100).toFixed(1)}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} turns)</span></div>`);
+			g.selectAll(`rect.${rowKey}`).data(r.cells).join("rect").attr("class", rowKey).attr("x", (d) => x(d.col)).attr("y", y(r.row)).attr("width", x.bandwidth()).attr("height", y.bandwidth()).attr("rx", 3).style("fill", (d) => colorFor(d.col)).style("opacity", (d) => .12 + Math.min(1, d.share / .6) * .82).style("cursor", "pointer").on("mouseover", function(event, d) {
+				const rowEmotion = r.row;
+				const colEmotion = d.col;
+				const devColor = EMOTION_COLORS$1[rowEmotion] || "#38bdf8";
+				const gptColor = EMOTION_COLORS$1[colEmotion] || "var(--foreground)";
+				const devLabel = EMOTION_LABEL[rowEmotion] || r.row;
+				const gptLabel = EMOTION_LABEL[colEmotion] || d.col;
+				tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${(d.share * 100).toFixed(1)}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} count)</span></div>`);
 				select_default(this).transition().duration(100).attr("stroke", "var(--foreground)").attr("stroke-width", "1.5px");
 			}).on("mousemove", function(event) {
 				tooltipDiv.style("top", event.pageY - 60 + "px").style("left", event.pageX + 15 + "px");
@@ -1762,7 +2058,11 @@ function Heatmap({ rows, colorFor, height, rowLabelWidth = 96 }) {
 				tooltipDiv.style("visibility", "hidden");
 				select_default(this).transition().duration(100).attr("stroke", "none");
 			});
-			g.selectAll(`text.v-${r.row.replace(/\W/g, "")}`).data(r.cells).join("text").attr("class", `v-${r.row.replace(/\W/g, "")}`).attr("x", (d) => x(d.col) + x.bandwidth() / 2).attr("y", y(r.row) + y.bandwidth() / 2).attr("dy", "0.35em").attr("text-anchor", "middle").style("font-size", "10px").style("font-variant-numeric", "tabular-nums").style("fill", (d) => d.share > .32 ? "var(--background)" : "var(--foreground)").text((d) => `${(d.share * 100).toFixed(0)}%`).style("pointer-events", "none");
+			g.selectAll(`text.v-${rowKey}`).data(r.cells).join("text").attr("class", `v-${rowKey}`).attr("x", (d) => x(d.col) + x.bandwidth() / 2).attr("y", y(r.row) + y.bandwidth() / 2).attr("dy", "0.35em").attr("text-anchor", "middle").style("font-size", "10px").style("font-variant-numeric", "tabular-nums").style("fill", (d) => d.share > .32 ? "var(--background)" : "var(--foreground)").text((d) => {
+				if (valueFormat === "count") return `${d.count}`;
+				if (valueFormat === "both") return d.count > 0 ? `${(d.share * 100).toFixed(0)}% (${d.count})` : "0";
+				return `${(d.share * 100).toFixed(0)}%`;
+			}).style("pointer-events", "none");
 		});
 		return () => {
 			select_default("#chart-tooltip").remove();
@@ -1772,11 +2072,12 @@ function Heatmap({ rows, colorFor, height, rowLabelWidth = 96 }) {
 		width,
 		chartHeight,
 		colorFor,
-		rowLabelWidth
+		rowLabelWidth,
+		valueFormat
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref,
-		className: "w-full",
+		className: rows.length > 10 ? "w-full max-h-[440px] overflow-y-auto pr-1" : "w-full",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
 			ref: svgRef,
 			width,
@@ -1876,16 +2177,13 @@ function ImpactTab({ activeFilters = [] }) {
 			turns: conv.turns.filter((t) => activeFilters.includes(t.promptEmotion))
 		})).filter((conv) => conv.turns.length > 0);
 	}, [activeFilters, kpiData.conversations]);
-	const [colorBy, setColorBy] = (0, import_react.useState)("promptEmotion");
-	const allTurns = (0, import_react.useMemo)(() => getAllTurns(filteredConversations), [filteredConversations]);
+	const [valueFormat, setValueFormat] = (0, import_react.useState)("both");
+	(0, import_react.useMemo)(() => getAllTurns(filteredConversations), [filteredConversations]);
 	const points = (0, import_react.useMemo)(() => scatterPoints(filteredConversations), [filteredConversations]);
-	const fit = (0, import_react.useMemo)(() => pearson(points.map((p) => ({
-		x: p.x,
-		y: p.y
-	}))), [points]);
-	const valence = (0, import_react.useMemo)(() => answerValenceByPromptEmotion(filteredConversations), [filteredConversations]);
+	(0, import_react.useMemo)(() => answerValenceByPromptEmotion(filteredConversations), [filteredConversations]);
 	const depth = (0, import_react.useMemo)(() => emotionByTurnDepth(filteredConversations), [filteredConversations]);
 	const matrix = (0, import_react.useMemo)(() => transitionMatrix(filteredConversations), [filteredConversations]);
+	const langMatrix = (0, import_react.useMemo)(() => languageMatrix(filteredConversations), [filteredConversations]);
 	const stackRows = matrix.map((r) => ({
 		label: EMOTION_LABEL[r.prompt],
 		labelColor: emotionVar(r.prompt),
@@ -1897,13 +2195,6 @@ function ImpactTab({ activeFilters = [] }) {
 		}))
 	}));
 	const frustrationRise = depth[depth.length - 1].frustration - depth[0].frustration;
-	const satAfter = (e) => {
-		const rows = allTurns.filter((t) => t.promptEmotion === e);
-		return rows.filter((t) => t.answerEmotion === "satisfaction").length / (rows.length || 1);
-	};
-	satAfter("satisfaction") / (satAfter("frustration") || 1);
-	const baseline = allTurns.reduce((s, t) => s + EMOTION_VALENCE[t.answerEmotion], 0) / allTurns.length;
-	valence.find((v) => v.emotion === "frustration").mean - baseline;
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: "space-y-6",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1945,56 +2236,46 @@ function ImpactTab({ activeFilters = [] }) {
 					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "Every row is dominated by neutral and caution, but the satisfaction segment shrinks steadily as the developer's mood worsens. This one chart contains the core finding: emotion carries over into the answer, mostly as extra caution." }),
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StackedBarChart, { rows: stackRows })
 				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Panel, {
-					className: "lg:col-span-2",
-					title: "Prompt score vs answer score",
-					subtitle: "One point per prompt–answer pair; dashed line is the OLS fit",
-					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-						"The near-flat fit (r = ",
-						fit.r.toFixed(3),
-						") shows that classifier",
-						" ",
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("em", { children: "confidence" }),
-						" does not transfer between the two sides — the carryover effect lives in the discrete ",
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("em", { children: "labels" }),
-						", not the scores. Colour the points by answer emotion and the vertical banding by emotion class becomes the visible structure instead."
-					] }),
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "mb-3 flex flex-wrap items-center justify-between gap-3",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "flex gap-1.5",
-							children: ["promptEmotion", "answerEmotion"].map((c) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-								onClick: () => setColorBy(c),
-								className: cn("rounded border px-2 py-0.5 text-[10px] transition-colors", colorBy === c ? "border-ring bg-accent text-foreground" : "border-border text-muted-foreground hover:text-foreground"),
-								children: ["colour by ", c === "promptEmotion" ? "developer" : "assistant"]
-							}, c))
-						})
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScatterPlot, {
-						points,
-						fit,
-						colorBy,
-						height: 360,
-						xLabel: "developer prompt emotion score",
-						yLabel: "assistant answer emotion score"
-					})]
-				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Panel, {
 					className: "lg:col-span-2",
-					title: "Prompt emotion → answer emotion",
-					subtitle: "Row-normalised share of answer labels for each prompt label",
-					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "This heatmap shows how the assistant responds across developer moods: each row is a prompt emotion, and the columns show the answer emotion distribution that follows." }),
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Heatmap, {
-						rows: matrix.map((r) => ({
-							row: r.prompt,
-							total: r.total,
-							cells: r.cells.map((c) => ({
-								col: c.answer,
-								share: c.share,
-								count: c.count
-							}))
-						})),
-						colorFor: (col) => emotionVar(col)
+					title: "Conversation Length vs Emotion Concentration",
+					subtitle: "Each bubble represents a conversation (Sharing ID, length 2 to 35 turns): Y-axis is turn length, X-axis is conversation count index, bubble size is max occurring prompt emotion count, colored by dominant emotion",
+					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "This bubble scatterplot maps conversation length against developer affect concentration: longer conversations (higher turn counts) feature larger bubbles indicating repeated emotion occurrences. Frustration and caution dominate extended multi-turn conversations." }),
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScatterPlot, {
+						points,
+						height: 360,
+						xLabel: "Conversation Count Index",
+						yLabel: "Conversation Length (Number of Turns per Sharing ID)"
 					})
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Panel, {
+					className: "lg:col-span-2",
+					title: "Prompt Emotion by Programming Language",
+					subtitle: "Heatmap showing count and distribution of developer prompt emotions for languages with at least one emotion count greater than 10",
+					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "This heatmap displays developer prompt emotions broken down by the programming language used in the conversation (showing only languages where at least one individual prompt emotion count is greater than 10). Each cell shows the count and percentage of prompt emotions for that language." }),
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "mb-4 flex flex-wrap items-center justify-end gap-3 border-b border-border/50 pb-3",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "flex items-center gap-1.5",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "text-[11px] font-medium text-muted-foreground mr-1",
+								children: "Values:"
+							}), [
+								"both",
+								"count",
+								"percentage"
+							].map((fmt) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								onClick: () => setValueFormat(fmt),
+								className: cn("rounded border px-2 py-0.5 text-[10px] capitalize transition-colors", valueFormat === fmt ? "border-ring bg-accent text-foreground font-semibold" : "border-border text-muted-foreground hover:text-foreground"),
+								children: fmt === "both" ? "% & count" : fmt
+							}, fmt))]
+						})
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Heatmap, {
+						rows: langMatrix,
+						colorFor: (col) => emotionVar(col),
+						rowLabelWidth: 130,
+						valueFormat
+					})]
 				})
 			]
 		})
@@ -2036,32 +2317,24 @@ function EmojiMorph({ shares, captions, intervalMs = 2600, className, stacked = 
 			className: cn(stacked ? "flex flex-col items-center gap-4 text-center" : "flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:gap-8"),
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "relative flex size-32 shrink-0 items-center justify-center sm:size-40",
-				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						className: "absolute inset-0 rounded-full",
-						style: {
-							background: `color-mix(in oklab, ${color} 18%, transparent)`,
-							transition: "background 700ms ease",
-							animation: "pulse 2.6s cubic-bezier(0.4,0,0.6,1) infinite"
-						}
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						className: "emoji relative select-none text-6xl sm:text-7xl",
-						style: {
-							display: "inline-block",
-							filter: phase === "out" ? "blur(6px)" : "blur(0px)",
-							opacity: phase === "out" ? 0 : 1,
-							transform: phase === "out" ? "scale(0.7) rotate(-14deg)" : "scale(1) rotate(0deg)",
-							transition: "transform 420ms cubic-bezier(0.16,1,0.3,1), opacity 420ms ease, filter 420ms ease"
-						},
-						children: EMOTION_EMOJI[current]
-					}, current),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						onClick: () => setPlaying((p) => !p),
-						className: "absolute -bottom-2 -right-2 z-10 rounded-full border border-border/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:bg-accent bg-background shadow-sm",
-						children: playing ? "pause" : "play"
-					})
-				]
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: "absolute inset-0 rounded-full",
+					style: {
+						background: `color-mix(in oklab, ${color} 18%, transparent)`,
+						transition: "background 700ms ease",
+						animation: "pulse 2.6s cubic-bezier(0.4,0,0.6,1) infinite"
+					}
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					className: "emoji relative select-none text-6xl sm:text-7xl",
+					style: {
+						display: "inline-block",
+						filter: phase === "out" ? "blur(6px)" : "blur(0px)",
+						opacity: phase === "out" ? 0 : 1,
+						transform: phase === "out" ? "scale(0.7) rotate(-14deg)" : "scale(1) rotate(0deg)",
+						transition: "transform 420ms cubic-bezier(0.16,1,0.3,1), opacity 420ms ease, filter 420ms ease"
+					},
+					children: EMOTION_EMOJI[current]
+				}, current)]
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: cn("min-w-0 flex-1", stacked ? "text-center" : "text-center sm:text-left"),
 				children: [
@@ -2111,74 +2384,59 @@ function Sidebar({ activeFilters, setActiveFilters }) {
 				className: "rounded-lg border border-border bg-background p-3",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "flex flex-col items-stretch gap-4",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "w-full",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmojiMorph, {
-								shares,
-								captions: {
-									frustration: "The developer is blocked and shows it.",
-									caution: "Risk-flagging gets limited responses.",
-									neutral: "Plain task requests: just code context.",
-									satisfaction: "The developer confirms something worked."
-								},
-								className: "p-0 w-full",
-								stacked: true
-							})
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "w-full -mt-2",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider mb-2 text-left px-0.5",
-									children: "Filter by developer mood"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-									className: "flex w-full items-center justify-between gap-1.5",
-									children: EMOTIONS.map((e) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "w-full",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmojiMorph, {
+							shares,
+							captions: {
+								frustration: "The developer is blocked and shows it.",
+								caution: "Risk-flagging gets limited responses.",
+								neutral: "Plain task requests: just code context.",
+								satisfaction: "The developer confirms something worked."
+							},
+							className: "p-0 w-full",
+							stacked: true
+						})
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "w-full -mt-2",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+								className: "text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider mb-2 text-left px-0.5",
+								children: "Filter by developer mood"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "flex w-full items-center justify-between gap-1.5",
+								children: EMOTIONS.map((e) => {
+									const color = emotionVar(e);
+									const isExplicitlyActive = activeFilters.includes(e);
+									const isAnyActive = activeFilters.length === 0;
+									const showGradient = isExplicitlyActive || isAnyActive;
+									return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 										onClick: () => {
 											if (activeFilters.includes(e)) setActiveFilters(activeFilters.filter((f) => f !== e));
 											else setActiveFilters([...activeFilters, e]);
 										},
 										"aria-label": `Filter by ${EMOTION_LABEL[e]}`,
-										className: cn("flex-1 flex items-center justify-center rounded-md border py-2 transition-all", activeFilters.includes(e) || activeFilters.length === 0 ? "border-foreground/25 bg-accent scale-[1.02] shadow-sm" : "border-border bg-background text-muted-foreground hover:bg-accent opacity-50 hover:opacity-100"),
+										className: cn("flex-1 flex items-center justify-center rounded-md border py-2 transition-all cursor-pointer", isExplicitlyActive ? "scale-[1.05] shadow-md border-foreground/30 font-bold" : isAnyActive ? "scale-[1.02] shadow-xs border-border/80 hover:scale-[1.04]" : "border-border bg-background text-muted-foreground hover:bg-accent opacity-40 hover:opacity-90"),
+										style: showGradient ? {
+											backgroundImage: `radial-gradient(110% 115% at 50% 0%, color-mix(in oklab, ${color} 26%, transparent), transparent 90%)`,
+											backgroundColor: `color-mix(in oklab, ${color} 10%, transparent)`,
+											borderColor: isExplicitlyActive ? `color-mix(in oklab, ${color} 45%, transparent)` : `color-mix(in oklab, ${color} 25%, transparent)`
+										} : {},
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 											className: "emoji text-lg leading-none",
 											children: EMOTION_EMOJI[e]
 										})
-									}, e))
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-									onClick: () => setActiveFilters([]),
-									className: "mt-1.5 w-full rounded-md border border-border py-1.5 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:bg-accent bg-background",
-									children: "Reset"
+									}, e);
 								})
-							]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "w-full text-left",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-									className: "text-sm font-semibold text-foreground",
-									children: "Dataset: DevGPT"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("hr", { className: "my-3 border-border" }),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h4", {
-									className: "text-sm font-semibold text-foreground",
-									children: "Summary"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-									className: "mt-1 text-xs text-muted-foreground",
-									children: [
-										kpiData.totalPairs.toLocaleString(),
-										" pairs · ",
-										kpiData.totalConversations.toLocaleString(),
-										" conversations"
-									]
-								})
-							]
-						})
-					]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+								onClick: () => setActiveFilters([]),
+								className: "mt-1.5 w-full rounded-md border border-border py-1.5 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:bg-accent bg-background",
+								children: "Reset"
+							})
+						]
+					})]
 				})
 			})
 		})
@@ -2305,7 +2563,7 @@ function Dashboard() {
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabsContent, {
 							value: "deep",
-							className: "m-0 focus-visible:outline-none",
+							className: "m-0 focus-visible:outline-none h-full",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CaseInspectorTab, {
 								selectedId,
 								setSelectedId

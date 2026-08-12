@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { useChartWidth } from "./chart-utils";
+import { type Emotion } from "@/lib/emotions";
+
+const EMOTION_COLORS: Record<Emotion, string> = {
+  frustration: "#c0392b",
+  caution:     "#c48f0a",
+  neutral:     "#3b6fa5",
+  satisfaction: "#27ae60",
+};
 
 export type BarSeries = { key: string; label: string; color: string };
 export type BarGroup = { label: string; values: Record<string, number> };
@@ -30,6 +38,27 @@ export function GroupedBarChart({
     const margin = { top: 22, right: 12, bottom: 34, left: 46 };
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
+
+    // Tooltip setup
+    let tooltipDiv = d3.select<HTMLDivElement, unknown>("#chart-tooltip");
+    if (tooltipDiv.empty()) {
+      tooltipDiv = d3.select("body")
+        .append("div")
+        .attr("id", "chart-tooltip")
+        .style("position", "absolute")
+        .style("visibility", "hidden")
+        .style("background", "rgba(15, 23, 42, 0.95)")
+        .style("backdrop-filter", "blur(8px)")
+        .style("border", "1px solid rgba(255, 255, 255, 0.15)")
+        .style("padding", "8px 12px")
+        .style("border-radius", "8px")
+        .style("color", "#fff")
+        .style("font-size", "11px")
+        .style("font-weight", "600")
+        .style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)")
+        .style("pointer-events", "none")
+        .style("z-index", "99999");
+    }
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
@@ -96,11 +125,38 @@ export function GroupedBarChart({
           .attr("height", 0)
           .attr("rx", 3)
           .style("fill", s.color)
-          .call((sel) =>
-            sel
-              .append("title")
-              .text(`${group.label} · ${s.label}: ${format(v)}`),
-          )
+          .style("cursor", "pointer")
+          .style("fill-opacity", 0.9)
+          .on("mouseover", function(event) {
+            const devColor = EMOTION_COLORS[group.label.toLowerCase() as Emotion] || "#3b6fa5";
+            tooltipDiv
+              .style("visibility", "visible")
+              .html(
+                `<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${group.label}</span>` +
+                `<span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span>` +
+                `<span style="color: ${s.color}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${s.label}</span>` +
+                `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
+                `${format(v)}` +
+                `</div>`
+              );
+
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .style("fill-opacity", 1.0);
+          })
+          .on("mousemove", function(event) {
+            tooltipDiv
+              .style("top", (event.pageY - 60) + "px")
+              .style("left", (event.pageX + 15) + "px");
+          })
+          .on("mouseout", function() {
+            tooltipDiv.style("visibility", "hidden");
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .style("fill-opacity", 0.9);
+          })
           .transition()
           .delay(delay)
           .duration(750)
@@ -124,6 +180,10 @@ export function GroupedBarChart({
           .style("opacity", 1);
       });
     });
+
+    return () => {
+      d3.select("#chart-tooltip").remove();
+    };
   }, [groups, series, width, height, format, yMax]);
 
   return (

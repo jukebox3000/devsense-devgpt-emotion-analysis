@@ -30,9 +30,19 @@ interface DualRingDonutProps {
   width?: number;
   height?: number;
   isFiltered?: boolean;
+  devExamples?: Record<Emotion, string>;
+  gptExamples?: Record<Emotion, string>;
 }
 
-export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFiltered = false }: DualRingDonutProps) {
+export function DualRingDonut({
+  devCounts,
+  gptCounts,
+  width = 340,
+  height = 340,
+  isFiltered = false,
+  devExamples = { frustration: "", caution: "", neutral: "", satisfaction: "" },
+  gptExamples = { frustration: "", caution: "", neutral: "", satisfaction: "" },
+}: DualRingDonutProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [filter, setFilter] = useState<Filter>("both");
 
@@ -331,6 +341,9 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340,
             `<span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span>` +
             `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
             `${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} prompts)</span>` +
+            `</div>` +
+            `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">` +
+            `“${devExamples[d.data.label]}”` +
             `</div>`
           );
       })
@@ -429,6 +442,9 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340,
             `<span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span>` +
             `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
             `${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} responses)</span>` +
+            `</div>` +
+            `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">` +
+            `“${gptExamples[d.data.label]}”` +
             `</div>`
           );
       })
@@ -501,7 +517,7 @@ export function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340,
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [filter, width, height, totalDev, totalGpt, devData, gptData, isFiltered]);
+  }, [filter, width, height, totalDev, totalGpt, devData, gptData, isFiltered, devExamples, gptExamples]);
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-around gap-6 w-full h-full py-2 px-4">

@@ -1,11 +1,11 @@
 {
-  "compatibility_date": "2026-08-09",
+  "compatibility_date": "2026-08-12",
   "main": "index.mjs",
   "assets": {
     "binding": "ASSETS",
     "directory": "../public"
   },
-  "name": "tanstack-start-ts",
+  "name": "jukebox3000-devsense-devgpt-emotion-analysis",
   "compatibility_flags": [
     "nodejs_compat"
   ],
