@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { useLoaderData } from "@tanstack/react-router";
 import {
   getAllTurns,
-  scatterPoints,
   pearson,
   answerValenceByPromptEmotion,
   emotionByTurnDepth,
@@ -17,7 +16,7 @@ import {
   type Emotion,
   type Conversation,
 } from "@/lib/emotions";
-import { ScatterPlot, Heatmap } from "@/components/charts/ScatterHeatmap";
+import { Heatmap } from "@/components/charts/Heatmap";
 import { StackedBarChart } from "@/components/charts/BarCharts";
 import { TrendLineChart } from "@/components/charts/LineCharts";
 import { Panel } from "./Primitives";
@@ -52,10 +51,7 @@ export function ImpactTab({
     () => getAllTurns(filteredConversations),
     [filteredConversations],
   );
-  const points = useMemo(
-    () => scatterPoints(filteredConversations),
-    [filteredConversations],
-  );
+
   const valence = useMemo(
     () => answerValenceByPromptEmotion(filteredConversations),
     [filteredConversations],
@@ -142,25 +138,7 @@ export function ImpactTab({
           <StackedBarChart rows={stackRows} />
         </Panel>
 
-        <Panel
-          className="lg:col-span-2"
-          title="Conversation Length vs Emotion Concentration"
-          subtitle="Each bubble represents a conversation (Sharing ID, length 2 to 35 turns): Y-axis is turn length, X-axis is conversation count index, bubble size is max occurring prompt emotion count, colored by dominant emotion"
-          insight={
-            <>
-              This bubble scatterplot maps conversation length against developer affect concentration:
-              longer conversations (higher turn counts) feature larger bubbles indicating repeated emotion occurrences.
-              Frustration and caution dominate extended multi-turn conversations.
-            </>
-          }
-        >
-          <ScatterPlot
-            points={points}
-            height={360}
-            xLabel="Conversation Count Index"
-            yLabel="Conversation Length (Number of Turns per Sharing ID)"
-          />
-        </Panel>
+
 
         <Panel
           className="lg:col-span-2"

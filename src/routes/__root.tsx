@@ -23,8 +23,11 @@ function LoadingScreen({ isFading }: { isFading: boolean }) {
   }, []);
 
   useEffect(() => {
+    let video: HTMLVideoElement | null = null;
+    let playVideo: (() => void) | null = null;
+
     if (mounted && videoRef.current) {
-      const video = videoRef.current;
+      video = videoRef.current;
 
       // Force native properties directly on the DOM node for iOS/Safari compliance
       video.defaultMuted = true;
@@ -34,8 +37,8 @@ function LoadingScreen({ isFading }: { isFading: boolean }) {
       video.setAttribute("playsinline", "");
       video.setAttribute("webkit-playsinline", "");
 
-      const playVideo = () => {
-        video.play().catch((err) => {
+      playVideo = () => {
+        video?.play().catch((err) => {
           console.warn("Autoplay block caught:", err);
         });
       };
@@ -49,14 +52,16 @@ function LoadingScreen({ isFading }: { isFading: boolean }) {
         video.addEventListener("canplay", playVideo, { once: true });
         video.addEventListener("canplaythrough", playVideo, { once: true });
       }
+    }
 
-      // Cleanup
-      return () => {
+    // Always return a cleanup function to satisfy TS compiler return path checks
+    return () => {
+      if (video && playVideo) {
         video.removeEventListener("loadedmetadata", playVideo);
         video.removeEventListener("canplay", playVideo);
         video.removeEventListener("canplaythrough", playVideo);
-      };
-    }
+      }
+    };
   }, [mounted]);
 
   if (!mounted) {

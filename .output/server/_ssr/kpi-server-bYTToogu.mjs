@@ -1,6 +1,6 @@
-import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BRAljjW5.mjs";
+import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-D2LsR0G4.mjs";
 import processModule from "node:process";
-//#region node_modules/.nitro/vite/services/ssr/assets/kpi-server-8Ni_sGGG.js
+//#region node_modules/.nitro/vite/services/ssr/assets/kpi-server-bYTToogu.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {

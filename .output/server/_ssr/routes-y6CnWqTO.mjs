@@ -2,18 +2,18 @@ import { r as __toESM } from "../_runtime.mjs";
 import { n as cubicOut, t as cubicInOut } from "../_libs/d3+[...].mjs";
 import { a as require_jsx_runtime, o as require_react } from "../_libs/@radix-ui/react-collection+[...].mjs";
 import { v as useLoaderData } from "../_libs/@tanstack/react-router+[...].mjs";
-import { n as DevGPT_Logo_default } from "./router-drLD2uJb.mjs";
+import { n as DevGPT_Logo_default } from "./router-B_x-zdNq.mjs";
 import { i as Trigger, n as List, r as Root2, t as Content } from "../_libs/radix-ui__react-tabs.mjs";
 import { t as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
 import { n as max } from "../_libs/d3-array.mjs";
-import { i as point, n as linear, r as band, t as sqrt } from "../_libs/d3-scale+internmap.mjs";
+import { n as band, r as point, t as linear } from "../_libs/d3-scale+internmap.mjs";
 import { n as axisLeft, t as axisBottom } from "../_libs/d3-axis.mjs";
 import { t as select_default } from "../_libs/d3-selection.mjs";
 import { n as value_default } from "../_libs/d3-interpolate.mjs";
 import { i as arc_default, n as pie_default, r as line_default, t as monotoneX } from "../_libs/d3-shape.mjs";
 import { a as Funnel, c as Check, i as Maximize2, l as ArrowUpDown, n as Minus, o as ChevronUp, r as MessageSquare, s as ChevronDown, t as X } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-C6ea-PKA.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-y6CnWqTO.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function cn(...inputs) {
@@ -133,35 +133,6 @@ function emotionByTurnDepth(conversations) {
 		return point;
 	}).filter((p) => p.n >= 25);
 }
-function scatterPoints(conversations) {
-	return conversations.filter((c) => c.turns.length >= 2 && c.turns.length <= 35).map((conv, idx) => {
-		const counts = {
-			frustration: 0,
-			caution: 0,
-			neutral: 0,
-			satisfaction: 0
-		};
-		conv.turns.forEach((t) => {
-			if (t.promptEmotion) counts[t.promptEmotion] = (counts[t.promptEmotion] || 0) + 1;
-		});
-		let dominantEmotion = "neutral";
-		let maxEmotionCount = 0;
-		EMOTIONS.forEach((e) => {
-			if (counts[e] > maxEmotionCount) {
-				maxEmotionCount = counts[e];
-				dominantEmotion = e;
-			}
-		});
-		return {
-			id: conv.id,
-			x: idx + 1,
-			y: conv.turns.length,
-			dominantEmotion,
-			maxEmotionCount: Math.max(1, maxEmotionCount),
-			counts
-		};
-	});
-}
 var EXCLUDED_LANGUAGES = /* @__PURE__ */ new Set([
 	"unknown",
 	"plpgsql",
@@ -252,8 +223,8 @@ function StackedBarChart({ rows, height = 260 }) {
 				return seg;
 			});
 			g.selectAll(`rect.r-${row.label.replace(/\W/g, "")}`).data(segs).join("rect").attr("class", `r-${row.label.replace(/\W/g, "")}`).attr("x", (d) => x(d.x0)).attr("y", y(row.label)).attr("width", 0).attr("height", y.bandwidth()).style("fill", (d) => emotionVar(d.key)).style("opacity", .92).style("cursor", "pointer").on("mouseover", function(event, d) {
-				const devColor = EMOTION_COLORS$3[row.label.toLowerCase()] || "#3b6fa5";
-				const gptColor = EMOTION_COLORS$3[d.key];
+				const devColor = EMOTION_COLORS$4[row.label.toLowerCase()] || "#3b6fa5";
+				const gptColor = EMOTION_COLORS$4[d.key];
 				const devLabel = row.label;
 				const gptLabel = EMOTION_LABEL[d.key];
 				tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${fmtPct(d.share)} <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} responses)</span></div>`);
@@ -286,7 +257,7 @@ function StackedBarChart({ rows, height = 260 }) {
 		})
 	});
 }
-var EMOTION_COLORS$3 = {
+var EMOTION_COLORS$4 = {
 	frustration: "#c0392b",
 	caution: "#c48f0a",
 	neutral: "#3b6fa5",
@@ -318,8 +289,8 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 		if (zeroLine) g.append("line").attr("x1", 0).attr("x2", w).attr("y1", y(0)).attr("y2", y(0)).style("stroke", "var(--muted-foreground)").style("stroke-dasharray", "3 3");
 		const base = zeroLine ? y(0) : h;
 		g.selectAll("rect").data(data).join("rect").attr("x", (d) => x(d.emotion)).attr("width", x.bandwidth()).attr("y", base).attr("height", 0).attr("rx", 3).style("fill", (d) => emotionVar(d.emotion)).style("fill-opacity", .85).style("cursor", "pointer").on("mouseover", function(event, d) {
-			const devColor = EMOTION_COLORS$3[d.emotion];
-			const satColor = EMOTION_COLORS$3["satisfaction"];
+			const devColor = EMOTION_COLORS$4[d.emotion];
+			const satColor = EMOTION_COLORS$4["satisfaction"];
 			const devLabel = EMOTION_LABEL[d.emotion];
 			const satLabel = EMOTION_LABEL["satisfaction"];
 			tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${satColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${satLabel}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${valueFormat(d.mean)} <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(n=${d.n})</span></div>`);
@@ -357,6 +328,12 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 		})
 	});
 }
+var EMOTION_COLORS$3 = {
+	frustration: "#c0392b",
+	caution: "#c48f0a",
+	neutral: "#3b6fa5",
+	satisfaction: "#27ae60"
+};
 /**
 * Side-by-side (grouped) vertical bar chart with a draw-in animation.
 * Series colours are passed in, so non-emotion series never reuse emotion hues.
@@ -374,6 +351,8 @@ function GroupedBarChart({ groups, series, height = 300, format = (v) => `${(v *
 		};
 		const w = width - margin.left - margin.right;
 		const h = height - margin.top - margin.bottom;
+		let tooltipDiv = select_default("#chart-tooltip");
+		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(15, 23, 42, 0.95)").style("backdrop-filter", "blur(8px)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "8px 12px").style("border-radius", "8px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)").style("pointer-events", "none").style("z-index", "99999");
 		const svg = select_default(svgRef.current);
 		svg.selectAll("*").remove();
 		const g = svg.attr("viewBox", `0 0 ${width} ${height}`).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
@@ -388,10 +367,22 @@ function GroupedBarChart({ groups, series, height = 300, format = (v) => `${(v *
 			series.forEach((s, si) => {
 				const v = group.values[s.key] ?? 0;
 				const delay = gi * 90 + si * 45;
-				cell.append("rect").attr("x", x1(s.key)).attr("width", x1.bandwidth()).attr("y", h).attr("height", 0).attr("rx", 3).style("fill", s.color).call((sel) => sel.append("title").text(`${group.label} · ${s.label}: ${format(v)}`)).transition().delay(delay).duration(750).ease(cubicOut).attr("y", y(v)).attr("height", h - y(v));
+				cell.append("rect").attr("x", x1(s.key)).attr("width", x1.bandwidth()).attr("y", h).attr("height", 0).attr("rx", 3).style("fill", s.color).style("cursor", "pointer").style("fill-opacity", .9).on("mouseover", function(event) {
+					const devColor = EMOTION_COLORS$3[group.label.toLowerCase()] || "#3b6fa5";
+					tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${group.label}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${s.color}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${s.label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${format(v)}</div>`);
+					select_default(this).transition().duration(100).style("fill-opacity", 1);
+				}).on("mousemove", function(event) {
+					tooltipDiv.style("top", event.pageY - 60 + "px").style("left", event.pageX + 15 + "px");
+				}).on("mouseout", function() {
+					tooltipDiv.style("visibility", "hidden");
+					select_default(this).transition().duration(100).style("fill-opacity", .9);
+				}).transition().delay(delay).duration(750).ease(cubicOut).attr("y", y(v)).attr("height", h - y(v));
 				cell.append("text").attr("x", x1(s.key) + x1.bandwidth() / 2).attr("y", y(v) - 7).attr("text-anchor", "middle").style("font-size", "10px").style("font-family", "var(--font-mono)").style("fill", s.color).style("opacity", 0).text(format(v)).transition().delay(delay + 420).duration(400).style("opacity", 1);
 			});
 		});
+		return () => {
+			select_default("#chart-tooltip").remove();
+		};
 	}, [
 		groups,
 		series,
@@ -435,7 +426,17 @@ function emotionGlow(emotion) {
 	const c = EMOTION_HEX[emotion];
 	return `rgba(${parseInt(c.slice(1, 3), 16)},${parseInt(c.slice(3, 5), 16)},${parseInt(c.slice(5, 7), 16)},0.45)`;
 }
-function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFiltered = false }) {
+function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFiltered = false, devExamples = {
+	frustration: "",
+	caution: "",
+	neutral: "",
+	satisfaction: ""
+}, gptExamples = {
+	frustration: "",
+	caution: "",
+	neutral: "",
+	satisfaction: ""
+} }) {
 	const svgRef = (0, import_react.useRef)(null);
 	const [filter, setFilter] = (0, import_react.useState)("both");
 	const devData = EMOTIONS.map((e) => ({
@@ -589,7 +590,7 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const color = EMOTION_HEX[d.data.label];
 			const label = d.data.label.charAt(0).toUpperCase() + d.data.label.slice(1);
 			const pctStr = totalDev > 0 ? Math.round(d.data.count / totalDev * 100) : 0;
-			tooltipDiv.style("visibility", "visible").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${user_profile_icon_free_vector_658200527_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">Developer Mood</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} prompts)</span></div>`);
+			tooltipDiv.style("visibility", "visible").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${user_profile_icon_free_vector_658200527_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">Developer Mood</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} prompts)</span></div><div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">“${devExamples[d.data.label]}”</div>`);
 		}).on("mousemove", function(event) {
 			tooltipDiv.style("top", event.pageY - 65 + "px").style("left", event.pageX + 15 + "px");
 		}).on("mouseout", function(_, d) {
@@ -628,7 +629,7 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const color = EMOTION_HEX[d.data.label];
 			const label = d.data.label.charAt(0).toUpperCase() + d.data.label.slice(1);
 			const pctStr = totalGpt > 0 ? Math.round(d.data.count / totalGpt * 100) : 0;
-			tooltipDiv.style("visibility", "visible").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${black_gpt_chat_logo_on_white_background_logo_illustration_free_vector_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">GPT Response</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} responses)</span></div>`);
+			tooltipDiv.style("visibility", "visible").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${black_gpt_chat_logo_on_white_background_logo_illustration_free_vector_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">GPT Response</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} responses)</span></div><div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">“${gptExamples[d.data.label]}”</div>`);
 		}).on("mousemove", function(event) {
 			tooltipDiv.style("top", event.pageY - 65 + "px").style("left", event.pageX + 15 + "px");
 		}).on("mouseout", function(_, d) {
@@ -669,7 +670,9 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		totalGpt,
 		devData,
 		gptData,
-		isFiltered
+		isFiltered,
+		devExamples,
+		gptExamples
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "flex flex-col md:flex-row items-center justify-around gap-6 w-full h-full py-2 px-4",
@@ -930,6 +933,65 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 		return (countsMap[ans] || 0) / totalForDev;
 	};
 	const satLift = realPAnswer("satisfaction", "satisfaction") / (realPAnswer("frustration", "satisfaction") || 1);
+	const { devExamples, gptExamples } = (0, import_react.useMemo)(() => {
+		const devExamples = {
+			frustration: "",
+			caution: "",
+			neutral: "",
+			satisfaction: ""
+		};
+		const gptExamples = {
+			frustration: "",
+			caution: "",
+			neutral: "",
+			satisfaction: ""
+		};
+		const EMOTIONS_LIST = [
+			"frustration",
+			"caution",
+			"neutral",
+			"satisfaction"
+		];
+		const allTurns = [];
+		for (const conv of conversations) if (conv.turns) allTurns.push(...conv.turns);
+		const cleanText = (text) => {
+			if (!text) return "";
+			return text.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
+		};
+		const truncateText = (text, maxLen = 100) => {
+			const cleaned = cleanText(text);
+			if (cleaned.length <= maxLen) return cleaned;
+			return cleaned.slice(0, maxLen - 3) + "...";
+		};
+		for (const emotion of EMOTIONS_LIST) {
+			const firstDev = [...allTurns.filter((t) => t.promptEmotion === emotion && t.prompt)].sort((a, b) => {
+				const aLen = a.prompt.length;
+				const bLen = b.prompt.length;
+				const aPreferred = aLen >= 25 && aLen <= 120;
+				const bPreferred = bLen >= 25 && bLen <= 120;
+				if (aPreferred && !bPreferred) return -1;
+				if (!aPreferred && bPreferred) return 1;
+				return (b.promptScore || 0) - (a.promptScore || 0);
+			})[0];
+			if (firstDev) devExamples[emotion] = truncateText(firstDev.prompt);
+			else devExamples[emotion] = "No representative prompt found.";
+			const firstGpt = [...allTurns.filter((t) => t.answerEmotion === emotion && t.answer)].sort((a, b) => {
+				const aLen = a.answer.length;
+				const bLen = b.answer.length;
+				const aPreferred = aLen >= 25 && aLen <= 120;
+				const bPreferred = bLen >= 25 && bLen <= 120;
+				if (aPreferred && !bPreferred) return -1;
+				if (!aPreferred && bPreferred) return 1;
+				return (b.answerScore || 0) - (a.answerScore || 0);
+			})[0];
+			if (firstGpt) gptExamples[emotion] = truncateText(firstGpt.answer);
+			else gptExamples[emotion] = "No representative response found.";
+		}
+		return {
+			devExamples,
+			gptExamples
+		};
+	}, [conversations]);
 	visibleEmotions.map((e) => ({
 		label: EMOTION_LABEL[e],
 		values: {
@@ -1140,7 +1202,9 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 						gptCounts: filteredGptCounts,
 						width: 320,
 						height: 320,
-						isFiltered: activeFilters.length > 0
+						isFiltered: activeFilters.length > 0,
+						devExamples,
+						gptExamples
 					})
 				})
 			}),
@@ -1958,65 +2022,6 @@ var EMOTION_COLORS$1 = {
 	neutral: "#6b7280",
 	satisfaction: "#10b981"
 };
-function ScatterPlot({ points, height = 360, xLabel = "Conversation Index (Count)", yLabel = "Conversation Length (Turns per Sharing ID)" }) {
-	const { ref, width } = useChartWidth();
-	const svgRef = (0, import_react.useRef)(null);
-	(0, import_react.useEffect)(() => {
-		if (!width || !svgRef.current) return;
-		const margin = {
-			top: 18,
-			right: 20,
-			bottom: 44,
-			left: 56
-		};
-		const w = width - margin.left - margin.right;
-		const h = height - margin.top - margin.bottom;
-		let tooltipDiv = select_default("#chart-tooltip");
-		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(15, 23, 42, 0.95)").style("backdrop-filter", "blur(8px)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "8px 12px").style("border-radius", "8px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)").style("pointer-events", "none").style("z-index", "99999");
-		const svg = select_default(svgRef.current);
-		svg.selectAll("*").remove();
-		const g = svg.attr("viewBox", `0 0 ${width} ${height}`).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-		const maxX = max(points, (d) => d.x) || 100;
-		const maxY = max(points, (d) => d.y) || 10;
-		const maxBubble = max(points, (d) => d.maxEmotionCount) || 1;
-		const x = linear([1, maxX], [0, w]);
-		const y = linear([0, maxY + 2], [h, 0]);
-		const rScale = sqrt([1, maxBubble], [3.5, 18]);
-		g.append("g").call(axisLeft(y).ticks(6).tickSize(-w)).call((s) => s.select(".domain").remove()).call((s) => s.selectAll(".tick line").style("stroke", "var(--grid)").style("opacity", .4)).selectAll("text").style("fill", "var(--muted-foreground)").style("font-size", "10px");
-		g.append("g").attr("transform", `translate(0,${h})`).call(axisBottom(x).ticks(8).tickSize(-h)).call((s) => s.select(".domain").style("stroke", "var(--border)")).call((s) => s.selectAll(".tick line").style("stroke", "var(--grid)").style("opacity", .3)).selectAll("text").style("fill", "var(--muted-foreground)").style("font-size", "10px");
-		g.append("text").attr("x", w / 2).attr("y", h + 36).attr("text-anchor", "middle").style("font-size", "10px").style("fill", "var(--muted-foreground)").text(xLabel);
-		g.append("text").attr("transform", `rotate(-90)`).attr("x", -h / 2).attr("y", -42).attr("text-anchor", "middle").style("font-size", "10px").style("fill", "var(--muted-foreground)").text(yLabel);
-		g.selectAll("circle").data(points).join("circle").attr("cx", (d) => x(d.x)).attr("cy", (d) => y(d.y)).attr("r", (d) => rScale(d.maxEmotionCount)).style("fill", (d) => emotionVar(d.dominantEmotion)).style("opacity", .55).style("stroke", "var(--background)").style("stroke-width", "0.75px").style("cursor", "pointer").on("mouseover", function(event, d) {
-			const domColor = EMOTION_COLORS$1[d.dominantEmotion] || "var(--foreground)";
-			const domLabel = EMOTION_LABEL[d.dominantEmotion] || d.dominantEmotion;
-			tooltipDiv.style("visibility", "visible").html(`<div style="font-weight: 800; font-size: 11px; color: #fff; margin-bottom: 2px;">Sharing ID: ${d.id}</div><div style="color: #94a3b8; font-size: 10px; margin-bottom: 3px;">Conversation Length: <strong style="color: #fff;">${d.y} turns</strong></div><div style="font-size: 10px; margin-bottom: 2px;">Dominant Emotion: <span style="color: ${domColor}; font-weight: 800; text-transform: uppercase;">${domLabel}</span></div><div style="font-size: 10px; color: #cbd5e1;">Max Prompt Emotion Count: <strong>${d.maxEmotionCount}</strong></div>`);
-			select_default(this).transition().duration(100).attr("r", rScale(d.maxEmotionCount) + 3).style("opacity", .95).style("stroke", "var(--foreground)").style("stroke-width", "1.5px");
-		}).on("mousemove", function(event) {
-			tooltipDiv.style("top", event.pageY - 70 + "px").style("left", event.pageX + 15 + "px");
-		}).on("mouseout", function(event, d) {
-			tooltipDiv.style("visibility", "hidden");
-			select_default(this).transition().duration(100).attr("r", rScale(d.maxEmotionCount)).style("opacity", .55).style("stroke", "var(--background)").style("stroke-width", "0.75px");
-		});
-		return () => {
-			select_default("#chart-tooltip").remove();
-		};
-	}, [
-		points,
-		width,
-		height,
-		xLabel,
-		yLabel
-	]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref,
-		className: "w-full",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
-			ref: svgRef,
-			width,
-			height
-		})
-	});
-}
 function Heatmap({ rows, colorFor, height, rowLabelWidth = 110, valueFormat = "both" }) {
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
@@ -2179,7 +2184,6 @@ function ImpactTab({ activeFilters = [] }) {
 	}, [activeFilters, kpiData.conversations]);
 	const [valueFormat, setValueFormat] = (0, import_react.useState)("both");
 	(0, import_react.useMemo)(() => getAllTurns(filteredConversations), [filteredConversations]);
-	const points = (0, import_react.useMemo)(() => scatterPoints(filteredConversations), [filteredConversations]);
 	(0, import_react.useMemo)(() => answerValenceByPromptEmotion(filteredConversations), [filteredConversations]);
 	const depth = (0, import_react.useMemo)(() => emotionByTurnDepth(filteredConversations), [filteredConversations]);
 	const matrix = (0, import_react.useMemo)(() => transitionMatrix(filteredConversations), [filteredConversations]);
@@ -2235,18 +2239,6 @@ function ImpactTab({ activeFilters = [] }) {
 					subtitle: "Each bar is 100% of the responses given to that developer emotion",
 					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "Every row is dominated by neutral and caution, but the satisfaction segment shrinks steadily as the developer's mood worsens. This one chart contains the core finding: emotion carries over into the answer, mostly as extra caution." }),
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StackedBarChart, { rows: stackRows })
-				}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Panel, {
-					className: "lg:col-span-2",
-					title: "Conversation Length vs Emotion Concentration",
-					subtitle: "Each bubble represents a conversation (Sharing ID, length 2 to 35 turns): Y-axis is turn length, X-axis is conversation count index, bubble size is max occurring prompt emotion count, colored by dominant emotion",
-					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "This bubble scatterplot maps conversation length against developer affect concentration: longer conversations (higher turn counts) feature larger bubbles indicating repeated emotion occurrences. Frustration and caution dominate extended multi-turn conversations." }),
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ScatterPlot, {
-						points,
-						height: 360,
-						xLabel: "Conversation Count Index",
-						yLabel: "Conversation Length (Number of Turns per Sharing ID)"
-					})
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Panel, {
 					className: "lg:col-span-2",
@@ -2481,7 +2473,7 @@ function Dashboard() {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 						className: "max-w-2xl text-xs leading-relaxed text-muted-foreground",
 						children: [
-							"Analyzing emotional dynamics between Developers and ChatGPT;",
+							"Analyzing dynamics of Developers-ChatGPT conversations;",
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
 							"labelled with an SE-specific four-class scheme:",
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {

@@ -294,8 +294,9 @@ export function OverviewTab({
         return (b.promptScore || 0) - (a.promptScore || 0);
       });
 
-      if (devSorted.length > 0) {
-        devExamples[emotion] = truncateText(devSorted[0].prompt);
+      const firstDev = devSorted[0];
+      if (firstDev) {
+        devExamples[emotion] = truncateText(firstDev.prompt);
       } else {
         devExamples[emotion] = "No representative prompt found.";
       }
@@ -313,8 +314,9 @@ export function OverviewTab({
         return (b.answerScore || 0) - (a.answerScore || 0);
       });
 
-      if (gptSorted.length > 0) {
-        gptExamples[emotion] = truncateText(gptSorted[0].answer);
+      const firstGpt = gptSorted[0];
+      if (firstGpt) {
+        gptExamples[emotion] = truncateText(firstGpt.answer);
       } else {
         gptExamples[emotion] = "No representative response found.";
       }

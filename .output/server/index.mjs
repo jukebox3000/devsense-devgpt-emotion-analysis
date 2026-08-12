@@ -19,63 +19,63 @@ var public_assets_data_default = {
 	"/project.json": {
 		"type": "application/json",
 		"etag": "\"7c-+nGOqrH2QMDPXJWRaqkuim36Yss\"",
-		"mtime": "2026-08-12T09:40:03.474Z",
+		"mtime": "2026-08-12T20:58:09.979Z",
 		"size": 124,
 		"path": "../public/project.json"
 	},
 	"/robots.txt": {
 		"type": "text/plain; charset=utf-8",
 		"etag": "\"a0-CKGXSIe7TSsqDTmGm/nY1t/o5d0\"",
-		"mtime": "2026-08-12T09:40:03.474Z",
+		"mtime": "2026-08-12T20:58:09.979Z",
 		"size": 160,
 		"path": "../public/robots.txt"
 	},
 	"/assets/black-gpt-chat-logo-on-white-background-logo-illustration-free-vector-BwAIPV0z.jpg": {
 		"type": "image/jpeg",
 		"etag": "\"16e80-LW78nIvpC6WPNXM2CeNcFVvjFrU\"",
-		"mtime": "2026-08-12T09:39:58.719Z",
+		"mtime": "2026-08-12T20:58:08.057Z",
 		"size": 93824,
 		"path": "../public/assets/black-gpt-chat-logo-on-white-background-logo-illustration-free-vector-BwAIPV0z.jpg"
 	},
-	"/assets/index-RB-JKkD4.js": {
-		"type": "text/javascript; charset=utf-8",
-		"etag": "\"552e7-2D/38NKfdRNeJ8V6gH+ZbjuOSgA\"",
-		"mtime": "2026-08-12T09:39:58.707Z",
-		"size": 348903,
-		"path": "../public/assets/index-RB-JKkD4.js"
-	},
-	"/assets/routes-GgfdN-5r.js": {
-		"type": "text/javascript; charset=utf-8",
-		"etag": "\"30dd7-ESCqwhNPM/0Z8/baB8iNvtdX//E\"",
-		"mtime": "2026-08-12T09:39:58.708Z",
-		"size": 200151,
-		"path": "../public/assets/routes-GgfdN-5r.js"
-	},
-	"/assets/styles-D5GMKf4z.css": {
+	"/assets/styles-dB983ZXQ.css": {
 		"type": "text/css; charset=utf-8",
-		"etag": "\"17e37-Uyv9zunFZJVOUvo+NoWNFPjPQB4\"",
-		"mtime": "2026-08-12T09:39:58.719Z",
-		"size": 97847,
-		"path": "../public/assets/styles-D5GMKf4z.css"
+		"etag": "\"12373-Dtu4y99w2wGIBepPo+i8bAaPf6E\"",
+		"mtime": "2026-08-12T20:58:08.057Z",
+		"size": 74611,
+		"path": "../public/assets/styles-dB983ZXQ.css"
+	},
+	"/assets/routes-7_TV-YTi.js": {
+		"type": "text/javascript; charset=utf-8",
+		"etag": "\"3053e-BtCgfM/EgIkz6OQTygzpBCC5lE0\"",
+		"mtime": "2026-08-12T20:58:08.051Z",
+		"size": 197950,
+		"path": "../public/assets/routes-7_TV-YTi.js"
 	},
 	"/assets/user-profile-icon-free-vector-658200527-DNpqjL6l.jpg": {
 		"type": "image/jpeg",
 		"etag": "\"16ca3-qgROwD8QIgHKTseubIWoVVUUSXE\"",
-		"mtime": "2026-08-12T09:39:58.722Z",
+		"mtime": "2026-08-12T20:58:08.057Z",
 		"size": 93347,
 		"path": "../public/assets/user-profile-icon-free-vector-658200527-DNpqjL6l.jpg"
+	},
+	"/assets/index-BwWBjgBg.js": {
+		"type": "text/javascript; charset=utf-8",
+		"etag": "\"5537b-EhjUYlyIP0x7ku6DDu+qBJlVom0\"",
+		"mtime": "2026-08-12T20:58:08.051Z",
+		"size": 349051,
+		"path": "../public/assets/index-BwWBjgBg.js"
 	},
 	"/assets/DevGPT_Logo-D0xFZSbc.png": {
 		"type": "image/png",
 		"etag": "\"c6487-I/eSaqYYFnmIJenNRyTOkxFxPu0\"",
-		"mtime": "2026-08-12T09:39:58.711Z",
+		"mtime": "2026-08-12T20:58:08.052Z",
 		"size": 812167,
 		"path": "../public/assets/DevGPT_Logo-D0xFZSbc.png"
 	},
 	"/assets/animationloader-CooiT8Jq.mp4": {
 		"type": "video/mp4",
 		"etag": "\"29a96f-6Ygp3ewC9gsaJwUM9c79o5xzqRM\"",
-		"mtime": "2026-08-12T09:39:58.718Z",
+		"mtime": "2026-08-12T20:58:08.056Z",
 		"size": 2730351,
 		"path": "../public/assets/animationloader-CooiT8Jq.mp4"
 	}

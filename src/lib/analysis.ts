@@ -98,42 +98,6 @@ export function emotionByTurnDepth(conversations: Conversation[]) {
   }).filter((p) => p.n >= 25); // suppress depths with too few observations to interpret
 }
 
-export function scatterPoints(conversations: Conversation[]) {
-  const filtered = conversations.filter(
-    (c) => c.turns.length >= 2 && c.turns.length <= 35,
-  );
-  return filtered.map((conv, idx) => {
-    const counts: Record<Emotion, number> = {
-      frustration: 0,
-      caution: 0,
-      neutral: 0,
-      satisfaction: 0,
-    };
-    conv.turns.forEach((t) => {
-      if (t.promptEmotion) {
-        counts[t.promptEmotion] = (counts[t.promptEmotion] || 0) + 1;
-      }
-    });
-
-    let dominantEmotion: Emotion = "neutral";
-    let maxEmotionCount = 0;
-    EMOTIONS.forEach((e) => {
-      if (counts[e] > maxEmotionCount) {
-        maxEmotionCount = counts[e];
-        dominantEmotion = e;
-      }
-    });
-
-    return {
-      id: conv.id,
-      x: idx + 1,
-      y: conv.turns.length,
-      dominantEmotion,
-      maxEmotionCount: Math.max(1, maxEmotionCount),
-      counts,
-    };
-  });
-}
 
 export function pearson(pairs: { x: number; y: number }[]) {
   const n = pairs.length || 1;
