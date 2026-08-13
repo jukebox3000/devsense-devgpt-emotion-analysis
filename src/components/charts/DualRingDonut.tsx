@@ -51,18 +51,16 @@ export function DualRingDonut({
   const totalDev = devData.reduce((s, d) => s + d.count, 0);
   const totalGpt = gptData.reduce((s, d) => s + d.count, 0);
 
-  // Toggle helpers — click the ring or selection button, click again to go back
   const toggleDev = () => setFilter((f) => (f === "developer" ? "both" : "developer"));
   const toggleGpt = () => setFilter((f) => (f === "gpt" ? "both" : "gpt"));
 
   useEffect(() => {
     if (!svgRef.current) return;
     const svg = d3.select(svgRef.current);
-    // Expand donut closer to edge
+
     const radius = Math.min(width, height) / 2 - 5;
     const padAngle = 0.015;
 
-    // Tooltip setup
     let tooltipDiv = d3.select<HTMLDivElement, unknown>("#chart-tooltip");
     if (tooltipDiv.empty()) {
       tooltipDiv = d3.select("body")
@@ -83,7 +81,6 @@ export function DualRingDonut({
         .style("z-index", "99999");
     }
 
-    // Radii shifted outwards (inner hole increased to 0.28, outer bounds pushed up)
     const radii = {
       dev: {
         both: { inner: radius * 0.28, outer: radius * 0.65 },
@@ -105,18 +102,15 @@ export function DualRingDonut({
         .attr("transform", `translate(${width / 2}, ${height / 2})`);
     }
 
-    // Stripe defs & ClipPaths (preserve defs so clipPaths aren't destroyed on filter change)
     let defs = svg.select<SVGDefsElement>("defs");
     if (defs.empty()) {
       defs = svg.insert("defs", "g");
     }
 
-    // Clip paths sized for single (r=26), both (r=18), and devgpt (r=28)
     if (defs.select("#clip-logo-dev").empty()) {
       defs.append("clipPath").attr("id", "clip-logo-dev").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 26);
       defs.append("clipPath").attr("id", "clip-logo-gpt").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 26);
       defs.append("clipPath").attr("id", "clip-logo-devgpt").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 28);
-      // Small clip paths for single mode scaling
       defs.append("clipPath").attr("id", "clip-logo-dev-sm").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 18);
       defs.append("clipPath").attr("id", "clip-logo-gpt-sm").append("circle").attr("cx", 0).attr("cy", 0).attr("r", 18);
     }
@@ -150,13 +144,12 @@ export function DualRingDonut({
     const targetDevOpacity = filter === "gpt" ? 0 : 1;
     const targetGptOpacity = filter === "developer" ? 0 : 1;
 
-    // ── Center logos — circle-framed; DOM creation ──
     let textGroup = g.select<SVGGElement>("g.center-text");
     if (textGroup.empty()) {
       textGroup = g.append("g").attr("class", "center-text");
       const logoGroup = textGroup.append("g").attr("class", "center-logo-group");
 
-      // Developer group (clickable, toggles developer filter)
+      // Developer group
       const devG = logoGroup.append("g").attr("class", "logo-dev-group")
         .style("cursor", "pointer")
         .on("click", (e) => {
@@ -178,7 +171,6 @@ export function DualRingDonut({
         .attr("x", -28)
         .attr("y", -28);
 
-      // GPT group (clickable, toggles gpt filter)
       const gptG = logoGroup.append("g").attr("class", "logo-gpt-group")
         .style("cursor", "pointer")
         .on("click", (e) => {
@@ -200,7 +192,7 @@ export function DualRingDonut({
         .attr("x", -28)
         .attr("y", -28);
 
-      // DevGPT group (visible when both rings displayed)
+      // DevGPT group
       const devgptG = logoGroup.append("g").attr("class", "logo-devgpt-group")
         .style("cursor", "pointer")
         .on("click", (e) => {
@@ -222,8 +214,6 @@ export function DualRingDonut({
         .attr("x", -28)
         .attr("y", -28);
     }
-
-    // ── Dynamic D3 Transitions for Center Logos ─────────────────────────────
     const logoDevGroup = textGroup.select("g.logo-dev-group");
     const logoGptGroup = textGroup.select("g.logo-gpt-group");
     const logoDevgptGroup = textGroup.select("g.logo-devgpt-group");
@@ -231,7 +221,6 @@ export function DualRingDonut({
     const ease = d3.easeCubicInOut;
 
     if (filter === "developer") {
-      // Dev solo (centered & large)
       logoDevGroup.style("pointer-events", "all").transition().duration(duration).ease(ease)
         .style("opacity", 1)
         .attr("transform", "translate(0,0)");
@@ -243,7 +232,6 @@ export function DualRingDonut({
         .attr("width", 88).attr("height", 88).attr("x", -44).attr("y", -44)
         .attr("clip-path", "url(#clip-logo-dev)");
 
-      // GPT & DevGPT fade out
       logoGptGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
         .style("opacity", 0)
         .attr("transform", "translate(15,0) scale(0.6)");
@@ -252,7 +240,6 @@ export function DualRingDonut({
         .style("opacity", 0)
         .attr("transform", "translate(0,0) scale(0.6)");
     } else if (filter === "gpt") {
-      // Dev & DevGPT fade out
       logoDevGroup.style("pointer-events", "none").transition().duration(duration).ease(ease)
         .style("opacity", 0)
         .attr("transform", "translate(-15,0) scale(0.6)");
@@ -261,7 +248,6 @@ export function DualRingDonut({
         .style("opacity", 0)
         .attr("transform", "translate(0,0) scale(0.6)");
 
-      // GPT solo (centered & large)
       logoGptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease)
         .style("opacity", 1)
         .attr("transform", "translate(0,0)");
@@ -273,7 +259,6 @@ export function DualRingDonut({
         .attr("width", 88).attr("height", 88).attr("x", -44).attr("y", -44)
         .attr("clip-path", "url(#clip-logo-gpt)");
     } else {
-      // Both mode: DevGPT logo centered in the middle
       logoDevgptGroup.style("pointer-events", "all").transition().duration(duration).ease(ease)
         .style("opacity", 1)
         .attr("transform", "translate(0,0)");
@@ -294,7 +279,6 @@ export function DualRingDonut({
         .attr("transform", "translate(20,0) scale(0.6)");
     }
 
-    // ── Arc tween helper ───────────────────────────────────────────────────────
     function makeArcTween(tInner: number, tOuter: number, dInner: number, dOuter: number) {
       return function (this: SVGPathElement, d: d3.PieArcDatum<RingDatum>) {
         const el = this as any;
@@ -309,7 +293,7 @@ export function DualRingDonut({
       };
     }
 
-    // ── Developer ring (inner, solid, clickable) ───────────────────────────────
+    // Developer ring
     if (g.select("g.dev-ring").empty()) g.append("g").attr("class", "dev-ring");
     const devPaths = g.select<SVGGElement>("g.dev-ring")
       .selectAll<SVGPathElement, d3.PieArcDatum<RingDatum>>("path")
@@ -390,7 +374,6 @@ export function DualRingDonut({
         }
       });
 
-    // ── Dev Labels ─────────────────────────────────────────────────────────────
     if (g.select("g.dev-labels").empty()) g.append("g").attr("class", "dev-labels");
     const devLabels = g.select<SVGGElement>("g.dev-labels")
       .selectAll<SVGTextElement, d3.PieArcDatum<RingDatum>>("text")
@@ -427,7 +410,7 @@ export function DualRingDonut({
         };
       });
 
-    // ── GPT ring (outer, stripe, clickable) ────────────────────────────────────
+    //  GPT ring
     if (g.select("g.gpt-ring").empty()) g.append("g").attr("class", "gpt-ring");
     const gptPaths = g.select<SVGGElement>("g.gpt-ring")
       .selectAll<SVGPathElement, d3.PieArcDatum<RingDatum>>("path")
@@ -508,7 +491,7 @@ export function DualRingDonut({
         }
       });
 
-    // ── GPT Labels ─────────────────────────────────────────────────────────────
+    //  GPT Labels 
     if (g.select("g.gpt-labels").empty()) g.append("g").attr("class", "gpt-labels");
     const gptLabels = g.select<SVGGElement>("g.gpt-labels")
       .selectAll<SVGTextElement, d3.PieArcDatum<RingDatum>>("text")
@@ -544,8 +527,6 @@ export function DualRingDonut({
           return `translate(${arc.centroid(d)})`;
         };
       });
-
-    // Bring center logos to the front so they aren't hidden behind the rings
     textGroup.raise();
 
     return () => {

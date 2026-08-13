@@ -33,7 +33,6 @@ function LoadingScreen({ isFading }: { isFading: boolean }) {
     if (mounted && videoRef.current) {
       video = videoRef.current;
 
-      // Force native properties directly on the DOM node for iOS/Safari compliance
       video.defaultMuted = true;
       video.muted = true;
       video.playsInline = true;
@@ -47,18 +46,15 @@ function LoadingScreen({ isFading }: { isFading: boolean }) {
         });
       };
 
-      // If video metadata/frame is already loaded (from cache), play immediately
       if (video.readyState >= 2) {
         playVideo();
       } else {
-        // Fallbacks for loading stages to trigger autoplay
         video.addEventListener("loadedmetadata", playVideo, { once: true });
         video.addEventListener("canplay", playVideo, { once: true });
         video.addEventListener("canplaythrough", playVideo, { once: true });
       }
     }
 
-    // Always return a cleanup function to satisfy TS compiler return path checks
     return () => {
       if (video && playVideo) {
         video.removeEventListener("loadedmetadata", playVideo);
@@ -90,7 +86,7 @@ function LoadingScreen({ isFading }: { isFading: boolean }) {
           className="w-48 h-48 object-contain mix-blend-multiply"
           style={{
             mixBlendMode: "multiply",
-            transform: "translate3d(0, 0, 0)", // Force Safari GPU rendering context to respect blend mode
+            transform: "translate3d(0, 0, 0)", // Force Safari GPU rendering
             willChange: "transform",
           }}
         />

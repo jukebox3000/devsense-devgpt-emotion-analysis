@@ -95,19 +95,19 @@ function Dashboard() {
               <TabsList className="bg-transparent border-none p-0 rounded-none h-auto gap-1.5 translate-y-[1px] z-10 flex">
                 <TabsTrigger
                   value="overview"
-                  className="rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all"
+                  className="rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all"
                 >
                   Overview
                 </TabsTrigger>
                 <TabsTrigger
                   value="impact"
-                  className="rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all"
+                  className="rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all"
                 >
                   Detailed Analysis
                 </TabsTrigger>
                 <TabsTrigger
                   value="deep"
-                  className="rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all"
+                  className="rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all"
                 >
                   Case Inspector
                 </TabsTrigger>
@@ -117,7 +117,7 @@ function Dashboard() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col w-full mx-auto max-w-[1400px] px-6 py-4 min-h-0">
+      <main className="flex-1 flex flex-col w-full mx-auto max-w-[1400px] px-6 py-4 min-h-0 bg-card rounded-t-lg">
         <div className="grid flex-1 h-full gap-4 lg:grid-cols-5 lg:gap-x-6 min-h-0">
           <div className="lg:col-span-1 h-full overflow-y-auto pr-2 pb-4">
             {/* Sidebar for filters and summary */}

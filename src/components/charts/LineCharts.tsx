@@ -33,7 +33,6 @@ export function TrendLineChart({
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
-    // Tooltip setup
     let tooltipDiv = d3.select<HTMLDivElement, unknown>("#chart-tooltip");
     if (tooltipDiv.empty()) {
       tooltipDiv = d3.select("body")
@@ -157,11 +156,9 @@ export function TrendLineChart({
           const turnNum = d.label;
           const sampleSize = d.n ?? "–";
 
-          // Determine dominant emotion at this turn
           const dominant = EMOTIONS.reduce((best, em) => d[em] > d[best] ? em : best, EMOTIONS[0]);
           const isDominant = e === dominant;
 
-          // Build a contextual explanation
           const explanation = `At turn ${turnNum}, ${pct} of developer prompts expressed <span style="color: ${color}; font-weight: 700;">${label.toLowerCase()}</span>.`;
 
           tooltipDiv

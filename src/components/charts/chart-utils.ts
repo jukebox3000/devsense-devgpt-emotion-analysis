@@ -34,17 +34,32 @@ export function useIsLoading() {
   useEffect(() => {
     if (!isLoading) return;
 
+    // Listen for the custom event
     const handleFinished = () => {
       setIsLoading(false);
     };
 
     window.addEventListener("loading-finished", handleFinished);
+
+    // Check immediately in case event already fired
     if (typeof window !== "undefined" && !(window as any).__isLoading) {
       setIsLoading(false);
+      return () => {
+        window.removeEventListener("loading-finished", handleFinished);
+      };
     }
+
+    // Polling fallback: if event was missed (e.g. during HMR), check periodically
+    const poll = setInterval(() => {
+      if (typeof window !== "undefined" && !(window as any).__isLoading) {
+        setIsLoading(false);
+        clearInterval(poll);
+      }
+    }, 300);
 
     return () => {
       window.removeEventListener("loading-finished", handleFinished);
+      clearInterval(poll);
     };
   }, [isLoading]);
 

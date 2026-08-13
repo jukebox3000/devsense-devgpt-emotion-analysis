@@ -5,8 +5,8 @@ import { type Emotion } from "@/lib/emotions";
 
 const EMOTION_COLORS: Record<Emotion, string> = {
   frustration: "#c0392b",
-  caution:     "#c48f0a",
-  neutral:     "#3b6fa5",
+  caution: "#c48f0a",
+  neutral: "#3b6fa5",
   satisfaction: "#27ae60",
 };
 
@@ -41,7 +41,6 @@ export function GroupedBarChart({
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
-    // Tooltip setup
     let tooltipDiv = d3.select<HTMLDivElement, unknown>("#chart-tooltip");
     if (tooltipDiv.empty()) {
       tooltipDiv = d3.select("body")
@@ -129,7 +128,7 @@ export function GroupedBarChart({
           .style("fill", s.color)
           .style("cursor", "pointer")
           .style("fill-opacity", 0.9)
-          .on("mouseover", function(event) {
+          .on("mouseover", function (event) {
             const devColor = EMOTION_COLORS[group.label.toLowerCase() as Emotion] || "#3b6fa5";
             tooltipDiv
               .style("visibility", "visible")
@@ -147,12 +146,12 @@ export function GroupedBarChart({
               .duration(100)
               .style("fill-opacity", 1.0);
           })
-          .on("mousemove", function(event) {
+          .on("mousemove", function (event) {
             tooltipDiv
               .style("top", (event.pageY - 60) + "px")
               .style("left", (event.pageX + 15) + "px");
           })
-          .on("mouseout", function() {
+          .on("mouseout", function () {
             tooltipDiv.style("visibility", "hidden");
             d3.select(this)
               .transition()

@@ -23,7 +23,6 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
-    // Tooltip setup
     let tooltipDiv = d3.select<HTMLDivElement, unknown>("#chart-tooltip");
     if (tooltipDiv.empty()) {
       tooltipDiv = d3.select("body")
@@ -85,12 +84,12 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
         .style("fill", (d) => emotionVar(d.key))
         .style("opacity", 0.92)
         .style("cursor", "pointer")
-        .on("mouseover", function(event, d) {
+        .on("mouseover", function (event, d) {
           const devColor = EMOTION_COLORS[row.label.toLowerCase() as Emotion] || "#3b6fa5";
           const gptColor = EMOTION_COLORS[d.key];
           const devLabel = row.label;
           const gptLabel = EMOTION_LABEL[d.key];
-          
+
           tooltipDiv
             .style("visibility", "visible")
             .html(
@@ -107,12 +106,12 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
             .duration(100)
             .style("opacity", 1.0);
         })
-        .on("mousemove", function(event) {
+        .on("mousemove", function (event) {
           tooltipDiv
             .style("top", (event.pageY - 60) + "px")
             .style("left", (event.pageX + 15) + "px");
         })
-        .on("mouseout", function() {
+        .on("mouseout", function () {
           tooltipDiv.style("visibility", "hidden");
           d3.select(this)
             .transition()
@@ -172,8 +171,8 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
 
 const EMOTION_COLORS: Record<Emotion, string> = {
   frustration: "#c0392b",
-  caution:     "#c48f0a",
-  neutral:     "#3b6fa5",
+  caution: "#c48f0a",
+  neutral: "#3b6fa5",
   satisfaction: "#27ae60",
 };
 
@@ -202,7 +201,6 @@ export function MeanBarChart({
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
-    // Tooltip setup
     let tooltipDiv = d3.select<HTMLDivElement, unknown>("#chart-tooltip");
     if (tooltipDiv.empty()) {
       tooltipDiv = d3.select("body")
@@ -283,12 +281,12 @@ export function MeanBarChart({
       .style("fill", (d) => emotionVar(d.emotion))
       .style("fill-opacity", 0.85)
       .style("cursor", "pointer")
-      .on("mouseover", function(event, d) {
+      .on("mouseover", function (event, d) {
         const devColor = EMOTION_COLORS[d.emotion];
         const satColor = EMOTION_COLORS["satisfaction"];
         const devLabel = EMOTION_LABEL[d.emotion];
         const satLabel = EMOTION_LABEL["satisfaction"];
-        
+
         tooltipDiv
           .style("visibility", "visible")
           .html(
@@ -305,12 +303,12 @@ export function MeanBarChart({
           .duration(100)
           .style("fill-opacity", 1);
       })
-      .on("mousemove", function(event) {
+      .on("mousemove", function (event) {
         tooltipDiv
           .style("top", (event.pageY - 60) + "px")
           .style("left", (event.pageX + 15) + "px");
       })
-      .on("mouseout", function() {
+      .on("mouseout", function () {
         tooltipDiv.style("visibility", "hidden");
         d3.select(this)
           .transition()

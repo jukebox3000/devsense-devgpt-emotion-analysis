@@ -37,7 +37,6 @@ export function OverviewTab({
   setActiveTab?: (tab: string) => void;
   setSelectedId?: (id: string | null) => void;
 }) {
-  // Load real dataset KPI information
   const kpiData = useLoaderData({ from: "/" }) as {
     success: boolean;
     totalRows: number;
@@ -67,7 +66,6 @@ export function OverviewTab({
   const matrix = transitionMatrix(conversations);
   const depth = emotionByTurnDepth(conversations);
 
-  // Find highest emotion dynamically (developer)
   const emotionKeys = Object.keys(kpiData.counts) as (
     "satisfaction" | "neutral" | "frustration" | "caution"
   )[];
@@ -95,13 +93,11 @@ export function OverviewTab({
     secondHighestEmotion.slice(1)
     : "";
 
-  // Shares for all emotions (developer)
   const satShare = (kpiData.counts["satisfaction"] || 0) / totalEmotionsCount;
   const neuShare = (kpiData.counts["neutral"] || 0) / totalEmotionsCount;
   const fruShare = (kpiData.counts["frustration"] || 0) / totalEmotionsCount;
   const cauShare = (kpiData.counts["caution"] || 0) / totalEmotionsCount;
 
-  // Find highest GPT emotion dynamically (overall)
   const gptCounts = kpiData.gptCounts || {};
   const gptEmotionKeys = Object.keys(gptCounts) as (
     "satisfaction" | "neutral" | "frustration" | "caution"
@@ -139,7 +135,6 @@ export function OverviewTab({
   const gptCauShare =
     (gptCounts["caution"] || 0) / (totalGptEmotionsCount || 1);
 
-  // Find highest answer emotion when prompt is highestEmotion (from KPI 1)
   const kpi2AnswerCounts = kpiData.promptToAnswerCounts?.[highestEmotion] || {};
   const kpi2AnswerKeys = Object.keys(kpi2AnswerCounts) as (
     "satisfaction" | "neutral" | "frustration" | "caution"
@@ -384,7 +379,6 @@ export function OverviewTab({
     ),
   }));
   const maxChanceOfSat = Math.max(0, ...chanceOfSatData.map((d) => d.mean));
-  // Add 10% padding to the max value for the y-axis, cap at 1.0
   const dynamicDomainMax = Math.min(1.0, maxChanceOfSat + 0.1);
 
   const escalationData = useMemo(() => {

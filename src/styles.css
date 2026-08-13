@@ -170,5 +170,5 @@
 }
 
 @utility header-peach-gradient {
-  background: rgba(255, 255, 255, 0.98);
+  background: color-mix(in oklab, var(--color-background) 85%, transparent);
 }

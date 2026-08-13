@@ -55,7 +55,6 @@ export function EmojiMorph({
     >
       <div
         className={cn(
-          // default: column on small, row on sm+; when stacked=true force column
           stacked
             ? "flex flex-col items-center gap-4 text-center"
             : "flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:gap-8",
