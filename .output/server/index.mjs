@@ -19,63 +19,63 @@ var public_assets_data_default = {
 	"/project.json": {
 		"type": "application/json",
 		"etag": "\"7c-+nGOqrH2QMDPXJWRaqkuim36Yss\"",
-		"mtime": "2026-08-12T20:58:09.979Z",
+		"mtime": "2026-08-13T16:50:12.907Z",
 		"size": 124,
 		"path": "../public/project.json"
 	},
 	"/robots.txt": {
 		"type": "text/plain; charset=utf-8",
 		"etag": "\"a0-CKGXSIe7TSsqDTmGm/nY1t/o5d0\"",
-		"mtime": "2026-08-12T20:58:09.979Z",
+		"mtime": "2026-08-13T16:50:12.907Z",
 		"size": 160,
 		"path": "../public/robots.txt"
 	},
 	"/assets/black-gpt-chat-logo-on-white-background-logo-illustration-free-vector-BwAIPV0z.jpg": {
 		"type": "image/jpeg",
 		"etag": "\"16e80-LW78nIvpC6WPNXM2CeNcFVvjFrU\"",
-		"mtime": "2026-08-12T20:58:08.057Z",
+		"mtime": "2026-08-13T16:50:12.531Z",
 		"size": 93824,
 		"path": "../public/assets/black-gpt-chat-logo-on-white-background-logo-illustration-free-vector-BwAIPV0z.jpg"
 	},
-	"/assets/styles-dB983ZXQ.css": {
-		"type": "text/css; charset=utf-8",
-		"etag": "\"12373-Dtu4y99w2wGIBepPo+i8bAaPf6E\"",
-		"mtime": "2026-08-12T20:58:08.057Z",
-		"size": 74611,
-		"path": "../public/assets/styles-dB983ZXQ.css"
-	},
-	"/assets/routes-7_TV-YTi.js": {
+	"/assets/routes-DEtJMbBn.js": {
 		"type": "text/javascript; charset=utf-8",
-		"etag": "\"3053e-BtCgfM/EgIkz6OQTygzpBCC5lE0\"",
-		"mtime": "2026-08-12T20:58:08.051Z",
-		"size": 197950,
-		"path": "../public/assets/routes-7_TV-YTi.js"
+		"etag": "\"310b8-O34Kk+qFdhKW6tchdBnWs0k0wDo\"",
+		"mtime": "2026-08-13T16:50:12.530Z",
+		"size": 200888,
+		"path": "../public/assets/routes-DEtJMbBn.js"
 	},
 	"/assets/user-profile-icon-free-vector-658200527-DNpqjL6l.jpg": {
 		"type": "image/jpeg",
 		"etag": "\"16ca3-qgROwD8QIgHKTseubIWoVVUUSXE\"",
-		"mtime": "2026-08-12T20:58:08.057Z",
+		"mtime": "2026-08-13T16:50:12.532Z",
 		"size": 93347,
 		"path": "../public/assets/user-profile-icon-free-vector-658200527-DNpqjL6l.jpg"
 	},
-	"/assets/index-BwWBjgBg.js": {
+	"/assets/styles-BS68RymV.css": {
+		"type": "text/css; charset=utf-8",
+		"etag": "\"1220e-Jh/w1fgq9G36VwNU8dJtoHQnbLA\"",
+		"mtime": "2026-08-13T16:50:12.531Z",
+		"size": 74254,
+		"path": "../public/assets/styles-BS68RymV.css"
+	},
+	"/assets/index-Cc7Wm5hS.js": {
 		"type": "text/javascript; charset=utf-8",
-		"etag": "\"5537b-EhjUYlyIP0x7ku6DDu+qBJlVom0\"",
-		"mtime": "2026-08-12T20:58:08.051Z",
-		"size": 349051,
-		"path": "../public/assets/index-BwWBjgBg.js"
+		"etag": "\"55436-hN4Nw3b88SiWExbVkdrvFeWZ+HA\"",
+		"mtime": "2026-08-13T16:50:12.530Z",
+		"size": 349238,
+		"path": "../public/assets/index-Cc7Wm5hS.js"
 	},
 	"/assets/DevGPT_Logo-D0xFZSbc.png": {
 		"type": "image/png",
 		"etag": "\"c6487-I/eSaqYYFnmIJenNRyTOkxFxPu0\"",
-		"mtime": "2026-08-12T20:58:08.052Z",
+		"mtime": "2026-08-13T16:50:12.530Z",
 		"size": 812167,
 		"path": "../public/assets/DevGPT_Logo-D0xFZSbc.png"
 	},
 	"/assets/animationloader-CooiT8Jq.mp4": {
 		"type": "video/mp4",
 		"etag": "\"29a96f-6Ygp3ewC9gsaJwUM9c79o5xzqRM\"",
-		"mtime": "2026-08-12T20:58:08.056Z",
+		"mtime": "2026-08-13T16:50:12.531Z",
 		"size": 2730351,
 		"path": "../public/assets/animationloader-CooiT8Jq.mp4"
 	}
@@ -115,11 +115,11 @@ var findRouteRules = /* @__PURE__ */ (() => {
 		return r;
 	};
 })();
-var _lazy_Ec96Og = defineLazyEventHandler(() => import("./_chunks/ssr-renderer.mjs"));
+var _lazy_sUqdlh = defineLazyEventHandler(() => import("./_chunks/ssr-renderer.mjs"));
 var findRoute = /* @__PURE__ */ (() => {
 	const data = {
 		route: "/**",
-		handler: _lazy_Ec96Og
+		handler: _lazy_sUqdlh
 	};
 	return ((_m, p) => {
 		return {

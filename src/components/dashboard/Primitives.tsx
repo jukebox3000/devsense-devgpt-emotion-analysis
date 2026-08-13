@@ -83,7 +83,8 @@ export function KpiCard({
   variant,
   progress,
   style,
-  bgEmojiCentered = false
+  bgEmojiCentered = false,
+  bgEmojiOpacity
 }: {
   label: React.ReactNode;
   value: React.ReactNode;
@@ -95,6 +96,7 @@ export function KpiCard({
   progress?: number;
   style?: React.CSSProperties;
   bgEmojiCentered?: boolean;
+  bgEmojiOpacity?: number;
 }) {
   const bar = {
     frustration: "bg-frustration",
@@ -138,14 +140,16 @@ export function KpiCard({
             "absolute leading-none pointer-events-none select-none z-0",
             bgEmojiCentered
               ? "left-0 right-0 bottom-0 top-0 flex items-center justify-end text-[8.5rem] overflow-hidden"
-              : "right-[-3.5rem] top-1/2 -translate-y-1/2 text-[8rem] opacity-20"
+              : "right-[-3.5rem] top-1/2 -translate-y-1/2 text-[8rem]"
           )}
           style={bgEmojiCentered ? {
-            opacity: 0.12,
+            opacity: bgEmojiOpacity !== undefined ? bgEmojiOpacity : 0.12,
             maskImage: "linear-gradient(to right, transparent 5%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 1) 100%)",
             WebkitMaskImage: "linear-gradient(to right, transparent 5%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 1) 100%)",
             transform: "translateX(12%)",
-          } : undefined}
+          } : {
+            opacity: bgEmojiOpacity !== undefined ? bgEmojiOpacity : 0.18,
+          }}
         >
           {bgEmoji}
         </div>

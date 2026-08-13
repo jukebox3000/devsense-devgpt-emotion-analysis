@@ -1,13 +1,13 @@
 import { r as __toESM } from "../_runtime.mjs";
 import { a as require_jsx_runtime, o as require_react } from "../_libs/@radix-ui/react-collection+[...].mjs";
 import { _ as Link, f as createRouter, g as createRootRouteWithContext, h as createFileRoute, l as Scripts, m as lazyRouteComponent, p as Outlet, u as HeadContent, y as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
-import { i as getServerFnById, n as __exportAll, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-D2LsR0G4.mjs";
+import { i as getServerFnById, n as __exportAll, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-D2wWKvFz.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-B_x-zdNq.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-CE0xHdFs.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-B1643VLF.css";
+var styles_default = "/assets/styles-DEnl_QxJ.css";
 var DevGPT_Logo_default = "/assets/DevGPT_Logo-D0xFZSbc.png";
 var animationloader_default = "/assets/animationloader-CooiT8Jq.mp4";
 function reportLovableError(error, context = {}) {
@@ -29,6 +29,7 @@ function reportLovableError(error, context = {}) {
 		filename: window.location.pathname
 	});
 }
+if (typeof window !== "undefined") window.__isLoading = true;
 function LoadingScreen({ isFading }) {
 	const videoRef = (0, import_react.useRef)(null);
 	const [mounted, setMounted] = (0, import_react.useState)(false);
@@ -240,11 +241,16 @@ function RootComponent() {
 	const [isLoading, setIsLoading] = (0, import_react.useState)(true);
 	const [isFading, setIsFading] = (0, import_react.useState)(false);
 	(0, import_react.useEffect)(() => {
+		if (typeof window !== "undefined") window.__isLoading = true;
 		const fadeTimer = setTimeout(() => {
 			setIsFading(true);
 		}, 4700);
 		const removeTimer = setTimeout(() => {
 			setIsLoading(false);
+			if (typeof window !== "undefined") {
+				window.__isLoading = false;
+				window.dispatchEvent(new CustomEvent("loading-finished"));
+			}
 		}, 5e3);
 		return () => {
 			clearTimeout(fadeTimer);
@@ -269,7 +275,7 @@ var createSsrRpc = (functionId) => {
 	});
 };
 var processKpis = createServerFn({ method: "GET" }).handler(createSsrRpc("a15dbfb3c2bd69dfb87d0fc3b9afc9f03987c63ee02bfbf7eddbe186c17ea438"));
-var $$splitComponentImporter = () => import("./routes-y6CnWqTO.mjs");
+var $$splitComponentImporter = () => import("./routes-C3hjX554.mjs");
 var title = "DevGPT Emotion Analytics — Developer–LLM Affect Dashboard";
 var description = "Thesis dashboard analysing emotion in developer–ChatGPT conversations: distribution, carryover effects, escalation trends and impact of developer affect on assistant responses.";
 var rootRouteChildren = { IndexRoute: createFileRoute("/")({

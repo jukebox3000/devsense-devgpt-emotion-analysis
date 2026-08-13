@@ -381,21 +381,33 @@ export function OverviewTab({
   const maxChanceOfSat = Math.max(0, ...chanceOfSatData.map((d) => d.mean));
   const dynamicDomainMax = Math.min(1.0, maxChanceOfSat + 0.1);
 
-  const escalationData = useMemo(() => {
+  const frustrationRecoveryData = useMemo(() => {
     const list = kpiData.conversations || [];
-    const multiTurnConvs = list.filter((c) => c.turns.length >= 2);
-    const startedNonFrustrated = multiTurnConvs.filter(
-      (c) => c.turns[0]?.promptEmotion !== "frustration",
-    );
-    const escalated = startedNonFrustrated.filter((c) =>
-      c.turns.slice(1).some((t) => t.promptEmotion === "frustration"),
-    );
+    let totalFrustratedTurns = 0;
+    let recoveredTurns = 0;
 
-    const total = startedNonFrustrated.length;
-    const count = escalated.length;
-    const rate = total > 0 ? count / total : 0;
+    for (const conv of list) {
+      if (!conv.turns || conv.turns.length < 2) continue;
+      for (let i = 0; i < conv.turns.length - 1; i++) {
+        const currentTurn = conv.turns[i];
+        const nextTurn = conv.turns[i + 1];
+        if (
+          currentTurn &&
+          nextTurn &&
+          currentTurn.promptEmotion === "frustration"
+        ) {
+          totalFrustratedTurns++;
+          if (nextTurn.promptEmotion !== "frustration") {
+            recoveredTurns++;
+          }
+        }
+      }
+    }
 
-    return { rate, count, total };
+    const rate =
+      totalFrustratedTurns > 0 ? recoveredTurns / totalFrustratedTurns : 0;
+
+    return { rate, count: recoveredTurns, total: totalFrustratedTurns };
   }, [kpiData.conversations]);
 
   return (
@@ -476,21 +488,19 @@ export function OverviewTab({
             <>
               Frustration{" "}
               <strong className="font-bold text-foreground text-[11px]">
-                escalation
+                recovery
               </strong>{" "}
               rate
             </>
           }
           value={
             <span className="font-bold font-['Oswald'] tracking-wide text-foreground">
-              {fmtPct(escalationData.rate, 1)}
+              {fmtPct(frustrationRecoveryData.rate, 1)}
             </span>
           }
           tone="frustration"
           className="border border-border/50 bg-white"
           style={{ backgroundColor: `color-mix(in srgb, var(--emotion-frustration) 6%, white)` }}
-          bgEmoji="📈"
-          bgEmojiCentered={true}
         />
       </div>
 

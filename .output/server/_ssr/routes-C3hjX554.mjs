@@ -2,7 +2,7 @@ import { r as __toESM } from "../_runtime.mjs";
 import { n as cubicOut, t as cubicInOut } from "../_libs/d3+[...].mjs";
 import { a as require_jsx_runtime, o as require_react } from "../_libs/@radix-ui/react-collection+[...].mjs";
 import { v as useLoaderData } from "../_libs/@tanstack/react-router+[...].mjs";
-import { n as DevGPT_Logo_default } from "./router-B_x-zdNq.mjs";
+import { n as DevGPT_Logo_default } from "./router-CE0xHdFs.mjs";
 import { i as Trigger, n as List, r as Root2, t as Content } from "../_libs/radix-ui__react-tabs.mjs";
 import { t as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
@@ -13,7 +13,7 @@ import { t as select_default } from "../_libs/d3-selection.mjs";
 import { n as value_default } from "../_libs/d3-interpolate.mjs";
 import { i as arc_default, n as pie_default, r as line_default, t as monotoneX } from "../_libs/d3-shape.mjs";
 import { a as Funnel, c as Check, i as Maximize2, l as ArrowUpDown, n as Minus, o as ChevronUp, r as MessageSquare, s as ChevronDown, t as X } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-y6CnWqTO.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-C3hjX554.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function cn(...inputs) {
@@ -189,11 +189,43 @@ function useChartWidth() {
 	};
 }
 var fmtPct = (v, digits = 1) => `${(v * 100).toFixed(digits)}%`;
+function useIsLoading() {
+	const [isLoading, setIsLoading] = (0, import_react.useState)(() => {
+		if (typeof window !== "undefined") return !!window.__isLoading;
+		return true;
+	});
+	(0, import_react.useEffect)(() => {
+		if (!isLoading) return;
+		const handleFinished = () => {
+			setIsLoading(false);
+		};
+		window.addEventListener("loading-finished", handleFinished);
+		if (typeof window !== "undefined" && !window.__isLoading) {
+			setIsLoading(false);
+			return () => {
+				window.removeEventListener("loading-finished", handleFinished);
+			};
+		}
+		const poll = setInterval(() => {
+			if (typeof window !== "undefined" && !window.__isLoading) {
+				setIsLoading(false);
+				clearInterval(poll);
+			}
+		}, 300);
+		return () => {
+			window.removeEventListener("loading-finished", handleFinished);
+			clearInterval(poll);
+		};
+	}, [isLoading]);
+	return isLoading;
+}
 /** 100% stacked horizontal bars — one row per group, segments per emotion. */
 function StackedBarChart({ rows, height = 260 }) {
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
+	const isLoading = useIsLoading();
 	(0, import_react.useEffect)(() => {
+		if (isLoading) return;
 		if (!width || !svgRef.current) return;
 		const margin = {
 			top: 8,
@@ -245,7 +277,8 @@ function StackedBarChart({ rows, height = 260 }) {
 	}, [
 		rows,
 		width,
-		height
+		height,
+		isLoading
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref,
@@ -267,7 +300,9 @@ var EMOTION_COLORS$4 = {
 function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFixed(3), zeroLine = false }) {
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
+	const isLoading = useIsLoading();
 	(0, import_react.useEffect)(() => {
+		if (isLoading) return;
 		if (!width || !svgRef.current) return;
 		const margin = {
 			top: 18,
@@ -316,7 +351,8 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 		height,
 		domain,
 		valueFormat,
-		zeroLine
+		zeroLine,
+		isLoading
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref,
@@ -341,7 +377,9 @@ var EMOTION_COLORS$3 = {
 function GroupedBarChart({ groups, series, height = 300, format = (v) => `${(v * 100).toFixed(0)}%`, yMax }) {
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
+	const isLoading = useIsLoading();
 	(0, import_react.useEffect)(() => {
+		if (isLoading) return;
 		if (!width || !svgRef.current) return;
 		const margin = {
 			top: 22,
@@ -389,7 +427,8 @@ function GroupedBarChart({ groups, series, height = 300, format = (v) => `${(v *
 		width,
 		height,
 		format,
-		yMax
+		yMax,
+		isLoading
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref,
@@ -599,8 +638,16 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const co = el._currentOuter ?? targetDevOuter;
 			select_default(this).transition().duration(200).ease(cubicOut).attr("d", arc_default().innerRadius(ci).outerRadius(co)(d)).style("filter", "none").attr("stroke-width", 1.5);
 			tooltipDiv.style("visibility", "hidden");
-		}).attr("d", (d) => arc_default().innerRadius(radii.dev.both.inner).outerRadius(radii.dev.both.outer)(d)).merge(devPaths).on("click", toggleDev).attr("fill", (d) => EMOTION_HEX[d.data.label]).transition().duration(750).ease(cubicInOut).style("opacity", targetDevOpacity).style("pointer-events", filter === "gpt" ? "none" : "all").attrTween("d", function(d) {
-			return makeArcTween(targetDevInner, targetDevOuter, radii.dev.both.inner, radii.dev.both.outer).call(this, d);
+		}).attr("d", (d) => arc_default().innerRadius(radii.dev.both.inner).outerRadius(radii.dev.both.outer)(d)).merge(devPaths).on("click", toggleDev).attr("fill", (d) => EMOTION_HEX[d.data.label]).transition().duration(1e3).ease(cubicOut).style("opacity", targetDevOpacity).style("pointer-events", filter === "gpt" ? "none" : "all").attrTween("d", function(d) {
+			const el = this;
+			if (!el._currentAngle) {
+				el._currentAngle = d;
+				const interpolateStart = value_default(0, d.startAngle);
+				const interpolateEnd = value_default(0, d.endAngle);
+				return (t) => {
+					return arc_default().innerRadius(radii.dev.both.inner).outerRadius(radii.dev.both.outer).startAngle(interpolateStart(t)).endAngle(interpolateEnd(t)).padAngle(padAngle)(d);
+				};
+			} else return makeArcTween(targetDevInner, targetDevOuter, radii.dev.both.inner, radii.dev.both.outer).call(this, d);
 		});
 		if (g.select("g.dev-labels").empty()) g.append("g").attr("class", "dev-labels");
 		const devLabels = g.select("g.dev-labels").selectAll("text").data(devArcs, (d) => d.data.label);
@@ -638,8 +685,16 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const co = el._currentOuter ?? targetGptOuter;
 			select_default(this).transition().duration(200).ease(cubicOut).attr("d", arc_default().innerRadius(ci).outerRadius(co)(d)).style("filter", "none").attr("stroke-width", 1.5);
 			tooltipDiv.style("visibility", "hidden");
-		}).attr("d", (d) => arc_default().innerRadius(radii.gpt.both.inner).outerRadius(radii.gpt.both.outer)(d)).merge(gptPaths).on("click", toggleGpt).attr("fill", (d) => `url(#pattern-dual-${d.data.label})`).transition().duration(750).ease(cubicInOut).style("opacity", targetGptOpacity).style("pointer-events", filter === "developer" ? "none" : "all").attrTween("d", function(d) {
-			return makeArcTween(targetGptInner, targetGptOuter, radii.gpt.both.inner, radii.gpt.both.outer).call(this, d);
+		}).attr("d", (d) => arc_default().innerRadius(radii.gpt.both.inner).outerRadius(radii.gpt.both.outer)(d)).merge(gptPaths).on("click", toggleGpt).attr("fill", (d) => `url(#pattern-dual-${d.data.label})`).transition().duration(1e3).ease(cubicOut).style("opacity", targetGptOpacity).style("pointer-events", filter === "developer" ? "none" : "all").attrTween("d", function(d) {
+			const el = this;
+			if (!el._currentAngle) {
+				el._currentAngle = d;
+				const interpolateStart = value_default(0, d.startAngle);
+				const interpolateEnd = value_default(0, d.endAngle);
+				return (t) => {
+					return arc_default().innerRadius(radii.gpt.both.inner).outerRadius(radii.gpt.both.outer).startAngle(interpolateStart(t)).endAngle(interpolateEnd(t)).padAngle(padAngle)(d);
+				};
+			} else return makeArcTween(targetGptInner, targetGptOuter, radii.gpt.both.inner, radii.gpt.both.outer).call(this, d);
 		});
 		if (g.select("g.gpt-labels").empty()) g.append("g").attr("class", "gpt-labels");
 		const gptLabels = g.select("g.gpt-labels").selectAll("text").data(gptArcs, (d) => d.data.label);
@@ -789,8 +844,30 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 	});
 }
 function Panel({ title, subtitle, children, insight, className }) {
+	const ref = (0, import_react.useRef)(null);
+	const [isVisible, setIsVisible] = (0, import_react.useState)(false);
+	(0, import_react.useEffect)(() => {
+		let timeoutId;
+		const observer = new IntersectionObserver(([entry]) => {
+			if (entry && entry.isIntersecting) {
+				observer.disconnect();
+				timeoutId = setTimeout(() => {
+					setIsVisible(true);
+				}, 300);
+			}
+		}, {
+			threshold: .05,
+			rootMargin: "0px 0px -120px 0px"
+		});
+		if (ref.current) observer.observe(ref.current);
+		return () => {
+			observer.disconnect();
+			if (timeoutId) clearTimeout(timeoutId);
+		};
+	}, []);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-		className: cn("panel rise-in flex flex-col p-5", className),
+		ref,
+		className: cn("panel flex flex-col p-5 transition-all duration-700 ease-out", isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4", className),
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
 				className: "mb-4",
@@ -803,8 +880,8 @@ function Panel({ title, subtitle, children, insight, className }) {
 				})]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "flex-1",
-				children
+				className: "flex-1 min-h-[200px]",
+				children: isVisible ? children : null
 			}),
 			insight && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 				className: "mt-4 border-t border-border pt-3 text-xs leading-relaxed text-muted-foreground",
@@ -816,7 +893,7 @@ function Panel({ title, subtitle, children, insight, className }) {
 		]
 	});
 }
-function KpiCard({ label, value, hint, tone, className, bgEmoji, variant, progress }) {
+function KpiCard({ label, value, hint, tone, className, bgEmoji, variant, progress, style, bgEmojiCentered = false, bgEmojiOpacity }) {
 	const bar = {
 		frustration: "bg-frustration",
 		caution: "bg-caution",
@@ -830,6 +907,7 @@ function KpiCard({ label, value, hint, tone, className, bgEmoji, variant, progre
 			neutral: "border-neutral",
 			satisfaction: "border-satisfaction"
 		}[tone] : "", className),
+		style,
 		children: [
 			progress !== void 0 && tone && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 				className: cn("absolute left-0 bottom-0 top-0 opacity-25 transition-all duration-1000 ease-out z-0", bar[tone]),
@@ -837,7 +915,13 @@ function KpiCard({ label, value, hint, tone, className, bgEmoji, variant, progre
 			}),
 			tone && variant !== "outline" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: cn("absolute inset-x-0 top-0 h-1 z-10", bar[tone]) }),
 			bgEmoji && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "absolute right-[-3.5rem] top-1/2 -translate-y-1/2 text-[8rem] leading-none opacity-20 pointer-events-none select-none z-0",
+				className: cn("absolute leading-none pointer-events-none select-none z-0", bgEmojiCentered ? "left-0 right-0 bottom-0 top-0 flex items-center justify-end text-[8.5rem] overflow-hidden" : "right-[-3.5rem] top-1/2 -translate-y-1/2 text-[8rem]"),
+				style: bgEmojiCentered ? {
+					opacity: bgEmojiOpacity !== void 0 ? bgEmojiOpacity : .12,
+					maskImage: "linear-gradient(to right, transparent 5%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 1) 100%)",
+					WebkitMaskImage: "linear-gradient(to right, transparent 5%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 1) 100%)",
+					transform: "translateX(12%)"
+				} : { opacity: bgEmojiOpacity !== void 0 ? bgEmojiOpacity : .18 },
 				children: bgEmoji
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -878,9 +962,9 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 	const highestCount = kpiData.counts[highestEmotion] || 0;
 	const totalEmotionsCount = Object.values(kpiData.counts).reduce((s, c) => s + c, 0);
 	const highestShare = totalEmotionsCount ? highestCount / totalEmotionsCount : 0;
-	const secondHighestShare = totalEmotionsCount && secondHighestEmotion ? (kpiData.counts[secondHighestEmotion] || 0) / totalEmotionsCount : 0;
+	totalEmotionsCount && secondHighestEmotion && (kpiData.counts[secondHighestEmotion] || 0) / totalEmotionsCount;
 	const formattedHighestLabel = highestEmotion.charAt(0).toUpperCase() + highestEmotion.slice(1);
-	const formattedSecondHighestLabel = secondHighestEmotion ? secondHighestEmotion.charAt(0).toUpperCase() + secondHighestEmotion.slice(1) : "";
+	secondHighestEmotion && secondHighestEmotion.charAt(0).toUpperCase() + secondHighestEmotion.slice(1);
 	(kpiData.counts["satisfaction"] || 0) / totalEmotionsCount;
 	(kpiData.counts["neutral"] || 0) / totalEmotionsCount;
 	(kpiData.counts["frustration"] || 0) / totalEmotionsCount;
@@ -892,9 +976,9 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 	const highestGptCount = gptCounts[highestGptEmotion] || 0;
 	const totalGptEmotionsCount = Object.values(gptCounts).reduce((s, c) => s + c, 0);
 	const highestGptShare = totalGptEmotionsCount ? highestGptCount / totalGptEmotionsCount : 0;
-	const secondHighestGptShare = totalGptEmotionsCount && secondHighestGptEmotion ? (gptCounts[secondHighestGptEmotion] || 0) / totalGptEmotionsCount : 0;
+	totalGptEmotionsCount && secondHighestGptEmotion && (gptCounts[secondHighestGptEmotion] || 0) / totalGptEmotionsCount;
 	const formattedHighestGptLabel = highestGptEmotion.charAt(0).toUpperCase() + highestGptEmotion.slice(1);
-	const formattedSecondHighestGptLabel = secondHighestGptEmotion ? secondHighestGptEmotion.charAt(0).toUpperCase() + secondHighestGptEmotion.slice(1) : "";
+	secondHighestGptEmotion && secondHighestGptEmotion.charAt(0).toUpperCase() + secondHighestGptEmotion.slice(1);
 	(gptCounts["satisfaction"] || 0) / (totalGptEmotionsCount || 1);
 	(gptCounts["neutral"] || 0) / (totalGptEmotionsCount || 1);
 	(gptCounts["frustration"] || 0) / (totalGptEmotionsCount || 1);
@@ -906,9 +990,9 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 	const highestKpi2AnswerCount = kpi2AnswerCounts[highestKpi2Answer] || 0;
 	const totalKpi2Answers = Object.values(kpi2AnswerCounts).reduce((s, c) => s + c, 0);
 	const highestKpi2AnswerShare = totalKpi2Answers ? highestKpi2AnswerCount / totalKpi2Answers : 0;
-	const secondHighestKpi2AnswerShare = totalKpi2Answers && secondHighestKpi2Answer ? (kpi2AnswerCounts[secondHighestKpi2Answer] || 0) / totalKpi2Answers : 0;
+	totalKpi2Answers && secondHighestKpi2Answer && (kpi2AnswerCounts[secondHighestKpi2Answer] || 0) / totalKpi2Answers;
 	const formattedHighestKpi2AnswerLabel = highestKpi2Answer.charAt(0).toUpperCase() + highestKpi2Answer.slice(1);
-	const formattedSecondHighestKpi2AnswerLabel = secondHighestKpi2Answer ? secondHighestKpi2Answer.charAt(0).toUpperCase() + secondHighestKpi2Answer.slice(1) : "";
+	secondHighestKpi2Answer && secondHighestKpi2Answer.charAt(0).toUpperCase() + secondHighestKpi2Answer.slice(1);
 	[
 		"satisfaction",
 		"neutral",
@@ -1032,11 +1116,32 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 	}));
 	const maxChanceOfSat = Math.max(0, ...chanceOfSatData.map((d) => d.mean));
 	const dynamicDomainMax = Math.min(1, maxChanceOfSat + .1);
+	const frustrationRecoveryData = (0, import_react.useMemo)(() => {
+		const list = kpiData.conversations || [];
+		let totalFrustratedTurns = 0;
+		let recoveredTurns = 0;
+		for (const conv of list) {
+			if (!conv.turns || conv.turns.length < 2) continue;
+			for (let i = 0; i < conv.turns.length - 1; i++) {
+				const currentTurn = conv.turns[i];
+				const nextTurn = conv.turns[i + 1];
+				if (currentTurn && nextTurn && currentTurn.promptEmotion === "frustration") {
+					totalFrustratedTurns++;
+					if (nextTurn.promptEmotion !== "frustration") recoveredTurns++;
+				}
+			}
+		}
+		return {
+			rate: totalFrustratedTurns > 0 ? recoveredTurns / totalFrustratedTurns : 0,
+			count: recoveredTurns,
+			total: totalFrustratedTurns
+		};
+	}, [kpiData.conversations]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "space-y-6 relative",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "sticky top-0 z-20 bg-background/95 backdrop-blur-md py-3 -mx-2 px-2 rounded-b-xl border-b border-border/40 mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 shadow-sm",
+				className: "sticky top-0 z-20 py-3 mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, {
 						label: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
@@ -1052,34 +1157,13 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 						value: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "uppercase",
 							children: formattedHighestLabel
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "block mt-1 font-bold font-['Oswald'] tracking-wide text-[0.8em] text-foreground",
-							children: [
-								"(",
-								fmtPct(highestShare, 0),
-								")"
-							]
+							children: fmtPct(highestShare, 0)
 						})] }),
-						hint: formattedSecondHighestLabel ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-							className: "display uppercase tracking-[0.09em] text-[12px]",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: `text-${secondHighestEmotion}`,
-									children: formattedSecondHighestLabel
-								}),
-								" ",
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "font-bold font-['Oswald'] tracking-wide text-[11px] text-foreground",
-									children: [
-										"(",
-										fmtPct(secondHighestShare, 0),
-										")"
-									]
-								})
-							]
-						}) : null,
 						tone: highestEmotion,
-						className: "bg-muted/80 shadow-lg border border-border/50",
+						className: "border border-border/50 bg-white",
+						style: { backgroundColor: `color-mix(in srgb, var(--emotion-${highestEmotion}) 6%, white)` },
 						bgEmoji: EMOTION_EMOJI[highestEmotion]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, {
@@ -1094,34 +1178,12 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 						value: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "uppercase",
 							children: formattedHighestKpi2AnswerLabel
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "block mt-1 font-bold font-['Oswald'] tracking-wide text-[0.8em] text-foreground",
-							children: [
-								"(",
-								fmtPct(highestKpi2AnswerShare, 0),
-								")"
-							]
+							children: fmtPct(highestKpi2AnswerShare, 0)
 						})] }),
-						hint: formattedSecondHighestKpi2AnswerLabel ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-							className: "display uppercase tracking-[0.09em] text-[12px]",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: `text-${secondHighestKpi2Answer}`,
-									children: formattedSecondHighestKpi2AnswerLabel
-								}),
-								" ",
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "font-bold font-['Oswald'] tracking-wide text-[11px] text-foreground",
-									children: [
-										"(",
-										fmtPct(secondHighestKpi2AnswerShare, 0),
-										")"
-									]
-								})
-							]
-						}) : null,
 						tone: highestKpi2Answer,
-						className: "border border-green-500 bg-background/50"
+						className: "border border-border/50 bg-white"
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, {
 						label: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
@@ -1137,64 +1199,39 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 						value: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "uppercase",
 							children: formattedHighestGptLabel
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "block mt-1 font-bold font-['Oswald'] tracking-wide text-[0.8em] text-foreground",
-							children: [
-								"(",
-								fmtPct(highestGptShare, 0),
-								")"
-							]
+							children: fmtPct(highestGptShare, 0)
 						})] }),
-						hint: formattedSecondHighestGptLabel ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-							className: "display uppercase tracking-[0.09em] text-[12px]",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									className: `text-${secondHighestGptEmotion}`,
-									children: formattedSecondHighestGptLabel
-								}),
-								" ",
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-									className: "font-bold font-['Oswald'] tracking-wide text-[11px] text-foreground",
-									children: [
-										"(",
-										fmtPct(secondHighestGptShare, 0),
-										")"
-									]
-								})
-							]
-						}) : null,
 						tone: highestGptEmotion,
-						className: "bg-muted/80 shadow-lg border border-border/50",
+						className: "border border-border/50 bg-white",
+						style: { backgroundColor: `color-mix(in srgb, var(--emotion-${highestGptEmotion}) 6%, white)` },
 						bgEmoji: EMOTION_EMOJI[highestGptEmotion]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)(KpiCard, {
 						label: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-							"Rows with",
+							"Frustration",
 							" ",
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
 								className: "font-bold text-foreground text-[11px]",
-								children: "code"
+								children: "recovery"
 							}),
 							" ",
-							"content"
+							"rate"
 						] }),
 						value: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "font-bold font-['Oswald'] tracking-wide text-foreground",
-							children: fmtPct(kpiData.codeContent.share, 0)
+							children: fmtPct(frustrationRecoveryData.rate, 1)
 						}),
-						hint: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-							className: "text-[12px]",
-							children: ["No code: ", fmtPct(kpiData.codeContent.noCodeShare, 0)]
-						}),
-						tone: "neutral",
-						className: "border border-border/50 bg-background/60",
-						progress: kpiData.codeContent.share
+						tone: "frustration",
+						className: "border border-border/50 bg-white",
+						style: { backgroundColor: `color-mix(in srgb, var(--emotion-frustration) 6%, white)` }
 					})
 				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Panel, {
-				title: "Emotion distribution - Developer vs ChatGPT",
-				subtitle: "Inner ring: developer prompts (solid) · Outer ring: GPT responses (stripe)",
+				title: "Overall emotion distribution: Developer vs ChatGPT",
+				subtitle: "Inner ring: Developer prompts (solid) · Outer ring: GPT responses (striped)",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "py-2",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DualRingDonut, {
@@ -1212,7 +1249,7 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 				className: "grid gap-6 lg:grid-cols-2",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Panel, {
 					className: "lg:col-span-2",
-					title: "GPT reply style per developer mood",
+					title: "GPT response style per developer mood",
 					subtitle: "Proportion of GPT answers that were helpful vs limited for each developer prompt mood",
 					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "Frustrated developers are much less likely to get a helpful response than satisfied ones." }),
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -1247,10 +1284,10 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 						" ",
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "text-satisfaction font-bold",
-							children: "satisfied"
+							children: "satisfactory"
 						}),
 						" ",
-						"answer"
+						"response"
 					] }),
 					subtitle: "Bars use the developer's emotion colour",
 					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
@@ -1417,7 +1454,7 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 		className: "flex flex-col h-full space-y-3.5 relative overflow-hidden",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "flex flex-col md:flex-row justify-between items-center gap-6 bg-muted/20 p-3.5 rounded-2xl border border-border/40 shrink-0",
+				className: "flex flex-col md:flex-row justify-between items-center gap-6 bg-card p-3.5 rounded-2xl border border-border shrink-0 shadow-sm",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "flex-1 w-full overflow-hidden",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectedConversationHeatmap, {
@@ -1440,7 +1477,7 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", {
 						className: "w-full border-collapse text-left text-xs",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", {
-							className: "sticky top-0 bg-muted/90 backdrop-blur-md z-10 border-b border-border select-none",
+							className: "sticky top-0 bg-card/90 backdrop-blur-md z-10 border-b border-border select-none",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", { children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("th", {
 									onClick: () => handleSort("title"),
@@ -1641,7 +1678,7 @@ function CaseInspectorTab({ selectedId: propSelectedId, setSelectedId: propSetSe
 						})]
 					})
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "bg-muted/10 border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center",
+					className: "bg-card border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: [
 						"Displaying ",
 						sortedList.length,
@@ -1684,7 +1721,7 @@ function ConversationViewer({ conversation, panelWidth, panelHeight, setPanelWid
 		isMinimized
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		className: "fixed bottom-6 right-6 z-[9999] flex flex-col rounded-2xl border border-border bg-background/95 backdrop-blur-md overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-all duration-150",
+		className: "fixed bottom-6 right-6 z-[9999] flex flex-col rounded-2xl border border-border bg-card/95 backdrop-blur-md overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-all duration-150",
 		style: {
 			width: panelWidth,
 			height: isMinimized ? 52 : panelHeight
@@ -1720,7 +1757,7 @@ function ConversationViewer({ conversation, panelWidth, panelHeight, setPanelWid
 				}
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
-				className: "h-[52px] bg-muted/60 border-b border-border px-4 py-3 flex items-center justify-between cursor-pointer select-none shrink-0",
+				className: "h-[52px] bg-card border-b border-border px-4 py-3 flex items-center justify-between cursor-pointer select-none shrink-0",
 				onClick: () => setIsMinimized(!isMinimized),
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "flex items-center gap-2 max-w-[75%]",
@@ -1896,7 +1933,7 @@ function SelectedConversationHeatmap({ conversation, highlightTurnId, onTurnClic
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-stretch border-b border-border/40",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none",
+								className: "w-10 px-2 py-1.5 bg-card text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none",
 								children: "DEV"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "flex items-stretch",
@@ -1921,7 +1958,7 @@ function SelectedConversationHeatmap({ conversation, highlightTurnId, onTurnClic
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: "flex items-stretch border-b border-border/40",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none",
+								className: "w-10 px-2 py-1.5 bg-card text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none",
 								children: "GPT"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "flex items-stretch",
@@ -1944,9 +1981,9 @@ function SelectedConversationHeatmap({ conversation, highlightTurnId, onTurnClic
 							})]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "flex items-stretch bg-muted/30",
+							className: "flex items-stretch bg-card",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								className: "w-10 px-2 py-1 bg-muted/60 text-[9px] font-mono text-muted-foreground/70 flex items-center justify-end border-r border-border/40 shrink-0 select-none",
+								className: "w-10 px-2 py-1 bg-card text-[9px] font-mono text-muted-foreground/70 flex items-center justify-end border-r border-border/40 shrink-0 select-none",
 								children: "#"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								className: "flex items-stretch",
@@ -2026,7 +2063,9 @@ function Heatmap({ rows, colorFor, height, rowLabelWidth = 110, valueFormat = "b
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
 	const chartHeight = height ?? Math.max(220, rows.length * 38 + 46);
+	const isLoading = useIsLoading();
 	(0, import_react.useEffect)(() => {
+		if (isLoading) return;
 		if (!width || !svgRef.current) return;
 		const margin = {
 			top: 26,
@@ -2037,7 +2076,7 @@ function Heatmap({ rows, colorFor, height, rowLabelWidth = 110, valueFormat = "b
 		const w = width - margin.left - margin.right;
 		const h = chartHeight - margin.top - margin.bottom;
 		let tooltipDiv = select_default("#chart-tooltip");
-		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(15, 23, 42, 0.95)").style("backdrop-filter", "blur(8px)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "8px 12px").style("border-radius", "8px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)").style("pointer-events", "none").style("z-index", "99999");
+		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(9, 9, 11, 0.92)").style("backdrop-filter", "blur(12px) saturate(160%)").style("border", "1px solid rgba(255, 255, 255, 0.08)").style("padding", "10px 14px").style("border-radius", "10px").style("color", "#fff").style("font-family", "system-ui, -apple-system, sans-serif").style("box-shadow", "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)").style("pointer-events", "none").style("z-index", "99999").style("width", "180px").style("transition", "opacity 0.12s ease").style("opacity", "0");
 		const svg = select_default(svgRef.current);
 		svg.selectAll("*").remove();
 		const g = svg.attr("viewBox", `0 0 ${width} ${chartHeight}`).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
@@ -2048,26 +2087,23 @@ function Heatmap({ rows, colorFor, height, rowLabelWidth = 110, valueFormat = "b
 		rows.forEach((r, rIdx) => {
 			const rowKey = `row-${rIdx}`;
 			g.append("text").attr("x", -10).attr("y", y(r.row) + y.bandwidth() / 2).attr("dy", "0.35em").attr("text-anchor", "end").style("font-size", "11px").style("fill", EMOTION_COLORS$1[r.row] ? emotionVar(r.row) : "var(--foreground)").text(EMOTION_LABEL[r.row] ?? r.row);
-			g.selectAll(`rect.${rowKey}`).data(r.cells).join("rect").attr("class", rowKey).attr("x", (d) => x(d.col)).attr("y", y(r.row)).attr("width", x.bandwidth()).attr("height", y.bandwidth()).attr("rx", 3).style("fill", (d) => colorFor(d.col)).style("opacity", (d) => .12 + Math.min(1, d.share / .6) * .82).style("cursor", "pointer").on("mouseover", function(event, d) {
-				const rowEmotion = r.row;
-				const colEmotion = d.col;
-				const devColor = EMOTION_COLORS$1[rowEmotion] || "#38bdf8";
-				const gptColor = EMOTION_COLORS$1[colEmotion] || "var(--foreground)";
-				const devLabel = EMOTION_LABEL[rowEmotion] || r.row;
-				const gptLabel = EMOTION_LABEL[colEmotion] || d.col;
-				tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${(d.share * 100).toFixed(1)}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} count)</span></div>`);
+			g.selectAll(`rect.${rowKey}`).data(r.cells).join("rect").attr("class", rowKey).attr("x", (d) => x(d.col)).attr("y", y(r.row)).attr("width", x.bandwidth()).attr("height", y.bandwidth()).attr("rx", 3).style("fill", (d) => colorFor(d.col)).style("cursor", "pointer").on("mouseover", function(event, d) {
+				tooltipDiv.style("visibility", "visible").style("opacity", "1").html(`<div style="display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 8px;"><span style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25); padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;">${r.row}</span><span style="color: rgba(255, 255, 255, 0.3); font-size: 10px;">→</span><span style="background: ${colorFor(d.col)}15; color: ${colorFor(d.col)}; border: 1px solid ${colorFor(d.col)}30; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;">${EMOTION_LABEL[d.col] || d.col}</span></div><div style="display: flex; align-items: baseline; justify-content: space-between;"><span style="font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.02em;">${(d.share * 100).toFixed(1)}%</span><span style="font-size: 10px; color: rgba(255, 255, 255, 0.5); font-weight: 500;">${d.count} response${d.count === 1 ? "" : "s"}</span></div><div style="width: 100%; height: 4px; background: rgba(255, 255, 255, 0.08); border-radius: 2px; margin-top: 8px; overflow: hidden;"><div style="width: ${d.share * 100}%; height: 100%; background: ${colorFor(d.col)}; border-radius: 2px;"></div></div>`);
 				select_default(this).transition().duration(100).attr("stroke", "var(--foreground)").attr("stroke-width", "1.5px");
 			}).on("mousemove", function(event) {
-				tooltipDiv.style("top", event.pageY - 60 + "px").style("left", event.pageX + 15 + "px");
+				tooltipDiv.style("top", event.pageY - 68 + "px").style("left", event.pageX + 15 + "px");
 			}).on("mouseout", function() {
-				tooltipDiv.style("visibility", "hidden");
+				tooltipDiv.style("opacity", "0");
+				setTimeout(() => {
+					if (tooltipDiv.style("opacity") === "0") tooltipDiv.style("visibility", "hidden");
+				}, 120);
 				select_default(this).transition().duration(100).attr("stroke", "none");
-			});
+			}).style("opacity", 0).attr("transform-origin", (d) => `${x(d.col) + x.bandwidth() / 2}px ${y(r.row) + y.bandwidth() / 2}px`).attr("transform", "scale(0.94) translate(0, 5)").transition().delay((d, i) => (rows.length - 1 - rIdx) * 45 + i * 20).duration(450).ease(cubicOut).style("opacity", (d) => .12 + Math.min(1, d.share / .6) * .82).attr("transform", "scale(1) translate(0, 0)");
 			g.selectAll(`text.v-${rowKey}`).data(r.cells).join("text").attr("class", `v-${rowKey}`).attr("x", (d) => x(d.col) + x.bandwidth() / 2).attr("y", y(r.row) + y.bandwidth() / 2).attr("dy", "0.35em").attr("text-anchor", "middle").style("font-size", "10px").style("font-variant-numeric", "tabular-nums").style("fill", (d) => d.share > .32 ? "var(--background)" : "var(--foreground)").text((d) => {
 				if (valueFormat === "count") return `${d.count}`;
 				if (valueFormat === "both") return d.count > 0 ? `${(d.share * 100).toFixed(0)}% (${d.count})` : "0";
 				return `${(d.share * 100).toFixed(0)}%`;
-			}).style("pointer-events", "none");
+			}).style("pointer-events", "none").style("opacity", 0).attr("transform-origin", (d) => `${x(d.col) + x.bandwidth() / 2}px ${y(r.row) + y.bandwidth() / 2}px`).attr("transform", "translate(0, 5)").transition().delay((d, i) => (rows.length - 1 - rIdx) * 45 + i * 20 + 150).duration(350).ease(cubicOut).style("opacity", 1).attr("transform", "translate(0, 0)");
 		});
 		return () => {
 			select_default("#chart-tooltip").remove();
@@ -2078,7 +2114,8 @@ function Heatmap({ rows, colorFor, height, rowLabelWidth = 110, valueFormat = "b
 		chartHeight,
 		colorFor,
 		rowLabelWidth,
-		valueFormat
+		valueFormat,
+		isLoading
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		ref,
@@ -2213,7 +2250,7 @@ function ImpactTab({ activeFilters = [] }) {
 							WebkitBackgroundClip: "text",
 							WebkitTextFillColor: "transparent"
 						},
-						children: "Longer the chat, worse the mood"
+						children: "Longer the chat, worse the mood?"
 					}) }),
 					subtitle: "Developer emotion share at each turn of the conversation",
 					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
@@ -2343,15 +2380,18 @@ function EmojiMorph({ shares, captions, intervalMs = 2600, className, stacked = 
 						children: EMOTION_LABEL[current]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						className: cn("mt-2 text-sm leading-relaxed text-muted-foreground", stacked ? "max-w-full" : "max-w-md"),
+						className: cn("mt-2 text-sm leading-relaxed text-muted-foreground whitespace-pre-line min-h-[40px]", stacked ? "max-w-full" : "max-w-md"),
 						children: captions[current]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-						className: "numeral mt-3 text-sm text-foreground",
+						className: "mt-3 text-xs text-muted-foreground",
 						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("b", { children: [(shares[current] * 100).toFixed(1), "%"] }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+								className: "numeral text-sm font-bold text-foreground",
+								children: [(shares[current] * 100).toFixed(1), "%"]
+							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
-							" of developer prompts"
+							"of developer prompts"
 						]
 					})
 				]
@@ -2373,7 +2413,7 @@ function Sidebar({ activeFilters, setActiveFilters }) {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "max-w-[280px] w-full",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				className: "rounded-lg border border-border bg-background p-3",
+				className: "rounded-lg border border-border bg-card p-3",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "flex flex-col items-stretch gap-4",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -2381,10 +2421,10 @@ function Sidebar({ activeFilters, setActiveFilters }) {
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(EmojiMorph, {
 							shares,
 							captions: {
-								frustration: "The developer is blocked and shows it.",
-								caution: "Risk-flagging gets limited responses.",
-								neutral: "Plain task requests: just code context.",
-								satisfaction: "The developer confirms something worked."
+								frustration: "Developer is stressed and expresses it",
+								caution: "Risk-flagging,\n need to be careful.",
+								neutral: "Plain task requests,\n just code context.",
+								satisfaction: "Developer confirms something worked."
 							},
 							className: "p-0 w-full",
 							stacked: true
@@ -2438,12 +2478,16 @@ function Dashboard() {
 	const [activeFilters, setActiveFilters] = import_react.useState([]);
 	const [activeTab, setActiveTab] = import_react.useState("overview");
 	const [selectedId, setSelectedId] = import_react.useState(null);
+	const scrollContainerRef = import_react.useRef(null);
+	import_react.useEffect(() => {
+		if (scrollContainerRef.current) scrollContainerRef.current.scrollTop = 0;
+	}, [activeTab]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Tabs, {
 		value: activeTab,
 		onValueChange: setActiveTab,
 		className: "h-screen flex flex-col bg-background overflow-hidden",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
-			className: "shrink-0 bg-background/95 backdrop-blur-md z-30 border-b border-border",
+			className: "shrink-0 header-peach-gradient backdrop-blur-md z-30 border-b border-border",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "mx-auto max-w-[1400px] px-6 pt-4 flex flex-col gap-4",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -2451,14 +2495,14 @@ function Dashboard() {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						className: "text-left flex flex-col items-start",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-							className: "numeral text-[14px] uppercase tracking-[0.18em] text-muted-foreground",
+							className: "numeral text-[14px] uppercase tracking-[0.18em] text-foreground/60",
 							children: ["CHAIR OF INFORMATION VISUALIZATION ·", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								style: { color: "var(--emotion-neutral)" },
 								children: "UNIVERSITY OF BAMBERG"
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-							className: "display mt-1 text-3xl leading-none text-foreground sm:text-4xl",
-							children: "DevGPT Emotion Analytics Dashboard"
+							className: "display mt-1 text-3xl leading-none text-foreground/75 sm:text-4xl",
+							children: "Developer-LLM Analytics Dashboard"
 						})]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 						className: "relative h-20 w-20 overflow-hidden rounded-full p-1",
@@ -2507,17 +2551,17 @@ function Dashboard() {
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabsTrigger, {
 									value: "overview",
-									className: "rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all",
+									className: "rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all",
 									children: "Overview"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabsTrigger, {
 									value: "impact",
-									className: "rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all",
+									className: "rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all",
 									children: "Detailed Analysis"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabsTrigger, {
 									value: "deep",
-									className: "rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all",
+									className: "rounded-t-lg rounded-b-none border-t border-x border-b border-border/80 bg-muted/85 text-muted-foreground/80 hover:bg-muted hover:text-foreground data-[state=active]:border-border data-[state=active]:border-b-transparent data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-[0_-4px_10px_rgba(0,0,0,0.05)] px-5 py-2.5 text-xs md:text-sm font-semibold transition-all",
 									children: "Case Inspector"
 								})
 							]
@@ -2526,7 +2570,7 @@ function Dashboard() {
 				})]
 			})
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("main", {
-			className: "flex-1 flex flex-col w-full mx-auto max-w-[1400px] px-6 py-4 min-h-0",
+			className: "flex-1 flex flex-col w-full mx-auto max-w-[1400px] px-6 py-4 min-h-0 bg-card rounded-t-lg",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "grid flex-1 h-full gap-4 lg:grid-cols-5 lg:gap-x-6 min-h-0",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -2542,7 +2586,8 @@ function Dashboard() {
 						})
 					})
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-					className: "lg:col-span-4 h-full overflow-y-auto pl-2 pb-4",
+					ref: scrollContainerRef,
+					className: "lg:col-span-4 h-full overflow-y-auto px-2 pb-4",
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(TabsContent, {
 							value: "overview",
