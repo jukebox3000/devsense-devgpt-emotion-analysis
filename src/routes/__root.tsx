@@ -14,6 +14,10 @@ import devgptLogo from "../../assets/DevGPT_Logo.png";
 import loaderVideo from "../../assets/animationloader.mp4";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+if (typeof window !== "undefined") {
+  (window as any).__isLoading = true;
+}
+
 function LoadingScreen({ isFading }: { isFading: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -70,9 +74,8 @@ function LoadingScreen({ isFading }: { isFading: boolean }) {
 
   return (
     <div
-      className={`fixed inset-0 flex flex-col items-center justify-center bg-background z-[9999] transition-opacity duration-300 ${
-        isFading ? "opacity-0 pointer-events-none" : "opacity-100"
-      }`}
+      className={`fixed inset-0 flex flex-col items-center justify-center bg-background z-[9999] transition-opacity duration-300 ${isFading ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
     >
       <div className="flex flex-col items-center gap-6">
         <video
@@ -213,12 +216,20 @@ function RootComponent() {
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      (window as any).__isLoading = true;
+    }
+
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
     }, 4700);
 
     const removeTimer = setTimeout(() => {
       setIsLoading(false);
+      if (typeof window !== "undefined") {
+        (window as any).__isLoading = false;
+        window.dispatchEvent(new CustomEvent("loading-finished"));
+      }
     }, 5000);
 
     return () => {

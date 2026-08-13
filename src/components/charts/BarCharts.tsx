@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { EMOTIONS, EMOTION_LABEL, emotionVar, type Emotion } from "@/lib/emotions";
-import { useChartWidth, fmtPct } from "./chart-utils";
+import { useChartWidth, fmtPct, useIsLoading } from "./chart-utils";
 
 export type StackRow = {
   label: string;
@@ -14,8 +14,10 @@ export type StackRow = {
 export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; height?: number }) {
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const isLoading = useIsLoading();
 
   useEffect(() => {
+    if (isLoading) return;
     if (!width || !svgRef.current) return;
     const margin = { top: 8, right: 46, bottom: 26, left: 96 };
     const w = width - margin.left - margin.right;
@@ -159,7 +161,7 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [rows, width, height]);
+  }, [rows, width, height, isLoading]);
 
   return (
     <div ref={ref} className="w-full">
@@ -191,8 +193,10 @@ export function MeanBarChart({
 }) {
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const isLoading = useIsLoading();
 
   useEffect(() => {
+    if (isLoading) return;
     if (!width || !svgRef.current) return;
     const margin = { top: 18, right: 12, bottom: 30, left: 48 };
     const w = width - margin.left - margin.right;
@@ -347,7 +351,7 @@ export function MeanBarChart({
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [data, width, height, domain, valueFormat, zeroLine]);
+  }, [data, width, height, domain, valueFormat, zeroLine, isLoading]);
 
   return (
     <div ref={ref} className="w-full">

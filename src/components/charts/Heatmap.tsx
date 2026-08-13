@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { EMOTION_LABEL, emotionVar, type Emotion } from "@/lib/emotions";
-import { useChartWidth } from "./chart-utils";
+import { useChartWidth, useIsLoading } from "./chart-utils";
 
 const EMOTION_COLORS: Record<Emotion, string> = {
   frustration: "#ef4444",
@@ -32,8 +32,10 @@ export function Heatmap({
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
   const chartHeight = height ?? Math.max(220, rows.length * 38 + 46);
+  const isLoading = useIsLoading();
 
   useEffect(() => {
+    if (isLoading) return;
     if (!width || !svgRef.current) return;
     const margin = { top: 26, right: 12, bottom: 8, left: rowLabelWidth };
     const w = width - margin.left - margin.right;
@@ -48,17 +50,19 @@ export function Heatmap({
         .attr("id", "chart-tooltip")
         .style("position", "absolute")
         .style("visibility", "hidden")
-        .style("background", "rgba(15, 23, 42, 0.95)")
-        .style("backdrop-filter", "blur(8px)")
-        .style("border", "1px solid rgba(255, 255, 255, 0.15)")
-        .style("padding", "8px 12px")
-        .style("border-radius", "8px")
+        .style("background", "rgba(9, 9, 11, 0.92)")
+        .style("backdrop-filter", "blur(12px) saturate(160%)")
+        .style("border", "1px solid rgba(255, 255, 255, 0.08)")
+        .style("padding", "10px 14px")
+        .style("border-radius", "10px")
         .style("color", "#fff")
-        .style("font-size", "11px")
-        .style("font-weight", "600")
-        .style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)")
+        .style("font-family", "system-ui, -apple-system, sans-serif")
+        .style("box-shadow", "0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)")
         .style("pointer-events", "none")
-        .style("z-index", "99999");
+        .style("z-index", "99999")
+        .style("width", "180px")
+        .style("transition", "opacity 0.12s ease")
+        .style("opacity", "0");
     }
 
     const svg = d3.select(svgRef.current);
@@ -113,25 +117,24 @@ export function Heatmap({
         .attr("height", y.bandwidth())
         .attr("rx", 3)
         .style("fill", (d) => colorFor(d.col))
-        .style("opacity", (d) => 0.12 + Math.min(1, d.share / 0.6) * 0.82)
         .style("cursor", "pointer")
         .on("mouseover", function (event, d) {
-          const rowEmotion = r.row as Emotion;
-          const colEmotion = d.col as Emotion;
-          const devColor = EMOTION_COLORS[rowEmotion] || "#38bdf8";
-          const gptColor = EMOTION_COLORS[colEmotion] || "var(--foreground)";
-          const devLabel = EMOTION_LABEL[rowEmotion] || r.row;
-          const gptLabel = EMOTION_LABEL[colEmotion] || d.col;
-
           tooltipDiv
             .style("visibility", "visible")
+            .style("opacity", "1")
             .html(
-              `<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span>` +
-                `<span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span>` +
-                `<span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span>` +
-                `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
-                `${(d.share * 100).toFixed(1)}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} count)</span>` +
-                `</div>`,
+              `<div style="display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 8px;">` +
+                `<span style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25); padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;">${r.row}</span>` +
+                `<span style="color: rgba(255, 255, 255, 0.3); font-size: 10px;">→</span>` +
+                `<span style="background: ${colorFor(d.col)}15; color: ${colorFor(d.col)}; border: 1px solid ${colorFor(d.col)}30; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;">${EMOTION_LABEL[d.col as Emotion] || d.col}</span>` +
+              `</div>` +
+              `<div style="display: flex; align-items: baseline; justify-content: space-between;">` +
+                `<span style="font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.02em;">${(d.share * 100).toFixed(1)}%</span>` +
+                `<span style="font-size: 10px; color: rgba(255, 255, 255, 0.5); font-weight: 500;">${d.count} response${d.count === 1 ? '' : 's'}</span>` +
+              `</div>` +
+              `<div style="width: 100%; height: 4px; background: rgba(255, 255, 255, 0.08); border-radius: 2px; margin-top: 8px; overflow: hidden;">` +
+                `<div style="width: ${(d.share * 100)}%; height: 100%; background: ${colorFor(d.col)}; border-radius: 2px;"></div>` +
+              `</div>`,
             );
 
           d3.select(this)
@@ -142,13 +145,30 @@ export function Heatmap({
         })
         .on("mousemove", function (event) {
           tooltipDiv
-            .style("top", event.pageY - 60 + "px")
+            .style("top", event.pageY - 68 + "px")
             .style("left", event.pageX + 15 + "px");
         })
         .on("mouseout", function () {
-          tooltipDiv.style("visibility", "hidden");
+          tooltipDiv
+            .style("opacity", "0");
+          
+          setTimeout(() => {
+            if (tooltipDiv.style("opacity") === "0") {
+              tooltipDiv.style("visibility", "hidden");
+            }
+          }, 120);
+
           d3.select(this).transition().duration(100).attr("stroke", "none");
-        });
+        })
+        .style("opacity", 0)
+        .attr("transform-origin", (d) => `${x(d.col)! + x.bandwidth() / 2}px ${y(r.row)! + y.bandwidth() / 2}px`)
+        .attr("transform", "scale(0.94) translate(0, 5)")
+        .transition()
+        .delay((d, i) => (rows.length - 1 - rIdx) * 45 + i * 20)
+        .duration(450)
+        .ease(d3.easeCubicOut)
+        .style("opacity", (d) => 0.12 + Math.min(1, d.share / 0.6) * 0.82)
+        .attr("transform", "scale(1) translate(0, 0)");
 
       g.selectAll(`text.v-${rowKey}`)
         .data(r.cells)
@@ -171,13 +191,22 @@ export function Heatmap({
               : "0";
           return `${(d.share * 100).toFixed(0)}%`;
         })
-        .style("pointer-events", "none");
+        .style("pointer-events", "none")
+        .style("opacity", 0)
+        .attr("transform-origin", (d) => `${x(d.col)! + x.bandwidth() / 2}px ${y(r.row)! + y.bandwidth() / 2}px`)
+        .attr("transform", "translate(0, 5)")
+        .transition()
+        .delay((d, i) => (rows.length - 1 - rIdx) * 45 + i * 20 + 150)
+        .duration(350)
+        .ease(d3.easeCubicOut)
+        .style("opacity", 1)
+        .attr("transform", "translate(0, 0)");
     });
 
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [rows, width, chartHeight, colorFor, rowLabelWidth, valueFormat]);
+  }, [rows, width, chartHeight, colorFor, rowLabelWidth, valueFormat, isLoading]);
 
   return (
     <div

@@ -8,9 +8,9 @@ import devgptLogo from "../../../assets/DevGPT_Logo.png";
 
 const EMOTION_HEX: Record<Emotion, string> = {
   frustration: "#c0392b",
-  caution:     "#c48f0a",
-  neutral:     "#3b6fa5",
-  satisfaction:"#27ae60",
+  caution: "#c48f0a",
+  neutral: "#3b6fa5",
+  satisfaction: "#27ae60",
 };
 
 function emotionGlow(emotion: Emotion): string {
@@ -86,14 +86,14 @@ export function DualRingDonut({
     // Radii shifted outwards (inner hole increased to 0.28, outer bounds pushed up)
     const radii = {
       dev: {
-        both:      { inner: radius * 0.28, outer: radius * 0.65 },
+        both: { inner: radius * 0.28, outer: radius * 0.65 },
         developer: { inner: radius * 0.28, outer: radius * 0.95 },
-        gpt:       { inner: radius * 0.28, outer: radius * 0.28 },
+        gpt: { inner: radius * 0.28, outer: radius * 0.28 },
       },
       gpt: {
-        both:      { inner: radius * 0.68, outer: radius * 0.95 },
+        both: { inner: radius * 0.68, outer: radius * 0.95 },
         developer: { inner: radius * 0.95, outer: radius * 0.95 },
-        gpt:       { inner: radius * 0.28, outer: radius * 0.95 },
+        gpt: { inner: radius * 0.28, outer: radius * 0.95 },
       },
     };
 
@@ -296,7 +296,7 @@ export function DualRingDonut({
 
     // ── Arc tween helper ───────────────────────────────────────────────────────
     function makeArcTween(tInner: number, tOuter: number, dInner: number, dOuter: number) {
-      return function(this: SVGPathElement, d: d3.PieArcDatum<RingDatum>) {
+      return function (this: SVGPathElement, d: d3.PieArcDatum<RingDatum>) {
         const el = this as any;
         const ci = el._currentInner ?? dInner;
         const co = el._currentOuter ?? dOuter;
@@ -319,7 +319,7 @@ export function DualRingDonut({
       .attr("stroke", "var(--color-card)").attr("stroke-width", 1.5)
       .style("opacity", 0).style("cursor", "pointer")
       .on("click", toggleDev)
-      .on("mouseover", function(event, d) {
+      .on("mouseover", function (event, d) {
         const el = this as any;
         const ci = el._currentInner ?? targetDevInner;
         const co = el._currentOuter ?? targetDevOuter;
@@ -330,7 +330,7 @@ export function DualRingDonut({
         const color = EMOTION_HEX[d.data.label];
         const label = d.data.label.charAt(0).toUpperCase() + d.data.label.slice(1);
         const pctStr = totalDev > 0 ? Math.round((d.data.count / totalDev) * 100) : 0;
-        
+
         tooltipDiv
           .style("visibility", "visible")
           .html(
@@ -347,12 +347,12 @@ export function DualRingDonut({
             `</div>`
           );
       })
-      .on("mousemove", function(event) {
+      .on("mousemove", function (event) {
         tooltipDiv
           .style("top", (event.pageY - 65) + "px")
           .style("left", (event.pageX + 15) + "px");
       })
-      .on("mouseout", function(_, d) {
+      .on("mouseout", function (_, d) {
         const el = this as any;
         const ci = el._currentInner ?? targetDevInner;
         const co = el._currentOuter ?? targetDevOuter;
@@ -366,11 +366,28 @@ export function DualRingDonut({
       .merge(devPaths as any)
       .on("click", toggleDev)
       .attr("fill", (d) => EMOTION_HEX[d.data.label])
-      .transition().duration(750).ease(d3.easeCubicInOut)
+      .transition().duration(1000).ease(d3.easeCubicOut)
       .style("opacity", targetDevOpacity)
       .style("pointer-events", filter === "gpt" ? "none" : "all")
-      .attrTween("d", function(this: SVGPathElement, d) {
-        return makeArcTween(targetDevInner, targetDevOuter, radii.dev.both.inner, radii.dev.both.outer).call(this, d);
+      .attrTween("d", function (this: SVGPathElement, d) {
+        const el = this as any;
+        const isNew = !el._currentAngle;
+        if (isNew) {
+          el._currentAngle = d;
+          const interpolateStart = d3.interpolate(0, d.startAngle);
+          const interpolateEnd = d3.interpolate(0, d.endAngle);
+          return (t: number) => {
+            const tempArc = d3.arc<d3.PieArcDatum<RingDatum>>()
+              .innerRadius(radii.dev.both.inner)
+              .outerRadius(radii.dev.both.outer)
+              .startAngle(interpolateStart(t))
+              .endAngle(interpolateEnd(t))
+              .padAngle(padAngle);
+            return tempArc(d) as string;
+          };
+        } else {
+          return makeArcTween(targetDevInner, targetDevOuter, radii.dev.both.inner, radii.dev.both.outer).call(this, d);
+        }
       });
 
     // ── Dev Labels ─────────────────────────────────────────────────────────────
@@ -396,7 +413,7 @@ export function DualRingDonut({
       })
       .transition().duration(750).ease(d3.easeCubicInOut)
       .style("opacity", filter === "developer" ? 1 : 0)
-      .attrTween("transform", function(this: SVGTextElement, d) {
+      .attrTween("transform", function (this: SVGTextElement, d) {
         const el = this as any;
         const ci = el._currentInner ?? targetDevInner;
         const co = el._currentOuter ?? targetDevOuter;
@@ -420,7 +437,7 @@ export function DualRingDonut({
       .attr("stroke", "var(--color-card)").attr("stroke-width", 1.5)
       .style("opacity", 0).style("cursor", "pointer")
       .on("click", toggleGpt)
-      .on("mouseover", function(event, d) {
+      .on("mouseover", function (event, d) {
         const el = this as any;
         const ci = el._currentInner ?? targetGptInner;
         const co = el._currentOuter ?? targetGptOuter;
@@ -431,7 +448,7 @@ export function DualRingDonut({
         const color = EMOTION_HEX[d.data.label];
         const label = d.data.label.charAt(0).toUpperCase() + d.data.label.slice(1);
         const pctStr = totalGpt > 0 ? Math.round((d.data.count / totalGpt) * 100) : 0;
-        
+
         tooltipDiv
           .style("visibility", "visible")
           .html(
@@ -448,12 +465,12 @@ export function DualRingDonut({
             `</div>`
           );
       })
-      .on("mousemove", function(event) {
+      .on("mousemove", function (event) {
         tooltipDiv
           .style("top", (event.pageY - 65) + "px")
           .style("left", (event.pageX + 15) + "px");
       })
-      .on("mouseout", function(_, d) {
+      .on("mouseout", function (_, d) {
         const el = this as any;
         const ci = el._currentInner ?? targetGptInner;
         const co = el._currentOuter ?? targetGptOuter;
@@ -467,11 +484,28 @@ export function DualRingDonut({
       .merge(gptPaths as any)
       .on("click", toggleGpt)
       .attr("fill", (d) => `url(#pattern-dual-${d.data.label})`)
-      .transition().duration(750).ease(d3.easeCubicInOut)
+      .transition().duration(1000).ease(d3.easeCubicOut)
       .style("opacity", targetGptOpacity)
       .style("pointer-events", filter === "developer" ? "none" : "all")
-      .attrTween("d", function(this: SVGPathElement, d) {
-        return makeArcTween(targetGptInner, targetGptOuter, radii.gpt.both.inner, radii.gpt.both.outer).call(this, d);
+      .attrTween("d", function (this: SVGPathElement, d) {
+        const el = this as any;
+        const isNew = !el._currentAngle;
+        if (isNew) {
+          el._currentAngle = d;
+          const interpolateStart = d3.interpolate(0, d.startAngle);
+          const interpolateEnd = d3.interpolate(0, d.endAngle);
+          return (t: number) => {
+            const tempArc = d3.arc<d3.PieArcDatum<RingDatum>>()
+              .innerRadius(radii.gpt.both.inner)
+              .outerRadius(radii.gpt.both.outer)
+              .startAngle(interpolateStart(t))
+              .endAngle(interpolateEnd(t))
+              .padAngle(padAngle);
+            return tempArc(d) as string;
+          };
+        } else {
+          return makeArcTween(targetGptInner, targetGptOuter, radii.gpt.both.inner, radii.gpt.both.outer).call(this, d);
+        }
       });
 
     // ── GPT Labels ─────────────────────────────────────────────────────────────
@@ -497,7 +531,7 @@ export function DualRingDonut({
       })
       .transition().duration(750).ease(d3.easeCubicInOut)
       .style("opacity", filter === "gpt" ? 1 : 0)
-      .attrTween("transform", function(this: SVGTextElement, d) {
+      .attrTween("transform", function (this: SVGTextElement, d) {
         const el = this as any;
         const ci = el._currentInner ?? targetGptInner;
         const co = el._currentOuter ?? targetGptOuter;

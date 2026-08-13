@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { EMOTION_LABEL, emotionVar, type Emotion } from "@/lib/emotions";
-import { useChartWidth, fmtPct } from "./chart-utils";
+import { useChartWidth, fmtPct, useIsLoading } from "./chart-utils";
 
 type Datum = { emotion: Emotion; count: number; share: number };
 
@@ -14,8 +14,10 @@ export function DonutChart({
 }) {
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const isLoading = useIsLoading();
 
   useEffect(() => {
+    if (isLoading) return;
     if (!width || !svgRef.current) return;
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
@@ -70,7 +72,7 @@ export function DonutChart({
       .style("font-weight", "800")
       .text((d) => fmtPct(d.data.share, 0));
 
-  }, [data, width, height]);
+  }, [data, width, height, isLoading]);
 
   return (
     <div ref={ref} className="w-full">

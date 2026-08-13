@@ -7,8 +7,8 @@ export type TrendPoint = { label: string; n?: number } & Record<Emotion, number>
 
 const EMOTION_COLORS: Record<Emotion, string> = {
   frustration: "#c0392b",
-  caution:     "#c48f0a",
-  neutral:     "#3b6fa5",
+  caution: "#c48f0a",
+  neutral: "#3b6fa5",
   satisfaction: "#27ae60",
 };
 
@@ -150,7 +150,7 @@ export function TrendLineChart({
         .attr("r", 0)
         .style("fill", emotionVar(e))
         .style("cursor", "pointer")
-        .on("mouseover", function(event, d) {
+        .on("mouseover", function (event, d) {
           const color = EMOTION_COLORS[e];
           const label = EMOTION_LABEL[e];
           const pct = fmtPct(d[e]);
@@ -182,12 +182,12 @@ export function TrendLineChart({
             .duration(100)
             .attr("r", 6);
         })
-        .on("mousemove", function(event) {
+        .on("mousemove", function (event) {
           tooltipDiv
             .style("top", (event.pageY - 60) + "px")
             .style("left", (event.pageX + 15) + "px");
         })
-        .on("mouseout", function() {
+        .on("mouseout", function () {
           tooltipDiv.style("visibility", "hidden");
           d3.select(this)
             .transition()
@@ -313,8 +313,7 @@ export function ConversationLineChart({
         .append("title")
         .text(
           (d) =>
-            `Turn ${d.index} — ${key === "promptScore" ? "developer" : "assistant"}: ${
-              EMOTION_LABEL[d[emo]]
+            `Turn ${d.index} — ${key === "promptScore" ? "developer" : "assistant"}: ${EMOTION_LABEL[d[emo]]
             } ${d[key].toFixed(2)}`,
         );
     });

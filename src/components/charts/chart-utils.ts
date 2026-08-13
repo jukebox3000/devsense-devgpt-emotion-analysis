@@ -22,3 +22,31 @@ export function useChartWidth<T extends HTMLElement = HTMLDivElement>() {
 
 export const fmtPct = (v: number, digits = 1) => `${(v * 100).toFixed(digits)}%`;
 export const fmtNum = (v: number, digits = 2) => v.toFixed(digits);
+
+export function useIsLoading() {
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !!(window as any).__isLoading;
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    if (!isLoading) return;
+
+    const handleFinished = () => {
+      setIsLoading(false);
+    };
+
+    window.addEventListener("loading-finished", handleFinished);
+    if (typeof window !== "undefined" && !(window as any).__isLoading) {
+      setIsLoading(false);
+    }
+
+    return () => {
+      window.removeEventListener("loading-finished", handleFinished);
+    };
+  }, [isLoading]);
+
+  return isLoading;
+}

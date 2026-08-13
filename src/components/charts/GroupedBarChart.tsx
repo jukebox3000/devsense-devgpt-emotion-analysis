@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { useChartWidth } from "./chart-utils";
+import { useChartWidth, useIsLoading } from "./chart-utils";
 import { type Emotion } from "@/lib/emotions";
 
 const EMOTION_COLORS: Record<Emotion, string> = {
@@ -32,8 +32,10 @@ export function GroupedBarChart({
 }) {
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const isLoading = useIsLoading();
 
   useEffect(() => {
+    if (isLoading) return;
     if (!width || !svgRef.current) return;
     const margin = { top: 22, right: 12, bottom: 34, left: 46 };
     const w = width - margin.left - margin.right;
@@ -184,7 +186,7 @@ export function GroupedBarChart({
     return () => {
       d3.select("#chart-tooltip").remove();
     };
-  }, [groups, series, width, height, format, yMax]);
+  }, [groups, series, width, height, format, yMax, isLoading]);
 
   return (
     <div ref={ref} className="w-full">

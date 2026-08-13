@@ -106,14 +106,18 @@ export function EmojiMorph({
           </h3>
           <p
             className={cn(
-              "mt-2 text-sm leading-relaxed text-muted-foreground",
+              "mt-2 text-sm leading-relaxed text-muted-foreground whitespace-pre-line min-h-[40px]",
               stacked ? "max-w-full" : "max-w-md",
             )}
           >
             {captions[current]}
           </p>
-          <p className="numeral mt-3 text-sm text-foreground">
-            <b>{(shares[current] * 100).toFixed(1)}%</b><br /> of developer prompts
+          <p className="mt-3 text-xs text-muted-foreground">
+            <span className="numeral text-sm font-bold text-foreground">
+              {(shares[current] * 100).toFixed(1)}%
+            </span>
+            <br />
+            of developer prompts
           </p>
         </div>
       </div>

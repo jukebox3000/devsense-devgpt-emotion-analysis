@@ -246,7 +246,7 @@ export function CaseInspectorTab({
   return (
     <div className="flex flex-col h-full space-y-3.5 relative overflow-hidden">
       {/* Top Heatmap Panel */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-muted/20 p-3.5 rounded-2xl border border-border/40 shrink-0">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-card p-3.5 rounded-2xl border border-border shrink-0 shadow-sm">
         <div className="flex-1 w-full overflow-hidden">
           <SelectedConversationHeatmap
             conversation={selectedConversation}
@@ -266,7 +266,7 @@ export function CaseInspectorTab({
       <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex-1 flex flex-col min-h-0">
         <div className="flex-1 overflow-y-auto custom-scrollbar">
           <table className="w-full border-collapse text-left text-xs">
-            <thead className="sticky top-0 bg-muted/90 backdrop-blur-md z-10 border-b border-border select-none">
+            <thead className="sticky top-0 bg-card/90 backdrop-blur-md z-10 border-b border-border select-none">
               <tr>
                 <th
                   onClick={() => handleSort("title")}
@@ -525,7 +525,7 @@ export function CaseInspectorTab({
             </tbody>
           </table>
         </div>
-        <div className="bg-muted/10 border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center">
+        <div className="bg-card border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center">
           <span>
             Displaying {sortedList.length} records
           </span>
@@ -605,7 +605,7 @@ function ConversationViewer({
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-[9999] flex flex-col rounded-2xl border border-border bg-background/95 backdrop-blur-md overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-all duration-150"
+      className="fixed bottom-6 right-6 z-[9999] flex flex-col rounded-2xl border border-border bg-card/95 backdrop-blur-md overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-all duration-150"
       style={{ width: panelWidth, height: isMinimized ? 52 : panelHeight }}
     >
       {/* Left resize handle */}
@@ -643,7 +643,7 @@ function ConversationViewer({
 
       {/* Floating window Header */}
       <header
-        className="h-[52px] bg-muted/60 border-b border-border px-4 py-3 flex items-center justify-between cursor-pointer select-none shrink-0"
+        className="h-[52px] bg-card border-b border-border px-4 py-3 flex items-center justify-between cursor-pointer select-none shrink-0"
         onClick={() => setIsMinimized(!isMinimized)}
       >
         <div className="flex items-center gap-2 max-w-[75%]">
@@ -879,7 +879,7 @@ function SelectedConversationHeatmap({
         <div className="inline-flex flex-col min-w-max border border-border/60 rounded-md bg-card overflow-hidden shadow-xs">
           {/* Row 1: Developer Prompts */}
           <div className="flex items-stretch border-b border-border/40">
-            <div className="w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none">
+            <div className="w-10 px-2 py-1.5 bg-card text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none">
               DEV
             </div>
             <div className="flex items-stretch">
@@ -919,7 +919,7 @@ function SelectedConversationHeatmap({
 
           {/* Row 2: ChatGPT Responses */}
           <div className="flex items-stretch border-b border-border/40">
-            <div className="w-10 px-2 py-1.5 bg-muted/50 text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none">
+            <div className="w-10 px-2 py-1.5 bg-card text-[10px] font-extrabold text-muted-foreground flex items-center justify-end border-r border-border/40 shrink-0 select-none">
               GPT
             </div>
             <div className="flex items-stretch">
@@ -958,8 +958,8 @@ function SelectedConversationHeatmap({
           </div>
 
           {/* Row 3: X-Axis Sequential Turn Counter (1, 2, 3...) */}
-          <div className="flex items-stretch bg-muted/30">
-            <div className="w-10 px-2 py-1 bg-muted/60 text-[9px] font-mono text-muted-foreground/70 flex items-center justify-end border-r border-border/40 shrink-0 select-none">
+          <div className="flex items-stretch bg-card">
+            <div className="w-10 px-2 py-1 bg-card text-[9px] font-mono text-muted-foreground/70 flex items-center justify-end border-r border-border/40 shrink-0 select-none">
               #
             </div>
             <div className="flex items-stretch">

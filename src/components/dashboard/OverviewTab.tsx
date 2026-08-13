@@ -387,9 +387,26 @@ export function OverviewTab({
   // Add 10% padding to the max value for the y-axis, cap at 1.0
   const dynamicDomainMax = Math.min(1.0, maxChanceOfSat + 0.1);
 
+  const escalationData = useMemo(() => {
+    const list = kpiData.conversations || [];
+    const multiTurnConvs = list.filter((c) => c.turns.length >= 2);
+    const startedNonFrustrated = multiTurnConvs.filter(
+      (c) => c.turns[0]?.promptEmotion !== "frustration",
+    );
+    const escalated = startedNonFrustrated.filter((c) =>
+      c.turns.slice(1).some((t) => t.promptEmotion === "frustration"),
+    );
+
+    const total = startedNonFrustrated.length;
+    const count = escalated.length;
+    const rate = total > 0 ? count / total : 0;
+
+    return { rate, count, total };
+  }, [kpiData.conversations]);
+
   return (
     <div className="space-y-6 relative">
-      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-md py-3 -mx-2 px-2 rounded-b-xl border-b border-border/40 mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 shadow-sm">
+      <div className="sticky top-0 z-20 py-3 mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
         <KpiCard
           label={
             <>
@@ -404,24 +421,13 @@ export function OverviewTab({
             <>
               <span className="uppercase">{formattedHighestLabel}</span>
               <span className="block mt-1 font-bold font-['Oswald'] tracking-wide text-[0.8em] text-foreground">
-                ({fmtPct(highestShare, 0)})
+                {fmtPct(highestShare, 0)}
               </span>
             </>
           }
-          hint={
-            formattedSecondHighestLabel ? (
-              <span className="display uppercase tracking-[0.09em] text-[12px]">
-                <span className={`text-${secondHighestEmotion}`}>
-                  {formattedSecondHighestLabel}
-                </span>{" "}
-                <span className="font-bold font-['Oswald'] tracking-wide text-[11px] text-foreground">
-                  ({fmtPct(secondHighestShare, 0)})
-                </span>
-              </span>
-            ) : null
-          }
           tone={highestEmotion}
-          className="bg-muted/80 shadow-lg border border-border/50"
+          className="border border-border/50 bg-white"
+          style={{ backgroundColor: `color-mix(in srgb, var(--emotion-${highestEmotion}) 6%, white)` }}
           bgEmoji={EMOTION_EMOJI[highestEmotion]}
         />
         <KpiCard
@@ -441,24 +447,12 @@ export function OverviewTab({
                 {formattedHighestKpi2AnswerLabel}
               </span>
               <span className="block mt-1 font-bold font-['Oswald'] tracking-wide text-[0.8em] text-foreground">
-                ({fmtPct(highestKpi2AnswerShare, 0)})
+                {fmtPct(highestKpi2AnswerShare, 0)}
               </span>
             </>
           }
-          hint={
-            formattedSecondHighestKpi2AnswerLabel ? (
-              <span className="display uppercase tracking-[0.09em] text-[12px]">
-                <span className={`text-${secondHighestKpi2Answer}`}>
-                  {formattedSecondHighestKpi2AnswerLabel}
-                </span>{" "}
-                <span className="font-bold font-['Oswald'] tracking-wide text-[11px] text-foreground">
-                  ({fmtPct(secondHighestKpi2AnswerShare, 0)})
-                </span>
-              </span>
-            ) : null
-          }
           tone={highestKpi2Answer}
-          className="border border-green-500 bg-background/50"
+          className="border border-border/50 bg-white"
         />
         <KpiCard
           label={
@@ -474,49 +468,35 @@ export function OverviewTab({
             <>
               <span className="uppercase">{formattedHighestGptLabel}</span>
               <span className="block mt-1 font-bold font-['Oswald'] tracking-wide text-[0.8em] text-foreground">
-                ({fmtPct(highestGptShare, 0)})
+                {fmtPct(highestGptShare, 0)}
               </span>
             </>
           }
-          hint={
-            formattedSecondHighestGptLabel ? (
-              <span className="display uppercase tracking-[0.09em] text-[12px]">
-                <span className={`text-${secondHighestGptEmotion}`}>
-                  {formattedSecondHighestGptLabel}
-                </span>{" "}
-                <span className="font-bold font-['Oswald'] tracking-wide text-[11px] text-foreground">
-                  ({fmtPct(secondHighestGptShare, 0)})
-                </span>
-              </span>
-            ) : null
-          }
           tone={highestGptEmotion}
-          className="bg-muted/80 shadow-lg border border-border/50"
+          className="border border-border/50 bg-white"
+          style={{ backgroundColor: `color-mix(in srgb, var(--emotion-${highestGptEmotion}) 6%, white)` }}
           bgEmoji={EMOTION_EMOJI[highestGptEmotion]}
         />
         <KpiCard
           label={
             <>
-              Rows with{" "}
+              Frustration{" "}
               <strong className="font-bold text-foreground text-[11px]">
-                code
+                escalation
               </strong>{" "}
-              content
+              rate
             </>
           }
           value={
             <span className="font-bold font-['Oswald'] tracking-wide text-foreground">
-              {fmtPct(kpiData.codeContent.share, 0)}
+              {fmtPct(escalationData.rate, 1)}
             </span>
           }
-          hint={
-            <span className="text-[12px]">
-              No code: {fmtPct(kpiData.codeContent.noCodeShare, 0)}
-            </span>
-          }
-          tone="neutral"
-          className="border border-border/50 bg-background/60"
-          progress={kpiData.codeContent.share}
+          tone="frustration"
+          className="border border-border/50 bg-white"
+          style={{ backgroundColor: `color-mix(in srgb, var(--emotion-frustration) 6%, white)` }}
+          bgEmoji="📈"
+          bgEmojiCentered={true}
         />
       </div>
 

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { EMOTIONS, EMOTION_LABEL } from "@/lib/emotions";
 import { cn } from "@/lib/utils";
 
@@ -15,8 +15,43 @@ export function Panel({
   insight?: ReactNode;
   className?: string;
 }) {
+  const ref = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry && entry.isIntersecting) {
+          observer.disconnect();
+          timeoutId = setTimeout(() => {
+            setIsVisible(true);
+          }, 300);
+        }
+      },
+      {
+        threshold: 0.05,
+        rootMargin: "0px 0px -120px 0px"
+      }
+    );
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => {
+      observer.disconnect();
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
-    <section className={cn("panel rise-in flex flex-col p-5", className)}>
+    <section
+      ref={ref}
+      className={cn(
+        "panel flex flex-col p-5 transition-all duration-700 ease-out",
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+        className
+      )}
+    >
       <header className="mb-4">
         <h3 className="text-base font-semibold tracking-tight text-foreground">
           {title}
@@ -25,7 +60,9 @@ export function Panel({
           <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>
         )}
       </header>
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 min-h-[200px]">
+        {isVisible ? children : null}
+      </div>
       {insight && (
         <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-muted-foreground">
           <span className="font-semibold text-foreground">Reading: </span>
@@ -44,7 +81,9 @@ export function KpiCard({
   className,
   bgEmoji,
   variant,
-  progress
+  progress,
+  style,
+  bgEmojiCentered = false
 }: {
   label: React.ReactNode;
   value: React.ReactNode;
@@ -54,6 +93,8 @@ export function KpiCard({
   bgEmoji?: string;
   variant?: "default" | "outline";
   progress?: number;
+  style?: React.CSSProperties;
+  bgEmojiCentered?: boolean;
 }) {
   const bar = {
     frustration: "bg-frustration",
@@ -79,7 +120,9 @@ export function KpiCard({
       variant === "outline" ? "bg-transparent border" : "",
       variant === "outline" && tone ? outlineBorder[tone] : "",
       className
-    )}>
+    )}
+      style={style}
+    >
       {progress !== undefined && tone && (
         <div
           className={cn("absolute left-0 bottom-0 top-0 opacity-25 transition-all duration-1000 ease-out z-0", bar[tone])}
@@ -90,7 +133,20 @@ export function KpiCard({
         <span className={cn("absolute inset-x-0 top-0 h-1 z-10", bar[tone])} />
       )}
       {bgEmoji && (
-        <div className="absolute right-[-3.5rem] top-1/2 -translate-y-1/2 text-[8rem] leading-none opacity-20 pointer-events-none select-none z-0">
+        <div
+          className={cn(
+            "absolute leading-none pointer-events-none select-none z-0",
+            bgEmojiCentered
+              ? "left-0 right-0 bottom-0 top-0 flex items-center justify-end text-[8.5rem] overflow-hidden"
+              : "right-[-3.5rem] top-1/2 -translate-y-1/2 text-[8rem] opacity-20"
+          )}
+          style={bgEmojiCentered ? {
+            opacity: 0.12,
+            maskImage: "linear-gradient(to right, transparent 5%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 1) 100%)",
+            WebkitMaskImage: "linear-gradient(to right, transparent 5%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 1) 100%)",
+            transform: "translateX(12%)",
+          } : undefined}
+        >
           {bgEmoji}
         </div>
       )}

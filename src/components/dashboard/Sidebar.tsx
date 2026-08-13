@@ -31,16 +31,16 @@ export function Sidebar({
   return (
     <aside className="hidden lg:block h-full w-full">
       <div className="max-w-[280px] w-full">
-        <div className="rounded-lg border border-border bg-background p-3">
+        <div className="rounded-lg border border-border bg-card p-3">
           <div className="flex flex-col items-stretch gap-4">
             <div className="w-full">
               <EmojiMorph
                 shares={shares}
                 captions={{
-                  frustration: "The developer is blocked and shows it.",
-                  caution: "Risk-flagging gets limited responses.",
-                  neutral: "Plain task requests: just code context.",
-                  satisfaction: "The developer confirms something worked.",
+                  frustration: "Developer is stressed and expresses it",
+                  caution: "Risk-flagging,\n need to be careful.",
+                  neutral: "Plain task requests,\n just code context.",
+                  satisfaction: "Developer confirms something worked.",
                 }}
                 className="p-0 w-full"
                 stacked
@@ -74,18 +74,18 @@ export function Sidebar({
                         isExplicitlyActive
                           ? "scale-[1.05] shadow-md border-foreground/30 font-bold"
                           : isAnyActive
-                          ? "scale-[1.02] shadow-xs border-border/80 hover:scale-[1.04]"
-                          : "border-border bg-background text-muted-foreground hover:bg-accent opacity-40 hover:opacity-90"
+                            ? "scale-[1.02] shadow-xs border-border/80 hover:scale-[1.04]"
+                            : "border-border bg-background text-muted-foreground hover:bg-accent opacity-40 hover:opacity-90"
                       )}
                       style={
                         showGradient
                           ? {
-                              backgroundImage: `radial-gradient(110% 115% at 50% 0%, color-mix(in oklab, ${color} 26%, transparent), transparent 90%)`,
-                              backgroundColor: `color-mix(in oklab, ${color} 10%, transparent)`,
-                              borderColor: isExplicitlyActive 
-                                ? `color-mix(in oklab, ${color} 45%, transparent)` 
-                                : `color-mix(in oklab, ${color} 25%, transparent)`,
-                            }
+                            backgroundImage: `radial-gradient(110% 115% at 50% 0%, color-mix(in oklab, ${color} 26%, transparent), transparent 90%)`,
+                            backgroundColor: `color-mix(in oklab, ${color} 10%, transparent)`,
+                            borderColor: isExplicitlyActive
+                              ? `color-mix(in oklab, ${color} 45%, transparent)`
+                              : `color-mix(in oklab, ${color} 25%, transparent)`,
+                          }
                           : {}
                       }
                     >

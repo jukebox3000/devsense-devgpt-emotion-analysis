@@ -33,24 +33,32 @@ function Dashboard() {
   const [activeTab, setActiveTab] = React.useState("overview");
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
+  const scrollContainerRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [activeTab]);
+
   return (
     <Tabs
       value={activeTab}
       onValueChange={setActiveTab}
       className="h-screen flex flex-col bg-background overflow-hidden"
     >
-      <header className="shrink-0 bg-background/95 backdrop-blur-md z-30 border-b border-border">
+      <header className="shrink-0 header-peach-gradient backdrop-blur-md z-30 border-b border-border">
         <div className="mx-auto max-w-[1400px] px-6 pt-4 flex flex-col gap-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="text-left flex flex-col items-start">
-              <p className="numeral text-[14px] uppercase tracking-[0.18em] text-muted-foreground">
+              <p className="numeral text-[14px] uppercase tracking-[0.18em] text-foreground/60">
                 CHAIR OF INFORMATION VISUALIZATION ·
                 <span style={{ color: "var(--emotion-neutral)" }}>
                   UNIVERSITY OF BAMBERG
                 </span>
               </p>
-              <h1 className="display mt-1 text-3xl leading-none text-foreground sm:text-4xl">
-                DevGPT Emotion Analytics Dashboard
+              <h1 className="display mt-1 text-3xl leading-none text-foreground/75 sm:text-4xl">
+                Developer-LLM Analytics Dashboard
               </h1>
             </div>
             <span className="relative h-20 w-20 overflow-hidden rounded-full p-1">
@@ -124,7 +132,10 @@ function Dashboard() {
             </div>
           </div>
 
-          <section className="lg:col-span-4 h-full overflow-y-auto pl-2 pb-4">
+          <section
+            ref={scrollContainerRef}
+            className="lg:col-span-4 h-full overflow-y-auto px-2 pb-4"
+          >
             <TabsContent
               value="overview"
               className="m-0 focus-visible:outline-none"
