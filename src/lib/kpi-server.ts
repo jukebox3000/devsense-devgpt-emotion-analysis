@@ -33,17 +33,17 @@ export const processKpis = createServerFn({ method: "GET" }).handler(
 
     const metadataPath = path.join(
       process.cwd(),
-      "Emotion_UNIQUE",
+      "DevGPT_cleaned",
       "1_metadata.csv",
     );
     const chatgptPath = path.join(
       process.cwd(),
-      "Emotion_UNIQUE",
+      "DevGPT_cleaned",
       "2_chatgpt_details.csv",
     );
     const filePath = path.join(
       process.cwd(),
-      "Emotion_UNIQUE",
+      "DevGPT_cleaned",
       "unique_prompt_answer.csv",
     );
 
@@ -361,7 +361,7 @@ export const processKpis = createServerFn({ method: "GET" }).handler(
     // Process resolution rate (conversations ended in satisfaction)
     const endedFilePath = path.join(
       process.cwd(),
-      "Emotion_UNIQUE",
+      "DevGPT_cleaned",
       "2_chatgpt_details.csv",
     );
     let resolutionRate = 0;

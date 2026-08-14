@@ -21,7 +21,7 @@ npm run dev
 
 ## Processed data file structure
 
-The folder `Emotion_UNIQUE` in root has the following structure:
+The folder `DevGPT_cleaned` in root has the following structure:
 1. metadata (contains meta-data about )
 2. individual conversational metrics (contains specific metrics per conversation)
 3. flattened prompt-answer pairs (contains flattened prompt-answer pairs of all conversations)
