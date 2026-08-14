@@ -13,6 +13,9 @@ git clone https://github.com/jukebox3000/devsense-devgpt-emotion-analysis.git
 npm i
 npm run dev
 
+## Recommended Browsers
+Chromium-engine based browsers (Google Chrome, Microsoft Edge, Brave Browser)
+
 ## Tech Stack 
 - React (v19)
 - Redux Toolkit
@@ -22,8 +25,9 @@ npm run dev
 ## Processed data file structure
 
 The folder `DevGPT_cleaned` in root has the following structure:
-1. metadata (contains meta-data about )
+1. metadata (contains metadata about conversations)
 2. individual conversational metrics (contains specific metrics per conversation)
 3. flattened prompt-answer pairs (contains flattened prompt-answer pairs of all conversations)
+
 
 
