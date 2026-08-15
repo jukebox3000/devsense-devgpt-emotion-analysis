@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   distribution,
   transitionMatrix,
@@ -9,19 +9,18 @@ import {
   EMOTIONS,
   EMOTION_LABEL,
   EMOTION_EMOJI,
+  EMOTION_HEX,
   emotionVar,
   type Emotion,
   type Conversation,
   type Turn,
 } from "@/lib/emotions";
+import { cn } from "@/lib/utils";
 import { DonutChart } from "@/components/charts/DonutChart";
 import { StackedBarChart, MeanBarChart } from "@/components/charts/BarCharts";
-import {
-  GroupedBarChart,
-  SeriesLegend,
-} from "@/components/charts/GroupedBarChart";
 import { TrendLineChart } from "@/components/charts/LineCharts";
 import { DualRingDonut } from "@/components/charts/DualRingDonut";
+import { SankeyDiagram } from "@/components/charts/SankeyDiagram";
 import { Panel, KpiCard, EmotionLegend } from "./Primitives";
 import { fmtPct } from "@/components/charts/chart-utils";
 
@@ -325,14 +324,6 @@ export function OverviewTab({
     values: { dev: shareOf(promptDist, e), gpt: shareOf(answerDist, e) },
   }));
 
-  const replyStyle = visibleEmotions.map((e) => ({
-    label: EMOTION_LABEL[e],
-    values: {
-      helpful: realPAnswer(e, "satisfaction"),
-      limited: realPAnswer(e, "caution"),
-    },
-  }));
-
   const stackRows = matrix
     .filter((r) => visibleEmotions.includes(r.prompt))
     .map((r) => ({
@@ -370,16 +361,21 @@ export function OverviewTab({
     return matching[0] || conversations[0];
   }, [conversations, selectedEmotion]);
 
-  const chanceOfSatData = visibleEmotions.map((e) => ({
-    emotion: e,
-    mean: realPAnswer(e, "satisfaction"),
-    n: Object.values(kpiData.promptToAnswerCounts?.[e] || {}).reduce(
-      (s, c) => s + (c as number),
-      0,
-    ),
-  }));
-  const maxChanceOfSat = Math.max(0, ...chanceOfSatData.map((d) => d.mean));
-  const dynamicDomainMax = Math.min(1.0, maxChanceOfSat + 0.1);
+  const [targetEmotion, setTargetEmotion] = useState<Emotion>("satisfaction");
+
+  const chanceOfTargetData = useMemo(() => {
+    return visibleEmotions.map((e) => ({
+      emotion: e,
+      mean: realPAnswer(e, targetEmotion),
+      n: Object.values(kpiData.promptToAnswerCounts?.[e] || {}).reduce(
+        (s, c) => s + (c as number),
+        0,
+      ),
+    }));
+  }, [visibleEmotions, targetEmotion, kpiData.promptToAnswerCounts]);
+
+  const maxChanceOfTarget = Math.max(0, ...chanceOfTargetData.map((d) => d.mean));
+  const dynamicDomainMax = Math.min(1.0, Math.max(0.25, maxChanceOfTarget + 0.1));
 
   const frustrationRecoveryData = useMemo(() => {
     const list = kpiData.conversations || [];
@@ -522,83 +518,84 @@ export function OverviewTab({
         </div>
       </Panel>
 
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Panel
-          className="lg:col-span-2"
-          title="GPT response style per developer mood"
-          subtitle="Proportion of GPT answers that were helpful vs limited for each developer prompt mood"
-          insight={
-            <>
-              Frustrated developers are much less likely to get a helpful
-              response than satisfied ones.
-            </>
-          }
-        >
-          <div className="mb-3">
-            <SeriesLegend
-              series={[
-                {
-                  key: "helpful",
-                  label: "Helpful answer",
-                  color: "var(--emotion-satisfaction)",
-                },
-                {
-                  key: "limited",
-                  label: "Limited answer",
-                  color: "var(--emotion-caution)",
-                },
-              ]}
-            />
+      <Panel
+        title={
+          <>
+            Chance of a{" "}
+            <span
+              style={{ color: EMOTION_HEX[targetEmotion] }}
+              className="font-bold capitalize"
+            >
+              {targetEmotion === "satisfaction"
+                ? "satisfactory"
+                : targetEmotion === "frustration"
+                ? "frustrated"
+                : targetEmotion === "caution"
+                ? "cautious"
+                : "neutral"}
+            </span>{" "}
+            response
+          </>
+        }
+        subtitle={`Probability of receiving a ${EMOTION_LABEL[targetEmotion].toLowerCase()} GPT answer per developer prompt mood`}
+        action={
+          <div className="flex items-center gap-1 bg-muted/70 p-1 rounded-lg border border-border/60">
+            {EMOTIONS.map((emo) => {
+              const isSelected = targetEmotion === emo;
+              return (
+                <button
+                  key={emo}
+                  onClick={() => setTargetEmotion(emo)}
+                  className={cn(
+                    "px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1 select-none cursor-pointer",
+                    isSelected
+                      ? "bg-card text-foreground shadow-xs border border-border/80"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                  )}
+                  style={isSelected ? { color: EMOTION_HEX[emo] } : undefined}
+                >
+                  <span>{EMOTION_EMOJI[emo]}</span>
+                  <span className="capitalize">{EMOTION_LABEL[emo]}</span>
+                </button>
+              );
+            })}
           </div>
-          <GroupedBarChart
-            groups={replyStyle}
-            series={[
-              {
-                key: "helpful",
-                label: "Helpful answer",
-                color: "var(--emotion-satisfaction)",
-              },
-              {
-                key: "limited",
-                label: "Limited answer",
-                color: "var(--emotion-caution)",
-              },
-            ]}
-            format={(v) => fmtPct(v, 0)}
-            height={280}
-          />
-        </Panel>
+        }
+        insight={
+          <>
+            Read this as a single number per mood: a frustrated prompt gets a{" "}
+            {targetEmotion} answer{" "}
+            {fmtPct(realPAnswer("frustration", targetEmotion), 0)} of the time,
+            whereas a satisfied prompt gets a {targetEmotion} answer{" "}
+            {fmtPct(realPAnswer("satisfaction", targetEmotion), 0)}.
+          </>
+        }
+      >
+        <MeanBarChart
+          data={chanceOfTargetData}
+          domain={[0, dynamicDomainMax]}
+          valueFormat={(v) => fmtPct(v, 0)}
+          height={280}
+        />
+      </Panel>
 
-        <Panel
-          className="lg:col-span-2"
-          title={
-            <>
-              Chance of a{" "}
-              <span className="text-satisfaction font-bold">satisfactory</span>{" "}
-              response
-            </>
-          }
-          subtitle="Bars use the developer's emotion colour"
-          insight={
-            <>
-              Read this as a single number per mood: a frustrated prompt gets a
-              satisfied answer{" "}
-              {fmtPct(realPAnswer("frustration", "satisfaction"), 0)} of the
-              time, a satisfied prompt{" "}
-              {fmtPct(realPAnswer("satisfaction", "satisfaction"), 0)} — a{" "}
-              {satLift.toFixed(1)}× gap.
-            </>
-          }
-        >
-          <MeanBarChart
-            data={chanceOfSatData}
-            domain={[0, dynamicDomainMax]}
-            valueFormat={(v) => fmtPct(v, 0)}
-            height={280}
+      <Panel
+        title="Conversation Emotion Progression: Start Mood (Turn 1) ➔ End Mood (Final Turn)"
+        subtitle="Sankey diagram mapping the initial (start) prompt emotion of a conversation (Turn 1) to its final (end) prompt emotion. Stream width reflects conversation volume."
+        insight={
+          <>
+            Traces long-term affective flow across multi-turn conversations. Left nodes display initial (turn-1) prompt emotions; right nodes display final-turn prompt emotions. Hover streams or nodes for detailed volume percentages.
+          </>
+        }
+      >
+        <div className="py-2">
+          <SankeyDiagram
+            conversations={conversations}
+            activeFilters={activeFilters}
+            height={420}
           />
-        </Panel>
-      </div>
+        </div>
+      </Panel>
     </div>
   );
 }

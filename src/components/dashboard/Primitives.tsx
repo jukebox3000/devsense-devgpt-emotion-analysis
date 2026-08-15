@@ -7,12 +7,14 @@ export function Panel({
   subtitle,
   children,
   insight,
+  action,
   className,
 }: {
   title: ReactNode;
   subtitle?: string;
   children: ReactNode;
   insight?: ReactNode;
+  action?: ReactNode;
   className?: string;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -52,13 +54,16 @@ export function Panel({
         className
       )}
     >
-      <header className="mb-4">
-        <h3 className="text-base font-semibold tracking-tight text-foreground">
-          {title}
-        </h3>
-        {subtitle && (
-          <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>
-        )}
+      <header className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h3 className="text-base font-semibold tracking-tight text-foreground">
+            {title}
+          </h3>
+          {subtitle && (
+            <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>
+          )}
+        </div>
+        {action && <div className="shrink-0 self-start sm:self-auto">{action}</div>}
       </header>
       <div className="flex-1 min-h-[200px]">
         {isVisible ? children : null}
