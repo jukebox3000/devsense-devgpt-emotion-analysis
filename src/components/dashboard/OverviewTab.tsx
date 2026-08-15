@@ -571,8 +571,8 @@ export function OverviewTab({
       </Panel>
 
       <Panel
-        title="Conversation Emotion Progression: Start Mood (Turn 1) ➔ End Mood (Final Turn)"
-        subtitle="Sankey diagram mapping the initial (start) prompt emotion of a conversation (Turn 1) to its final (end) prompt emotion. Stream width reflects conversation volume."
+        title="Emotion Progression: First Prompt Emotion ➔ Last Prompt Emotion"
+        subtitle="Sankey diagram mapping the initial prompt emotion to the final prompt emotion. Stream width indicates conversation volume."
       >
         <div className="py-2">
           <SankeyDiagram

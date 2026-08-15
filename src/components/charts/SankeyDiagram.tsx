@@ -76,6 +76,9 @@ export function SankeyDiagram({
   const [isVisible, setIsVisible] = useState(false);
   const hasAnimatedRef = useRef(false);
 
+  const [selectedSourceIdx, setSelectedSourceIdx] = useState<number | null>(null);
+  const [selectedTargetIdx, setSelectedTargetIdx] = useState<number | null>(null);
+
   const [hoveredSourceIdx, setHoveredSourceIdx] = useState<number | null>(null);
   const [hoveredTargetIdx, setHoveredTargetIdx] = useState<number | null>(null);
   const [hoveredLinkKey, setHoveredLinkKey] = useState<string | null>(null);
@@ -217,6 +220,10 @@ export function SankeyDiagram({
 
     const g = svg
       .attr("viewBox", `0 0 ${width} ${chartHeight}`)
+      .on("click", () => {
+        setSelectedSourceIdx(null);
+        setSelectedTargetIdx(null);
+      })
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -388,14 +395,25 @@ export function SankeyDiagram({
       .style("cursor", "pointer")
       .style("transition", "opacity 0.2s ease")
       .style("opacity", (d) => {
-        if (hoveredLinkKey) {
+        if (hoveredLinkKey !== null) {
           return hoveredLinkKey === d.key ? 0.95 : 0.08;
         }
         if (hoveredSourceIdx !== null) {
-          return d.srcIndex === hoveredSourceIdx ? 0.9 : 0.08;
+          return d.srcIndex === hoveredSourceIdx ? 0.95 : 0.08;
         }
         if (hoveredTargetIdx !== null) {
-          return d.tgtIndex === hoveredTargetIdx ? 0.9 : 0.08;
+          return d.tgtIndex === hoveredTargetIdx ? 0.95 : 0.08;
+        }
+        if (selectedSourceIdx !== null && selectedTargetIdx !== null) {
+          return d.srcIndex === selectedSourceIdx && d.tgtIndex === selectedTargetIdx
+            ? 0.95
+            : 0.08;
+        }
+        if (selectedSourceIdx !== null) {
+          return d.srcIndex === selectedSourceIdx ? 0.95 : 0.08;
+        }
+        if (selectedTargetIdx !== null) {
+          return d.tgtIndex === selectedTargetIdx ? 0.95 : 0.08;
         }
         if (activeFilters.length > 0) {
           return activeFilters.includes(d.srcEmo) || activeFilters.includes(d.tgtEmo)
@@ -403,6 +421,16 @@ export function SankeyDiagram({
             : 0.12;
         }
         return 0.65;
+      })
+      .on("click", (event, d) => {
+        event.stopPropagation();
+        if (selectedSourceIdx === d.srcIndex && selectedTargetIdx === d.tgtIndex) {
+          setSelectedSourceIdx(null);
+          setSelectedTargetIdx(null);
+        } else {
+          setSelectedSourceIdx(d.srcIndex);
+          setSelectedTargetIdx(d.tgtIndex);
+        }
       })
       .on("mouseover", (event, d) => {
         setHoveredLinkKey(d.key);
@@ -426,8 +454,8 @@ export function SankeyDiagram({
               <span style="color: ${tgtColor}; font-weight: 800; letter-spacing: 0.04em;">${tgtLabelCaps}</span>
             </div>
             <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
-              <div><strong>Volume:</strong> ${d.value.toLocaleString()} conversations</div>
-              <div><strong>BEGINS WITH <span style="color: ${srcColor}; font-weight: 800;">${srcLabelCaps}</span>:</strong> ${fmtPct(rowShare, 1)}</div>
+              <div> ${d.value.toLocaleString()} conversations</div>
+              <div>${fmtPct(rowShare, 1)} of <strong><span style="color: ${srcColor}; font-weight: 800;">${srcLabelCaps}</span></strong></div>
               <div><strong>Share of Total Dataset:</strong> ${fmtPct(globalShare, 1)}</div>
             </div>
           `);
@@ -449,7 +477,13 @@ export function SankeyDiagram({
       .selectAll("g")
       .data(sourceNodes)
       .join("g")
-      .attr("transform", (d) => `translate(0, ${d.y0})`);
+      .attr("transform", (d) => `translate(0, ${d.y0})`)
+      .style("cursor", "pointer")
+      .on("click", (event, d) => {
+        event.stopPropagation();
+        setSelectedSourceIdx((prev) => (prev === d.index ? null : d.index));
+        setSelectedTargetIdx(null);
+      });
 
     const srcRects = srcNodesG
       .append("rect")
@@ -457,12 +491,19 @@ export function SankeyDiagram({
       .attr("rx", 3)
       .attr("fill", (d) => EMOTION_HEX[d.emotion])
       .attr("stroke", "#fff")
-      .attr("stroke-width", 1.2)
+      .attr("stroke-width", (d) => (selectedSourceIdx === d.index ? 2.5 : 1.2))
       .style("cursor", "pointer")
-      .style("transition", "opacity 0.2s ease")
+      .style("transition", "opacity 0.2s ease, stroke-width 0.2s ease")
       .style("opacity", (d) => {
         if (hoveredSourceIdx !== null) {
           return hoveredSourceIdx === d.index ? 1.0 : 0.35;
+        }
+        if (selectedSourceIdx !== null) {
+          return selectedSourceIdx === d.index ? 1.0 : 0.35;
+        }
+        if (selectedTargetIdx !== null) {
+          const connected = (matrix[d.index]?.[selectedTargetIdx] ?? 0) > 0;
+          return connected ? 1.0 : 0.35;
         }
         if (activeFilters.length > 0) {
           return activeFilters.includes(d.emotion) ? 1.0 : 0.35;
@@ -497,10 +538,10 @@ export function SankeyDiagram({
           .style("opacity", "1")
           .html(`
             <div style="font-weight: 800; font-size: 13px; color: ${emoColor}; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 4px; letter-spacing: 0.04em;">
-              ${emoCaps} (Start Mood - Turn 1)
+              ${emoCaps} (Turn 1)
             </div>
             <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
-              <div><strong>Volume:</strong> ${d.value.toLocaleString()} conversations</div>
+              <div> ${d.value.toLocaleString()} conversations</div>
               <div><strong>Share of Total Dataset:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
             </div>
           `);
@@ -522,9 +563,10 @@ export function SankeyDiagram({
       .attr("dy", "0.35em")
       .attr("text-anchor", "end")
       .style("font-size", "11px")
-      .style("font-weight", "600")
+      .style("font-weight", (d) => (selectedSourceIdx === d.index || hoveredSourceIdx === d.index ? "800" : "600"))
       .style("fill", (d) => EMOTION_HEX[d.emotion])
-      .text((d) => `${EMOTION_EMOJI[d.emotion]} ${EMOTION_LABEL[d.emotion]} (${fmtPct(d.value / totalValidConvs, 0)})`);
+      .style("cursor", "pointer")
+      .text((d) => `${EMOTION_LABEL[d.emotion]} (${fmtPct(d.value / totalValidConvs, 0)})`);
 
     if (!hasAnimatedRef.current && isVisible) {
       srcTexts
@@ -545,7 +587,7 @@ export function SankeyDiagram({
       .style("font-weight", "700")
       .style("fill", "var(--foreground)")
       .style("letter-spacing", "0.04em")
-      .text("START PROMPT MOOD (TURN 1)");
+      .text("FIRST PROMPT EMOTION");
 
     if (!hasAnimatedRef.current && isVisible) {
       headerLeft
@@ -563,7 +605,13 @@ export function SankeyDiagram({
       .selectAll("g")
       .data(targetNodes)
       .join("g")
-      .attr("transform", (d) => `translate(${innerWidth}, ${d.y0})`);
+      .attr("transform", (d) => `translate(${innerWidth}, ${d.y0})`)
+      .style("cursor", "pointer")
+      .on("click", (event, d) => {
+        event.stopPropagation();
+        setSelectedTargetIdx((prev) => (prev === d.index ? null : d.index));
+        setSelectedSourceIdx(null);
+      });
 
     const tgtRects = tgtNodesG
       .append("rect")
@@ -571,12 +619,19 @@ export function SankeyDiagram({
       .attr("rx", 3)
       .attr("fill", (d) => EMOTION_HEX[d.emotion])
       .attr("stroke", "#fff")
-      .attr("stroke-width", 1.2)
+      .attr("stroke-width", (d) => (selectedTargetIdx === d.index ? 2.5 : 1.2))
       .style("cursor", "pointer")
-      .style("transition", "opacity 0.2s ease")
+      .style("transition", "opacity 0.2s ease, stroke-width 0.2s ease")
       .style("opacity", (d) => {
         if (hoveredTargetIdx !== null) {
           return hoveredTargetIdx === d.index ? 1.0 : 0.35;
+        }
+        if (selectedTargetIdx !== null) {
+          return selectedTargetIdx === d.index ? 1.0 : 0.35;
+        }
+        if (selectedSourceIdx !== null) {
+          const connected = (matrix[selectedSourceIdx]?.[d.index] ?? 0) > 0;
+          return connected ? 1.0 : 0.35;
         }
         if (activeFilters.length > 0) {
           return activeFilters.includes(d.emotion) ? 1.0 : 0.35;
@@ -612,10 +667,10 @@ export function SankeyDiagram({
           .style("opacity", "1")
           .html(`
             <div style="font-weight: 800; font-size: 13px; color: ${emoColor}; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 4px; letter-spacing: 0.04em;">
-              ${emoCaps} (End Mood - Final Turn)
+              ${emoCaps} (Final Turn)
             </div>
             <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
-              <div><strong>Volume:</strong> ${d.value.toLocaleString()} conversations</div>
+              <div>${d.value.toLocaleString()} conversations</div>
               <div><strong>Share of Total Dataset:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
             </div>
           `);
@@ -637,9 +692,10 @@ export function SankeyDiagram({
       .attr("dy", "0.35em")
       .attr("text-anchor", "start")
       .style("font-size", "11px")
-      .style("font-weight", "600")
+      .style("font-weight", (d) => (selectedTargetIdx === d.index || hoveredTargetIdx === d.index ? "800" : "600"))
       .style("fill", (d) => EMOTION_HEX[d.emotion])
-      .text((d) => `${EMOTION_EMOJI[d.emotion]} ${EMOTION_LABEL[d.emotion]} (${fmtPct(d.value / totalValidConvs, 0)})`);
+      .style("cursor", "pointer")
+      .text((d) => `${EMOTION_LABEL[d.emotion].toUpperCase()} (${fmtPct(d.value / totalValidConvs, 0)})`);
 
     if (!hasAnimatedRef.current && isVisible) {
       tgtTexts
@@ -660,7 +716,7 @@ export function SankeyDiagram({
       .style("font-weight", "700")
       .style("fill", "var(--foreground)")
       .style("letter-spacing", "0.04em")
-      .text("END PROMPT MOOD (FINAL TURN)");
+      .text("LAST PROMPT EMOTION");
 
     if (!hasAnimatedRef.current && isVisible) {
       headerRight
@@ -671,10 +727,40 @@ export function SankeyDiagram({
         .style("opacity", 1);
     }
 
-  }, [width, height, matrix, totalValidConvs, hoveredSourceIdx, hoveredTargetIdx, hoveredLinkKey, activeFilters, isLoading, isVisible]);
+  }, [
+    width,
+    height,
+    matrix,
+    totalValidConvs,
+    hoveredSourceIdx,
+    hoveredTargetIdx,
+    hoveredLinkKey,
+    activeFilters,
+    isLoading,
+    isVisible,
+    selectedSourceIdx,
+    selectedTargetIdx,
+  ]);
+
+  const hasSelection = selectedSourceIdx !== null || selectedTargetIdx !== null;
 
   return (
     <div ref={containerRef} className="space-y-4">
+      {hasSelection && (
+        <div className="flex justify-end items-center -mb-2">
+          <button
+            onClick={() => {
+              setSelectedSourceIdx(null);
+              setSelectedTargetIdx(null);
+            }}
+            className="text-[11px] font-semibold text-muted-foreground hover:text-foreground bg-muted/60 hover:bg-muted px-2.5 py-1 rounded-md transition-all flex items-center gap-1.5 cursor-pointer shadow-xs border border-border/50"
+          >
+            <span>Reset Sankey filter</span>
+            <span className="text-[10px]">✕</span>
+          </button>
+        </div>
+      )}
+
       {/* SVG Container */}
       <div ref={ref} className="w-full flex justify-center items-center relative min-h-[360px]">
         {totalValidConvs === 0 ? (
@@ -693,9 +779,8 @@ export function SankeyDiagram({
       {/* Summary Narrative Scorecards with viewport entrance animation */}
       {stats && (
         <div
-          className={`grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-border/40 transition-all duration-700 ease-out ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
+          className={`grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-border/40 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
         >
           <div className="p-3 rounded-lg border border-border/40 bg-muted/20">
             <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider block">
