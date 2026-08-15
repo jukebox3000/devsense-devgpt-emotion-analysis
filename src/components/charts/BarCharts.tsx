@@ -172,7 +172,7 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
 const EMOTION_COLORS: Record<Emotion, string> = {
   frustration: "#c0392b",
   caution: "#c48f0a",
-  neutral: "#3b6fa5",
+  neutral: "#3b82f6",
   satisfaction: "#27ae60",
 };
 
@@ -183,12 +183,14 @@ export function MeanBarChart({
   height = 250,
   valueFormat = (v: number) => v.toFixed(3),
   zeroLine = false,
+  targetEmotion = "satisfaction",
 }: {
   data: { emotion: Emotion; mean: number; ci?: number; n: number }[];
   domain: [number, number];
   height?: number;
   valueFormat?: (v: number) => string;
   zeroLine?: boolean;
+  targetEmotion?: Emotion;
 }) {
   const { ref, width } = useChartWidth();
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -208,17 +210,19 @@ export function MeanBarChart({
         .attr("id", "chart-tooltip")
         .style("position", "absolute")
         .style("visibility", "hidden")
-        .style("background", "rgba(15, 23, 42, 0.95)")
-        .style("backdrop-filter", "blur(8px)")
+        .style("opacity", "0")
+        .style("background", "rgba(15, 23, 42, 0.96)")
+        .style("backdrop-filter", "blur(12px) saturate(160%)")
         .style("border", "1px solid rgba(255, 255, 255, 0.15)")
-        .style("padding", "8px 12px")
-        .style("border-radius", "8px")
+        .style("padding", "10px 14px")
+        .style("border-radius", "10px")
         .style("color", "#fff")
         .style("font-size", "11px")
         .style("font-weight", "600")
-        .style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)")
+        .style("box-shadow", "0 10px 25px -5px rgba(0, 0, 0, 0.5)")
         .style("pointer-events", "none")
-        .style("z-index", "99999");
+        .style("z-index", "99999")
+        .style("transition", "opacity 0.12s ease");
     }
 
     const svg = d3.select<SVGSVGElement, unknown>(svgRef.current);
@@ -283,18 +287,21 @@ export function MeanBarChart({
       .style("cursor", "pointer")
       .on("mouseover", function (event, d) {
         const devColor = EMOTION_COLORS[d.emotion];
-        const satColor = EMOTION_COLORS["satisfaction"];
+        const tgtColor = EMOTION_COLORS[targetEmotion];
         const devLabel = EMOTION_LABEL[d.emotion];
-        const satLabel = EMOTION_LABEL["satisfaction"];
+        const tgtLabel = EMOTION_LABEL[targetEmotion];
 
         tooltipDiv
           .style("visibility", "visible")
+          .style("opacity", "1")
           .html(
-            `<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span>` +
-            `<span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span>` +
-            `<span style="color: ${satColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${satLabel}</span>` +
+            `<div style="display: flex; align-items: center; gap: 4px; margin-bottom: 2px;">` +
+            `<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">Developer ${devLabel}</span>` +
+            `<span style="color: #94a3b8; font-weight: 400; margin: 0 4px;">➔</span>` +
+            `<span style="color: ${tgtColor}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">GPT ${tgtLabel}</span>` +
+            `</div>` +
             `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
-            `${valueFormat(d.mean)} <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(n=${d.n})</span>` +
+            `${valueFormat(d.mean)} probability <span style="font-size: 9.5px; color: #94a3b8; font-weight: 400;">(${d.n.toLocaleString()} total prompts)</span>` +
             `</div>`
           );
 
@@ -309,7 +316,7 @@ export function MeanBarChart({
           .style("left", (event.pageX + 15) + "px");
       })
       .on("mouseout", function () {
-        tooltipDiv.style("visibility", "hidden");
+        tooltipDiv.style("visibility", "hidden").style("opacity", "0");
         d3.select(this)
           .transition()
           .duration(100)
@@ -347,9 +354,9 @@ export function MeanBarChart({
       .text((d) => valueFormat(d.mean));
 
     return () => {
-      d3.select("#chart-tooltip").remove();
+      tooltipDiv.style("visibility", "hidden").style("opacity", "0");
     };
-  }, [data, width, height, domain, valueFormat, zeroLine, isLoading]);
+  }, [data, width, height, domain, valueFormat, zeroLine, targetEmotion, isLoading]);
 
   return (
     <div ref={ref} className="w-full">

@@ -9,7 +9,7 @@ import devgptLogo from "../../../assets/DevGPT_Logo.png";
 const EMOTION_HEX: Record<Emotion, string> = {
   frustration: "#c0392b",
   caution: "#c48f0a",
-  neutral: "#3b6fa5",
+  neutral: "#3b82f6",
   satisfaction: "#27ae60",
 };
 
@@ -44,7 +44,10 @@ export function DualRingDonut({
   gptExamples = { frustration: "", caution: "", neutral: "", satisfaction: "" },
 }: DualRingDonutProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [filter, setFilter] = useState<Filter>("both");
+  const [isVisible, setIsVisible] = useState(false);
+  const hasAnimatedRef = useRef(false);
 
   const devData: RingDatum[] = EMOTIONS.map((e) => ({ label: e, count: devCounts[e] || 0 }));
   const gptData: RingDatum[] = EMOTIONS.map((e) => ({ label: e, count: gptCounts[e] || 0 }));
@@ -54,10 +57,29 @@ export function DualRingDonut({
   const toggleDev = () => setFilter((f) => (f === "developer" ? "both" : "developer"));
   const toggleGpt = () => setFilter((f) => (f === "gpt" ? "both" : "gpt"));
 
+  // IntersectionObserver to detect when chart scrolls into view
   useEffect(() => {
-    if (!svgRef.current) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry && entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!svgRef.current || !isVisible) return;
     const svg = d3.select(svgRef.current);
 
+    const isFirstTime = !hasAnimatedRef.current;
     const radius = Math.min(width, height) / 2 - 5;
     const padAngle = 0.015;
 
@@ -68,17 +90,19 @@ export function DualRingDonut({
         .attr("id", "chart-tooltip")
         .style("position", "absolute")
         .style("visibility", "hidden")
-        .style("background", "rgba(15, 23, 42, 0.95)")
-        .style("backdrop-filter", "blur(8px)")
+        .style("opacity", "0")
+        .style("background", "rgba(15, 23, 42, 0.96)")
+        .style("backdrop-filter", "blur(12px) saturate(160%)")
         .style("border", "1px solid rgba(255, 255, 255, 0.15)")
-        .style("padding", "8px 12px")
-        .style("border-radius", "8px")
+        .style("padding", "10px 14px")
+        .style("border-radius", "10px")
         .style("color", "#fff")
         .style("font-size", "11px")
         .style("font-weight", "600")
-        .style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)")
+        .style("box-shadow", "0 10px 25px -5px rgba(0, 0, 0, 0.5)")
         .style("pointer-events", "none")
-        .style("z-index", "99999");
+        .style("z-index", "99999")
+        .style("transition", "opacity 0.12s ease");
     }
 
     const radii = {
@@ -217,7 +241,7 @@ export function DualRingDonut({
     const logoDevGroup = textGroup.select("g.logo-dev-group");
     const logoGptGroup = textGroup.select("g.logo-gpt-group");
     const logoDevgptGroup = textGroup.select("g.logo-devgpt-group");
-    const duration = 500;
+    const duration = isFirstTime ? 800 : 500;
     const ease = d3.easeCubicInOut;
 
     if (filter === "developer") {
@@ -293,15 +317,21 @@ export function DualRingDonut({
       };
     }
 
-    // Developer ring
+    // 1. Developer ring (Inner chart)
     if (g.select("g.dev-ring").empty()) g.append("g").attr("class", "dev-ring");
     const devPaths = g.select<SVGGElement>("g.dev-ring")
       .selectAll<SVGPathElement, d3.PieArcDatum<RingDatum>>("path")
       .data(devArcs, (d) => d.data.label);
 
-    devPaths.enter().append("path")
+    const devDuration = isFirstTime ? 1400 : 500;
+
+    const devMerged = devPaths.enter().append("path")
       .attr("stroke", "var(--color-card)").attr("stroke-width", 1.5)
-      .style("opacity", 0).style("cursor", "pointer")
+      .style("opacity", 0)
+      .merge(devPaths as any);
+
+    devMerged
+      .style("cursor", "pointer")
       .on("click", toggleDev)
       .on("mouseover", function (event, d) {
         const el = this as any;
@@ -317,6 +347,7 @@ export function DualRingDonut({
 
         tooltipDiv
           .style("visibility", "visible")
+          .style("opacity", "1")
           .html(
             `<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">` +
             `<img src="${devLogo}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" />` +
@@ -326,9 +357,10 @@ export function DualRingDonut({
             `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
             `${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} prompts)</span>` +
             `</div>` +
+            (devExamples[d.data.label] ?
             `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">` +
             `“${devExamples[d.data.label]}”` +
-            `</div>`
+            `</div>` : "")
           );
       })
       .on("mousemove", function (event) {
@@ -343,14 +375,12 @@ export function DualRingDonut({
         d3.select(this).transition().duration(200).ease(d3.easeCubicOut)
           .attr("d", d3.arc<d3.PieArcDatum<RingDatum>>().innerRadius(ci).outerRadius(co)(d) as string)
           .style("filter", "none").attr("stroke-width", 1.5);
-        tooltipDiv.style("visibility", "hidden");
+        tooltipDiv.style("visibility", "hidden").style("opacity", "0");
       })
-      .attr("d", (d) => d3.arc<d3.PieArcDatum<RingDatum>>()
-        .innerRadius(radii.dev.both.inner).outerRadius(radii.dev.both.outer)(d) as string)
-      .merge(devPaths as any)
-      .on("click", toggleDev)
       .attr("fill", (d) => EMOTION_HEX[d.data.label])
-      .transition().duration(1000).ease(d3.easeCubicOut)
+      .transition()
+      .duration(devDuration)
+      .ease(d3.easeCubicOut)
       .style("opacity", targetDevOpacity)
       .style("pointer-events", filter === "gpt" ? "none" : "all")
       .attrTween("d", function (this: SVGPathElement, d) {
@@ -394,7 +424,10 @@ export function DualRingDonut({
         }
         return totalDev > 0 ? `${Math.round((d.data.count / totalDev) * 100)}%` : "";
       })
-      .transition().duration(750).ease(d3.easeCubicInOut)
+      .transition()
+      .delay(isFirstTime ? 900 : 0)
+      .duration(750)
+      .ease(d3.easeCubicInOut)
       .style("opacity", filter === "developer" ? 1 : 0)
       .attrTween("transform", function (this: SVGTextElement, d) {
         const el = this as any;
@@ -410,15 +443,22 @@ export function DualRingDonut({
         };
       });
 
-    //  GPT ring
+    // 2. GPT ring (Outer chart)
     if (g.select("g.gpt-ring").empty()) g.append("g").attr("class", "gpt-ring");
     const gptPaths = g.select<SVGGElement>("g.gpt-ring")
       .selectAll<SVGPathElement, d3.PieArcDatum<RingDatum>>("path")
       .data(gptArcs, (d) => d.data.label);
 
-    gptPaths.enter().append("path")
+    const gptDuration = isFirstTime ? 1400 : 500;
+    const gptDelay = 0; // Simultaneous entrance together with inner ring
+
+    const gptMerged = gptPaths.enter().append("path")
       .attr("stroke", "var(--color-card)").attr("stroke-width", 1.5)
-      .style("opacity", 0).style("cursor", "pointer")
+      .style("opacity", 0)
+      .merge(gptPaths as any);
+
+    gptMerged
+      .style("cursor", "pointer")
       .on("click", toggleGpt)
       .on("mouseover", function (event, d) {
         const el = this as any;
@@ -434,6 +474,7 @@ export function DualRingDonut({
 
         tooltipDiv
           .style("visibility", "visible")
+          .style("opacity", "1")
           .html(
             `<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">` +
             `<img src="${gptLogo}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" />` +
@@ -443,9 +484,10 @@ export function DualRingDonut({
             `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
             `${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} responses)</span>` +
             `</div>` +
+            (gptExamples[d.data.label] ?
             `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">` +
             `“${gptExamples[d.data.label]}”` +
-            `</div>`
+            `</div>` : "")
           );
       })
       .on("mousemove", function (event) {
@@ -460,14 +502,13 @@ export function DualRingDonut({
         d3.select(this).transition().duration(200).ease(d3.easeCubicOut)
           .attr("d", d3.arc<d3.PieArcDatum<RingDatum>>().innerRadius(ci).outerRadius(co)(d) as string)
           .style("filter", "none").attr("stroke-width", 1.5);
-        tooltipDiv.style("visibility", "hidden");
+        tooltipDiv.style("visibility", "hidden").style("opacity", "0");
       })
-      .attr("d", (d) => d3.arc<d3.PieArcDatum<RingDatum>>()
-        .innerRadius(radii.gpt.both.inner).outerRadius(radii.gpt.both.outer)(d) as string)
-      .merge(gptPaths as any)
-      .on("click", toggleGpt)
       .attr("fill", (d) => `url(#pattern-dual-${d.data.label})`)
-      .transition().duration(1000).ease(d3.easeCubicOut)
+      .transition()
+      .delay(gptDelay)
+      .duration(gptDuration)
+      .ease(d3.easeCubicOut)
       .style("opacity", targetGptOpacity)
       .style("pointer-events", filter === "developer" ? "none" : "all")
       .attrTween("d", function (this: SVGPathElement, d) {
@@ -489,9 +530,14 @@ export function DualRingDonut({
         } else {
           return makeArcTween(targetGptInner, targetGptOuter, radii.gpt.both.inner, radii.gpt.both.outer).call(this, d);
         }
+      })
+      .on("end", () => {
+        if (isFirstTime) {
+          hasAnimatedRef.current = true;
+        }
       });
 
-    //  GPT Labels 
+    // GPT Labels
     if (g.select("g.gpt-labels").empty()) g.append("g").attr("class", "gpt-labels");
     const gptLabels = g.select<SVGGElement>("g.gpt-labels")
       .selectAll<SVGTextElement, d3.PieArcDatum<RingDatum>>("text")
@@ -512,7 +558,10 @@ export function DualRingDonut({
         }
         return totalGpt > 0 ? `${Math.round((d.data.count / totalGpt) * 100)}%` : "";
       })
-      .transition().duration(750).ease(d3.easeCubicInOut)
+      .transition()
+      .delay(isFirstTime ? 900 : 0)
+      .duration(750)
+      .ease(d3.easeCubicInOut)
       .style("opacity", filter === "gpt" ? 1 : 0)
       .attrTween("transform", function (this: SVGTextElement, d) {
         const el = this as any;
@@ -530,12 +579,12 @@ export function DualRingDonut({
     textGroup.raise();
 
     return () => {
-      d3.select("#chart-tooltip").remove();
+      tooltipDiv.style("visibility", "hidden").style("opacity", "0");
     };
-  }, [filter, width, height, totalDev, totalGpt, devData, gptData, isFiltered, devExamples, gptExamples]);
+  }, [filter, width, height, totalDev, totalGpt, devData, gptData, isFiltered, devExamples, gptExamples, isVisible]);
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-around gap-6 w-full h-full py-2 px-4">
+    <div ref={containerRef} className="flex flex-col md:flex-row items-center justify-around gap-6 w-full h-full py-2 px-4">
       {/* Graph on Left */}
       <div className="flex items-center justify-center shrink-0" style={{ width, height }}>
         <svg ref={svgRef} style={{ width, height }} />
@@ -560,7 +609,7 @@ export function DualRingDonut({
                 boxShadow: "none",
               }}
             >
-              {/* Circle-framed logo — scaled to fill, no whitespace */}
+              {/* Circle-framed logo */}
               <span
                 className="relative shrink-0 w-11 h-11 rounded-full overflow-hidden"
                 style={{
@@ -598,7 +647,7 @@ export function DualRingDonut({
                 boxShadow: "none",
               }}
             >
-              {/* Circle-framed logo — scaled to fill */}
+              {/* Circle-framed logo */}
               <span
                 className="relative shrink-0 w-11 h-11 rounded-full overflow-hidden"
                 style={{

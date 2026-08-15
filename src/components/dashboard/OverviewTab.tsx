@@ -524,15 +524,15 @@ export function OverviewTab({
             Chance of a{" "}
             <span
               style={{ color: EMOTION_HEX[targetEmotion] }}
-              className="font-bold capitalize"
+              className="text-xl font-bold capitalize"
             >
               {targetEmotion === "satisfaction"
                 ? "satisfactory"
                 : targetEmotion === "frustration"
-                ? "frustrated"
-                : targetEmotion === "caution"
-                ? "cautious"
-                : "neutral"}
+                  ? "frustrated"
+                  : targetEmotion === "caution"
+                    ? "cautious"
+                    : "neutral"}
             </span>{" "}
             response
           </>
@@ -547,14 +547,13 @@ export function OverviewTab({
                   key={emo}
                   onClick={() => setTargetEmotion(emo)}
                   className={cn(
-                    "px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1 select-none cursor-pointer",
+                    "px-2.5 py-1 text-xs font-bold rounded-md transition-all select-none cursor-pointer",
                     isSelected
-                      ? "bg-card text-foreground shadow-xs border border-border/80"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
+                      ? "bg-card shadow-xs border border-border/80 opacity-100"
+                      : "bg-transparent border border-transparent opacity-70 hover:opacity-100 hover:bg-muted/50"
                   )}
-                  style={isSelected ? { color: EMOTION_HEX[emo] } : undefined}
+                  style={{ color: EMOTION_HEX[emo] }}
                 >
-                  <span>{EMOTION_EMOJI[emo]}</span>
                   <span className="capitalize">{EMOTION_LABEL[emo]}</span>
                 </button>
               );
@@ -575,6 +574,7 @@ export function OverviewTab({
           data={chanceOfTargetData}
           domain={[0, dynamicDomainMax]}
           valueFormat={(v) => fmtPct(v, 0)}
+          targetEmotion={targetEmotion}
           height={280}
         />
       </Panel>
@@ -582,11 +582,6 @@ export function OverviewTab({
       <Panel
         title="Conversation Emotion Progression: Start Mood (Turn 1) ➔ End Mood (Final Turn)"
         subtitle="Sankey diagram mapping the initial (start) prompt emotion of a conversation (Turn 1) to its final (end) prompt emotion. Stream width reflects conversation volume."
-        insight={
-          <>
-            Traces long-term affective flow across multi-turn conversations. Left nodes display initial (turn-1) prompt emotions; right nodes display final-turn prompt emotions. Hover streams or nodes for detailed volume percentages.
-          </>
-        }
       >
         <div className="py-2">
           <SankeyDiagram

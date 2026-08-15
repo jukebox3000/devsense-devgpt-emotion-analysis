@@ -411,16 +411,23 @@ export function SankeyDiagram({
         const sNodeVal = sourceNodes[d.srcIndex]?.value || 1;
         const rowShare = d.value / sNodeVal;
 
+        const srcColor = EMOTION_HEX[d.srcEmo];
+        const tgtColor = EMOTION_HEX[d.tgtEmo];
+        const srcLabelCaps = EMOTION_LABEL[d.srcEmo].toUpperCase();
+        const tgtLabelCaps = EMOTION_LABEL[d.tgtEmo].toUpperCase();
+
         tooltipDiv
           .style("visibility", "visible")
           .style("opacity", "1")
           .html(`
-            <div style="font-weight: 700; font-size: 13px; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">
-              <span>${EMOTION_EMOJI[d.srcEmo]} Start ${EMOTION_LABEL[d.srcEmo]} ➔ ${EMOTION_EMOJI[d.tgtEmo]} End ${EMOTION_LABEL[d.tgtEmo]}</span>
+            <div style="font-weight: 800; font-size: 13px; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 5px; display: flex; align-items: center; gap: 5px;">
+              <span style="color: ${srcColor}; font-weight: 800; letter-spacing: 0.04em;">${srcLabelCaps}</span>
+              <span style="color: #94a3b8; font-weight: 400;">➔</span>
+              <span style="color: ${tgtColor}; font-weight: 800; letter-spacing: 0.04em;">${tgtLabelCaps}</span>
             </div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.85);">
-              <div><strong>Conversation Volume:</strong> ${d.value.toLocaleString()} convs</div>
-              <div><strong>Percentage of ${EMOTION_LABEL[d.srcEmo]} Emotion:</strong> ${fmtPct(rowShare, 1)}</div>
+            <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
+              <div><strong>Volume:</strong> ${d.value.toLocaleString()} conversations</div>
+              <div><strong>BEGINS WITH <span style="color: ${srcColor}; font-weight: 800;">${srcLabelCaps}</span>:</strong> ${fmtPct(rowShare, 1)}</div>
               <div><strong>Share of Total Dataset:</strong> ${fmtPct(globalShare, 1)}</div>
             </div>
           `);
@@ -482,16 +489,19 @@ export function SankeyDiagram({
       .on("mouseover", (event, d) => {
         setHoveredSourceIdx(d.index);
 
+        const emoColor = EMOTION_HEX[d.emotion];
+        const emoCaps = EMOTION_LABEL[d.emotion].toUpperCase();
+
         tooltipDiv
           .style("visibility", "visible")
           .style("opacity", "1")
           .html(`
-            <div style="font-weight: 700; font-size: 13px; color: ${EMOTION_HEX[d.emotion]}; margin-bottom: 4px;">
-              ${EMOTION_EMOJI[d.emotion]} ${EMOTION_LABEL[d.emotion]} (Start Mood - Turn 1)
+            <div style="font-weight: 800; font-size: 13px; color: ${emoColor}; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 4px; letter-spacing: 0.04em;">
+              ${emoCaps} (Start Mood - Turn 1)
             </div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.85);">
-              <div><strong>Initial Conversations:</strong> ${d.value.toLocaleString()}</div>
-              <div><strong>Percentage of Start Emotions:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
+            <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
+              <div><strong>Volume:</strong> ${d.value.toLocaleString()} conversations</div>
+              <div><strong>Share of Total Dataset:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
             </div>
           `);
       })
@@ -594,16 +604,19 @@ export function SankeyDiagram({
       .on("mouseover", (event, d) => {
         setHoveredTargetIdx(d.index);
 
+        const emoColor = EMOTION_HEX[d.emotion];
+        const emoCaps = EMOTION_LABEL[d.emotion].toUpperCase();
+
         tooltipDiv
           .style("visibility", "visible")
           .style("opacity", "1")
           .html(`
-            <div style="font-weight: 700; font-size: 13px; color: ${EMOTION_HEX[d.emotion]}; margin-bottom: 4px;">
-              ${EMOTION_EMOJI[d.emotion]} ${EMOTION_LABEL[d.emotion]} (End Turn)
+            <div style="font-weight: 800; font-size: 13px; color: ${emoColor}; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 4px; letter-spacing: 0.04em;">
+              ${emoCaps} (End Mood - Final Turn)
             </div>
-            <div style="font-size: 11px; color: rgba(255,255,255,0.85);">
-              <div><strong>Final Conversations:</strong> ${d.value.toLocaleString()}</div>
-              <div><strong>Percentage of End Emotions:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
+            <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
+              <div><strong>Volume:</strong> ${d.value.toLocaleString()} conversations</div>
+              <div><strong>Share of Total Dataset:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
             </div>
           `);
       })
@@ -689,9 +702,9 @@ export function SankeyDiagram({
               Top Overall Flow
             </span>
             <div className="text-sm font-bold mt-1 text-foreground flex items-center gap-1.5">
-              <span>{stats.maxTransition.srcEmoji} Start {stats.maxTransition.srcLabel}</span>
+              <span>Start {stats.maxTransition.srcLabel}</span>
               <span className="text-muted-foreground">➔</span>
-              <span>{stats.maxTransition.tgtEmoji} End {stats.maxTransition.tgtLabel}</span>
+              <span>End {stats.maxTransition.tgtLabel}</span>
             </div>
             <span className="text-xs font-semibold text-primary block mt-0.5">
               {stats.maxTransition.count.toLocaleString()} conversations ({fmtPct(stats.maxTransition.share, 1)})
@@ -703,7 +716,7 @@ export function SankeyDiagram({
               Frustration Recovery Rate
             </span>
             <div className="text-sm font-bold mt-1 text-frustration flex items-center gap-1">
-              <span>😡 Turn 1 Frustration</span>
+              <span>Turn 1 Frustration</span>
               <span className="text-muted-foreground">➔</span>
               <span className="text-satisfaction">Non-Frustrated End</span>
             </div>
@@ -717,9 +730,9 @@ export function SankeyDiagram({
               Satisfaction Retention Rate
             </span>
             <div className="text-sm font-bold mt-1 text-satisfaction flex items-center gap-1">
-              <span>🤩 Turn 1 Satisfaction</span>
+              <span>Turn 1 Satisfaction</span>
               <span className="text-muted-foreground">➔</span>
-              <span>🤩 End Satisfaction</span>
+              <span>End Satisfaction</span>
             </div>
             <span className="text-xs font-semibold text-satisfaction block mt-0.5">
               {fmtPct(stats.satRetention, 1)} retained until end turn

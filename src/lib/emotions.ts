@@ -23,7 +23,7 @@ export const EMOTION_LABEL: Record<Emotion, string> = {
 export const EMOTION_HEX: Record<Emotion, string> = {
   frustration: "#ef4444",
   caution: "#f59e0b",
-  neutral: "#6b7280",
+  neutral: "#3b82f6",
   satisfaction: "#10b981",
 };
 
