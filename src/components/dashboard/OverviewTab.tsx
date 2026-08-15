@@ -560,15 +560,6 @@ export function OverviewTab({
             })}
           </div>
         }
-        insight={
-          <>
-            Read this as a single number per mood: a frustrated prompt gets a{" "}
-            {targetEmotion} answer{" "}
-            {fmtPct(realPAnswer("frustration", targetEmotion), 0)} of the time,
-            whereas a satisfied prompt gets a {targetEmotion} answer{" "}
-            {fmtPct(realPAnswer("satisfaction", targetEmotion), 0)}.
-          </>
-        }
       >
         <MeanBarChart
           data={chanceOfTargetData}
