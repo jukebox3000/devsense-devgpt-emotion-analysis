@@ -3,7 +3,6 @@ import { useLoaderData } from "@tanstack/react-router";
 import {
   EMOTIONS,
   EMOTION_LABEL,
-  EMOTION_EMOJI,
   type Emotion,
   type Conversation,
 } from "@/lib/emotions";

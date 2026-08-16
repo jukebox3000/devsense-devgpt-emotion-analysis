@@ -1,17 +1,12 @@
 import { useMemo, useState } from "react";
 import { useLoaderData } from "@tanstack/react-router";
 import {
-  getAllTurns,
-  pearson,
-  answerValenceByPromptEmotion,
   emotionByTurnDepth,
   transitionMatrix,
   languageMatrix,
 } from "@/lib/analysis";
 import {
-  EMOTIONS,
   EMOTION_LABEL,
-  EMOTION_VALENCE,
   emotionVar,
   type Emotion,
   type Conversation,
@@ -46,16 +41,6 @@ export function ImpactTab({
   const [valueFormat, setValueFormat] = useState<
     "percentage" | "count" | "both"
   >("both");
-
-  const allTurns = useMemo(
-    () => getAllTurns(filteredConversations),
-    [filteredConversations],
-  );
-
-  const valence = useMemo(
-    () => answerValenceByPromptEmotion(filteredConversations),
-    [filteredConversations],
-  );
   const depth = useMemo(
     () => emotionByTurnDepth(filteredConversations),
     [filteredConversations],
@@ -187,5 +172,3 @@ export function ImpactTab({
     </div>
   );
 }
-
-export { EMOTION_LABEL };
