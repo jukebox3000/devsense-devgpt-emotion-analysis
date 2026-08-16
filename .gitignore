@@ -1,0 +1,5 @@
+node_modules
+
+# Large local datasets
+Emotion scored_fin/
+DevGPT_cleaned/3.conversion_scored_codedetails.csv

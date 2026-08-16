@@ -1,0 +1,67 @@
+import { useEffect, useRef, useState } from "react";
+
+/** Observes a container and returns its pixel width (for responsive D3 SVGs). */
+export function useChartWidth<T extends HTMLElement = HTMLDivElement>() {
+  const ref = useRef<T | null>(null);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width ?? 0;
+      setWidth(Math.round(w));
+    });
+    ro.observe(el);
+    setWidth(Math.round(el.getBoundingClientRect().width));
+    return () => ro.disconnect();
+  }, []);
+
+  return { ref, width };
+}
+
+export const fmtPct = (v: number, digits = 1) => `${(v * 100).toFixed(digits)}%`;
+export const fmtNum = (v: number, digits = 2) => v.toFixed(digits);
+
+export function useIsLoading() {
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== "undefined") {
+      return !!(window as any).__isLoading;
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    if (!isLoading) return;
+
+    // Listen for the custom event
+    const handleFinished = () => {
+      setIsLoading(false);
+    };
+
+    window.addEventListener("loading-finished", handleFinished);
+
+    // Check immediately in case event already fired
+    if (typeof window !== "undefined" && !(window as any).__isLoading) {
+      setIsLoading(false);
+      return () => {
+        window.removeEventListener("loading-finished", handleFinished);
+      };
+    }
+
+    // Polling fallback: if event was missed (e.g. during HMR), check periodically
+    const poll = setInterval(() => {
+      if (typeof window !== "undefined" && !(window as any).__isLoading) {
+        setIsLoading(false);
+        clearInterval(poll);
+      }
+    }, 300);
+
+    return () => {
+      window.removeEventListener("loading-finished", handleFinished);
+      clearInterval(poll);
+    };
+  }, [isLoading]);
+
+  return isLoading;
+}
