@@ -229,6 +229,15 @@ export function OverviewTab({
 
   const [targetEmotion, setTargetEmotion] = useState<Emotion>("satisfaction");
 
+  const targetAdjective =
+    targetEmotion === "satisfaction"
+      ? "satisfactory"
+      : targetEmotion === "frustration"
+        ? "frustrated"
+        : targetEmotion === "caution"
+          ? "cautious"
+          : "neutral";
+
   const chanceOfTargetData = useMemo(() => {
     return visibleEmotions.map((e) => ({
       emotion: e,
@@ -245,31 +254,25 @@ export function OverviewTab({
 
   const frustrationRecoveryData = useMemo(() => {
     const list = kpiData.conversations || [];
-    let totalFrustratedTurns = 0;
-    let recoveredTurns = 0;
+    let totalFrustratedConvs = 0;
+    let recoveredConvs = 0;
 
     for (const conv of list) {
-      if (!conv.turns || conv.turns.length < 2) continue;
-      for (let i = 0; i < conv.turns.length - 1; i++) {
-        const currentTurn = conv.turns[i];
-        const nextTurn = conv.turns[i + 1];
-        if (
-          currentTurn &&
-          nextTurn &&
-          currentTurn.promptEmotion === "frustration"
-        ) {
-          totalFrustratedTurns++;
-          if (nextTurn.promptEmotion !== "frustration") {
-            recoveredTurns++;
-          }
+      if (!conv.turns || conv.turns.length === 0) continue;
+      const firstTurn = conv.turns[0];
+      const lastTurn = conv.turns[conv.turns.length - 1];
+      if (firstTurn && firstTurn.promptEmotion === "frustration") {
+        totalFrustratedConvs++;
+        if (lastTurn && lastTurn.promptEmotion !== "frustration") {
+          recoveredConvs++;
         }
       }
     }
 
     const rate =
-      totalFrustratedTurns > 0 ? recoveredTurns / totalFrustratedTurns : 0;
+      totalFrustratedConvs > 0 ? recoveredConvs / totalFrustratedConvs : 0;
 
-    return { rate, count: recoveredTurns, total: totalFrustratedTurns };
+    return { rate, count: recoveredConvs, total: totalFrustratedConvs };
   }, [kpiData.conversations]);
 
   return (
@@ -369,7 +372,12 @@ export function OverviewTab({
 
       <Panel
         title="Overall emotion distribution: Developer vs ChatGPT"
-        subtitle="Inner ring: Developer prompts (solid) · Outer ring: GPT responses (striped)"
+        subtitle={
+          <>
+            Inner solid ring: <b>Developer prompts</b> · Outer striped ring:{" "}
+            <b>GPT responses</b>
+          </>
+        }
       >
         <div className="py-2">
           <DualRingDonut
@@ -392,18 +400,12 @@ export function OverviewTab({
               style={{ color: EMOTION_HEX[targetEmotion] }}
               className="text-xl font-bold capitalize"
             >
-              {targetEmotion === "satisfaction"
-                ? "satisfactory"
-                : targetEmotion === "frustration"
-                  ? "frustrated"
-                  : targetEmotion === "caution"
-                    ? "cautious"
-                    : "neutral"}
+              {targetAdjective}
             </span>{" "}
             response
           </>
         }
-        subtitle={`Probability of receiving a ${EMOTION_LABEL[targetEmotion].toLowerCase()} GPT answer per developer prompt mood`}
+        subtitle={`Probability of receiving a ${targetAdjective.toLowerCase()} GPT answer per developer prompt mood`}
         action={
           <div className="flex items-center gap-1 bg-muted/70 p-1 rounded-lg border border-border/60">
             {EMOTIONS.map((emo) => {

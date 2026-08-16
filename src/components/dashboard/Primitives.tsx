@@ -10,7 +10,7 @@ export function Panel({
   className,
 }: {
   title: ReactNode;
-  subtitle?: string;
+  subtitle?: ReactNode;
   children: ReactNode;
   insight?: ReactNode;
   action?: ReactNode;
@@ -67,12 +67,7 @@ export function Panel({
       <div className="flex-1 min-h-[200px]">
         {isVisible ? children : null}
       </div>
-      {insight && (
-        <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-muted-foreground">
-          <span className="font-semibold text-foreground">Reading: </span>
-          {insight}
-        </p>
-      )}
+
     </section>
   );
 }

@@ -128,7 +128,7 @@ export function ImpactTab({
         <Panel
           className="lg:col-span-2"
           title="Prompt Emotion by Programming Language"
-          subtitle="Heatmap showing count and distribution of developer prompt emotions for languages with at least one emotion count greater than 10"
+          subtitle="Distribution of developer prompt emotions for coding languages"
           insight={
             <>
               This heatmap displays developer prompt emotions broken down by

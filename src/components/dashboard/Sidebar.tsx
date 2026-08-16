@@ -30,9 +30,9 @@ export function Sidebar({
 
   return (
     <aside className="hidden lg:block h-full w-full">
-      <div className="max-w-[280px] w-full">
-        <div className="rounded-lg border border-border bg-card p-3">
-          <div className="flex flex-col items-stretch gap-4">
+      <div className="max-w-[280px] w-full h-full">
+        <div className="rounded-2xl border border-border bg-card p-4 h-full flex flex-col justify-between shadow-xs">
+          <div className="flex flex-col items-stretch gap-6">
             <div className="w-full">
               <EmojiMorph
                 shares={shares}
@@ -47,11 +47,11 @@ export function Sidebar({
               />
             </div>
 
-            <div className="w-full -mt-2">
-              <p className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider mb-2 text-left px-0.5">
+            <div className="w-full space-y-3">
+              <p className="text-[10px] font-bold text-muted-foreground/80 uppercase tracking-wider text-left px-0.5">
                 Filter by developer mood
               </p>
-              <div className="flex w-full items-center justify-between gap-1.5">
+              <div className="flex w-full items-center justify-between gap-2">
                 {EMOTIONS.map((e) => {
                   const color = emotionVar(e);
                   const isExplicitlyActive = activeFilters.includes(e);
@@ -98,10 +98,11 @@ export function Sidebar({
               </div>
               <button
                 onClick={() => setActiveFilters([])}
-                className="mt-1.5 w-full rounded-md border border-border py-1.5 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:bg-accent bg-background"
+                className="w-full rounded-md border border-border py-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-accent bg-background"
               >
-                Reset
+                Reset Filters
               </button>
+              <div className="h-6" /> {/* Generous spacing below filter buttons */}
             </div>
           </div>
         </div>

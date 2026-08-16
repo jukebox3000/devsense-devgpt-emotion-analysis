@@ -19,7 +19,7 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
   useEffect(() => {
     if (isLoading) return;
     if (!width || !svgRef.current) return;
-    const margin = { top: 8, right: 46, bottom: 26, left: 96 };
+    const margin = { top: 8, right: 16, bottom: 26, left: 96 };
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
@@ -146,15 +146,6 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
         .style("font-size", "11px")
         .style("fill", row.labelColor ?? "var(--foreground)")
         .text(row.label);
-
-      g.append("text")
-        .attr("x", w + 8)
-        .attr("y", y(row.label)! + y.bandwidth() / 2)
-        .attr("dy", "0.35em")
-        .style("font-size", "10px")
-        .style("font-variant-numeric", "tabular-nums")
-        .style("fill", "var(--muted-foreground)")
-        .text(`n=${row.total}`);
     });
 
     return () => {

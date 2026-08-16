@@ -1,6 +1,6 @@
-import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-D2wWKvFz.mjs";
+import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-okUkyzOC.mjs";
 import processModule from "node:process";
-//#region node_modules/.nitro/vite/services/ssr/assets/kpi-server-BhxFbbkw.js
+//#region node_modules/.nitro/vite/services/ssr/assets/kpi-server-BMoe7uVE.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {
@@ -37,9 +37,9 @@ var processKpis_createServerFn_handler = createServerRpc({
 var processKpis = createServerFn({ method: "GET" }).handler(processKpis_createServerFn_handler, async () => {
 	const fs = await import("node:fs");
 	const path = await import("node:path");
-	const metadataPath = path.join(processModule.cwd(), "Emotion_UNIQUE", "1_metadata.csv");
-	const chatgptPath = path.join(processModule.cwd(), "Emotion_UNIQUE", "2_chatgpt_details.csv");
-	const filePath = path.join(processModule.cwd(), "Emotion_UNIQUE", "unique_prompt_answer.csv");
+	const metadataPath = path.join(processModule.cwd(), "DevGPT_cleaned", "1_metadata.csv");
+	const chatgptPath = path.join(processModule.cwd(), "DevGPT_cleaned", "2_chatgpt_details.csv");
+	const filePath = path.join(processModule.cwd(), "DevGPT_cleaned", "unique_prompt_answer.csv");
 	console.log(`[KPI Server] Starting stream-parsing files...`);
 	const start = Date.now();
 	const metadataMap = /* @__PURE__ */ new Map();
@@ -254,7 +254,7 @@ var processKpis = createServerFn({ method: "GET" }).handler(processKpis_createSe
 			turns: group.turns
 		});
 	}
-	const endedFilePath = path.join(processModule.cwd(), "Emotion_UNIQUE", "2_chatgpt_details.csv");
+	const endedFilePath = path.join(processModule.cwd(), "DevGPT_cleaned", "2_chatgpt_details.csv");
 	let resolutionRate = 0;
 	if (fs.existsSync(endedFilePath)) {
 		const lines = fs.readFileSync(endedFilePath, "utf8").split(/\r?\n/);

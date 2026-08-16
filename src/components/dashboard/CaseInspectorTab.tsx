@@ -246,7 +246,7 @@ export function CaseInspectorTab({
     <div className="flex flex-col h-full space-y-3.5 relative overflow-hidden">
       {/* Top Heatmap Panel */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-card p-3.5 rounded-2xl border border-border shrink-0 shadow-sm">
-        <div className="flex-1 w-full overflow-hidden">
+        <div className="flex-1 w-full overflow-hidden flex items-center justify-between">
           <SelectedConversationHeatmap
             conversation={selectedConversation}
             highlightTurnId={highlightTurnId}
@@ -258,6 +258,14 @@ export function CaseInspectorTab({
               }
             }}
           />
+          {selectedId && isMinimized && (
+            <button
+              onClick={() => setIsMinimized(false)}
+              className="ml-3 shrink-0 text-xs text-primary hover:underline flex items-center gap-1 bg-primary/10 px-2.5 py-1.5 rounded-lg border border-primary/20"
+            >
+              <MessageSquare className="size-3.5" /> Re-open viewer
+            </button>
+          )}
         </div>
       </div>
 
@@ -523,19 +531,6 @@ export function CaseInspectorTab({
               )}
             </tbody>
           </table>
-        </div>
-        <div className="bg-card border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center">
-          <span>
-            Displaying {sortedList.length} records
-          </span>
-          {selectedId && (
-            <button
-              onClick={() => setIsMinimized(false)}
-              className="text-primary hover:underline flex items-center gap-1"
-            >
-              <MessageSquare className="size-3.5" /> Re-open viewer
-            </button>
-          )}
         </div>
       </div>
 

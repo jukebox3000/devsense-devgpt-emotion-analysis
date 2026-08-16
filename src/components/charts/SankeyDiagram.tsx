@@ -143,6 +143,8 @@ export function SankeyDiagram({
       frustTotalCount: frustRowTotal,
       satRetention,
       maxTransition: {
+        srcEmo,
+        tgtEmo,
         srcLabel: EMOTION_LABEL[srcEmo],
         srcEmoji: EMOTION_EMOJI[srcEmo],
         tgtLabel: EMOTION_LABEL[tgtEmo],
@@ -782,46 +784,56 @@ export function SankeyDiagram({
           className={`grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-border/40 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
         >
-          <div className="p-3 rounded-lg border border-border/40 bg-muted/20">
+          <div className="p-3 rounded-lg border border-border/40 bg-muted/20 flex flex-col justify-between">
             <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider block">
-              Top Overall Flow
+              Most Frequent Flow
             </span>
-            <div className="text-sm font-bold mt-1 text-foreground flex items-center gap-1.5">
-              <span>Start {stats.maxTransition.srcLabel}</span>
-              <span className="text-muted-foreground">➔</span>
-              <span>End {stats.maxTransition.tgtLabel}</span>
+            <div className="text-2xl font-bold font-['Oswald'] tracking-tight text-foreground mt-1">
+              {fmtPct(stats.maxTransition.share, 1)}{" "}
+              <span className="text-xs font-medium text-muted-foreground font-sans tracking-normal ml-0.5">
+                ({stats.maxTransition.count.toLocaleString()} convs)
+              </span>
             </div>
-            <span className="text-xs font-semibold text-primary block mt-0.5">
-              {stats.maxTransition.count.toLocaleString()} conversations ({fmtPct(stats.maxTransition.share, 1)})
-            </span>
+            <div className="text-xs font-semibold mt-2 flex items-center gap-1.5">
+              <span style={{ color: EMOTION_HEX[stats.maxTransition.srcEmo] }}>
+                Start {stats.maxTransition.srcLabel}
+              </span>
+              <span className="text-muted-foreground">➔</span>
+              <span style={{ color: EMOTION_HEX[stats.maxTransition.tgtEmo] }}>
+                End {stats.maxTransition.tgtLabel}
+              </span>
+            </div>
           </div>
 
-          <div className="p-3 rounded-lg border border-border/40 bg-muted/20">
+          <div className="p-3 rounded-lg border border-border/40 bg-muted/20 flex flex-col justify-between">
             <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider block">
               Frustration Recovery Rate
             </span>
-            <div className="text-sm font-bold mt-1 text-frustration flex items-center gap-1">
-              <span>Turn 1 Frustration</span>
-              <span className="text-muted-foreground">➔</span>
-              <span className="text-satisfaction">Non-Frustrated End</span>
+            <div className="text-2xl font-bold font-['Oswald'] tracking-tight text-foreground mt-1">
+              {fmtPct(stats.frustRecoveryRate, 1)}{" "}
+              <span className="text-xs font-medium text-muted-foreground font-sans tracking-normal ml-0.5">
+                ({stats.frustRecoveredCount} of {stats.frustTotalCount} convs)
+              </span>
             </div>
-            <span className="text-xs font-semibold text-satisfaction block mt-0.5">
-              {fmtPct(stats.frustRecoveryRate, 1)} ({stats.frustRecoveredCount} of {stats.frustTotalCount} convs)
-            </span>
+            <div className="text-xs font-semibold mt-2 flex items-center gap-1">
+              <span style={{ color: EMOTION_HEX.frustration }}>Began frustrated</span>
+              <span className="text-muted-foreground">➔</span>
+              <span style={{ color: EMOTION_HEX.satisfaction }}>Ended calmer</span>
+            </div>
           </div>
 
-          <div className="p-3 rounded-lg border border-border/40 bg-muted/20">
+          <div className="p-3 rounded-lg border border-border/40 bg-muted/20 flex flex-col justify-between">
             <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider block">
               Satisfaction Retention Rate
             </span>
-            <div className="text-sm font-bold mt-1 text-satisfaction flex items-center gap-1">
-              <span>Turn 1 Satisfaction</span>
-              <span className="text-muted-foreground">➔</span>
-              <span>End Satisfaction</span>
+            <div className="text-2xl font-bold font-['Oswald'] tracking-tight text-foreground mt-1">
+              {fmtPct(stats.satRetention, 1)}
             </div>
-            <span className="text-xs font-semibold text-satisfaction block mt-0.5">
-              {fmtPct(stats.satRetention, 1)} retained until end turn
-            </span>
+            <div className="text-xs font-semibold mt-2 flex items-center gap-1">
+              <span style={{ color: EMOTION_HEX.satisfaction }}>Began satisfied</span>
+              <span className="text-muted-foreground">➔</span>
+              <span style={{ color: EMOTION_HEX.satisfaction }}>Ended satisfied</span>
+            </div>
           </div>
         </div>
       )}
