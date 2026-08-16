@@ -235,6 +235,7 @@ export function TrendLineChart({
       .on("mousemove", function (event) {
         const [mouseX, mouseY] = d3.pointer(event, g.node());
         const { emotion: e, point: d } = findNearestPoint(mouseX, mouseY);
+        if (!d) return;
 
         // Highlight nearest point circle
         g.selectAll("circle")
