@@ -109,8 +109,8 @@ export function ImpactTab({
 
         <Panel
           className="lg:col-span-2"
-          title="Full answer mix per developer mood"
-          subtitle="Each bar is 100% of the responses given to that developer emotion"
+          title="Response Emotions by Developer Mood"
+          subtitle="How LLM responds to each developer prompt"
           insight={
             <>
               Every row is dominated by neutral and caution, but the
