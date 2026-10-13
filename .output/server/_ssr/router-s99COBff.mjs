@@ -1,34 +1,15 @@
 import { r as __toESM } from "../_runtime.mjs";
 import { a as require_jsx_runtime, o as require_react } from "../_libs/@radix-ui/react-collection+[...].mjs";
 import { _ as Link, f as createRouter, g as createRootRouteWithContext, h as createFileRoute, l as Scripts, m as lazyRouteComponent, p as Outlet, u as HeadContent, y as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
-import { i as getServerFnById, n as __exportAll, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-D2wWKvFz.mjs";
+import { i as getServerFnById, n as __exportAll, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-okUkyzOC.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-CE0xHdFs.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-s99COBff.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-DEnl_QxJ.css";
+var styles_default = "/assets/styles-CF1HIMQV.css";
 var DevGPT_Logo_default = "/assets/DevGPT_Logo-D0xFZSbc.png";
 var animationloader_default = "/assets/animationloader-CooiT8Jq.mp4";
-function reportLovableError(error, context = {}) {
-	if (typeof window === "undefined") return;
-	window.__lovableEvents?.captureException?.(error, {
-		source: "react_error_boundary",
-		route: window.location.pathname,
-		...context
-	}, {
-		mechanism: "react_error_boundary",
-		handled: false,
-		severity: "error"
-	});
-	const message = error instanceof Response ? `Response ${error.status}${error.url ? ` at ${error.url}` : ""}` : error instanceof Error ? error.message : String(error);
-	const stack = error instanceof Error ? error.stack : void 0;
-	window.__lovableReportRuntimeError?.({
-		message,
-		...stack !== void 0 && { stack },
-		filename: window.location.pathname
-	});
-}
 if (typeof window !== "undefined") window.__isLoading = true;
 function LoadingScreen({ isFading }) {
 	const videoRef = (0, import_react.useRef)(null);
@@ -127,9 +108,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }) {
 	console.error(error);
 	const router = useRouter();
-	(0, import_react.useEffect)(() => {
-		reportLovableError(error, { boundary: "tanstack_root_error_component" });
-	}, [error]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		className: "flex min-h-screen items-center justify-center bg-background px-4",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -170,34 +148,22 @@ var Route$1 = createRootRouteWithContext()({
 				name: "viewport",
 				content: "width=device-width, initial-scale=1"
 			},
-			{ title: "Lovable App" },
+			{ title: "DevGPT Emotion Analytics Dashboard" },
 			{
 				name: "description",
-				content: "Lovable Generated Project"
-			},
-			{
-				name: "author",
-				content: "Lovable"
+				content: "Developer–LLM Affect Dashboard analyzing emotion in developer–ChatGPT conversations."
 			},
 			{
 				property: "og:title",
-				content: "Lovable App"
+				content: "DevGPT Emotion Analytics Dashboard"
 			},
 			{
 				property: "og:description",
-				content: "Lovable Generated Project"
+				content: "Developer–LLM Affect Dashboard analyzing emotion in developer–ChatGPT conversations."
 			},
 			{
 				property: "og:type",
 				content: "website"
-			},
-			{
-				name: "twitter:card",
-				content: "summary_large_image"
-			},
-			{
-				name: "twitter:site",
-				content: "@Lovable"
 			}
 		],
 		links: [
@@ -275,7 +241,7 @@ var createSsrRpc = (functionId) => {
 	});
 };
 var processKpis = createServerFn({ method: "GET" }).handler(createSsrRpc("a15dbfb3c2bd69dfb87d0fc3b9afc9f03987c63ee02bfbf7eddbe186c17ea438"));
-var $$splitComponentImporter = () => import("./routes-C3hjX554.mjs");
+var $$splitComponentImporter = () => import("./routes-Dt2dbQ94.mjs");
 var title = "DevGPT Emotion Analytics — Developer–LLM Affect Dashboard";
 var description = "Thesis dashboard analysing emotion in developer–ChatGPT conversations: distribution, carryover effects, escalation trends and impact of developer affect on assistant responses.";
 var rootRouteChildren = { IndexRoute: createFileRoute("/")({

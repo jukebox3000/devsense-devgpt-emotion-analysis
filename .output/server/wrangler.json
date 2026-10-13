@@ -1,11 +1,11 @@
 {
-  "compatibility_date": "2026-08-13",
+  "compatibility_date": "2026-08-16",
   "main": "index.mjs",
   "assets": {
     "binding": "ASSETS",
     "directory": "../public"
   },
-  "name": "jukebox3000-devsense-devgpt-emotion-analysis",
+  "name": "jithin-joseph-michael-developer-llm-analytics-dashboard",
   "compatibility_flags": [
     "nodejs_compat"
   ],

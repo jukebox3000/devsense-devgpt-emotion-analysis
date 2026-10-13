@@ -3,7 +3,6 @@ import { useLoaderData } from "@tanstack/react-router";
 import {
   EMOTIONS,
   EMOTION_LABEL,
-  EMOTION_EMOJI,
   type Emotion,
   type Conversation,
 } from "@/lib/emotions";
@@ -247,7 +246,7 @@ export function CaseInspectorTab({
     <div className="flex flex-col h-full space-y-3.5 relative overflow-hidden">
       {/* Top Heatmap Panel */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-card p-3.5 rounded-2xl border border-border shrink-0 shadow-sm">
-        <div className="flex-1 w-full overflow-hidden">
+        <div className="flex-1 w-full overflow-hidden flex items-center justify-between">
           <SelectedConversationHeatmap
             conversation={selectedConversation}
             highlightTurnId={highlightTurnId}
@@ -259,6 +258,14 @@ export function CaseInspectorTab({
               }
             }}
           />
+          {selectedId && isMinimized && (
+            <button
+              onClick={() => setIsMinimized(false)}
+              className="ml-3 shrink-0 text-xs text-primary hover:underline flex items-center gap-1 bg-primary/10 px-2.5 py-1.5 rounded-lg border border-primary/20"
+            >
+              <MessageSquare className="size-3.5" /> Re-open viewer
+            </button>
+          )}
         </div>
       </div>
 
@@ -525,19 +532,6 @@ export function CaseInspectorTab({
             </tbody>
           </table>
         </div>
-        <div className="bg-card border-t border-border p-3 text-xs text-muted-foreground flex justify-between items-center">
-          <span>
-            Displaying {sortedList.length} records
-          </span>
-          {selectedId && (
-            <button
-              onClick={() => setIsMinimized(false)}
-              className="text-primary hover:underline flex items-center gap-1"
-            >
-              <MessageSquare className="size-3.5" /> Re-open viewer
-            </button>
-          )}
-        </div>
       </div>
 
       {/* Floating resizable Chat Viewer */}
@@ -803,6 +797,7 @@ function SelectedConversationHeatmap({
     score?: number | undefined;
     turnSeq: number;
     avatar?: string | undefined;
+    message?: string | undefined;
   }>({
     visible: false,
     x: 0,
@@ -828,6 +823,7 @@ function SelectedConversationHeatmap({
     emotion?: Emotion,
     score?: number,
     avatar?: string,
+    message?: string,
   ) => {
     setTooltip({
       visible: true,
@@ -838,6 +834,7 @@ function SelectedConversationHeatmap({
       emotion,
       score,
       avatar,
+      message,
     });
   };
 
@@ -899,6 +896,7 @@ function SelectedConversationHeatmap({
                         t.promptEmotion,
                         t.promptScore,
                         devLogo,
+                        t.prompt,
                       )
                     }
                     onMouseMove={handleMouseMove}
@@ -939,6 +937,7 @@ function SelectedConversationHeatmap({
                         t.answerEmotion,
                         t.answerScore,
                         gptLogo,
+                        t.answer,
                       )
                     }
                     onMouseMove={handleMouseMove}
@@ -995,19 +994,19 @@ function SelectedConversationHeatmap({
       {/* Floating Tooltip Component */}
       {tooltip.visible && (
         <div
-          className="fixed z-[99999] pointer-events-none transition-opacity duration-150"
+          className="fixed z-[99999] pointer-events-none transition-opacity duration-150 max-w-[280px]"
           style={{
-            top: tooltip.y - 70,
+            top: tooltip.y - 95,
             left: tooltip.x + 14,
-            background: "rgba(15, 23, 42, 0.95)",
-            backdropFilter: "blur(8px)",
+            background: "rgba(15, 23, 42, 0.96)",
+            backdropFilter: "blur(12px)",
             border: "1px solid rgba(255, 255, 255, 0.15)",
             padding: "8px 12px",
             borderRadius: "8px",
             color: "#fff",
             fontSize: "11px",
             fontWeight: 600,
-            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+            boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)",
           }}
         >
           <div className="flex items-center gap-1.5 mb-1">
@@ -1030,14 +1029,16 @@ function SelectedConversationHeatmap({
               >
                 {EMOTION_LABEL[tooltip.emotion]}
               </span>
-              <span className="text-white text-[12px] font-bold">
-                {fmtPct(tooltip.score || 0, 0)}
-              </span>
             </div>
           ) : (
             <span className="text-white text-xs font-bold">
               Click to jump to Turn {tooltip.turnSeq}
             </span>
+          )}
+          {tooltip.message && (
+            <p className="mt-1.5 text-[11px] font-normal text-slate-300 line-clamp-3 leading-relaxed border-t border-slate-700/60 pt-1.5">
+              "{tooltip.message}"
+            </p>
           )}
         </div>
       )}

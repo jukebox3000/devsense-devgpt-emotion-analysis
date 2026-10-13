@@ -2,7 +2,7 @@ import { r as __toESM } from "../_runtime.mjs";
 import { n as cubicOut, t as cubicInOut } from "../_libs/d3+[...].mjs";
 import { a as require_jsx_runtime, o as require_react } from "../_libs/@radix-ui/react-collection+[...].mjs";
 import { v as useLoaderData } from "../_libs/@tanstack/react-router+[...].mjs";
-import { n as DevGPT_Logo_default } from "./router-CE0xHdFs.mjs";
+import { n as DevGPT_Logo_default } from "./router-s99COBff.mjs";
 import { i as Trigger, n as List, r as Root2, t as Content } from "../_libs/radix-ui__react-tabs.mjs";
 import { t as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
@@ -13,7 +13,7 @@ import { t as select_default } from "../_libs/d3-selection.mjs";
 import { n as value_default } from "../_libs/d3-interpolate.mjs";
 import { i as arc_default, n as pie_default, r as line_default, t as monotoneX } from "../_libs/d3-shape.mjs";
 import { a as Funnel, c as Check, i as Maximize2, l as ArrowUpDown, n as Minus, o as ChevronUp, r as MessageSquare, s as ChevronDown, t as X } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-C3hjX554.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-Dt2dbQ94.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function cn(...inputs) {
@@ -46,18 +46,17 @@ var EMOTIONS = [
 ];
 /** CSS custom-property reference per emotion (defined in src/styles.css). */
 var emotionVar = (e) => `var(--emotion-${e})`;
-/** Ordered valence scale used for ordinal/regression style analysis. */
-var EMOTION_VALENCE = {
-	frustration: -1,
-	caution: -.33,
-	neutral: .33,
-	satisfaction: 1
-};
 var EMOTION_LABEL = {
 	frustration: "Frustration",
 	caution: "Caution",
 	neutral: "Neutral",
 	satisfaction: "Satisfaction"
+};
+var EMOTION_HEX$1 = {
+	frustration: "#ef4444",
+	caution: "#f59e0b",
+	neutral: "#3b82f6",
+	satisfaction: "#10b981"
 };
 var EMOTION_EMOJI = {
 	frustration: "😡",
@@ -65,109 +64,6 @@ var EMOTION_EMOJI = {
 	neutral: "😐",
 	satisfaction: "🤩"
 };
-function getAllTurns(conversations) {
-	return conversations.flatMap((c) => c.turns.map((t) => ({
-		...t,
-		conv: c
-	})));
-}
-var share = (n, total) => total ? n / total : 0;
-function distribution(conversations, key) {
-	const turns = getAllTurns(conversations);
-	const total = turns.length;
-	return EMOTIONS.map((e) => {
-		const count = turns.filter((t) => t[key] === e).length;
-		return {
-			emotion: e,
-			count,
-			share: share(count, total)
-		};
-	});
-}
-/** Row-normalised P(answer emotion | prompt emotion) with raw counts. */
-function transitionMatrix(conversations) {
-	const turns = getAllTurns(conversations);
-	return EMOTIONS.map((p) => {
-		const rows = turns.filter((t) => t.promptEmotion === p);
-		return {
-			prompt: p,
-			total: rows.length,
-			cells: EMOTIONS.map((a) => {
-				const count = rows.filter((t) => t.answerEmotion === a).length;
-				return {
-					answer: a,
-					count,
-					share: share(count, rows.length)
-				};
-			})
-		};
-	});
-}
-/** Answer valence (mean) grouped by prompt emotion — the "impact" measure. */
-function answerValenceByPromptEmotion(conversations) {
-	const turns = getAllTurns(conversations);
-	return EMOTIONS.map((e) => {
-		const rows = turns.filter((t) => t.promptEmotion === e);
-		return {
-			emotion: e,
-			mean: rows.reduce((s, t) => s + EMOTION_VALENCE[t.answerEmotion], 0) / (rows.length || 1),
-			n: rows.length
-		};
-	});
-}
-/** Frustration share of developer prompts by turn depth (escalation curve). */
-function emotionByTurnDepth(conversations) {
-	const turns = getAllTurns(conversations);
-	return Array.from({ length: 12 }, (_, i) => {
-		const depth = i + 1;
-		const rows = turns.filter((t) => t.index === depth);
-		const point = {
-			depth,
-			n: rows.length,
-			frustration: 0,
-			caution: 0,
-			neutral: 0,
-			satisfaction: 0
-		};
-		for (const e of EMOTIONS) point[e] = share(rows.filter((r) => r.promptEmotion === e).length, rows.length);
-		return point;
-	}).filter((p) => p.n >= 25);
-}
-var EXCLUDED_LANGUAGES = /* @__PURE__ */ new Set([
-	"unknown",
-	"plpgsql",
-	"shaderlab",
-	"asymptote",
-	"jinja",
-	"dockerfile",
-	"batchfile",
-	"shell",
-	"astro",
-	"codeql",
-	"jupyter notebook",
-	"javascript",
-	"c",
-	"kotlin",
-	"css"
-]);
-/** Language x developer-emotion share matrix for the heatmap. */
-function languageMatrix(conversations, minCount = 10) {
-	const turns = getAllTurns(conversations);
-	return [...new Set(turns.map((t) => t.conv.language))].sort().map((lang) => {
-		const rows = turns.filter((t) => t.conv.language === lang);
-		return {
-			row: lang,
-			total: rows.length,
-			cells: EMOTIONS.map((e) => ({
-				col: e,
-				share: share(rows.filter((r) => r.promptEmotion === e).length, rows.length),
-				count: rows.filter((r) => r.promptEmotion === e).length
-			}))
-		};
-	}).filter((r) => !EXCLUDED_LANGUAGES.has(r.row.trim().toLowerCase()) && r.cells.some((c) => c.count > minCount)).sort((a, b) => {
-		return (a.cells.find((c) => c.col === "frustration")?.share ?? 0) - (b.cells.find((c) => c.col === "frustration")?.share ?? 0);
-	});
-}
 /** Observes a container and returns its pixel width (for responsive D3 SVGs). */
 function useChartWidth() {
 	const ref = (0, import_react.useRef)(null);
@@ -255,8 +151,8 @@ function StackedBarChart({ rows, height = 260 }) {
 				return seg;
 			});
 			g.selectAll(`rect.r-${row.label.replace(/\W/g, "")}`).data(segs).join("rect").attr("class", `r-${row.label.replace(/\W/g, "")}`).attr("x", (d) => x(d.x0)).attr("y", y(row.label)).attr("width", 0).attr("height", y.bandwidth()).style("fill", (d) => emotionVar(d.key)).style("opacity", .92).style("cursor", "pointer").on("mouseover", function(event, d) {
-				const devColor = EMOTION_COLORS$4[row.label.toLowerCase()] || "#3b6fa5";
-				const gptColor = EMOTION_COLORS$4[d.key];
+				const devColor = EMOTION_COLORS$3[row.label.toLowerCase()] || "#3b6fa5";
+				const gptColor = EMOTION_COLORS$3[d.key];
 				const devLabel = row.label;
 				const gptLabel = EMOTION_LABEL[d.key];
 				tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${fmtPct(d.share)} <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} responses)</span></div>`);
@@ -290,14 +186,14 @@ function StackedBarChart({ rows, height = 260 }) {
 		})
 	});
 }
-var EMOTION_COLORS$4 = {
+var EMOTION_COLORS$3 = {
 	frustration: "#c0392b",
 	caution: "#c48f0a",
-	neutral: "#3b6fa5",
+	neutral: "#3b82f6",
 	satisfaction: "#27ae60"
 };
 /** Vertical bars of a single metric per emotion, with 95% CI whiskers. */
-function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFixed(3), zeroLine = false }) {
+function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFixed(3), zeroLine = false, targetEmotion = "satisfaction" }) {
 	const { ref, width } = useChartWidth();
 	const svgRef = (0, import_react.useRef)(null);
 	const isLoading = useIsLoading();
@@ -313,7 +209,7 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 		const w = width - margin.left - margin.right;
 		const h = height - margin.top - margin.bottom;
 		let tooltipDiv = select_default("#chart-tooltip");
-		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(15, 23, 42, 0.95)").style("backdrop-filter", "blur(8px)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "8px 12px").style("border-radius", "8px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)").style("pointer-events", "none").style("z-index", "99999");
+		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("opacity", "0").style("background", "rgba(15, 23, 42, 0.96)").style("backdrop-filter", "blur(12px) saturate(160%)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "10px 14px").style("border-radius", "10px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 10px 25px -5px rgba(0, 0, 0, 0.5)").style("pointer-events", "none").style("z-index", "99999").style("transition", "opacity 0.12s ease");
 		const svg = select_default(svgRef.current);
 		svg.selectAll("*").remove();
 		const g = svg.attr("viewBox", `0 0 ${width} ${height}`).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
@@ -324,16 +220,16 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 		if (zeroLine) g.append("line").attr("x1", 0).attr("x2", w).attr("y1", y(0)).attr("y2", y(0)).style("stroke", "var(--muted-foreground)").style("stroke-dasharray", "3 3");
 		const base = zeroLine ? y(0) : h;
 		g.selectAll("rect").data(data).join("rect").attr("x", (d) => x(d.emotion)).attr("width", x.bandwidth()).attr("y", base).attr("height", 0).attr("rx", 3).style("fill", (d) => emotionVar(d.emotion)).style("fill-opacity", .85).style("cursor", "pointer").on("mouseover", function(event, d) {
-			const devColor = EMOTION_COLORS$4[d.emotion];
-			const satColor = EMOTION_COLORS$4["satisfaction"];
+			const devColor = EMOTION_COLORS$3[d.emotion];
+			const tgtColor = EMOTION_COLORS$3[targetEmotion];
 			const devLabel = EMOTION_LABEL[d.emotion];
-			const satLabel = EMOTION_LABEL["satisfaction"];
-			tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${satColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${satLabel}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${valueFormat(d.mean)} <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(n=${d.n})</span></div>`);
+			const tgtLabel = EMOTION_LABEL[targetEmotion];
+			tooltipDiv.style("visibility", "visible").style("opacity", "1").html(`<div style="display: flex; align-items: center; gap: 4px; margin-bottom: 2px;"><span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">Developer ${devLabel}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 4px;">➔</span><span style="color: ${tgtColor}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">GPT ${tgtLabel}</span></div><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${valueFormat(d.mean)} probability <span style="font-size: 9.5px; color: #94a3b8; font-weight: 400;">(${d.n.toLocaleString()} total prompts)</span></div>`);
 			select_default(this).transition().duration(100).style("fill-opacity", 1);
 		}).on("mousemove", function(event) {
 			tooltipDiv.style("top", event.pageY - 60 + "px").style("left", event.pageX + 15 + "px");
 		}).on("mouseout", function() {
-			tooltipDiv.style("visibility", "hidden");
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
 			select_default(this).transition().duration(100).style("fill-opacity", .85);
 		}).transition().delay((_, i) => i * 90).duration(780).ease(cubicOut).attr("y", (d) => Math.min(base, y(d.mean))).attr("height", (d) => Math.abs(base - y(d.mean)));
 		data.forEach((d) => {
@@ -343,7 +239,7 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 		});
 		g.selectAll("text.val").data(data).join("text").attr("class", "val").attr("x", (d) => x(d.emotion) + x.bandwidth() / 2).attr("y", (d) => y(d.mean) < base ? y(d.mean) - 8 : y(d.mean) + 14).attr("text-anchor", "middle").style("font-size", "10px").style("font-variant-numeric", "tabular-nums").style("fill", "var(--foreground)").text((d) => valueFormat(d.mean));
 		return () => {
-			select_default("#chart-tooltip").remove();
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
 		};
 	}, [
 		data,
@@ -352,6 +248,7 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 		domain,
 		valueFormat,
 		zeroLine,
+		targetEmotion,
 		isLoading
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -362,95 +259,6 @@ function MeanBarChart({ data, domain, height = 250, valueFormat = (v) => v.toFix
 			width,
 			height
 		})
-	});
-}
-var EMOTION_COLORS$3 = {
-	frustration: "#c0392b",
-	caution: "#c48f0a",
-	neutral: "#3b6fa5",
-	satisfaction: "#27ae60"
-};
-/**
-* Side-by-side (grouped) vertical bar chart with a draw-in animation.
-* Series colours are passed in, so non-emotion series never reuse emotion hues.
-*/
-function GroupedBarChart({ groups, series, height = 300, format = (v) => `${(v * 100).toFixed(0)}%`, yMax }) {
-	const { ref, width } = useChartWidth();
-	const svgRef = (0, import_react.useRef)(null);
-	const isLoading = useIsLoading();
-	(0, import_react.useEffect)(() => {
-		if (isLoading) return;
-		if (!width || !svgRef.current) return;
-		const margin = {
-			top: 22,
-			right: 12,
-			bottom: 34,
-			left: 46
-		};
-		const w = width - margin.left - margin.right;
-		const h = height - margin.top - margin.bottom;
-		let tooltipDiv = select_default("#chart-tooltip");
-		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(15, 23, 42, 0.95)").style("backdrop-filter", "blur(8px)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "8px 12px").style("border-radius", "8px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)").style("pointer-events", "none").style("z-index", "99999");
-		const svg = select_default(svgRef.current);
-		svg.selectAll("*").remove();
-		const g = svg.attr("viewBox", `0 0 ${width} ${height}`).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-		const x0 = band().domain(groups.map((d) => d.label)).range([0, w]).paddingInner(.28).paddingOuter(.12);
-		const x1 = band().domain(series.map((s) => s.key)).range([0, x0.bandwidth()]).padding(.14);
-		const max$1 = yMax ?? (max(groups, (g2) => max(series, (s) => g2.values[s.key] ?? 0)) ?? 1) * 1.18;
-		const y = linear([0, max$1], [h, 0]);
-		g.append("g").call(axisLeft(y).ticks(5).tickSize(-w).tickFormat((d) => format(Number(d)))).call((s) => s.select(".domain").remove()).call((s) => s.selectAll(".tick line").style("stroke", "var(--grid)")).selectAll("text").style("fill", "var(--muted-foreground)").style("font-size", "10px");
-		g.append("g").attr("transform", `translate(0,${h})`).call(axisBottom(x0).tickSize(0).tickPadding(10)).call((s) => s.select(".domain").style("stroke", "var(--border)")).selectAll("text").style("fill", "var(--foreground)").style("font-size", "11px").style("font-weight", "500");
-		groups.forEach((group, gi) => {
-			const cell = g.append("g").attr("transform", `translate(${x0(group.label)},0)`);
-			series.forEach((s, si) => {
-				const v = group.values[s.key] ?? 0;
-				const delay = gi * 90 + si * 45;
-				cell.append("rect").attr("x", x1(s.key)).attr("width", x1.bandwidth()).attr("y", h).attr("height", 0).attr("rx", 3).style("fill", s.color).style("cursor", "pointer").style("fill-opacity", .9).on("mouseover", function(event) {
-					const devColor = EMOTION_COLORS$3[group.label.toLowerCase()] || "#3b6fa5";
-					tooltipDiv.style("visibility", "visible").html(`<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${group.label}</span><span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span><span style="color: ${s.color}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${s.label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${format(v)}</div>`);
-					select_default(this).transition().duration(100).style("fill-opacity", 1);
-				}).on("mousemove", function(event) {
-					tooltipDiv.style("top", event.pageY - 60 + "px").style("left", event.pageX + 15 + "px");
-				}).on("mouseout", function() {
-					tooltipDiv.style("visibility", "hidden");
-					select_default(this).transition().duration(100).style("fill-opacity", .9);
-				}).transition().delay(delay).duration(750).ease(cubicOut).attr("y", y(v)).attr("height", h - y(v));
-				cell.append("text").attr("x", x1(s.key) + x1.bandwidth() / 2).attr("y", y(v) - 7).attr("text-anchor", "middle").style("font-size", "10px").style("font-family", "var(--font-mono)").style("fill", s.color).style("opacity", 0).text(format(v)).transition().delay(delay + 420).duration(400).style("opacity", 1);
-			});
-		});
-		return () => {
-			select_default("#chart-tooltip").remove();
-		};
-	}, [
-		groups,
-		series,
-		width,
-		height,
-		format,
-		yMax,
-		isLoading
-	]);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		ref,
-		className: "w-full",
-		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
-			ref: svgRef,
-			width,
-			height
-		})
-	});
-}
-/** Small inline legend for non-emotion series. */
-function SeriesLegend({ series }) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-		className: "flex flex-wrap items-center gap-4 text-xs text-muted-foreground",
-		children: series.map((s) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-			className: "flex items-center gap-1.5",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: "size-2.5 rounded-sm",
-				style: { background: s.color }
-			}), s.label]
-		}, s.key))
 	});
 }
 var black_gpt_chat_logo_on_white_background_logo_illustration_free_vector_default = "/assets/black-gpt-chat-logo-on-white-background-logo-illustration-free-vector-BwAIPV0z.jpg";
@@ -458,7 +266,7 @@ var user_profile_icon_free_vector_658200527_default = "/assets/user-profile-icon
 var EMOTION_HEX = {
 	frustration: "#c0392b",
 	caution: "#c48f0a",
-	neutral: "#3b6fa5",
+	neutral: "#3b82f6",
 	satisfaction: "#27ae60"
 };
 function emotionGlow(emotion) {
@@ -477,7 +285,10 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 	satisfaction: ""
 } }) {
 	const svgRef = (0, import_react.useRef)(null);
+	const containerRef = (0, import_react.useRef)(null);
 	const [filter, setFilter] = (0, import_react.useState)("both");
+	const [isVisible, setIsVisible] = (0, import_react.useState)(false);
+	const hasAnimatedRef = (0, import_react.useRef)(false);
 	const devData = EMOTIONS.map((e) => ({
 		label: e,
 		count: devCounts[e] || 0
@@ -491,12 +302,25 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 	const toggleDev = () => setFilter((f) => f === "developer" ? "both" : "developer");
 	const toggleGpt = () => setFilter((f) => f === "gpt" ? "both" : "gpt");
 	(0, import_react.useEffect)(() => {
-		if (!svgRef.current) return;
+		const el = containerRef.current;
+		if (!el) return;
+		const observer = new IntersectionObserver(([entry]) => {
+			if (entry && entry.isIntersecting) setIsVisible(true);
+		}, {
+			threshold: .1,
+			rootMargin: "0px 0px -40px 0px"
+		});
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, []);
+	(0, import_react.useEffect)(() => {
+		if (!svgRef.current || !isVisible) return;
 		const svg = select_default(svgRef.current);
+		const isFirstTime = !hasAnimatedRef.current;
 		const radius = Math.min(width, height) / 2 - 5;
 		const padAngle = .015;
 		let tooltipDiv = select_default("#chart-tooltip");
-		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(15, 23, 42, 0.95)").style("backdrop-filter", "blur(8px)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "8px 12px").style("border-radius", "8px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 4px 20px rgba(0, 0, 0, 0.3)").style("pointer-events", "none").style("z-index", "99999");
+		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("opacity", "0").style("background", "rgba(15, 23, 42, 0.96)").style("backdrop-filter", "blur(12px) saturate(160%)").style("border", "1px solid rgba(255, 255, 255, 0.15)").style("padding", "10px 14px").style("border-radius", "10px").style("color", "#fff").style("font-size", "11px").style("font-weight", "600").style("box-shadow", "0 10px 25px -5px rgba(0, 0, 0, 0.5)").style("pointer-events", "none").style("z-index", "99999").style("transition", "opacity 0.12s ease");
 		const radii = {
 			dev: {
 				both: {
@@ -586,7 +410,7 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		const logoDevGroup = textGroup.select("g.logo-dev-group");
 		const logoGptGroup = textGroup.select("g.logo-gpt-group");
 		const logoDevgptGroup = textGroup.select("g.logo-devgpt-group");
-		const duration = 500;
+		const duration = isFirstTime ? 800 : 500;
 		const ease = cubicInOut;
 		if (filter === "developer") {
 			logoDevGroup.style("pointer-events", "all").transition().duration(duration).ease(ease).style("opacity", 1).attr("transform", "translate(0,0)");
@@ -621,7 +445,8 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		}
 		if (g.select("g.dev-ring").empty()) g.append("g").attr("class", "dev-ring");
 		const devPaths = g.select("g.dev-ring").selectAll("path").data(devArcs, (d) => d.data.label);
-		devPaths.enter().append("path").attr("stroke", "var(--color-card)").attr("stroke-width", 1.5).style("opacity", 0).style("cursor", "pointer").on("click", toggleDev).on("mouseover", function(event, d) {
+		const devDuration = isFirstTime ? 1400 : 500;
+		devPaths.enter().append("path").attr("stroke", "var(--color-card)").attr("stroke-width", 1.5).style("opacity", 0).merge(devPaths).style("cursor", "pointer").on("click", toggleDev).on("mouseover", function(event, d) {
 			const el = this;
 			const ci = el._currentInner ?? targetDevInner;
 			const co = el._currentOuter ?? targetDevOuter;
@@ -629,7 +454,7 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const color = EMOTION_HEX[d.data.label];
 			const label = d.data.label.charAt(0).toUpperCase() + d.data.label.slice(1);
 			const pctStr = totalDev > 0 ? Math.round(d.data.count / totalDev * 100) : 0;
-			tooltipDiv.style("visibility", "visible").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${user_profile_icon_free_vector_658200527_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">Developer Mood</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} prompts)</span></div><div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">“${devExamples[d.data.label]}”</div>`);
+			tooltipDiv.style("visibility", "visible").style("opacity", "1").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${user_profile_icon_free_vector_658200527_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">Developer Mood</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} prompts)</span></div>` + (devExamples[d.data.label] ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">“${devExamples[d.data.label]}”</div>` : ""));
 		}).on("mousemove", function(event) {
 			tooltipDiv.style("top", event.pageY - 65 + "px").style("left", event.pageX + 15 + "px");
 		}).on("mouseout", function(_, d) {
@@ -637,8 +462,8 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const ci = el._currentInner ?? targetDevInner;
 			const co = el._currentOuter ?? targetDevOuter;
 			select_default(this).transition().duration(200).ease(cubicOut).attr("d", arc_default().innerRadius(ci).outerRadius(co)(d)).style("filter", "none").attr("stroke-width", 1.5);
-			tooltipDiv.style("visibility", "hidden");
-		}).attr("d", (d) => arc_default().innerRadius(radii.dev.both.inner).outerRadius(radii.dev.both.outer)(d)).merge(devPaths).on("click", toggleDev).attr("fill", (d) => EMOTION_HEX[d.data.label]).transition().duration(1e3).ease(cubicOut).style("opacity", targetDevOpacity).style("pointer-events", filter === "gpt" ? "none" : "all").attrTween("d", function(d) {
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
+		}).attr("fill", (d) => EMOTION_HEX[d.data.label]).transition().duration(devDuration).ease(cubicOut).style("opacity", targetDevOpacity).style("pointer-events", filter === "gpt" ? "none" : "all").attrTween("d", function(d) {
 			const el = this;
 			if (!el._currentAngle) {
 				el._currentAngle = d;
@@ -654,7 +479,7 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		devLabels.enter().append("text").attr("text-anchor", "middle").attr("dy", "0.35em").attr("fill", "white").attr("font-size", "14px").attr("font-weight", "bold").style("pointer-events", "none").style("opacity", 0).merge(devLabels).text((d) => {
 			if (isFiltered) return d.data.count > 0 ? `${d.data.count}` : "";
 			return totalDev > 0 ? `${Math.round(d.data.count / totalDev * 100)}%` : "";
-		}).transition().duration(750).ease(cubicInOut).style("opacity", filter === "developer" ? 1 : 0).attrTween("transform", function(d) {
+		}).transition().delay(isFirstTime ? 900 : 0).duration(750).ease(cubicInOut).style("opacity", filter === "developer" ? 1 : 0).attrTween("transform", function(d) {
 			const el = this;
 			const ci = el._currentInner ?? targetDevInner;
 			const co = el._currentOuter ?? targetDevOuter;
@@ -668,7 +493,8 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		});
 		if (g.select("g.gpt-ring").empty()) g.append("g").attr("class", "gpt-ring");
 		const gptPaths = g.select("g.gpt-ring").selectAll("path").data(gptArcs, (d) => d.data.label);
-		gptPaths.enter().append("path").attr("stroke", "var(--color-card)").attr("stroke-width", 1.5).style("opacity", 0).style("cursor", "pointer").on("click", toggleGpt).on("mouseover", function(event, d) {
+		const gptDuration = isFirstTime ? 1400 : 500;
+		gptPaths.enter().append("path").attr("stroke", "var(--color-card)").attr("stroke-width", 1.5).style("opacity", 0).merge(gptPaths).style("cursor", "pointer").on("click", toggleGpt).on("mouseover", function(event, d) {
 			const el = this;
 			const ci = el._currentInner ?? targetGptInner;
 			const co = el._currentOuter ?? targetGptOuter;
@@ -676,7 +502,7 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const color = EMOTION_HEX[d.data.label];
 			const label = d.data.label.charAt(0).toUpperCase() + d.data.label.slice(1);
 			const pctStr = totalGpt > 0 ? Math.round(d.data.count / totalGpt * 100) : 0;
-			tooltipDiv.style("visibility", "visible").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${black_gpt_chat_logo_on_white_background_logo_illustration_free_vector_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">GPT Response</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} responses)</span></div><div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">“${gptExamples[d.data.label]}”</div>`);
+			tooltipDiv.style("visibility", "visible").style("opacity", "1").html(`<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;"><img src="${black_gpt_chat_logo_on_white_background_logo_illustration_free_vector_default}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" /><span style="color: #94a3b8; font-weight: 500;">GPT Response</span></div><span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em;">${label}</span><div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">${pctStr}% <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.data.count} responses)</span></div>` + (gptExamples[d.data.label] ? `<div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 400; color: #cbd5e1; max-width: 220px; line-height: 1.4; font-style: italic;">“${gptExamples[d.data.label]}”</div>` : ""));
 		}).on("mousemove", function(event) {
 			tooltipDiv.style("top", event.pageY - 65 + "px").style("left", event.pageX + 15 + "px");
 		}).on("mouseout", function(_, d) {
@@ -684,8 +510,8 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 			const ci = el._currentInner ?? targetGptInner;
 			const co = el._currentOuter ?? targetGptOuter;
 			select_default(this).transition().duration(200).ease(cubicOut).attr("d", arc_default().innerRadius(ci).outerRadius(co)(d)).style("filter", "none").attr("stroke-width", 1.5);
-			tooltipDiv.style("visibility", "hidden");
-		}).attr("d", (d) => arc_default().innerRadius(radii.gpt.both.inner).outerRadius(radii.gpt.both.outer)(d)).merge(gptPaths).on("click", toggleGpt).attr("fill", (d) => `url(#pattern-dual-${d.data.label})`).transition().duration(1e3).ease(cubicOut).style("opacity", targetGptOpacity).style("pointer-events", filter === "developer" ? "none" : "all").attrTween("d", function(d) {
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
+		}).attr("fill", (d) => `url(#pattern-dual-${d.data.label})`).transition().delay(0).duration(gptDuration).ease(cubicOut).style("opacity", targetGptOpacity).style("pointer-events", filter === "developer" ? "none" : "all").attrTween("d", function(d) {
 			const el = this;
 			if (!el._currentAngle) {
 				el._currentAngle = d;
@@ -695,13 +521,15 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 					return arc_default().innerRadius(radii.gpt.both.inner).outerRadius(radii.gpt.both.outer).startAngle(interpolateStart(t)).endAngle(interpolateEnd(t)).padAngle(padAngle)(d);
 				};
 			} else return makeArcTween(targetGptInner, targetGptOuter, radii.gpt.both.inner, radii.gpt.both.outer).call(this, d);
+		}).on("end", () => {
+			if (isFirstTime) hasAnimatedRef.current = true;
 		});
 		if (g.select("g.gpt-labels").empty()) g.append("g").attr("class", "gpt-labels");
 		const gptLabels = g.select("g.gpt-labels").selectAll("text").data(gptArcs, (d) => d.data.label);
 		gptLabels.enter().append("text").attr("text-anchor", "middle").attr("dy", "0.35em").attr("fill", "#000000").attr("font-size", "14px").attr("font-weight", "bold").style("pointer-events", "none").style("opacity", 0).merge(gptLabels).text((d) => {
 			if (isFiltered) return d.data.count > 0 ? `${d.data.count}` : "";
 			return totalGpt > 0 ? `${Math.round(d.data.count / totalGpt * 100)}%` : "";
-		}).transition().duration(750).ease(cubicInOut).style("opacity", filter === "gpt" ? 1 : 0).attrTween("transform", function(d) {
+		}).transition().delay(isFirstTime ? 900 : 0).duration(750).ease(cubicInOut).style("opacity", filter === "gpt" ? 1 : 0).attrTween("transform", function(d) {
 			const el = this;
 			const ci = el._currentInner ?? targetGptInner;
 			const co = el._currentOuter ?? targetGptOuter;
@@ -715,7 +543,7 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		});
 		textGroup.raise();
 		return () => {
-			select_default("#chart-tooltip").remove();
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
 		};
 	}, [
 		filter,
@@ -727,9 +555,11 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		gptData,
 		isFiltered,
 		devExamples,
-		gptExamples
+		gptExamples,
+		isVisible
 	]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		ref: containerRef,
 		className: "flex flex-col md:flex-row items-center justify-around gap-6 w-full h-full py-2 px-4",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "flex items-center justify-center shrink-0",
@@ -843,7 +673,530 @@ function DualRingDonut({ devCounts, gptCounts, width = 340, height = 340, isFilt
 		})]
 	});
 }
-function Panel({ title, subtitle, children, insight, className }) {
+/** Safe helper to get emotion from index 0..3 */
+function getEmotion(index) {
+	return EMOTIONS[index] ?? "neutral";
+}
+/**
+* Computes the 4x4 transition matrix from Start Prompt Emotion (Turn 1) -> End Prompt Emotion (Final Turn)
+*/
+function computeStartToEndEmotionMatrix(conversations) {
+	const matrix = [
+		[
+			0,
+			0,
+			0,
+			0
+		],
+		[
+			0,
+			0,
+			0,
+			0
+		],
+		[
+			0,
+			0,
+			0,
+			0
+		],
+		[
+			0,
+			0,
+			0,
+			0
+		]
+	];
+	let totalValidConvs = 0;
+	for (const conv of conversations) {
+		if (!conv.turns || conv.turns.length === 0) continue;
+		const firstTurn = conv.turns[0];
+		if (!firstTurn || !firstTurn.promptEmotion || !EMOTIONS.includes(firstTurn.promptEmotion)) continue;
+		const startEmotion = firstTurn.promptEmotion;
+		const lastTurn = conv.turns[conv.turns.length - 1];
+		if (!lastTurn || !lastTurn.promptEmotion || !EMOTIONS.includes(lastTurn.promptEmotion)) continue;
+		const endEmotion = lastTurn.promptEmotion;
+		const startIdx = EMOTIONS.indexOf(startEmotion);
+		const endIdx = EMOTIONS.indexOf(endEmotion);
+		if (startIdx >= 0 && endIdx >= 0 && matrix[startIdx] && matrix[startIdx][endIdx] !== void 0) {
+			matrix[startIdx][endIdx] += 1;
+			totalValidConvs++;
+		}
+	}
+	return {
+		matrix,
+		totalValidConvs
+	};
+}
+function SankeyDiagram({ conversations, activeFilters = [], height = 420 }) {
+	const { ref, width } = useChartWidth();
+	const svgRef = (0, import_react.useRef)(null);
+	const containerRef = (0, import_react.useRef)(null);
+	const isLoading = useIsLoading();
+	const [isVisible, setIsVisible] = (0, import_react.useState)(false);
+	const hasAnimatedRef = (0, import_react.useRef)(false);
+	const [selectedSourceIdx, setSelectedSourceIdx] = (0, import_react.useState)(null);
+	const [selectedTargetIdx, setSelectedTargetIdx] = (0, import_react.useState)(null);
+	const [hoveredSourceIdx, setHoveredSourceIdx] = (0, import_react.useState)(null);
+	const [hoveredTargetIdx, setHoveredTargetIdx] = (0, import_react.useState)(null);
+	const [hoveredLinkKey, setHoveredLinkKey] = (0, import_react.useState)(null);
+	(0, import_react.useEffect)(() => {
+		const el = containerRef.current;
+		if (!el) return;
+		const observer = new IntersectionObserver(([entry]) => {
+			if (entry && entry.isIntersecting) setIsVisible(true);
+		}, {
+			threshold: .08,
+			rootMargin: "0px 0px -40px 0px"
+		});
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, []);
+	const { matrix, totalValidConvs } = (0, import_react.useMemo)(() => {
+		return computeStartToEndEmotionMatrix(conversations);
+	}, [conversations]);
+	const stats = (0, import_react.useMemo)(() => {
+		if (!totalValidConvs) return null;
+		const rowTotals = matrix.map((row) => row.reduce((sum, v) => sum + v, 0));
+		const frustRowTotal = rowTotals[0] || 1;
+		const frustRecovered = frustRowTotal - (matrix[0]?.[0] ?? 0);
+		const frustRecoveryRate = frustRecovered / frustRowTotal;
+		const satRowTotal = rowTotals[3] || 1;
+		const satRetention = (matrix[3]?.[3] ?? 0) / satRowTotal;
+		let maxTransition = {
+			src: 0,
+			tgt: 0,
+			count: 0
+		};
+		for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
+			const val = matrix[r]?.[c] ?? 0;
+			if (val > maxTransition.count) maxTransition = {
+				src: r,
+				tgt: c,
+				count: val
+			};
+		}
+		const srcEmo = getEmotion(maxTransition.src);
+		const tgtEmo = getEmotion(maxTransition.tgt);
+		return {
+			rowTotals,
+			frustRecoveryRate,
+			frustRecoveredCount: frustRecovered,
+			frustTotalCount: frustRowTotal,
+			satRetention,
+			maxTransition: {
+				srcEmo,
+				tgtEmo,
+				srcLabel: EMOTION_LABEL[srcEmo],
+				srcEmoji: EMOTION_EMOJI[srcEmo],
+				tgtLabel: EMOTION_LABEL[tgtEmo],
+				tgtEmoji: EMOTION_EMOJI[tgtEmo],
+				count: maxTransition.count,
+				share: maxTransition.count / totalValidConvs
+			}
+		};
+	}, [matrix, totalValidConvs]);
+	(0, import_react.useEffect)(() => {
+		if (isLoading) return;
+		if (!width || !svgRef.current || totalValidConvs === 0) return;
+		const margin = {
+			top: 32,
+			right: 165,
+			bottom: 24,
+			left: 165
+		};
+		const chartHeight = Math.max(360, height);
+		const innerWidth = width - margin.left - margin.right;
+		const innerHeight = chartHeight - margin.top - margin.bottom;
+		const nodeWidth = 20;
+		const nodePadding = 14;
+		const usableHeight = innerHeight - 42;
+		const svg = select_default(svgRef.current);
+		svg.selectAll("*").remove();
+		const defs = svg.append("defs");
+		const clipRect = defs.append("clipPath").attr("id", "sankey-reveal-clip").append("rect").attr("x", 0).attr("y", -margin.top).attr("width", hasAnimatedRef.current ? innerWidth + nodeWidth + 120 : 0).attr("height", chartHeight + 100);
+		if (isVisible && !hasAnimatedRef.current) clipRect.transition().duration(1100).ease(cubicInOut).attr("width", innerWidth + nodeWidth + 120).on("end", () => {
+			hasAnimatedRef.current = true;
+		});
+		let tooltipDiv = select_default("#chart-tooltip");
+		if (tooltipDiv.empty()) tooltipDiv = select_default("body").append("div").attr("id", "chart-tooltip").style("position", "absolute").style("visibility", "hidden").style("background", "rgba(9, 9, 11, 0.94)").style("backdrop-filter", "blur(12px) saturate(160%)").style("border", "1px solid rgba(255, 255, 255, 0.12)").style("padding", "12px 16px").style("border-radius", "12px").style("color", "#fff").style("font-family", "system-ui, -apple-system, sans-serif").style("box-shadow", "0 10px 25px -5px rgba(0, 0, 0, 0.5)").style("pointer-events", "none").style("z-index", "99999").style("min-width", "210px").style("transition", "opacity 0.12s ease").style("opacity", "0");
+		const g = svg.attr("viewBox", `0 0 ${width} ${chartHeight}`).on("click", () => {
+			setSelectedSourceIdx(null);
+			setSelectedTargetIdx(null);
+		}).append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+		const sourceTotals = matrix.map((row) => row.reduce((a, b) => a + b, 0));
+		const sourceNodes = [];
+		let currentSourceY = 0;
+		for (let i = 0; i < 4; i++) {
+			const val = sourceTotals[i] ?? 0;
+			const h = Math.max(6, val / totalValidConvs * usableHeight);
+			sourceNodes.push({
+				index: i,
+				emotion: getEmotion(i),
+				value: val,
+				y0: currentSourceY,
+				y1: currentSourceY + h,
+				height: h
+			});
+			currentSourceY += h + nodePadding;
+		}
+		const targetTotals = [
+			0,
+			0,
+			0,
+			0
+		];
+		for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) targetTotals[c] = (targetTotals[c] ?? 0) + (matrix[r]?.[c] ?? 0);
+		const targetNodes = [];
+		let currentTargetY = 0;
+		for (let j = 0; j < 4; j++) {
+			const val = targetTotals[j] ?? 0;
+			const h = Math.max(6, val / totalValidConvs * usableHeight);
+			targetNodes.push({
+				index: j,
+				emotion: getEmotion(j),
+				value: val,
+				y0: currentTargetY,
+				y1: currentTargetY + h,
+				height: h
+			});
+			currentTargetY += h + nodePadding;
+		}
+		const links = [];
+		const sourceOffsets = sourceNodes.map((n) => n.y0);
+		const targetOffsets = targetNodes.map((n) => n.y0);
+		for (let r = 0; r < 4; r++) {
+			const sNode = sourceNodes[r];
+			if (!sNode || sNode.value === 0) continue;
+			for (let c = 0; c < 4; c++) {
+				const val = matrix[r]?.[c] ?? 0;
+				if (val === 0) continue;
+				const tNode = targetNodes[c];
+				if (!tNode) continue;
+				const linkH_src = val / sNode.value * sNode.height;
+				const linkH_tgt = val / tNode.value * tNode.height;
+				const sy0 = sourceOffsets[r];
+				const sy1 = sy0 + linkH_src;
+				sourceOffsets[r] = sy1;
+				const ty0 = targetOffsets[c];
+				const ty1 = ty0 + linkH_tgt;
+				targetOffsets[c] = ty1;
+				links.push({
+					key: `${r}-${c}`,
+					srcIndex: r,
+					tgtIndex: c,
+					value: val,
+					sy0,
+					sy1,
+					ty0,
+					ty1,
+					srcEmo: getEmotion(r),
+					tgtEmo: getEmotion(c)
+				});
+				const gradId = `sankey-grad-${r}-${c}`;
+				const gradient = defs.append("linearGradient").attr("id", gradId).attr("gradientUnits", "userSpaceOnUse").attr("x1", nodeWidth).attr("x2", innerWidth);
+				gradient.append("stop").attr("offset", "0%").attr("stop-color", EMOTION_HEX$1[getEmotion(r)]).attr("stop-opacity", .75);
+				gradient.append("stop").attr("offset", "100%").attr("stop-color", EMOTION_HEX$1[getEmotion(c)]).attr("stop-opacity", .75);
+			}
+		}
+		function generateLinkPath(d) {
+			const x0 = nodeWidth;
+			const x1 = innerWidth;
+			const dx = (x1 - x0) * .48;
+			return `
+        M ${x0} ${d.sy0}
+        C ${x0 + dx} ${d.sy0}, ${x1 - dx} ${d.ty0}, ${x1} ${d.ty0}
+        L ${x1} ${d.ty1}
+        C ${x1 - dx} ${d.ty1}, ${x0 + dx} ${d.sy1}, ${x0} ${d.sy1}
+        Z
+      `;
+		}
+		g.append("g").attr("class", "links").attr("clip-path", "url(#sankey-reveal-clip)").selectAll("path").data(links).join("path").attr("d", generateLinkPath).attr("fill", (d) => `url(#sankey-grad-${d.srcIndex}-${d.tgtIndex})`).attr("stroke", (d) => EMOTION_HEX$1[d.srcEmo]).attr("stroke-width", .4).attr("stroke-opacity", .3).style("cursor", "pointer").style("transition", "opacity 0.2s ease").style("opacity", (d) => {
+			if (hoveredLinkKey !== null) return hoveredLinkKey === d.key ? .95 : .08;
+			if (hoveredSourceIdx !== null) return d.srcIndex === hoveredSourceIdx ? .95 : .08;
+			if (hoveredTargetIdx !== null) return d.tgtIndex === hoveredTargetIdx ? .95 : .08;
+			if (selectedSourceIdx !== null && selectedTargetIdx !== null) return d.srcIndex === selectedSourceIdx && d.tgtIndex === selectedTargetIdx ? .95 : .08;
+			if (selectedSourceIdx !== null) return d.srcIndex === selectedSourceIdx ? .95 : .08;
+			if (selectedTargetIdx !== null) return d.tgtIndex === selectedTargetIdx ? .95 : .08;
+			if (activeFilters.length > 0) return activeFilters.includes(d.srcEmo) || activeFilters.includes(d.tgtEmo) ? .85 : .12;
+			return .65;
+		}).on("click", (event, d) => {
+			event.stopPropagation();
+			if (selectedSourceIdx === d.srcIndex && selectedTargetIdx === d.tgtIndex) {
+				setSelectedSourceIdx(null);
+				setSelectedTargetIdx(null);
+			} else {
+				setSelectedSourceIdx(d.srcIndex);
+				setSelectedTargetIdx(d.tgtIndex);
+			}
+		}).on("mouseover", (event, d) => {
+			setHoveredLinkKey(d.key);
+			const globalShare = d.value / totalValidConvs;
+			const sNodeVal = sourceNodes[d.srcIndex]?.value || 1;
+			const rowShare = d.value / sNodeVal;
+			const srcColor = EMOTION_HEX$1[d.srcEmo];
+			const tgtColor = EMOTION_HEX$1[d.tgtEmo];
+			const srcLabelCaps = EMOTION_LABEL[d.srcEmo].toUpperCase();
+			const tgtLabelCaps = EMOTION_LABEL[d.tgtEmo].toUpperCase();
+			tooltipDiv.style("visibility", "visible").style("opacity", "1").html(`
+            <div style="font-weight: 800; font-size: 13px; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 5px; display: flex; align-items: center; gap: 5px;">
+              <span style="color: ${srcColor}; font-weight: 800; letter-spacing: 0.04em;">${srcLabelCaps}</span>
+              <span style="color: #94a3b8; font-weight: 400;">➔</span>
+              <span style="color: ${tgtColor}; font-weight: 800; letter-spacing: 0.04em;">${tgtLabelCaps}</span>
+            </div>
+            <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
+              <div> ${d.value.toLocaleString()} conversations</div>
+              <div>${fmtPct(rowShare, 1)} of <strong><span style="color: ${srcColor}; font-weight: 800;">${srcLabelCaps}</span></strong></div>
+              <div><strong>Share of Total Dataset:</strong> ${fmtPct(globalShare, 1)}</div>
+            </div>
+          `);
+		}).on("mousemove", (event) => {
+			tooltipDiv.style("top", `${event.pageY - 15}px`).style("left", `${event.pageX + 18}px`);
+		}).on("mouseout", () => {
+			setHoveredLinkKey(null);
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
+		});
+		const srcNodesG = g.append("g").attr("class", "source-nodes").selectAll("g").data(sourceNodes).join("g").attr("transform", (d) => `translate(0, ${d.y0})`).style("cursor", "pointer").on("click", (event, d) => {
+			event.stopPropagation();
+			setSelectedSourceIdx((prev) => prev === d.index ? null : d.index);
+			setSelectedTargetIdx(null);
+		});
+		const srcRects = srcNodesG.append("rect").attr("width", nodeWidth).attr("rx", 3).attr("fill", (d) => EMOTION_HEX$1[d.emotion]).attr("stroke", "#fff").attr("stroke-width", (d) => selectedSourceIdx === d.index ? 2.5 : 1.2).style("cursor", "pointer").style("transition", "opacity 0.2s ease, stroke-width 0.2s ease").style("opacity", (d) => {
+			if (hoveredSourceIdx !== null) return hoveredSourceIdx === d.index ? 1 : .35;
+			if (selectedSourceIdx !== null) return selectedSourceIdx === d.index ? 1 : .35;
+			if (selectedTargetIdx !== null) return (matrix[d.index]?.[selectedTargetIdx] ?? 0) > 0 ? 1 : .35;
+			if (activeFilters.length > 0) return activeFilters.includes(d.emotion) ? 1 : .35;
+			return .95;
+		});
+		if (!hasAnimatedRef.current && isVisible) srcRects.attr("height", 0).attr("y", (d) => d.height / 2).transition().duration(600).ease(cubicOut).attr("height", (d) => Math.max(4, d.height)).attr("y", 0);
+		else srcRects.attr("height", (d) => Math.max(4, d.height)).attr("y", 0);
+		srcNodesG.on("mouseover", (event, d) => {
+			setHoveredSourceIdx(d.index);
+			const emoColor = EMOTION_HEX$1[d.emotion];
+			const emoCaps = EMOTION_LABEL[d.emotion].toUpperCase();
+			tooltipDiv.style("visibility", "visible").style("opacity", "1").html(`
+            <div style="font-weight: 800; font-size: 13px; color: ${emoColor}; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 4px; letter-spacing: 0.04em;">
+              ${emoCaps} (Turn 1)
+            </div>
+            <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
+              <div> ${d.value.toLocaleString()} conversations</div>
+              <div><strong>Share of Total Dataset:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
+            </div>
+          `);
+		}).on("mousemove", (event) => {
+			tooltipDiv.style("top", `${event.pageY - 15}px`).style("left", `${event.pageX + 18}px`);
+		}).on("mouseout", () => {
+			setHoveredSourceIdx(null);
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
+		});
+		const srcTexts = srcNodesG.append("text").attr("x", -10).attr("y", (d) => d.height / 2).attr("dy", "0.35em").attr("text-anchor", "end").style("font-size", "11px").style("font-weight", (d) => selectedSourceIdx === d.index || hoveredSourceIdx === d.index ? "800" : "600").style("fill", (d) => EMOTION_HEX$1[d.emotion]).style("cursor", "pointer").text((d) => `${EMOTION_LABEL[d.emotion]} (${fmtPct(d.value / totalValidConvs, 0)})`);
+		if (!hasAnimatedRef.current && isVisible) srcTexts.style("opacity", 0).transition().delay(650).duration(400).style("opacity", 1);
+		const headerLeft = g.append("text").attr("x", 0).attr("y", -14).attr("text-anchor", "start").style("font-size", "11px").style("font-weight", "700").style("fill", "var(--foreground)").style("letter-spacing", "0.04em").text("FIRST PROMPT EMOTION");
+		if (!hasAnimatedRef.current && isVisible) headerLeft.style("opacity", 0).transition().delay(650).duration(400).style("opacity", 1);
+		const tgtNodesG = g.append("g").attr("class", "target-nodes").selectAll("g").data(targetNodes).join("g").attr("transform", (d) => `translate(${innerWidth}, ${d.y0})`).style("cursor", "pointer").on("click", (event, d) => {
+			event.stopPropagation();
+			setSelectedTargetIdx((prev) => prev === d.index ? null : d.index);
+			setSelectedSourceIdx(null);
+		});
+		const tgtRects = tgtNodesG.append("rect").attr("width", nodeWidth).attr("rx", 3).attr("fill", (d) => EMOTION_HEX$1[d.emotion]).attr("stroke", "#fff").attr("stroke-width", (d) => selectedTargetIdx === d.index ? 2.5 : 1.2).style("cursor", "pointer").style("transition", "opacity 0.2s ease, stroke-width 0.2s ease").style("opacity", (d) => {
+			if (hoveredTargetIdx !== null) return hoveredTargetIdx === d.index ? 1 : .35;
+			if (selectedTargetIdx !== null) return selectedTargetIdx === d.index ? 1 : .35;
+			if (selectedSourceIdx !== null) return (matrix[selectedSourceIdx]?.[d.index] ?? 0) > 0 ? 1 : .35;
+			if (activeFilters.length > 0) return activeFilters.includes(d.emotion) ? 1 : .35;
+			return .95;
+		});
+		if (!hasAnimatedRef.current && isVisible) tgtRects.attr("height", 0).attr("y", (d) => d.height / 2).transition().delay(350).duration(600).ease(cubicOut).attr("height", (d) => Math.max(4, d.height)).attr("y", 0);
+		else tgtRects.attr("height", (d) => Math.max(4, d.height)).attr("y", 0);
+		tgtNodesG.on("mouseover", (event, d) => {
+			setHoveredTargetIdx(d.index);
+			const emoColor = EMOTION_HEX$1[d.emotion];
+			const emoCaps = EMOTION_LABEL[d.emotion].toUpperCase();
+			tooltipDiv.style("visibility", "visible").style("opacity", "1").html(`
+            <div style="font-weight: 800; font-size: 13px; color: ${emoColor}; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 4px; letter-spacing: 0.04em;">
+              ${emoCaps} (Final Turn)
+            </div>
+            <div style="font-size: 11.5px; color: rgba(255,255,255,0.9); line-height: 1.6;">
+              <div>${d.value.toLocaleString()} conversations</div>
+              <div><strong>Share of Total Dataset:</strong> ${fmtPct(d.value / totalValidConvs, 1)}</div>
+            </div>
+          `);
+		}).on("mousemove", (event) => {
+			tooltipDiv.style("top", `${event.pageY - 15}px`).style("left", `${event.pageX + 18}px`);
+		}).on("mouseout", () => {
+			setHoveredTargetIdx(null);
+			tooltipDiv.style("visibility", "hidden").style("opacity", "0");
+		});
+		const tgtTexts = tgtNodesG.append("text").attr("x", 30).attr("y", (d) => d.height / 2).attr("dy", "0.35em").attr("text-anchor", "start").style("font-size", "11px").style("font-weight", (d) => selectedTargetIdx === d.index || hoveredTargetIdx === d.index ? "800" : "600").style("fill", (d) => EMOTION_HEX$1[d.emotion]).style("cursor", "pointer").text((d) => `${EMOTION_LABEL[d.emotion].toUpperCase()} (${fmtPct(d.value / totalValidConvs, 0)})`);
+		if (!hasAnimatedRef.current && isVisible) tgtTexts.style("opacity", 0).transition().delay(650).duration(400).style("opacity", 1);
+		const headerRight = g.append("text").attr("x", innerWidth + nodeWidth).attr("y", -14).attr("text-anchor", "end").style("font-size", "11px").style("font-weight", "700").style("fill", "var(--foreground)").style("letter-spacing", "0.04em").text("LAST PROMPT EMOTION");
+		if (!hasAnimatedRef.current && isVisible) headerRight.style("opacity", 0).transition().delay(650).duration(400).style("opacity", 1);
+	}, [
+		width,
+		height,
+		matrix,
+		totalValidConvs,
+		hoveredSourceIdx,
+		hoveredTargetIdx,
+		hoveredLinkKey,
+		activeFilters,
+		isLoading,
+		isVisible,
+		selectedSourceIdx,
+		selectedTargetIdx
+	]);
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		ref: containerRef,
+		className: "space-y-4",
+		children: [
+			(selectedSourceIdx !== null || selectedTargetIdx !== null) && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "flex justify-end items-center -mb-2",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+					onClick: () => {
+						setSelectedSourceIdx(null);
+						setSelectedTargetIdx(null);
+					},
+					className: "text-[11px] font-semibold text-muted-foreground hover:text-foreground bg-muted/60 hover:bg-muted px-2.5 py-1 rounded-md transition-all flex items-center gap-1.5 cursor-pointer shadow-xs border border-border/50",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Reset Sankey filter" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						className: "text-[10px]",
+						children: "✕"
+					})]
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				ref,
+				className: "w-full flex justify-center items-center relative min-h-[360px]",
+				children: totalValidConvs === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "text-sm text-muted-foreground py-12",
+					children: "No valid conversation data available for Sankey visualization."
+				}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+					ref: svgRef,
+					className: "w-full h-auto overflow-visible select-none",
+					style: { maxHeight: height }
+				})
+			}),
+			stats && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: `grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 border-t border-border/40 transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`,
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "p-3 rounded-lg border border-border/40 bg-muted/20 flex flex-col justify-between",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "text-[11px] font-medium text-muted-foreground uppercase tracking-wider block",
+								children: "Most Frequent Flow"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "text-2xl font-bold font-['Oswald'] tracking-tight text-foreground mt-1",
+								children: [
+									fmtPct(stats.maxTransition.share, 1),
+									" ",
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										className: "text-xs font-medium text-muted-foreground font-sans tracking-normal ml-0.5",
+										children: [
+											"(",
+											stats.maxTransition.count.toLocaleString(),
+											" convs)"
+										]
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "text-xs font-semibold mt-2 flex items-center gap-1.5",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										style: { color: EMOTION_HEX$1[stats.maxTransition.srcEmo] },
+										children: ["Start ", stats.maxTransition.srcLabel]
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-muted-foreground",
+										children: "➔"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										style: { color: EMOTION_HEX$1[stats.maxTransition.tgtEmo] },
+										children: ["End ", stats.maxTransition.tgtLabel]
+									})
+								]
+							})
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "p-3 rounded-lg border border-border/40 bg-muted/20 flex flex-col justify-between",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "text-[11px] font-medium text-muted-foreground uppercase tracking-wider block",
+								children: "Frustration Recovery Rate"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "text-2xl font-bold font-['Oswald'] tracking-tight text-foreground mt-1",
+								children: [
+									fmtPct(stats.frustRecoveryRate, 1),
+									" ",
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										className: "text-xs font-medium text-muted-foreground font-sans tracking-normal ml-0.5",
+										children: [
+											"(",
+											stats.frustRecoveredCount,
+											" of ",
+											stats.frustTotalCount,
+											" convs)"
+										]
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "text-xs font-semibold mt-2 flex items-center gap-1",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										style: { color: EMOTION_HEX$1.frustration },
+										children: "Began frustrated"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-muted-foreground",
+										children: "➔"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										style: { color: EMOTION_HEX$1.satisfaction },
+										children: "Ended calmer"
+									})
+								]
+							})
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "p-3 rounded-lg border border-border/40 bg-muted/20 flex flex-col justify-between",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "text-[11px] font-medium text-muted-foreground uppercase tracking-wider block",
+								children: "Satisfaction Retention Rate"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "text-2xl font-bold font-['Oswald'] tracking-tight text-foreground mt-1",
+								children: fmtPct(stats.satRetention, 1)
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "text-xs font-semibold mt-2 flex items-center gap-1",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										style: { color: EMOTION_HEX$1.satisfaction },
+										children: "Began satisfied"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-muted-foreground",
+										children: "➔"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										style: { color: EMOTION_HEX$1.satisfaction },
+										children: "Ended satisfied"
+									})
+								]
+							})
+						]
+					})
+				]
+			})
+		]
+	});
+}
+function Panel({ title, subtitle, children, insight, action, className }) {
 	const ref = (0, import_react.useRef)(null);
 	const [isVisible, setIsVisible] = (0, import_react.useState)(false);
 	(0, import_react.useEffect)(() => {
@@ -870,13 +1223,16 @@ function Panel({ title, subtitle, children, insight, className }) {
 		className: cn("panel flex flex-col p-5 transition-all duration-700 ease-out", isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4", className),
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
-				className: "mb-4",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+				className: "mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 					className: "text-base font-semibold tracking-tight text-foreground",
 					children: title
 				}), subtitle && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 					className: "mt-1 text-xs text-muted-foreground",
 					children: subtitle
+				})] }), action && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "shrink-0 self-start sm:self-auto",
+					children: action
 				})]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -949,59 +1305,26 @@ function KpiCard({ label, value, hint, tone, className, bgEmoji, variant, progre
 		]
 	});
 }
-function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
+function OverviewTab({ activeFilters = [] }) {
 	const kpiData = useLoaderData({ from: "/" });
 	const conversations = kpiData.conversations || [];
-	const promptDist = distribution(conversations, "promptEmotion");
-	const answerDist = distribution(conversations, "answerEmotion");
-	const matrix = transitionMatrix(conversations);
-	const depth = emotionByTurnDepth(conversations);
-	const sortedEmotions = [...Object.keys(kpiData.counts)].sort((a, b) => (kpiData.counts[b] || 0) - (kpiData.counts[a] || 0));
-	const highestEmotion = sortedEmotions[0] || "neutral";
-	const secondHighestEmotion = sortedEmotions[1];
+	const highestEmotion = [...Object.keys(kpiData.counts)].sort((a, b) => (kpiData.counts[b] || 0) - (kpiData.counts[a] || 0))[0] || "neutral";
 	const highestCount = kpiData.counts[highestEmotion] || 0;
 	const totalEmotionsCount = Object.values(kpiData.counts).reduce((s, c) => s + c, 0);
 	const highestShare = totalEmotionsCount ? highestCount / totalEmotionsCount : 0;
-	totalEmotionsCount && secondHighestEmotion && (kpiData.counts[secondHighestEmotion] || 0) / totalEmotionsCount;
 	const formattedHighestLabel = highestEmotion.charAt(0).toUpperCase() + highestEmotion.slice(1);
-	secondHighestEmotion && secondHighestEmotion.charAt(0).toUpperCase() + secondHighestEmotion.slice(1);
-	(kpiData.counts["satisfaction"] || 0) / totalEmotionsCount;
-	(kpiData.counts["neutral"] || 0) / totalEmotionsCount;
-	(kpiData.counts["frustration"] || 0) / totalEmotionsCount;
-	(kpiData.counts["caution"] || 0) / totalEmotionsCount;
 	const gptCounts = kpiData.gptCounts || {};
-	const sortedGptEmotions = [...Object.keys(gptCounts)].sort((a, b) => (gptCounts[b] || 0) - (gptCounts[a] || 0));
-	const highestGptEmotion = sortedGptEmotions[0] || "neutral";
-	const secondHighestGptEmotion = sortedGptEmotions[1];
+	const highestGptEmotion = [...Object.keys(gptCounts)].sort((a, b) => (gptCounts[b] || 0) - (gptCounts[a] || 0))[0] || "neutral";
 	const highestGptCount = gptCounts[highestGptEmotion] || 0;
 	const totalGptEmotionsCount = Object.values(gptCounts).reduce((s, c) => s + c, 0);
 	const highestGptShare = totalGptEmotionsCount ? highestGptCount / totalGptEmotionsCount : 0;
-	totalGptEmotionsCount && secondHighestGptEmotion && (gptCounts[secondHighestGptEmotion] || 0) / totalGptEmotionsCount;
 	const formattedHighestGptLabel = highestGptEmotion.charAt(0).toUpperCase() + highestGptEmotion.slice(1);
-	secondHighestGptEmotion && secondHighestGptEmotion.charAt(0).toUpperCase() + secondHighestGptEmotion.slice(1);
-	(gptCounts["satisfaction"] || 0) / (totalGptEmotionsCount || 1);
-	(gptCounts["neutral"] || 0) / (totalGptEmotionsCount || 1);
-	(gptCounts["frustration"] || 0) / (totalGptEmotionsCount || 1);
-	(gptCounts["caution"] || 0) / (totalGptEmotionsCount || 1);
 	const kpi2AnswerCounts = kpiData.promptToAnswerCounts?.[highestEmotion] || {};
-	const sortedKpi2Answers = [...Object.keys(kpi2AnswerCounts)].sort((a, b) => (kpi2AnswerCounts[b] || 0) - (kpi2AnswerCounts[a] || 0));
-	const highestKpi2Answer = sortedKpi2Answers[0] || "caution";
-	const secondHighestKpi2Answer = sortedKpi2Answers[1];
+	const highestKpi2Answer = [...Object.keys(kpi2AnswerCounts)].sort((a, b) => (kpi2AnswerCounts[b] || 0) - (kpi2AnswerCounts[a] || 0))[0] || "caution";
 	const highestKpi2AnswerCount = kpi2AnswerCounts[highestKpi2Answer] || 0;
 	const totalKpi2Answers = Object.values(kpi2AnswerCounts).reduce((s, c) => s + c, 0);
 	const highestKpi2AnswerShare = totalKpi2Answers ? highestKpi2AnswerCount / totalKpi2Answers : 0;
-	totalKpi2Answers && secondHighestKpi2Answer && (kpi2AnswerCounts[secondHighestKpi2Answer] || 0) / totalKpi2Answers;
 	const formattedHighestKpi2AnswerLabel = highestKpi2Answer.charAt(0).toUpperCase() + highestKpi2Answer.slice(1);
-	secondHighestKpi2Answer && secondHighestKpi2Answer.charAt(0).toUpperCase() + secondHighestKpi2Answer.slice(1);
-	[
-		"satisfaction",
-		"neutral",
-		"frustration",
-		"caution"
-	].filter((e) => e !== highestKpi2Answer).map((e) => {
-		return `${e === "satisfaction" ? "Sat" : e === "neutral" ? "Neu" : e === "frustration" ? "Fru" : "Cau"}: ${fmtPct(totalKpi2Answers ? (kpi2AnswerCounts[e] || 0) / totalKpi2Answers : 0, 0)}`;
-	}).join(" · ");
-	const shareOf = (list, e) => list.find((d) => d.emotion === e).share;
 	const visibleEmotions = activeFilters.length > 0 ? EMOTIONS.filter((e) => activeFilters.includes(e)) : EMOTIONS;
 	const filteredDevCounts = activeFilters.length > 0 ? Object.fromEntries(Object.entries(kpiData.counts).filter(([k]) => activeFilters.includes(k))) : kpiData.counts;
 	const filteredGptCounts = activeFilters.length > 0 ? EMOTIONS.reduce((acc, gptEmotion) => {
@@ -1016,7 +1339,6 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 		if (!totalForDev) return 0;
 		return (countsMap[ans] || 0) / totalForDev;
 	};
-	const satLift = realPAnswer("satisfaction", "satisfaction") / (realPAnswer("frustration", "satisfaction") || 1);
 	const { devExamples, gptExamples } = (0, import_react.useMemo)(() => {
 		const devExamples = {
 			frustration: "",
@@ -1076,65 +1398,38 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 			gptExamples
 		};
 	}, [conversations]);
-	visibleEmotions.map((e) => ({
-		label: EMOTION_LABEL[e],
-		values: {
-			dev: shareOf(promptDist, e),
-			gpt: shareOf(answerDist, e)
-		}
-	}));
-	const replyStyle = visibleEmotions.map((e) => ({
-		label: EMOTION_LABEL[e],
-		values: {
-			helpful: realPAnswer(e, "satisfaction"),
-			limited: realPAnswer(e, "caution")
-		}
-	}));
-	matrix.filter((r) => visibleEmotions.includes(r.prompt)).map((r) => ({
-		label: EMOTION_LABEL[r.prompt],
-		labelColor: emotionVar(r.prompt),
-		total: r.total,
-		cells: r.cells.map((c) => ({
-			key: c.answer,
-			share: c.share,
-			count: c.count
-		}))
-	}));
-	depth[depth.length - 1].frustration - depth[0].frustration;
-	const selectedEmotion = activeFilters[0] || highestEmotion;
-	(0, import_react.useMemo)(() => {
-		if (!conversations.length) return null;
-		return [...conversations].sort((a, b) => {
-			const countA = a.turns.filter((t) => t.promptEmotion === selectedEmotion).length;
-			return b.turns.filter((t) => t.promptEmotion === selectedEmotion).length - countA;
-		}).filter((c) => c.turns.some((t) => t.promptEmotion === selectedEmotion))[0] || conversations[0];
-	}, [conversations, selectedEmotion]);
-	const chanceOfSatData = visibleEmotions.map((e) => ({
-		emotion: e,
-		mean: realPAnswer(e, "satisfaction"),
-		n: Object.values(kpiData.promptToAnswerCounts?.[e] || {}).reduce((s, c) => s + c, 0)
-	}));
-	const maxChanceOfSat = Math.max(0, ...chanceOfSatData.map((d) => d.mean));
-	const dynamicDomainMax = Math.min(1, maxChanceOfSat + .1);
+	const [targetEmotion, setTargetEmotion] = (0, import_react.useState)("satisfaction");
+	const targetAdjective = targetEmotion === "satisfaction" ? "satisfactory" : targetEmotion === "frustration" ? "frustrated" : targetEmotion === "caution" ? "cautious" : "neutral";
+	const chanceOfTargetData = (0, import_react.useMemo)(() => {
+		return visibleEmotions.map((e) => ({
+			emotion: e,
+			mean: realPAnswer(e, targetEmotion),
+			n: Object.values(kpiData.promptToAnswerCounts?.[e] || {}).reduce((s, c) => s + c, 0)
+		}));
+	}, [
+		visibleEmotions,
+		targetEmotion,
+		kpiData.promptToAnswerCounts
+	]);
+	const maxChanceOfTarget = Math.max(0, ...chanceOfTargetData.map((d) => d.mean));
+	const dynamicDomainMax = Math.min(1, Math.max(.25, maxChanceOfTarget + .1));
 	const frustrationRecoveryData = (0, import_react.useMemo)(() => {
 		const list = kpiData.conversations || [];
-		let totalFrustratedTurns = 0;
-		let recoveredTurns = 0;
+		let totalFrustratedConvs = 0;
+		let recoveredConvs = 0;
 		for (const conv of list) {
-			if (!conv.turns || conv.turns.length < 2) continue;
-			for (let i = 0; i < conv.turns.length - 1; i++) {
-				const currentTurn = conv.turns[i];
-				const nextTurn = conv.turns[i + 1];
-				if (currentTurn && nextTurn && currentTurn.promptEmotion === "frustration") {
-					totalFrustratedTurns++;
-					if (nextTurn.promptEmotion !== "frustration") recoveredTurns++;
-				}
+			if (!conv.turns || conv.turns.length === 0) continue;
+			const firstTurn = conv.turns[0];
+			const lastTurn = conv.turns[conv.turns.length - 1];
+			if (firstTurn && firstTurn.promptEmotion === "frustration") {
+				totalFrustratedConvs++;
+				if (lastTurn && lastTurn.promptEmotion !== "frustration") recoveredConvs++;
 			}
 		}
 		return {
-			rate: totalFrustratedTurns > 0 ? recoveredTurns / totalFrustratedTurns : 0,
-			count: recoveredTurns,
-			total: totalFrustratedTurns
+			rate: totalFrustratedConvs > 0 ? recoveredConvs / totalFrustratedConvs : 0,
+			count: recoveredConvs,
+			total: totalFrustratedConvs
 		};
 	}, [kpiData.conversations]);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -1231,7 +1526,13 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Panel, {
 				title: "Overall emotion distribution: Developer vs ChatGPT",
-				subtitle: "Inner ring: Developer prompts (solid) · Outer ring: GPT responses (striped)",
+				subtitle: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+					"Inner solid ring: ",
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "Developer prompts" }),
+					" · Outer striped ring:",
+					" ",
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("b", { children: "GPT responses" })
+				] }),
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					className: "py-2",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DualRingDonut, {
@@ -1245,70 +1546,52 @@ function OverviewTab({ activeFilters = [], setActiveTab, setSelectedId }) {
 					})
 				})
 			}),
-			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "grid gap-6 lg:grid-cols-2",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Panel, {
-					className: "lg:col-span-2",
-					title: "GPT response style per developer mood",
-					subtitle: "Proportion of GPT answers that were helpful vs limited for each developer prompt mood",
-					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children: "Frustrated developers are much less likely to get a helpful response than satisfied ones." }),
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						className: "mb-3",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SeriesLegend, { series: [{
-							key: "helpful",
-							label: "Helpful answer",
-							color: "var(--emotion-satisfaction)"
-						}, {
-							key: "limited",
-							label: "Limited answer",
-							color: "var(--emotion-caution)"
-						}] })
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GroupedBarChart, {
-						groups: replyStyle,
-						series: [{
-							key: "helpful",
-							label: "Helpful answer",
-							color: "var(--emotion-satisfaction)"
-						}, {
-							key: "limited",
-							label: "Limited answer",
-							color: "var(--emotion-caution)"
-						}],
-						format: (v) => fmtPct(v, 0),
-						height: 280
-					})]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Panel, {
-					className: "lg:col-span-2",
-					title: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-						"Chance of a",
-						" ",
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "text-satisfaction font-bold",
-							children: "satisfactory"
-						}),
-						" ",
-						"response"
-					] }),
-					subtitle: "Bars use the developer's emotion colour",
-					insight: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-						"Read this as a single number per mood: a frustrated prompt gets a satisfied answer",
-						" ",
-						fmtPct(realPAnswer("frustration", "satisfaction"), 0),
-						" of the time, a satisfied prompt",
-						" ",
-						fmtPct(realPAnswer("satisfaction", "satisfaction"), 0),
-						" — a",
-						" ",
-						satLift.toFixed(1),
-						"× gap."
-					] }),
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MeanBarChart, {
-						data: chanceOfSatData,
-						domain: [0, dynamicDomainMax],
-						valueFormat: (v) => fmtPct(v, 0),
-						height: 280
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Panel, {
+				title: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+					"Chance of a",
+					" ",
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+						style: { color: EMOTION_HEX$1[targetEmotion] },
+						className: "text-xl font-bold capitalize",
+						children: targetAdjective
+					}),
+					" ",
+					"response"
+				] }),
+				subtitle: `Probability of receiving a ${targetAdjective.toLowerCase()} GPT answer per developer prompt mood`,
+				action: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "flex items-center gap-1 bg-muted/70 p-1 rounded-lg border border-border/60",
+					children: EMOTIONS.map((emo) => {
+						return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							onClick: () => setTargetEmotion(emo),
+							className: cn("px-2.5 py-1 text-xs font-bold rounded-md transition-all select-none cursor-pointer", targetEmotion === emo ? "bg-card shadow-xs border border-border/80 opacity-100" : "bg-transparent border border-transparent opacity-70 hover:opacity-100 hover:bg-muted/50"),
+							style: { color: EMOTION_HEX$1[emo] },
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: "capitalize",
+								children: EMOTION_LABEL[emo]
+							})
+						}, emo);
 					})
-				})]
+				}),
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MeanBarChart, {
+					data: chanceOfTargetData,
+					domain: [0, dynamicDomainMax],
+					valueFormat: (v) => fmtPct(v, 0),
+					targetEmotion,
+					height: 280
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Panel, {
+				title: "Emotion Progression: First Prompt Emotion ➔ Last Prompt Emotion",
+				subtitle: "Sankey diagram mapping the initial prompt emotion to the final prompt emotion. Stream width indicates conversation volume.",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "py-2",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SankeyDiagram, {
+						conversations,
+						activeFilters,
+						height: 420
+					})
+				})
 			})
 		]
 	});
@@ -2053,6 +2336,85 @@ function SelectedConversationHeatmap({ conversation, highlightTurnId, onTurnClic
 		]
 	});
 }
+function getAllTurns(conversations) {
+	return conversations.flatMap((c) => c.turns.map((t) => ({
+		...t,
+		conv: c
+	})));
+}
+var share = (n, total) => total ? n / total : 0;
+/** Row-normalised P(answer emotion | prompt emotion) with raw counts. */
+function transitionMatrix(conversations) {
+	const turns = getAllTurns(conversations);
+	return EMOTIONS.map((p) => {
+		const rows = turns.filter((t) => t.promptEmotion === p);
+		return {
+			prompt: p,
+			total: rows.length,
+			cells: EMOTIONS.map((a) => {
+				const count = rows.filter((t) => t.answerEmotion === a).length;
+				return {
+					answer: a,
+					count,
+					share: share(count, rows.length)
+				};
+			})
+		};
+	});
+}
+/** Frustration share of developer prompts by turn depth (escalation curve). */
+function emotionByTurnDepth(conversations) {
+	const turns = getAllTurns(conversations);
+	return Array.from({ length: 12 }, (_, i) => {
+		const depth = i + 1;
+		const rows = turns.filter((t) => t.index === depth);
+		const point = {
+			depth,
+			n: rows.length,
+			frustration: 0,
+			caution: 0,
+			neutral: 0,
+			satisfaction: 0
+		};
+		for (const e of EMOTIONS) point[e] = share(rows.filter((r) => r.promptEmotion === e).length, rows.length);
+		return point;
+	}).filter((p) => p.n >= 25);
+}
+var EXCLUDED_LANGUAGES = /* @__PURE__ */ new Set([
+	"unknown",
+	"plpgsql",
+	"shaderlab",
+	"asymptote",
+	"jinja",
+	"dockerfile",
+	"batchfile",
+	"shell",
+	"astro",
+	"codeql",
+	"jupyter notebook",
+	"javascript",
+	"c",
+	"kotlin",
+	"css"
+]);
+/** Language x developer-emotion share matrix for the heatmap. */
+function languageMatrix(conversations, minCount = 10) {
+	const turns = getAllTurns(conversations);
+	return [...new Set(turns.map((t) => t.conv.language))].sort().map((lang) => {
+		const rows = turns.filter((t) => t.conv.language === lang);
+		return {
+			row: lang,
+			total: rows.length,
+			cells: EMOTIONS.map((e) => ({
+				col: e,
+				share: share(rows.filter((r) => r.promptEmotion === e).length, rows.length),
+				count: rows.filter((r) => r.promptEmotion === e).length
+			}))
+		};
+	}).filter((r) => !EXCLUDED_LANGUAGES.has(r.row.trim().toLowerCase()) && r.cells.some((c) => c.count > minCount)).sort((a, b) => {
+		return (a.cells.find((c) => c.col === "frustration")?.share ?? 0) - (b.cells.find((c) => c.col === "frustration")?.share ?? 0);
+	});
+}
 var EMOTION_COLORS$1 = {
 	frustration: "#ef4444",
 	caution: "#f59e0b",
@@ -2220,8 +2582,6 @@ function ImpactTab({ activeFilters = [] }) {
 		})).filter((conv) => conv.turns.length > 0);
 	}, [activeFilters, kpiData.conversations]);
 	const [valueFormat, setValueFormat] = (0, import_react.useState)("both");
-	(0, import_react.useMemo)(() => getAllTurns(filteredConversations), [filteredConversations]);
-	(0, import_react.useMemo)(() => answerValenceByPromptEmotion(filteredConversations), [filteredConversations]);
 	const depth = (0, import_react.useMemo)(() => emotionByTurnDepth(filteredConversations), [filteredConversations]);
 	const matrix = (0, import_react.useMemo)(() => transitionMatrix(filteredConversations), [filteredConversations]);
 	const langMatrix = (0, import_react.useMemo)(() => languageMatrix(filteredConversations), [filteredConversations]);

@@ -1,16 +1,11 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { EMOTIONS, EMOTION_LABEL, emotionVar, type Emotion } from "@/lib/emotions";
+import { EMOTIONS, EMOTION_HEX, EMOTION_LABEL, emotionVar, type Emotion } from "@/lib/emotions";
 import { useChartWidth, fmtPct } from "./chart-utils";
 
 export type TrendPoint = { label: string; n?: number } & Record<Emotion, number>;
 
-const EMOTION_COLORS: Record<Emotion, string> = {
-  frustration: "#c0392b",
-  caution: "#c48f0a",
-  neutral: "#3b6fa5",
-  satisfaction: "#27ae60",
-};
+const EMOTION_COLORS = EMOTION_HEX;
 
 /** Multi-series line chart of emotion share over an ordered x axis. */
 export function TrendLineChart({
@@ -29,7 +24,7 @@ export function TrendLineChart({
 
   useEffect(() => {
     if (!width || !svgRef.current) return;
-    const margin = { top: 14, right: 52, bottom: 40, left: 44 };
+    const margin = { top: 14, right: 24, bottom: 40, left: 44 };
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
@@ -40,6 +35,7 @@ export function TrendLineChart({
         .attr("id", "chart-tooltip")
         .style("position", "absolute")
         .style("visibility", "hidden")
+        .style("opacity", "0")
         .style("background", "rgba(15, 23, 42, 0.95)")
         .style("backdrop-filter", "blur(8px)")
         .style("border", "1px solid rgba(255, 255, 255, 0.15)")
@@ -78,6 +74,7 @@ export function TrendLineChart({
     );
     const y = d3.scaleLinear([0, maxY], [h, 0]);
 
+    // Grid lines & Y Axis
     g.append("g")
       .call(d3.axisLeft(y).ticks(5).tickSize(-w).tickFormat((d) => fmtPct(Number(d), 0)))
       .call((s) => s.select(".domain").remove())
@@ -86,6 +83,7 @@ export function TrendLineChart({
       .style("fill", "var(--muted-foreground)")
       .style("font-size", "10px");
 
+    // X Axis
     const every = data.length > 10 ? Math.ceil(data.length / 10) : 1;
     g.append("g")
       .attr("transform", `translate(0,${h})`)
@@ -148,64 +146,115 @@ export function TrendLineChart({
         .attr("cy", (d) => y(d[e]))
         .attr("r", 0)
         .style("fill", emotionVar(e))
-        .style("cursor", "pointer")
-        .on("mouseover", function (event, d) {
-          const color = EMOTION_COLORS[e];
-          const label = EMOTION_LABEL[e];
-          const pct = fmtPct(d[e]);
-          const turnNum = d.label;
-          const sampleSize = d.n ?? "–";
-
-          const dominant = EMOTIONS.reduce((best, em) => d[em] > d[best] ? em : best, EMOTIONS[0]);
-          const isDominant = e === dominant;
-
-          const explanation = `At turn ${turnNum}, ${pct} of developer prompts expressed <span style="color: ${color}; font-weight: 700;">${label.toLowerCase()}</span>.`;
-
-          tooltipDiv
-            .style("visibility", "visible")
-            .html(
-              `<div style="margin-bottom: 6px; font-size: 10px; color: #94a3b8; font-weight: 500;">Turn ${turnNum} · <span style="font-variant-numeric: tabular-nums;">n = ${sampleSize} prompts</span></div>` +
-              `<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">` +
-              `<span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${color};"></span>` +
-              `<span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">${label}</span>` +
-              `<span style="font-size: 14px; font-weight: 700; color: #fff;">${pct}</span>` +
-              (isDominant ? `<span style="font-size: 9px; color: #fbbf24; font-weight: 600; margin-left: 2px;">★ DOMINANT</span>` : ``) +
-              `</div>` +
-              `<div style="font-size: 10px; color: #cbd5e1; font-weight: 400; line-height: 1.4; max-width: 220px;">${explanation}</div>`
-            );
-
-          d3.select(this)
-            .transition()
-            .duration(100)
-            .attr("r", 6);
-        })
-        .on("mousemove", function (event) {
-          tooltipDiv
-            .style("top", (event.pageY - 60) + "px")
-            .style("left", (event.pageX + 15) + "px");
-        })
-        .on("mouseout", function () {
-          tooltipDiv.style("visibility", "hidden");
-          d3.select(this)
-            .transition()
-            .duration(100)
-            .attr("r", 3.5);
-        })
+        .style("pointer-events", "none")
         .transition()
         .delay((_, i) => 300 + (i / Math.max(1, data.length - 1)) * 900)
         .duration(260)
         .attr("r", 3.5);
-
-
-      const last = visibleData[visibleData.length - 1]!;
-      g.append("text")
-        .attr("x", w + 6)
-        .attr("y", y(last[e]))
-        .attr("dy", "0.35em")
-        .style("font-size", "9px")
-        .style("fill", emotionVar(e))
-        .text(EMOTION_LABEL[e].slice(0, 5));
     });
+
+    const findNearestPoint = (mouseX: number, mouseY: number) => {
+      let minDistance = Infinity;
+      let bestEmotion = visibleEmotions[0];
+      let bestPoint = visibleData[0];
+
+      visibleData.forEach((d) => {
+        const px = x(d.label)!;
+        visibleEmotions.forEach((e) => {
+          const py = y(d[e]);
+          const dist = Math.hypot(px - mouseX, py - mouseY);
+          if (dist < minDistance) {
+            minDistance = dist;
+            bestEmotion = e;
+            bestPoint = d;
+          }
+        });
+      });
+
+      return { emotion: bestEmotion, point: bestPoint };
+    };
+
+    const updateTooltipPosition = (event: MouseEvent) => {
+      const node = tooltipDiv.node();
+      const rect = node ? node.getBoundingClientRect() : { width: 230, height: 90 };
+      const tooltipWidth = rect.width || 230;
+      const tooltipHeight = rect.height || 90;
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      let left = event.pageX + 15;
+      if (event.clientX + 15 + tooltipWidth > viewportWidth - 12) {
+        left = Math.max(10, event.pageX - tooltipWidth - 15);
+      }
+
+      let top = event.pageY - tooltipHeight - 10;
+      if (event.clientY - tooltipHeight - 10 < 12) {
+        top = Math.min(viewportHeight + window.scrollY - tooltipHeight - 12, event.pageY + 18);
+      }
+
+      tooltipDiv
+        .style("top", `${top}px`)
+        .style("left", `${left}px`);
+    };
+
+    const renderTooltipContent = (e: Emotion, d: TrendPoint) => {
+      const color = EMOTION_COLORS[e];
+      const label = EMOTION_LABEL[e];
+      const pct = fmtPct(d[e]);
+      const turnNum = d.label;
+      const sampleSize = d.n ?? "–";
+
+      const dominant = EMOTIONS.reduce((best, em) => d[em] > d[best] ? em : best, EMOTIONS[0]);
+      const isDominant = e === dominant;
+
+      const explanation = `At turn ${turnNum}, ${pct} of developer prompts expressed <span style="color: ${color}; font-weight: 700;">${label.toLowerCase()}</span>.`;
+
+      tooltipDiv
+        .style("visibility", "visible")
+        .style("opacity", "1")
+        .html(
+          `<div style="margin-bottom: 6px; font-size: 10px; color: #94a3b8; font-weight: 500;">Turn ${turnNum} · <span style="font-variant-numeric: tabular-nums;">n = ${sampleSize} prompts</span></div>` +
+          `<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">` +
+          `<span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${color};"></span>` +
+          `<span style="color: ${color}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">${label}</span>` +
+          `<span style="font-size: 14px; font-weight: 700; color: #fff;">${pct}</span>` +
+          (isDominant ? `<span style="font-size: 9px; color: #fbbf24; font-weight: 600; margin-left: 2px;">★ DOMINANT</span>` : ``) +
+          `</div>` +
+          `<div style="font-size: 10px; color: #cbd5e1; font-weight: 400; line-height: 1.4; max-width: 220px;">${explanation}</div>`
+        );
+    };
+
+    // Full-chart hover overlay for instant, hyper-sensitive hover target matching
+    g.append("rect")
+      .attr("width", w)
+      .attr("height", h)
+      .style("fill", "none")
+      .style("pointer-events", "all")
+      .style("cursor", "pointer")
+      .on("mousemove", function (event) {
+        const [mouseX, mouseY] = d3.pointer(event, g.node());
+        const { emotion: e, point: d } = findNearestPoint(mouseX, mouseY);
+        if (!d) return;
+
+        // Highlight nearest point circle
+        g.selectAll("circle")
+          .style("transition", "r 0.1s ease")
+          .attr("r", 3.5);
+
+        g.selectAll(`circle.${e}`)
+          .filter((p: any) => p.label === d.label)
+          .attr("r", 6.5);
+
+        renderTooltipContent(e, d);
+        updateTooltipPosition(event);
+      })
+      .on("mouseleave", function () {
+        g.selectAll("circle").attr("r", 3.5);
+        tooltipDiv
+          .style("visibility", "hidden")
+          .style("opacity", "0");
+      });
 
     return () => {
       d3.select("#chart-tooltip").remove();
@@ -289,8 +338,7 @@ export function ConversationLineChart({
         .curve(d3.curveMonotoneX);
 
       g.append("path")
-        .datum(turns)
-        .attr("d", line)
+        .attr("d", line(turns))
         .style("fill", "none")
         .style("stroke", "var(--muted-foreground)")
         .style("stroke-width", 1.5)

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { EMOTIONS, EMOTION_LABEL } from "@/lib/emotions";
 import { cn } from "@/lib/utils";
 
 export function Panel({
@@ -11,7 +10,7 @@ export function Panel({
   className,
 }: {
   title: ReactNode;
-  subtitle?: string;
+  subtitle?: ReactNode;
   children: ReactNode;
   insight?: ReactNode;
   action?: ReactNode;
@@ -68,12 +67,7 @@ export function Panel({
       <div className="flex-1 min-h-[200px]">
         {isVisible ? children : null}
       </div>
-      {insight && (
-        <p className="mt-4 border-t border-border pt-3 text-xs leading-relaxed text-muted-foreground">
-          <span className="font-semibold text-foreground">Reading: </span>
-          {insight}
-        </p>
-      )}
+
     </section>
   );
 }
@@ -168,26 +162,6 @@ export function KpiCard({
         </p>
         <div className="mt-1 text-xs leading-snug text-muted-foreground">{hint}</div>
       </div>
-    </div>
-  );
-}
-
-export function EmotionLegend({ note }: { note?: string }) {
-  const dot = {
-    frustration: "bg-frustration",
-    caution: "bg-caution",
-    neutral: "bg-neutral",
-    satisfaction: "bg-satisfaction",
-  };
-  return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
-      {EMOTIONS.map((e) => (
-        <span key={e} className="flex items-center gap-1.5">
-          <span className={cn("size-2.5 rounded-sm", dot[e])} />
-          {EMOTION_LABEL[e]}
-        </span>
-      ))}
-      {note && <span className="text-muted-foreground/70">· {note}</span>}
     </div>
   );
 }

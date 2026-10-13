@@ -1,36 +1,23 @@
 import { useMemo, useState } from "react";
-import {
-  distribution,
-  transitionMatrix,
-  emotionByTurnDepth,
-} from "@/lib/analysis";
 import { useLoaderData } from "@tanstack/react-router";
 import {
   EMOTIONS,
   EMOTION_LABEL,
   EMOTION_EMOJI,
   EMOTION_HEX,
-  emotionVar,
   type Emotion,
   type Conversation,
   type Turn,
 } from "@/lib/emotions";
 import { cn } from "@/lib/utils";
-import { DonutChart } from "@/components/charts/DonutChart";
-import { StackedBarChart, MeanBarChart } from "@/components/charts/BarCharts";
-import { TrendLineChart } from "@/components/charts/LineCharts";
+import { MeanBarChart } from "@/components/charts/BarCharts";
 import { DualRingDonut } from "@/components/charts/DualRingDonut";
 import { SankeyDiagram } from "@/components/charts/SankeyDiagram";
-import { Panel, KpiCard, EmotionLegend } from "./Primitives";
+import { Panel, KpiCard } from "./Primitives";
 import { fmtPct } from "@/components/charts/chart-utils";
-
-const DEV_COLOR = "var(--series-dev)";
-const GPT_COLOR = "var(--series-gpt)";
 
 export function OverviewTab({
   activeFilters = [],
-  setActiveTab,
-  setSelectedId,
 }: {
   activeFilters?: Emotion[];
   setActiveTab?: (tab: string) => void;
@@ -60,10 +47,6 @@ export function OverviewTab({
   };
 
   const conversations = kpiData.conversations || [];
-  const promptDist = distribution(conversations, "promptEmotion");
-  const answerDist = distribution(conversations, "answerEmotion");
-  const matrix = transitionMatrix(conversations);
-  const depth = emotionByTurnDepth(conversations);
 
   const emotionKeys = Object.keys(kpiData.counts) as (
     "satisfaction" | "neutral" | "frustration" | "caution"
@@ -72,7 +55,6 @@ export function OverviewTab({
     (a, b) => (kpiData.counts[b] || 0) - (kpiData.counts[a] || 0),
   );
   const highestEmotion = sortedEmotions[0] || "neutral";
-  const secondHighestEmotion = sortedEmotions[1];
   const highestCount = kpiData.counts[highestEmotion] || 0;
   const totalEmotionsCount = Object.values(kpiData.counts).reduce(
     (s, c) => s + c,
@@ -81,21 +63,8 @@ export function OverviewTab({
   const highestShare = totalEmotionsCount
     ? highestCount / totalEmotionsCount
     : 0;
-  const secondHighestShare =
-    totalEmotionsCount && secondHighestEmotion
-      ? (kpiData.counts[secondHighestEmotion] || 0) / totalEmotionsCount
-      : 0;
   const formattedHighestLabel =
     highestEmotion.charAt(0).toUpperCase() + highestEmotion.slice(1);
-  const formattedSecondHighestLabel = secondHighestEmotion
-    ? secondHighestEmotion.charAt(0).toUpperCase() +
-    secondHighestEmotion.slice(1)
-    : "";
-
-  const satShare = (kpiData.counts["satisfaction"] || 0) / totalEmotionsCount;
-  const neuShare = (kpiData.counts["neutral"] || 0) / totalEmotionsCount;
-  const fruShare = (kpiData.counts["frustration"] || 0) / totalEmotionsCount;
-  const cauShare = (kpiData.counts["caution"] || 0) / totalEmotionsCount;
 
   const gptCounts = kpiData.gptCounts || {};
   const gptEmotionKeys = Object.keys(gptCounts) as (
@@ -105,7 +74,6 @@ export function OverviewTab({
     (a, b) => (gptCounts[b] || 0) - (gptCounts[a] || 0),
   );
   const highestGptEmotion = sortedGptEmotions[0] || "neutral";
-  const secondHighestGptEmotion = sortedGptEmotions[1];
   const highestGptCount = gptCounts[highestGptEmotion] || 0;
   const totalGptEmotionsCount = Object.values(gptCounts).reduce(
     (s, c) => s + c,
@@ -114,25 +82,8 @@ export function OverviewTab({
   const highestGptShare = totalGptEmotionsCount
     ? highestGptCount / totalGptEmotionsCount
     : 0;
-  const secondHighestGptShare =
-    totalGptEmotionsCount && secondHighestGptEmotion
-      ? (gptCounts[secondHighestGptEmotion] || 0) / totalGptEmotionsCount
-      : 0;
   const formattedHighestGptLabel =
     highestGptEmotion.charAt(0).toUpperCase() + highestGptEmotion.slice(1);
-  const formattedSecondHighestGptLabel = secondHighestGptEmotion
-    ? secondHighestGptEmotion.charAt(0).toUpperCase() +
-    secondHighestGptEmotion.slice(1)
-    : "";
-
-  const gptSatShare =
-    (gptCounts["satisfaction"] || 0) / (totalGptEmotionsCount || 1);
-  const gptNeuShare =
-    (gptCounts["neutral"] || 0) / (totalGptEmotionsCount || 1);
-  const gptFruShare =
-    (gptCounts["frustration"] || 0) / (totalGptEmotionsCount || 1);
-  const gptCauShare =
-    (gptCounts["caution"] || 0) / (totalGptEmotionsCount || 1);
 
   const kpi2AnswerCounts = kpiData.promptToAnswerCounts?.[highestEmotion] || {};
   const kpi2AnswerKeys = Object.keys(kpi2AnswerCounts) as (
@@ -144,7 +95,6 @@ export function OverviewTab({
       ((kpi2AnswerCounts[a] as number) || 0),
   );
   const highestKpi2Answer = sortedKpi2Answers[0] || "caution";
-  const secondHighestKpi2Answer = sortedKpi2Answers[1];
   const highestKpi2AnswerCount = kpi2AnswerCounts[highestKpi2Answer] || 0;
   const totalKpi2Answers = Object.values(kpi2AnswerCounts).reduce(
     (s, c) => s + (c as number),
@@ -153,41 +103,8 @@ export function OverviewTab({
   const highestKpi2AnswerShare = totalKpi2Answers
     ? (highestKpi2AnswerCount as number) / totalKpi2Answers
     : 0;
-  const secondHighestKpi2AnswerShare =
-    totalKpi2Answers && secondHighestKpi2Answer
-      ? ((kpi2AnswerCounts[secondHighestKpi2Answer] as number) || 0) /
-      totalKpi2Answers
-      : 0;
   const formattedHighestKpi2AnswerLabel =
     highestKpi2Answer.charAt(0).toUpperCase() + highestKpi2Answer.slice(1);
-  const formattedSecondHighestKpi2AnswerLabel = secondHighestKpi2Answer
-    ? secondHighestKpi2Answer.charAt(0).toUpperCase() +
-    secondHighestKpi2Answer.slice(1)
-    : "";
-
-  const restOfKpi2Emotions = (
-    ["satisfaction", "neutral", "frustration", "caution"] as const
-  ).filter((e) => e !== highestKpi2Answer);
-
-  const restOfKpi2Hint = restOfKpi2Emotions
-    .map((e) => {
-      const label =
-        e === "satisfaction"
-          ? "Sat"
-          : e === "neutral"
-            ? "Neu"
-            : e === "frustration"
-              ? "Fru"
-              : "Cau";
-      const share = totalKpi2Answers
-        ? ((kpi2AnswerCounts[e] as number) || 0) / totalKpi2Answers
-        : 0;
-      return `${label}: ${fmtPct(share, 0)}`;
-    })
-    .join(" · ");
-
-  const shareOf = (list: typeof promptDist, e: Emotion) =>
-    list.find((d) => d.emotion === e)!.share;
 
   const visibleEmotions =
     activeFilters.length > 0
@@ -218,11 +135,6 @@ export function OverviewTab({
       )
       : kpiData.gptCounts;
 
-  /** P(answer emotion | developer emotion) helper. */
-  const pAnswer = (dev: Emotion, ans: Emotion) =>
-    matrix.find((r) => r.prompt === dev)!.cells.find((c) => c.answer === ans)!
-      .share;
-
   const realPAnswer = (dev: string, ans: string) => {
     const countsMap = kpiData.promptToAnswerCounts?.[dev] || {};
     const totalForDev = Object.values(countsMap).reduce(
@@ -232,10 +144,6 @@ export function OverviewTab({
     if (!totalForDev) return 0;
     return ((countsMap[ans] as number) || 0) / totalForDev;
   };
-
-  const satLift =
-    realPAnswer("satisfaction", "satisfaction") /
-    (realPAnswer("frustration", "satisfaction") || 1);
 
   const { devExamples, gptExamples } = useMemo(() => {
     const devExamples: Record<Emotion, string> = {
@@ -319,49 +227,16 @@ export function OverviewTab({
     return { devExamples, gptExamples };
   }, [conversations]);
 
-  const sideBySide = visibleEmotions.map((e) => ({
-    label: EMOTION_LABEL[e],
-    values: { dev: shareOf(promptDist, e), gpt: shareOf(answerDist, e) },
-  }));
-
-  const stackRows = matrix
-    .filter((r) => visibleEmotions.includes(r.prompt))
-    .map((r) => ({
-      label: EMOTION_LABEL[r.prompt],
-      labelColor: emotionVar(r.prompt),
-      total: r.total,
-      cells: r.cells.map((c) => ({
-        key: c.answer,
-        share: c.share,
-        count: c.count,
-      })),
-    }));
-
-  const frustrationRise =
-    depth[depth.length - 1]!.frustration - depth[0]!.frustration;
-
-  const selectedEmotion = activeFilters[0] || highestEmotion;
-
-  const bestExampleConv = useMemo(() => {
-    if (!conversations.length) return null;
-
-    const sorted = [...conversations].sort((a, b) => {
-      const countA = a.turns.filter(
-        (t) => t.promptEmotion === selectedEmotion,
-      ).length;
-      const countB = b.turns.filter(
-        (t) => t.promptEmotion === selectedEmotion,
-      ).length;
-      return countB - countA;
-    });
-
-    const matching = sorted.filter((c) =>
-      c.turns.some((t) => t.promptEmotion === selectedEmotion),
-    );
-    return matching[0] || conversations[0];
-  }, [conversations, selectedEmotion]);
-
   const [targetEmotion, setTargetEmotion] = useState<Emotion>("satisfaction");
+
+  const targetAdjective =
+    targetEmotion === "satisfaction"
+      ? "satisfactory"
+      : targetEmotion === "frustration"
+        ? "frustrated"
+        : targetEmotion === "caution"
+          ? "cautious"
+          : "neutral";
 
   const chanceOfTargetData = useMemo(() => {
     return visibleEmotions.map((e) => ({
@@ -379,31 +254,25 @@ export function OverviewTab({
 
   const frustrationRecoveryData = useMemo(() => {
     const list = kpiData.conversations || [];
-    let totalFrustratedTurns = 0;
-    let recoveredTurns = 0;
+    let totalFrustratedConvs = 0;
+    let recoveredConvs = 0;
 
     for (const conv of list) {
-      if (!conv.turns || conv.turns.length < 2) continue;
-      for (let i = 0; i < conv.turns.length - 1; i++) {
-        const currentTurn = conv.turns[i];
-        const nextTurn = conv.turns[i + 1];
-        if (
-          currentTurn &&
-          nextTurn &&
-          currentTurn.promptEmotion === "frustration"
-        ) {
-          totalFrustratedTurns++;
-          if (nextTurn.promptEmotion !== "frustration") {
-            recoveredTurns++;
-          }
+      if (!conv.turns || conv.turns.length === 0) continue;
+      const firstTurn = conv.turns[0];
+      const lastTurn = conv.turns[conv.turns.length - 1];
+      if (firstTurn && firstTurn.promptEmotion === "frustration") {
+        totalFrustratedConvs++;
+        if (lastTurn && lastTurn.promptEmotion !== "frustration") {
+          recoveredConvs++;
         }
       }
     }
 
     const rate =
-      totalFrustratedTurns > 0 ? recoveredTurns / totalFrustratedTurns : 0;
+      totalFrustratedConvs > 0 ? recoveredConvs / totalFrustratedConvs : 0;
 
-    return { rate, count: recoveredTurns, total: totalFrustratedTurns };
+    return { rate, count: recoveredConvs, total: totalFrustratedConvs };
   }, [kpiData.conversations]);
 
   return (
@@ -503,7 +372,12 @@ export function OverviewTab({
 
       <Panel
         title="Overall emotion distribution: Developer vs ChatGPT"
-        subtitle="Inner ring: Developer prompts (solid) · Outer ring: GPT responses (striped)"
+        subtitle={
+          <>
+            Inner solid ring: <b>Developer prompts</b> · Outer striped ring:{" "}
+            <b>GPT responses</b>
+          </>
+        }
       >
         <div className="py-2">
           <DualRingDonut
@@ -526,18 +400,12 @@ export function OverviewTab({
               style={{ color: EMOTION_HEX[targetEmotion] }}
               className="text-xl font-bold capitalize"
             >
-              {targetEmotion === "satisfaction"
-                ? "satisfactory"
-                : targetEmotion === "frustration"
-                  ? "frustrated"
-                  : targetEmotion === "caution"
-                    ? "cautious"
-                    : "neutral"}
+              {targetAdjective}
             </span>{" "}
             response
           </>
         }
-        subtitle={`Probability of receiving a ${EMOTION_LABEL[targetEmotion].toLowerCase()} GPT answer per developer prompt mood`}
+        subtitle={`Probability of receiving a ${targetAdjective.toLowerCase()} GPT answer per developer prompt mood`}
         action={
           <div className="flex items-center gap-1 bg-muted/70 p-1 rounded-lg border border-border/60">
             {EMOTIONS.map((emo) => {

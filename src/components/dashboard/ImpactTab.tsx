@@ -1,17 +1,12 @@
 import { useMemo, useState } from "react";
 import { useLoaderData } from "@tanstack/react-router";
 import {
-  getAllTurns,
-  pearson,
-  answerValenceByPromptEmotion,
   emotionByTurnDepth,
   transitionMatrix,
   languageMatrix,
 } from "@/lib/analysis";
 import {
-  EMOTIONS,
   EMOTION_LABEL,
-  EMOTION_VALENCE,
   emotionVar,
   type Emotion,
   type Conversation,
@@ -46,16 +41,6 @@ export function ImpactTab({
   const [valueFormat, setValueFormat] = useState<
     "percentage" | "count" | "both"
   >("both");
-
-  const allTurns = useMemo(
-    () => getAllTurns(filteredConversations),
-    [filteredConversations],
-  );
-
-  const valence = useMemo(
-    () => answerValenceByPromptEmotion(filteredConversations),
-    [filteredConversations],
-  );
   const depth = useMemo(
     () => emotionByTurnDepth(filteredConversations),
     [filteredConversations],
@@ -124,8 +109,8 @@ export function ImpactTab({
 
         <Panel
           className="lg:col-span-2"
-          title="Full answer mix per developer mood"
-          subtitle="Each bar is 100% of the responses given to that developer emotion"
+          title="Response Emotions by Developer Mood"
+          subtitle="How LLM responds to each developer prompt"
           insight={
             <>
               Every row is dominated by neutral and caution, but the
@@ -143,7 +128,7 @@ export function ImpactTab({
         <Panel
           className="lg:col-span-2"
           title="Prompt Emotion by Programming Language"
-          subtitle="Heatmap showing count and distribution of developer prompt emotions for languages with at least one emotion count greater than 10"
+          subtitle="Distribution of developer prompt emotions for coding languages"
           insight={
             <>
               This heatmap displays developer prompt emotions broken down by
@@ -187,5 +172,3 @@ export function ImpactTab({
     </div>
   );
 }
-
-export { EMOTION_LABEL };

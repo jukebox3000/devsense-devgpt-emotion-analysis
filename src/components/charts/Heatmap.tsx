@@ -127,12 +127,8 @@ export function Heatmap({
               `<span style="color: rgba(255, 255, 255, 0.3); font-size: 10px;">→</span>` +
               `<span style="background: ${colorFor(d.col)}15; color: ${colorFor(d.col)}; border: 1px solid ${colorFor(d.col)}30; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 80px;">${EMOTION_LABEL[d.col as Emotion] || d.col}</span>` +
               `</div>` +
-              `<div style="display: flex; align-items: baseline; justify-content: space-between;">` +
-              `<span style="font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.02em;">${(d.share * 100).toFixed(1)}%</span>` +
-              `<span style="font-size: 10px; color: rgba(255, 255, 255, 0.5); font-weight: 500;">${d.count} response${d.count === 1 ? '' : 's'}</span>` +
-              `</div>` +
-              `<div style="width: 100%; height: 4px; background: rgba(255, 255, 255, 0.08); border-radius: 2px; margin-top: 8px; overflow: hidden;">` +
-              `<div style="width: ${(d.share * 100)}%; height: 100%; background: ${colorFor(d.col)}; border-radius: 2px;"></div>` +
+              `<div style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">` +
+              `<span style="font-size: 11px; font-weight: 700; color: #fff;">${d.count} response${d.count === 1 ? '' : 's'}</span>` +
               `</div>`,
             );
 

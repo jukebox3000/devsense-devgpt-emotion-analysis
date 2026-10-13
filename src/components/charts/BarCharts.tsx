@@ -19,7 +19,7 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
   useEffect(() => {
     if (isLoading) return;
     if (!width || !svgRef.current) return;
-    const margin = { top: 8, right: 46, bottom: 26, left: 96 };
+    const margin = { top: 8, right: 16, bottom: 26, left: 96 };
     const w = width - margin.left - margin.right;
     const h = height - margin.top - margin.bottom;
 
@@ -30,6 +30,7 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
         .attr("id", "chart-tooltip")
         .style("position", "absolute")
         .style("visibility", "hidden")
+        .style("opacity", "0")
         .style("background", "rgba(15, 23, 42, 0.95)")
         .style("backdrop-filter", "blur(8px)")
         .style("border", "1px solid rgba(255, 255, 255, 0.15)")
@@ -92,12 +93,15 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
 
           tooltipDiv
             .style("visibility", "visible")
+            .style("opacity", "1")
             .html(
-              `<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${devLabel}</span>` +
-              `<span style="color: #94a3b8; font-weight: 400; margin: 0 6px;">→</span>` +
-              `<span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em;">${gptLabel}</span>` +
-              `<div style="margin-top: 4px; font-size: 13px; font-weight: 700; color: #fff;">` +
-              `${fmtPct(d.share)} <span style="font-size: 9px; color: #94a3b8; font-weight: 400;">(${d.count} responses)</span>` +
+              `<div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">` +
+              `<span style="color: ${devColor}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">${devLabel}</span>` +
+              `<span style="color: #94a3b8; font-weight: 400;">→</span>` +
+              `<span style="color: ${gptColor}; font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">${gptLabel}</span>` +
+              `</div>` +
+              `<div style="font-size: 13px; font-weight: 700; color: #fff;">` +
+              `${fmtPct(d.share)} <span style="font-size: 10px; color: #94a3b8; font-weight: 400;">(${d.count} responses)</span>` +
               `</div>`
             );
 
@@ -107,12 +111,30 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
             .style("opacity", 1.0);
         })
         .on("mousemove", function (event) {
+          const node = tooltipDiv.node();
+          const rect = node ? node.getBoundingClientRect() : { width: 220, height: 75 };
+          const tooltipWidth = rect.width || 220;
+          const tooltipHeight = rect.height || 75;
+
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+
+          let left = event.pageX + 15;
+          if (event.clientX + 15 + tooltipWidth > viewportWidth - 12) {
+            left = Math.max(10, event.pageX - tooltipWidth - 15);
+          }
+
+          let top = event.pageY - tooltipHeight - 10;
+          if (event.clientY - tooltipHeight - 10 < 12) {
+            top = Math.min(viewportHeight + window.scrollY - tooltipHeight - 12, event.pageY + 18);
+          }
+
           tooltipDiv
-            .style("top", (event.pageY - 60) + "px")
-            .style("left", (event.pageX + 15) + "px");
+            .style("top", `${top}px`)
+            .style("left", `${left}px`);
         })
         .on("mouseout", function () {
-          tooltipDiv.style("visibility", "hidden");
+          tooltipDiv.style("visibility", "hidden").style("opacity", "0");
           d3.select(this)
             .transition()
             .duration(100)
@@ -146,19 +168,10 @@ export function StackedBarChart({ rows, height = 260 }: { rows: StackRow[]; heig
         .style("font-size", "11px")
         .style("fill", row.labelColor ?? "var(--foreground)")
         .text(row.label);
-
-      g.append("text")
-        .attr("x", w + 8)
-        .attr("y", y(row.label)! + y.bandwidth() / 2)
-        .attr("dy", "0.35em")
-        .style("font-size", "10px")
-        .style("font-variant-numeric", "tabular-nums")
-        .style("fill", "var(--muted-foreground)")
-        .text(`n=${row.total}`);
     });
 
     return () => {
-      d3.select("#chart-tooltip").remove();
+      tooltipDiv.style("visibility", "hidden").style("opacity", "0");
     };
   }, [rows, width, height, isLoading]);
 
@@ -311,9 +324,27 @@ export function MeanBarChart({
           .style("fill-opacity", 1);
       })
       .on("mousemove", function (event) {
+        const node = tooltipDiv.node();
+        const rect = node ? node.getBoundingClientRect() : { width: 240, height: 75 };
+        const tooltipWidth = rect.width || 240;
+        const tooltipHeight = rect.height || 75;
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        let left = event.pageX + 15;
+        if (event.clientX + 15 + tooltipWidth > viewportWidth - 12) {
+          left = Math.max(10, event.pageX - tooltipWidth - 15);
+        }
+
+        let top = event.pageY - tooltipHeight - 10;
+        if (event.clientY - tooltipHeight - 10 < 12) {
+          top = Math.min(viewportHeight + window.scrollY - tooltipHeight - 12, event.pageY + 18);
+        }
+
         tooltipDiv
-          .style("top", (event.pageY - 60) + "px")
-          .style("left", (event.pageX + 15) + "px");
+          .style("top", `${top}px`)
+          .style("left", `${left}px`);
       })
       .on("mouseout", function () {
         tooltipDiv.style("visibility", "hidden").style("opacity", "0");
